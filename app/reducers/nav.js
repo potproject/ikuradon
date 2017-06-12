@@ -22,12 +22,12 @@ export default function reducer(state = initialState, action = {}) {
         })
       );
       break;
-    case Nav.NAV_HOME:
+    case Nav.NAV_MAIN:
       nextState = AppNavigator.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'Home' })
+            NavigationActions.navigate({ routeName: 'Main' })
           ]
         }),
         Object.assign(state, {

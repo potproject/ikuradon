@@ -4,7 +4,7 @@ import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import { bindActionCreators } from 'redux';
 
 import AuthorizeScreen from '../components/authorize';
-import HomeScreen from '../components/home';
+import MainScreen from '../components/main';
 import LoginScreen from '../components/login';
 import TootScreen from '../components/toot';
 
@@ -12,7 +12,7 @@ import * as AppInitActions from '../actions/actioncreators/appinit';
 
 export const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
-  Home: { screen: HomeScreen },
+  Main: { screen: MainScreen },
   Authorize: { screen: AuthorizeScreen },
   Toot: { screen: TootScreen }
 });

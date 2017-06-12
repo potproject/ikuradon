@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from 'react-native';
 import Mastolist from '../mastolist';
 
-export default class Main extends React.Component {
+export default class Home extends React.Component {
   static navigationOptions = {
     title: "Home",
     headerRight: <Button title="Toot" onPress={() => headerRightHandler()} />,
@@ -11,6 +11,6 @@ export default class Main extends React.Component {
     super(props);
   }
   render() {
-    return <Mastolist gettype={"main"}/>
+    return <Mastolist gettype={"home"}/>
   }
 }

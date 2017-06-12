@@ -6,13 +6,13 @@ import { bindActionCreators } from 'redux';
 import * as HomeActions from '../actions/actioncreators/home';
 import { TabNavigator } from 'react-navigation';
 
-import MainTabScreen from '../components/hometab/main';
-import LocalTabScreen from '../components/hometab/local';
+import HomeTabScreen from '../components/maintab/home';
+import LocalTabScreen from '../components/maintab/local';
 
-export default Home = TabNavigator(
+export default Main = TabNavigator(
   {
-    Main: {
-      screen: MainTabScreen,
+    Home: {
+      screen: HomeTabScreen,
     },
     Local: {
       screen: LocalTabScreen,

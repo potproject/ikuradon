@@ -8,7 +8,7 @@ export function appInit() {
         //ここにトークンが生きてるか判断させる
         if (access_token && domain) {
             dispatch({
-                type: Nav.NAV_HOME,
+                type: Nav.NAV_MAIN,
                 access_token,
                 domain
             });

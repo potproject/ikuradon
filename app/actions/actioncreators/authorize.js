@@ -25,7 +25,7 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
       return;
     }
     dispatch({
-      type: Nav.NAV_HOME,
+      type: Nav.NAV_MAIN,
       access_token,
       domain
     });
