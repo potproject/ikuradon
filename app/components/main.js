@@ -3,7 +3,7 @@ import { Button, View, Text, StyleSheet, Image, ListView, RefreshControl } from 
 import MastoRow from './mastorow';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as HomeActions from '../actions/actioncreators/home';
+import * as MainActions from '../actions/actioncreators/main';
 import { TabNavigator } from 'react-navigation';
 
 import HomeTabScreen from '../components/maintab/home';

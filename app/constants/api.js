@@ -28,8 +28,38 @@ export const GET_TIMELINES_HOME = {
         limit:"40", //optional
         since_id:null, //new timeline
         max_id:null, //old timeline
-        redirect_uri:"urn:ietf:wg:oauth:2.0:oob",
-        scope:"read write follow"
+    }
+};
+
+export const GET_TIMELINES_LOCAL = {
+    method:"get",
+    url:"/api/v1/timelines/public",
+    form:{
+        local:true,
+        limit:"40", //optional
+        since_id:null, //new timeline
+        max_id:null, //old timeline
+    }
+};
+
+export const GET_TIMELINES_FEDERAL = {
+    method:"get",
+    url:"/api/v1/timelines/public",
+    form:{
+        local:false,
+        limit:"40", //optional
+        since_id:null, //new timeline
+        max_id:null, //old timeline
+    }
+};
+
+export const GET_NOTIFICATIONS = {
+    method:"get",
+    url:"/api/v1/notifications",
+    form:{
+        limit:"40", //optional
+        since_id:null, //new timeline
+        max_id:null, //old timeline
     }
 };
 
@@ -43,7 +73,5 @@ export const POST_STATUS = {
         sensitive:false, //optional, nsfw flag
         spoiler_text:null, //optional, nsfw message
         visibility:"public", //"direct", "private", "unlisted" or "public"
-        redirect_uri:"urn:ietf:wg:oauth:2.0:oob",
-        scope:"read write follow"
     }
 };
