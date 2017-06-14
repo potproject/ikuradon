@@ -11,6 +11,6 @@ export default class Local extends React.Component {
     super(props);
   }
   render() {
-    return <Mastolist gettype={"local"}/>
+    return <Mastolist type={"local"}/>
   }
 }

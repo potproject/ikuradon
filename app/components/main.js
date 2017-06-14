@@ -8,6 +8,8 @@ import { TabNavigator } from 'react-navigation';
 
 import HomeTabScreen from '../components/maintab/home';
 import LocalTabScreen from '../components/maintab/local';
+import FederalTabScreen from '../components/maintab/federal';
+//import NotificationsTabScreen from '../components/maintab/notifications';
 
 export default Main = TabNavigator(
   {
@@ -17,6 +19,12 @@ export default Main = TabNavigator(
     Local: {
       screen: LocalTabScreen,
     },
+    federal: {
+      screen: FederalTabScreen,
+    },
+    /**notifications: {
+      screen: NotificationsTabScreen,
+    },**/
   },
   {
     tabBarOptions: {},

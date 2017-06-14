@@ -49,6 +49,8 @@ class Mastolist extends React.Component {
         return this.props.mainReducer.home;
       case "local":
         return this.props.mainReducer.local;
+      case "federal":
+        return this.props.mainReducer.federal;
     }
   }
 }
