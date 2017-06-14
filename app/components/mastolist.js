@@ -24,6 +24,7 @@ class Mastolist extends React.Component {
         style={styles.container}
         dataSource={this.dataSource.cloneWithRows(dataprops.data)}
         enableEmptySections={true}
+        removeClippedSubviews={false}
         renderRow={(data) =>
             <MastoRow 
               key={data.id} 
