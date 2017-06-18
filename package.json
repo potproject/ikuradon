@@ -23,6 +23,7 @@
     "expo": "^17.0.0",
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
+    "react-native-hyperlink": "^0.0.9",
     "react-navigation": "^1.0.0-beta.11",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
