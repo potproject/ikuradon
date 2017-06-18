@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
 import { FontAwesome } from '@expo/vector-icons';
 
+import Reply from './mainitem/reply';
+import Boost from './mainitem/boost';
+import Favorite from './mainitem/favorite';
+
 export default class MastoRow extends Component {
   constructor(props) {
     super(props);
@@ -33,9 +37,9 @@ export default class MastoRow extends Component {
         </View>
         <View style={styles.container}>
           <View style={styles.item}>
-            <FontAwesome style={styles.itemFlex} name="reply" size={20} color="gray" />
-            <FontAwesome style={styles.itemFlex} name="retweet" size={20} color="gray" />
-            <FontAwesome style={styles.itemFlex} name="star" size={20} color="gray" />
+            <Reply id={this.state.id} style={styles.itemFlex} />
+            <Boost id={this.state.id} style={styles.itemFlex} />
+            <Favorite id={this.state.id} style={styles.itemFlex} />
             <FontAwesome style={styles.itemFlex} name="ellipsis-h" size={20} color="gray" />
           </View>
         </View>
