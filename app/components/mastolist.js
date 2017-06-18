@@ -32,6 +32,8 @@ class Mastolist extends React.Component {
               user={data.account.display_name} 
               body={data.content} 
               image={data.account.avatar}
+              reblogged={data.reblogged}
+              favorited={data.favourited}
             />
         }
         refreshControl={
