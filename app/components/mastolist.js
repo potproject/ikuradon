@@ -27,7 +27,8 @@ class Mastolist extends React.Component {
         removeClippedSubviews={false}
         renderRow={(data) =>
             <MastoRow 
-              key={data.id} 
+              key={data.id}
+              id={data.id}
               user={data.account.display_name} 
               body={data.content} 
               image={data.account.avatar}
