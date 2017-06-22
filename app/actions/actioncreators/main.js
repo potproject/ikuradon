@@ -22,7 +22,7 @@ export function getTimeline(reducerType,limit = 40) {
     try {
       let access_token = await AsyncStorage.getItem("access_token");
       let domain = await AsyncStorage.getItem("domain");
-      data = await Networking.fetch(domain, reducerTypeArray[reducerType], { limit }, access_token);
+      data = await Networking.fetch(domain, reducerTypeArray[reducerType], null,{ limit }, access_token);
     } catch (e) {
       console.error(e);
       return;
@@ -38,7 +38,7 @@ export function refreshTimeline(reducerType,since_id, limit = 40) {
     try {
       let access_token = await AsyncStorage.getItem("access_token");
       let domain = await AsyncStorage.getItem("domain");
-      data = await Networking.fetch(domain,  reducerTypeArray[reducerType], { limit, since_id }, access_token);
+      data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id }, access_token);
     } catch (e) {
       console.error(e);
       return;

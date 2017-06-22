@@ -75,3 +75,31 @@ export const POST_STATUS = {
         visibility:"public", //"direct", "private", "unlisted" or "public"
     }
 };
+
+export const POST_REBLOG = {
+    method:"post",
+    url:"/api/v1/statuses/:param:/reblog",
+    form:{
+    }
+};
+
+export const POST_UNREBLOG = {
+    method:"post",
+    url:"/api/v1/statuses/:param:/unreblog",
+    form:{
+    }
+};
+
+export const POST_FAVOURITED = {
+    method:"post",
+    url:"/api/v1/statuses/:param:/favourite",
+    form:{
+    }
+};
+
+export const POST_UNFAVOURITED = {
+    method:"post",
+    url:"/api/v1/statuses/:param:/unfavourite",
+    form:{
+    }
+};

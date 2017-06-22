@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import Reply from './mainitem/reply';
 import Boost from './mainitem/boost';
-import Favorite from './mainitem/favorite';
+import Favourite from './mainitem/favourite';
 
 export default class MastoRow extends Component {
   constructor(props) {
@@ -16,7 +16,15 @@ export default class MastoRow extends Component {
       body: props.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
       image: props.image,
       reblogged:props.reblogged,
-      favorited:props.favorited
+      favourited:props.favourited
+    }
+  }
+  componentWillReceiveProps(nextProps){
+    if(this.state.favourited !== nextProps.favourited){
+      this.state.favourited = nextProps.favourited;
+    }
+    if(this.state.reblogged !== nextProps.reblogged){
+      this.state.reblogged = nextProps.reblogged;
     }
   }
   render() {
@@ -41,7 +49,7 @@ export default class MastoRow extends Component {
           <View style={styles.item}>
             <Reply id={this.state.id} style={styles.itemFlex} />
             <Boost id={this.state.id} reblogged={this.state.reblogged} style={styles.itemFlex} />
-            <Favorite id={this.state.id} favorited={this.state.favorited}style={styles.itemFlex} />
+            <Favourite id={this.state.id} favourited={this.state.favourited}style={styles.itemFlex} />
             <FontAwesome style={styles.itemFlex} name="ellipsis-h" size={20} color="gray" />
           </View>
         </View>

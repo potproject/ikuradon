@@ -9,7 +9,7 @@ export function toot(message) {
         try {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
-            let data = await Networking.fetch(domain, CONST_API.POST_STATUS, {
+            let data = await Networking.fetch(domain, CONST_API.POST_STATUS, null,{
                 status: message
             },access_token);
         } catch (e) {

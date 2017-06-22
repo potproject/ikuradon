@@ -12,48 +12,53 @@ class Mastolist extends React.Component {
     this.type = this.props.type;
     this.access_token = this.props.navReducer.access_token;
     this.domain = this.props.navReducer.domain;
-    this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => {r1 !== r2}});
+    this.listdata = this.reducerType(props);
     this.props.MainActions.getTimeline(this.type);
     headerRightHandler = this.props.MainActions.toot;
   }
+  
+  componentWillReceiveProps(nextProps){
+    this.listdata = this.reducerType(nextProps);
+  }
+
   render() {
-    let dataprops = this.reducerType();
     return (
       <View style={styles.container}>
         <ListView
         style={styles.container}
-        dataSource={this.dataSource.cloneWithRows(dataprops.data)}
+        dataSource={this.dataSource.cloneWithRows(this.listdata.data)}
         enableEmptySections={true}
         removeClippedSubviews={false}
         renderRow={(data) =>
-            <MastoRow 
+        <MastoRow 
               key={data.id}
               id={data.id}
               user={data.account.display_name} 
               body={data.content} 
               image={data.account.avatar}
               reblogged={data.reblogged}
-              favorited={data.favourited}
+              favourited={data.favourited}
             />
         }
         refreshControl={
           <RefreshControl
-            refreshing={dataprops.refreshing}
-            onRefresh={()=>this.props.MainActions.refreshTimeline(this.type,dataprops.maxId)}
+            refreshing={this.listdata.refreshing}
+            onRefresh={()=>this.props.MainActions.refreshTimeline(this.type,this.listdata.maxId)}
           />
         }
       />
       </View>
     );
   }
-  reducerType(){
-    switch(this.props.type){
+  reducerType(nextProps){
+    switch(this.type){
       case "home":
-        return this.props.mainReducer.home;
+        return nextProps.mainReducer.home;
       case "local":
-        return this.props.mainReducer.local;
+        return nextProps.mainReducer.local;
       case "federal":
-        return this.props.mainReducer.federal;
+        return nextProps.mainReducer.federal;
     }
   }
 }
