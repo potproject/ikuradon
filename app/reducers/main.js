@@ -19,6 +19,12 @@ const initialState = {
     minId: null,
     maxId: null
   },
+  notifications:{
+    data: [],
+    refreshing: false,
+    minId: null,
+    maxId: null
+  }
 };
 
 export default function Main(state = initialState, action = {}) {

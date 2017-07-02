@@ -8,6 +8,7 @@ const reducerTypeArray = {
   home: CONST_API.GET_TIMELINES_HOME,
   local:CONST_API.GET_TIMELINES_LOCAL,
   federal:CONST_API.GET_TIMELINES_FEDERAL,
+  notifications:CONST_API.GET_NOTIFICATIONS
 }
 
 export function toot() {

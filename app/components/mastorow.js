@@ -12,6 +12,7 @@ export default class MastoRow extends Component {
     super(props);
     this.state = {
       id:props.id,
+      tootid:props.tootid,
       user: props.user,
       body: props.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
       image: props.image,
@@ -47,9 +48,9 @@ export default class MastoRow extends Component {
         </View>
         <View style={styles.container}>
           <View style={styles.item}>
-            <Reply id={this.state.id} style={styles.itemFlex} />
-            <Boost id={this.state.id} reblogged={this.state.reblogged} style={styles.itemFlex} />
-            <Favourite id={this.state.id} favourited={this.state.favourited}style={styles.itemFlex} />
+            <Reply id={this.state.tootid} style={styles.itemFlex} />
+            <Boost id={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
+            <Favourite id={this.state.tootid} favourited={this.state.favourited}style={styles.itemFlex} />
             <FontAwesome style={styles.itemFlex} name="ellipsis-h" size={20} color="gray" />
           </View>
         </View>

@@ -17,7 +17,6 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
       await AsyncStorage.setItem('access_token', access_token);
       await AsyncStorage.setItem('domain', domain);
     } catch (e) {
-      Actions.login({type: ActionConst.BACK});
       Alert.alert("エラー", "認証に失敗しましたはい");
       dispatch({
         type: Authorize.AUTHORIZE_FAILURE,
