@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
 import { FontAwesome } from '@expo/vector-icons';
+import Moment from 'moment';
 
 import Reply from './mainitem/reply';
 import Boost from './mainitem/boost';
@@ -17,7 +18,10 @@ export default class MastoRow extends Component {
       body: props.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
       image: props.image,
       reblogged:props.reblogged,
-      favourited:props.favourited
+      favourited:props.favourited,
+      date:props.date,
+      username:props.username,
+      acct:"@"+props.acct
     }
   }
   componentWillReceiveProps(nextProps){
@@ -34,8 +38,13 @@ export default class MastoRow extends Component {
         <View style={styles.container}>
           <Image source={{ uri: this.state.image }} style={styles.photo} />
           <View style={styles.textarea}>
-            <Text style={styles.name}>
-              {this.state.user}
+            <Text style={styles.header} ellipsizeMode='tail' numberOfLines={1}>
+              <Text style={styles.name}>
+                {this.state.user}
+              </Text>
+              <Text style={styles.acct}>
+                {this.state.acct}
+              </Text>
             </Text>
             <Hyperlink onPress={url => this.openUrl(url)}>
               <View>
@@ -45,6 +54,11 @@ export default class MastoRow extends Component {
               </View>
             </Hyperlink>
           </View>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.dateFlex}>
+            {this.dateFormat(this.state.date)}
+          </Text>
         </View>
         <View style={styles.container}>
           <View style={styles.item}>
@@ -69,22 +83,31 @@ export default class MastoRow extends Component {
       console.error('Linking error', e);
     }
   }
+  dateFormat(date){
+    return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
+  }
 }
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 6,
+    padding: 4,
     flexDirection: 'row',
   },
   textarea: {
     flex: 1,
   },
-  name: {
+  header: {
     flex: 1,
+    paddingLeft: 12,
+  },
+  name: {
     fontSize: 16,
-    marginLeft: 12,
+  },
+  acct: {
+    color:"#5f5f5f",
+    fontSize: 12,
   },
   body: {
     flex: 2,
@@ -106,5 +129,14 @@ const styles = StyleSheet.create({
   },
   itemFlex:{
     flex:1
+  },
+  dateFlex:{
+    marginLeft:50,
+    paddingLeft: 12,
+    paddingTop:0,
+    paddingBottom:0,
+    color:"#5f5f5f",
+    fontSize: 12,
+    flex:3
   }
 });

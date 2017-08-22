@@ -73,6 +73,9 @@ class Mastolist extends React.Component {
         image={data.account.avatar}
         reblogged={data.reblogged}
         favourited={data.favourited}
+        date={data.status.created_at}
+        username={data.account.username}
+        acct={data.account.acct}
       />
     }
     return <MastoRow
@@ -84,6 +87,9 @@ class Mastolist extends React.Component {
       image={data.account.avatar}
       reblogged={data.reblogged}
       favourited={data.favourited}
+      date={data.created_at}
+      username={data.account.username}
+      acct={data.account.acct}
     />
   }
 }
