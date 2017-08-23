@@ -12,23 +12,24 @@ export default class MastoRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id:props.id,
-      tootid:props.tootid,
+      id: props.id,
+      tootid: props.tootid,
       user: props.user,
       body: props.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
       image: props.image,
-      reblogged:props.reblogged,
-      favourited:props.favourited,
-      date:props.date,
-      username:props.username,
-      acct:"@"+props.acct
+      reblogged: props.reblogged,
+      favourited: props.favourited,
+      date: props.date,
+      username: props.username,
+      acct: "@" + props.acct,
+      reblog_to: props.reblog_to
     }
   }
-  componentWillReceiveProps(nextProps){
-    if(this.state.favourited !== nextProps.favourited){
+  componentWillReceiveProps(nextProps) {
+    if (this.state.favourited !== nextProps.favourited) {
       this.state.favourited = nextProps.favourited;
     }
-    if(this.state.reblogged !== nextProps.reblogged){
+    if (this.state.reblogged !== nextProps.reblogged) {
       this.state.reblogged = nextProps.reblogged;
     }
   }
@@ -60,11 +61,12 @@ export default class MastoRow extends Component {
             {this.dateFormat(this.state.date)}
           </Text>
         </View>
+        {this.reblogFormat(this.state.reblog_to)}
         <View style={styles.container}>
           <View style={styles.item}>
             <Reply id={this.state.tootid} style={styles.itemFlex} />
             <Boost id={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
-            <Favourite id={this.state.tootid} favourited={this.state.favourited}style={styles.itemFlex} />
+            <Favourite id={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
             <FontAwesome style={styles.itemFlex} name="ellipsis-h" size={20} color="gray" />
           </View>
         </View>
@@ -83,8 +85,17 @@ export default class MastoRow extends Component {
       console.error('Linking error', e);
     }
   }
-  dateFormat(date){
+  dateFormat(date) {
     return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
+  }
+  reblogFormat(reblog_to) {
+    if (reblog_to !== null) {
+      return <View style={styles.container}>
+        <Text style={styles.dateFlex}>
+          <Text>{" "}<FontAwesome name="retweet" size={12} />{" " + reblog_to}</Text>
+        </Text>
+      </View>;
+    }
   }
 }
 
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   acct: {
-    color:"#5f5f5f",
+    color: "#5f5f5f",
     fontSize: 12,
   },
   body: {
@@ -119,24 +130,23 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 8
   },
-  item:{
+  item: {
     flex: 1,
-    marginLeft:50,
+    marginLeft: 50,
     paddingLeft: 12,
-    paddingTop:0,
-    paddingBottom:0,
+    paddingTop: 0,
+    paddingBottom: 0,
     flexDirection: 'row',
   },
-  itemFlex:{
-    flex:1
+  itemFlex: {
+    flex: 1
   },
-  dateFlex:{
-    marginLeft:50,
+  dateFlex: {
+    marginLeft: 50,
     paddingLeft: 12,
-    paddingTop:0,
-    paddingBottom:0,
-    color:"#5f5f5f",
+    paddingTop: 0,
+    paddingBottom: 0,
+    color: "#5f5f5f",
     fontSize: 12,
-    flex:3
   }
 });

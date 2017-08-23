@@ -76,21 +76,40 @@ class Mastolist extends React.Component {
         date={data.status.created_at}
         username={data.account.username}
         acct={data.account.acct}
+        reblog_to={null}
       />
     }
-    return <MastoRow
-      key={data.id}
-      id={data.id}
-      tootid={data.id}
-      user={data.account.display_name}
-      body={data.content}
-      image={data.account.avatar}
-      reblogged={data.reblogged}
-      favourited={data.favourited}
-      date={data.created_at}
-      username={data.account.username}
-      acct={data.account.acct}
-    />
+    if (data.reblog === null) {
+      return <MastoRow
+        key={data.id}
+        id={data.id}
+        tootid={data.id}
+        user={data.account.display_name}
+        body={data.content}
+        image={data.account.avatar}
+        reblogged={data.reblogged}
+        favourited={data.favourited}
+        date={data.created_at}
+        username={data.account.username}
+        acct={data.account.acct}
+        reblog_to={null}
+      />
+    } else {
+      return <MastoRow
+        key={data.id}
+        id={data.id}
+        tootid={data.id}
+        user={data.reblog.account.display_name}
+        body={data.reblog.content}
+        image={data.reblog.account.avatar}
+        reblogged={data.reblog.reblogged}
+        favourited={data.reblog.favourited}
+        date={data.reblog.created_at}
+        username={data.reblog.account.username}
+        acct={data.reblog.account.acct}
+        reblog_to={data.account.display_name}
+      />
+    }
   }
 }
 
