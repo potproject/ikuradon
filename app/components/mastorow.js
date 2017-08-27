@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
-import MastoImage from './mastoimage';
+import MastoMedia from './mastomedia';
 import { FontAwesome } from '@expo/vector-icons';
 import Moment from 'moment';
 import He from 'he';
@@ -57,7 +57,7 @@ export default class MastoRow extends Component {
                 </Text>
               </View>
             </Hyperlink>
-            <MastoImage
+            <MastoMedia
               media_attachments={this.state.media_attachments}
             />
           </View>

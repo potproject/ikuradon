@@ -5,7 +5,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-export default class MastoImage extends React.Component {
+export default class MastoMedia extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,7 @@ export default class MastoImage extends React.Component {
       return <Image
         key={media.id}
         source={{uri: media.preview_url}}
-        style={styles.image}
+        style={styles.media}
       />;
     }
   }
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
+  media: {
     margin: 5,
     padding:5,
     width:300,
