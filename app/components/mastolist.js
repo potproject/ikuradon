@@ -54,30 +54,36 @@ class Mastolist extends React.Component {
     }
   }
   mastoRowIdentification(data) {
-    if (this.type === "notifications" && data.type === "follow") {
-      return <MastoRowNotificationsFollow
-        key={data.id}
-        id={data.id}
-        type={data.type}
-        user={data.account.display_name}
-        image={data.account.avatar}
-      />;
-    }
     if (this.type === "notifications") {
-      return <MastoRow
-        key={data.id}
-        id={data.id}
-        tootid={data.status.id}
-        user={data.account.display_name}
-        body={data.status.content}
-        image={data.account.avatar}
-        reblogged={data.reblogged}
-        favourited={data.favourited}
-        date={data.status.created_at}
-        username={data.account.username}
-        acct={data.account.acct}
-        reblog_to={null}
-      />
+      switch (data.type) {
+        case "follow":
+          return <MastoRowNotificationsFollow
+            key={data.id}
+            id={data.id}
+            type={data.type}
+            user={data.account.display_name}
+            image={data.account.avatar}
+          />;
+        case "favourite":
+        case "reblog":
+        case "mention":
+          return <MastoRow
+            key={data.id}
+            id={data.id}
+            tootid={data.status.id}
+            user={data.status.account.display_name}
+            body={data.status.content}
+            image={data.status.account.avatar}
+            reblogged={data.status.reblogged}
+            favourited={data.status.favourited}
+            date={data.status.created_at}
+            username={data.status.account.username}
+            acct={data.status.account.acct}
+            notification_type={data.type}
+            notification_name={data.account.display_name}
+            media_attachments={[]}
+          />;
+      }
     }
     if (data.reblog === null) {
       return <MastoRow
@@ -92,7 +98,9 @@ class Mastolist extends React.Component {
         date={data.created_at}
         username={data.account.username}
         acct={data.account.acct}
-        reblog_to={null}
+        notification_type={null}
+        notification_name={null}
+        media_attachments={data.media_attachments}
       />
     } else {
       return <MastoRow
@@ -107,7 +115,9 @@ class Mastolist extends React.Component {
         date={data.reblog.created_at}
         username={data.reblog.account.username}
         acct={data.reblog.account.acct}
-        reblog_to={data.account.display_name}
+        notification_type={"reblog"}
+        notification_name={data.account.display_name}
+        media_attachments={data.reblog.media_attachments}
       />
     }
   }

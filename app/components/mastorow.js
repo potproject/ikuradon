@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
+import MastoImage from './mastoimage';
 import { FontAwesome } from '@expo/vector-icons';
 import Moment from 'moment';
 
@@ -22,7 +23,9 @@ export default class MastoRow extends Component {
       date: props.date,
       username: props.username,
       acct: "@" + props.acct,
-      reblog_to: props.reblog_to
+      notification_type: props.notification_type,
+      notification_name: props.notification_name,
+      media_attachments: props.media_attachments
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -54,6 +57,9 @@ export default class MastoRow extends Component {
                 </Text>
               </View>
             </Hyperlink>
+            <MastoImage
+              media_attachments={this.state.media_attachments}
+            />
           </View>
         </View>
         <View style={styles.container}>
@@ -61,7 +67,7 @@ export default class MastoRow extends Component {
             {this.dateFormat(this.state.date)}
           </Text>
         </View>
-        {this.reblogFormat(this.state.reblog_to)}
+        {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
         <View style={styles.container}>
           <View style={styles.item}>
             <Reply id={this.state.tootid} style={styles.itemFlex} />
@@ -88,14 +94,28 @@ export default class MastoRow extends Component {
   dateFormat(date) {
     return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
   }
-  reblogFormat(reblog_to) {
-    if (reblog_to !== null) {
-      return <View style={styles.container}>
-        <Text style={styles.dateFlex}>
-          <Text>{" "}<FontAwesome name="retweet" size={12} />{" " + reblog_to}</Text>
-        </Text>
-      </View>;
+  notificationFormat(type, name) {
+    if (type === null) {
+      return;
     }
+    console.log(type);
+    let faName;
+    switch (type) {
+      case "favourite":
+        faName = "star";
+        break;
+      case "reblog":
+        faName = "retweet";
+        break;
+      case "mention":
+        faName = "reply";
+        break;
+    }
+    return <View style={styles.container}>
+      <Text style={styles.dateFlex}>
+        <Text>{" "}<FontAwesome name={faName} size={12} />{" " + name}</Text>
+      </Text>
+    </View>;
   }
 }
 
