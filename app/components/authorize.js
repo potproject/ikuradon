@@ -8,6 +8,9 @@ import { bindActionCreators } from 'redux';
 import * as AuthorizeActions from '../actions/actioncreators/authorize';
 
 class Authorize extends React.Component {
+  static navigationOptions = {
+    title: "Authorize",
+  };
   constructor(props) {
     super(props);
     const {url,domain,client_id,client_secret} = props.navReducer;

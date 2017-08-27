@@ -130,11 +130,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
   separator: {
     flex: 1,
     height: StyleSheet.hairlineWidth,

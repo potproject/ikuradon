@@ -10,6 +10,9 @@ import { bindActionCreators } from 'redux';
 import * as TootActions from '../actions/actioncreators/toot';
 
 class Toot extends React.Component {
+  static navigationOptions = {
+    title: "Toot",
+  };
   constructor(props) {
     super(props);
     this.state = {
