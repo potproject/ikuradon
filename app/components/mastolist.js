@@ -31,6 +31,7 @@ class Mastolist extends React.Component {
           enableEmptySections={true}
           removeClippedSubviews={false}
           renderRow={(data) => this.mastoRowIdentification(data)}
+          renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
           refreshControl={
             <RefreshControl
               refreshing={this.listdata.refreshing}
@@ -61,8 +62,10 @@ class Mastolist extends React.Component {
             key={data.id}
             id={data.id}
             type={data.type}
-            user={data.account.display_name}
+            user={data.account.display_name !== "" ? data.account.display_name : data.account.username}
             image={data.account.avatar}
+            username={data.account.username}
+            acct={data.account.acct}
           />;
         case "favourite":
         case "reblog":
@@ -80,7 +83,7 @@ class Mastolist extends React.Component {
             username={data.status.account.username}
             acct={data.status.account.acct}
             notification_type={data.type}
-            notification_name={data.account.display_name}
+            notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
             media_attachments={[]}
           />;
       }
@@ -90,7 +93,7 @@ class Mastolist extends React.Component {
         key={data.id}
         id={data.id}
         tootid={data.id}
-        user={data.account.display_name}
+        user={data.account.display_name !== "" ? data.account.display_name : data.account.username}
         body={data.content}
         image={data.account.avatar}
         reblogged={data.reblogged}
@@ -107,7 +110,7 @@ class Mastolist extends React.Component {
         key={data.id}
         id={data.id}
         tootid={data.id}
-        user={data.reblog.account.display_name}
+        user={data.account.display_name !== "" ? data.account.display_name : data.account.username}
         body={data.reblog.content}
         image={data.reblog.account.avatar}
         reblogged={data.reblog.reblogged}
@@ -116,7 +119,7 @@ class Mastolist extends React.Component {
         username={data.reblog.account.username}
         acct={data.reblog.account.acct}
         notification_type={"reblog"}
-        notification_name={data.account.display_name}
+        notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
         media_attachments={data.reblog.media_attachments}
       />
     }
@@ -131,7 +134,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  }
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    marginTop:5,
+    marginBottom:5,
+    backgroundColor: '#cecece',
+  },
 });
 
 

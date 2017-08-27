@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Linking } from 'react-native';
-import Hyperlink from 'react-native-hyperlink';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default class MastoRowNotificationfollow extends Component {
   constructor(props) {
@@ -10,6 +10,8 @@ export default class MastoRowNotificationfollow extends Component {
       type:props.type,
       user: props.user,
       image: props.image,
+      username:"@"+props.username,
+      acct: "@"+props.acct
     }
   }
   render() {
@@ -18,8 +20,21 @@ export default class MastoRowNotificationfollow extends Component {
         <View style={styles.container}>
           <Image source={{ uri: this.state.image }} style={styles.photo} />
           <View style={styles.textarea}>
-            <Text style={styles.name}>
-              {this.state.user}
+            <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
+              <Text style={styles.name}>
+                {this.state.user}
+              </Text>
+            </Text>
+            <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
+              <FontAwesome name={"user-plus"} size={16} />
+              <Text style={styles.username}>
+                {" "+this.state.username}
+              </Text>
+            </Text>
+            <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
+              <Text style={styles.acct}>
+                {this.state.acct}
+              </Text>
             </Text>
           </View>
         </View>
@@ -42,13 +57,13 @@ export default class MastoRowNotificationfollow extends Component {
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 4,
+    flexDirection: 'row',
+  },
   textarea: {
     flex: 1,
-  },
-  name: {
-    flex: 1,
-    fontSize: 16,
-    marginLeft: 12,
   },
   body: {
     flex: 2,
@@ -60,15 +75,18 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 8
   },
-  item:{
+  text: {
     flex: 1,
-    marginLeft:50,
     paddingLeft: 12,
-    paddingTop:0,
-    paddingBottom:0,
-    flexDirection: 'row',
   },
-  itemFlex:{
-    flex:1
-  }
+  name: {
+    fontSize: 16,
+  },
+  acct: {
+    color: "#5f5f5f",
+    fontSize: 12,
+  },
+  username: {
+    fontSize: 14,
+  },
 });

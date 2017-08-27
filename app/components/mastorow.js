@@ -98,7 +98,6 @@ export default class MastoRow extends Component {
     if (type === null) {
       return;
     }
-    console.log(type);
     let faName;
     switch (type) {
       case "favourite":
