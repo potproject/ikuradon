@@ -74,7 +74,7 @@ class Mastolist extends React.Component {
             key={data.id}
             id={data.id}
             tootid={data.status.id}
-            user={data.status.account.display_name}
+            user={data.status.account.display_name !== "" ? data.status.account.display_name: data.status.account.username}
             body={data.status.content}
             image={data.status.account.avatar}
             reblogged={data.status.reblogged}
@@ -110,7 +110,7 @@ class Mastolist extends React.Component {
         key={data.id}
         id={data.id}
         tootid={data.id}
-        user={data.account.display_name !== "" ? data.account.display_name : data.account.username}
+        user={data.reblog.account.display_name !== "" ? data.reblog.account.display_name : data.reblog.account.username}
         body={data.reblog.content}
         image={data.reblog.account.avatar}
         reblogged={data.reblog.reblogged}
