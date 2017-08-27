@@ -4,7 +4,7 @@ import Hyperlink from 'react-native-hyperlink';
 import MastoImage from './mastoimage';
 import { FontAwesome } from '@expo/vector-icons';
 import Moment from 'moment';
-
+import He from 'he';
 import Reply from './mainitem/reply';
 import Boost from './mainitem/boost';
 import Favourite from './mainitem/favourite';
@@ -16,7 +16,7 @@ export default class MastoRow extends Component {
       id: props.id,
       tootid: props.tootid,
       user: props.user,
-      body: props.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''),
+      body: props.body,
       image: props.image,
       reblogged: props.reblogged,
       favourited: props.favourited,
@@ -53,7 +53,7 @@ export default class MastoRow extends Component {
             <Hyperlink onPress={url => this.openUrl(url)}>
               <View>
                 <Text style={styles.body}>
-                  {this.state.body}
+                  {this.bodyFormat(this.state.body)}
                 </Text>
               </View>
             </Hyperlink>
@@ -93,6 +93,10 @@ export default class MastoRow extends Component {
   }
   dateFormat(date) {
     return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
+  }
+  bodyFormat(body){
+    let newbody =body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
+    return He.unescape(newbody);
   }
   notificationFormat(type, name) {
     if (type === null) {
