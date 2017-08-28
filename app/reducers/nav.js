@@ -48,6 +48,12 @@ export default function reducer(state = initialState, action = {}) {
         Object.assign({},state)
       );
       break;
+    case Nav.NAV_IMAGEVIEWER:
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.navigate({ routeName: 'ImageViewer',params:{media_attachments:action.media_attachments,index:action.index}}),
+        Object.assign({},state)
+      );
+      break;
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;

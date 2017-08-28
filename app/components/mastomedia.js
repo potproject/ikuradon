@@ -2,10 +2,14 @@ import React, { PropTypes } from 'react';
 import {
   Image,
   View,
-  StyleSheet
+  StyleSheet,
+  TouchableHighlight
 } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as MastorowActions from '../actions/actioncreators/mastorow';
 
-export default class MastoMedia extends React.Component {
+class MastoMedia extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,18 +23,23 @@ export default class MastoMedia extends React.Component {
       </View>
     );
   }
-  mapView(){
-    if(this.state.media_attachments){
-      return this.state.media_attachments.map(this.mediaView);
-    }
-  }
-  mediaView(media, index) {
-    if (media.type === "image") {
-      return <Image
-        key={media.id}
-        source={{uri: media.preview_url}}
-        style={styles.media}
-      />;
+  mapView() {
+    if (this.state.media_attachments) {
+      let onPress = this.props.MastorowActions.imageOpen;
+      return this.state.media_attachments.map((media, index) => {
+        if (media.type === "image") {
+          return <TouchableHighlight key={media.id} onPress={() =>
+            onPress(this.state.media_attachments, index)}>
+            <View>
+              <Image
+                source={{ uri: media.preview_url }}
+                style={styles.media}
+              />
+            </View>
+          </TouchableHighlight>;
+        }
+
+      });
     }
   }
 }
@@ -41,8 +50,14 @@ const styles = StyleSheet.create({
   },
   media: {
     margin: 5,
-    padding:5,
-    width:300,
-    height:100
+    padding: 5,
+    width: 300,
+    height: 100
   }
 });
+
+export default connect(state => state,
+  (dispatch) => ({
+    MastorowActions: bindActionCreators(MastorowActions, dispatch)
+  })
+)(MastoMedia);
