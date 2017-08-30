@@ -38,7 +38,7 @@ class Login extends React.Component {
         <Button
           style={styles.button}
           onPress={() => this.props.LoginActions.login(this.state.domain)}
-          title="ログイン"
+          title="Login"
         />
       </View>
     );

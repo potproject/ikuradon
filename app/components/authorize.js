@@ -25,6 +25,7 @@ class Authorize extends React.Component {
       <WebView 
         source={{uri:this.url}}
           onShouldStartLoadWithRequest={(navState) => this.onWebViewRequest(navState,self.domain,self.client_id,self.client_secret)}
+          onNavigationStateChange={(navState) => this.onWebViewRequest(navState,self.domain,self.client_id,self.client_secret)}
         style={styles.container}
         >
       </WebView>
