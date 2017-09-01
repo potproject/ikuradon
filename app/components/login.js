@@ -7,6 +7,7 @@ import {
   Text,
   View
 } from 'react-native';
+import Dimensions from 'Dimensions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as LoginActions from '../actions/actioncreators/login';
@@ -18,7 +19,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      domain: "mastodon.potproject.net",
+      domain: "mastodon.social",
     };
   }
   render() {
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
   },
   textinput: {
     height: 40,
+    width: Dimensions.get('window').width - 20,
     borderColor: 'gray',
     borderWidth: 1,
     margin: 10,
