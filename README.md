@@ -1,6 +1,7 @@
 
 # ikuradon
-
+<img width="100" heigth="100" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true">
+   
 Mastodon client app for React Native  
 Used Libraies: [React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)  
 This project was created at [Create React Native App](https://github.com/react-community/create-react-native-app).  
@@ -8,6 +9,16 @@ This project was created at [Create React Native App](https://github.com/react-c
 マストドン用クライアントのReact Nativeアプリです。  
 ライブラリに[React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)を使用しています。  
 まだ開発中です。一部未実装の機能があります。
+
+## ScreenShots
+<div>
+  <div style="float: left;">
+    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview.png?raw=true">
+  </div>
+  <div style="clear: both;">
+    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.PNG?raw=true">
+  </div>
+</div>
 
 ## Getting Starter
 `Expo CDN`:
