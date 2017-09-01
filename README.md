@@ -1,16 +1,13 @@
 
 # ikuradon
-Mastodon client app for React Native　
 
-Used Libraies: [React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)
+Mastodon client app for React Native  
+Used Libraies: [React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)  
+This project was created at [Create React Native App](https://github.com/react-community/create-react-native-app).  
 
-マストドン用クライアントのReact Nativeアプリです。
-
-ライブラリに[React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)を使用しています。
-
+マストドン用クライアントのReact Nativeアプリです。  
+ライブラリに[React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)を使用しています。  
 まだ開発中です。一部未実装の機能があります。
-
-This project was created at [Create React Native App](https://github.com/react-community/create-react-native-app).
 
 ## Getting Starter
 `Expo CDN`:
@@ -30,7 +27,7 @@ requires npm or yarn.
 ##
 
 ## Apps Run
-### `npm start` or `yarn start`
+`npm start` or `yarn start`
 
 ## LICENSE
 
