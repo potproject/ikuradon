@@ -13,7 +13,7 @@ class Mastolist extends React.Component {
     this.type = this.props.type;
     this.access_token = this.props.navReducer.access_token;
     this.domain = this.props.navReducer.domain;
-    this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => { r1 !== r2 } });
+    this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => { r1.id !== r2.id } });
     this.listdata = this.reducerType(props);
     this.props.MainActions.getTimeline(this.type);
     headerRightHandler = this.props.MainActions.toot;

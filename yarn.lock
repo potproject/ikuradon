@@ -2086,9 +2086,9 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expo@^20.0.0:
-  version "20.0.4"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-20.0.4.tgz#2fac82a7792c732c8274430705035fb7a2b29a08"
+expo@^20.0.4:
+  version "20.1.2"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-20.1.2.tgz#bac5723693bdfdd30aa003df7b05d06ee5459d5f"
   dependencies:
     "@expo/vector-icons" "^5.0.0"
     babel-preset-expo "^3.0.0"
@@ -4729,6 +4729,12 @@ react-native-svg@5.3.0:
     color "^0.11.1"
     lodash "^4.16.6"
 
+react-native-swiper@^1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.10.tgz#20569b85623bdd3f667a376999b3844007d11dc1"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@^0.0.67:
   version "0.0.67"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.67.tgz#cdd146fe5e5d4baff6c89f2d5d0b15fa23db39d0"
@@ -4743,7 +4749,7 @@ react-native-vector-icons@4.1.1:
     prop-types "^15.5.8"
     yargs "^6.3.0"
 
-react-native@^0.47.0:
+react-native@^0.47.2:
   version "0.47.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.47.2.tgz#5e55cd84e4947123c86d36ea6f95ab9ed2d0cb19"
   dependencies:
@@ -4848,7 +4854,7 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.2:
+react-redux@^5.0.2, react-redux@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.6.tgz#23ed3a4f986359d68b5212eaaa681e60d6574946"
   dependencies:
@@ -4950,7 +4956,7 @@ redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.6.0:
+redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
@@ -5995,7 +6001,7 @@ webidl-conversions@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-websql@expo/node-websql#18.0.0:
+"websql@github:expo/node-websql#18.0.0":
   version "0.4.4"
   resolved "https://codeload.github.com/expo/node-websql/tar.gz/e364fa65146a9e2157a19e5c719e7702c2b6b87a"
   dependencies:
