@@ -18,11 +18,15 @@ class Setting extends React.Component {
   }
   render() {
     return <View>
-        <Button onPress={()=>this.streamTest()} title="Stream API Test button" />
+        <Button onPress={()=>this.streamStart()} title="Stream API Test Start" />
+        <Button onPress={()=>this.streamStop()} title="Stream API Test Stop" />
     </View>;
   }
-  streamTest(){
+  streamStart(){
     this.props.StreamingActions.start();
+  }
+  streamStop(){
+    this.props.StreamingActions.stop();
   }
 }
 
