@@ -10,6 +10,7 @@ import HomeTabScreen from '../components/maintab/home';
 import LocalTabScreen from '../components/maintab/local';
 import FederalTabScreen from '../components/maintab/federal';
 import NotificationsTabScreen from '../components/maintab/notifications';
+import SettingTabScreen from '../components/maintab/setting';
 
 export default Main = TabNavigator(
   {
@@ -24,6 +25,9 @@ export default Main = TabNavigator(
     },
     notifications: {
       screen: NotificationsTabScreen,
+    },
+    setting: {
+      screen: SettingTabScreen,
     }
   },
   {

@@ -18,8 +18,6 @@ export function toot() {
 export function getTimeline(reducerType,limit = 40) {
   return async dispatch => {
     let data;
-    let minId;
-    let maxId;
     try {
       let access_token = await AsyncStorage.getItem("access_token");
       let domain = await AsyncStorage.getItem("domain");
@@ -28,7 +26,7 @@ export function getTimeline(reducerType,limit = 40) {
       console.error(e);
       return;
     }
-    dispatch({ type: Main.UPDATE_MASTOLIST, data: data, minId, maxId , reducerType });
+    dispatch({ type: Main.UPDATE_MASTOLIST, data: data, reducerType });
   }
 }
 

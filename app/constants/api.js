@@ -103,3 +103,10 @@ export const POST_UNFAVOURITED = {
     form:{
     }
 };
+
+/** Streaming API とりあえずUSERのみサポート */
+export const STREAMING = {
+    method:"get",
+    url:"/api/v1/streaming",
+    stream:"user"
+};
