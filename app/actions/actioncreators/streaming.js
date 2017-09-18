@@ -6,8 +6,6 @@ import Stream from '../../stream';
 
 export function start() {
   return async dispatch => {
-
-    let stream;
     try {
       let access_token = await AsyncStorage.getItem("access_token");
       let domain = await AsyncStorage.getItem("domain");
@@ -17,6 +15,10 @@ export function start() {
       Stream.receive((message) => {
         if (message.event === "update" && message.payload) {
           dispatch({ type: Main.UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "home" });
+        }else if (message.event === "notification" && message.payload) {
+          dispatch({ type: Main.UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "notifications" });
+        }else if (message.event === "delete" && message.payload) {
+          //いつか実装します
         }
       });
     } catch (e) {
