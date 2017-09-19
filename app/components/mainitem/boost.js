@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -19,9 +19,9 @@ class Boost extends React.Component {
   }
   render() {
     return (
-      <TouchableHighlight style={this.state.style} onPress={() => this.props.MastorowActions.boost(this.state.id, !this.state.reblogged)}>
+      <TouchableOpacity style={this.state.style} onPress={() => this.props.MastorowActions.boost(this.state.id, !this.state.reblogged)}>
         <FontAwesome name="retweet" size={20} color={this.setColor(this.state.reblogged)} />
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
   setColor(reblogged) {
