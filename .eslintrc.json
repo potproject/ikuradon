@@ -1,5 +1,5 @@
 {
-    "plugins": ["react"],
+    "plugins": ["react","flowtype"],
     "env": {
         "browser": true,
         "commonjs": true,
