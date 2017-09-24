@@ -104,6 +104,11 @@ export const POST_UNFAVOURITED = {
     }
 };
 
+export const UPLOAD_POST_MEDIA = {
+    method:"post",
+    url:"/api/v1/media",
+};
+
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
     method:"get",
