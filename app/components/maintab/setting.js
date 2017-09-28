@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as StreamingActions from '../../actions/actioncreators/streaming';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import I18n from '../../i18n';
 
 class Setting extends React.Component {
   static navigationOptions = {
@@ -20,10 +21,11 @@ class Setting extends React.Component {
         streaming_api_checked: false,
       }
     };
+    Setting.navigationOptions.title = I18n.t("navigation_setting");
   }
   render() {
     return <View>
-      <Text>Streaming API</Text>
+      <Text>{I18n.t("setting_streamingapi")}</Text>
       <Switch
         onValueChange={(streamingChecked) => streamingChecked ? this.streamStart() : this.streamStop()}
         value={this.state.setting.streaming_api_checked}

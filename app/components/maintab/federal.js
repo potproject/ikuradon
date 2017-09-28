@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-native';
 import Mastolist from '../mastolist';
 import { FontAwesome } from '@expo/vector-icons';
+import I18n from '../../i18n';
 
 export default class Federal extends React.Component {
   static navigationOptions = {
@@ -13,6 +14,7 @@ export default class Federal extends React.Component {
   };
   constructor(props) {
     super(props);
+    Federal.navigationOptions.title = I18n.t("navigation_federal");
   }
   render() {
     return <Mastolist type={"federal"} />
