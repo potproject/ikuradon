@@ -42,24 +42,30 @@ class Toot extends React.Component {
           maxLength={MAX_TOOT_LENGTH}
           multiline={true}
         />
-        <Button
-          onPress={() => this.props.TootActions.toot(this.state.text,this.state.visibility,this.state.nsfwFlag,this.state.warning)}
-          title="Toot!"
-          color="#00008B"
-        />
-        <Text>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
-        <TouchableOpacity onPress={() => this.props.TootActions.mediaOpen("library")}>
-          <FontAwesome name="picture-o" size={30} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.TootActions.mediaOpen("camera")}>
-          <FontAwesome name="camera" size={30} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.setState({ nsfwFlag: !this.state.nsfwFlag })}>
-          <Text>CW</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.setState({ visibilityModal: true })}>
-          <Text>{this.state.visibility}</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonview}>
+          <View style={styles.tootbuttonview}>
+            <TouchableOpacity style={styles.button} onPress={() => this.props.TootActions.mediaOpen("library")}>
+              <FontAwesome name="picture-o" size={30} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => this.props.TootActions.mediaOpen("camera")}>
+              <FontAwesome name="camera" size={30} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => this.setState({ visibilityModal: true })}>
+              <Text style={styles.textvisibility}>{this.state.visibility}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => this.setState({ nsfwFlag: !this.state.nsfwFlag })}>
+              <Text style={styles.textcw}>CW</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.tootbuttonview}>
+            <View style={styles.button}>
+              <Text style={styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
+            </View>
+            <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning)}>
+              <Text style={styles.texttoot}>Toot!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <Modal
           animationType="slide"
           transparent={false}
@@ -74,7 +80,7 @@ class Toot extends React.Component {
               <Picker.Item label="private" value="private" />
               <Picker.Item label="direct" value="direct" />
             </Picker>
-            <TouchableOpacity onPress={() => this.setState({  visibilityModal: false })}>
+            <TouchableOpacity onPress={() => this.setState({ visibilityModal: false })}>
               <Text>OK!</Text>
             </TouchableOpacity>
           </View>
@@ -114,6 +120,40 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 5,
     borderWidth: 1
+  },
+  buttonview: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tootbuttonview: {
+    width: 120,
+    height: 40,
+    flexDirection: 'row',
+  },
+  button: {
+    width: 40,
+    height: 40,
+    margin: 5,
+    alignItems: 'center',
+  },
+  tootbutton: {
+    width: 80,
+    height: 40,
+    margin: 5,
+    alignItems: 'center',
+  },
+  textcw: {
+    fontSize: 24,
+  },
+  textvisibility: {
+    fontSize: 12,
+  },
+  textlimit: {
+    fontSize: 20,
+  },
+  texttoot: {
+    fontSize: 20,
+    color:"#00008B"
   }
 });
 

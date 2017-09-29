@@ -7,7 +7,7 @@ import I18n from '../../i18n';
 export default class Home extends React.Component {
   static navigationOptions = {
     title: "Home",
-    headerRight: <Button title="" onPress={() => headerRightHandler()} />,
+    headerRight: <Button title="toot" onPress={() => headerRightHandler()} />,
     tabBarIcon: ({ focused, tintColor }) => (
                 <FontAwesome name="home" size={32} color={tintColor} />
             )
