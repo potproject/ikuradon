@@ -5,14 +5,23 @@ export default class Stream {
     }
 
     static open() {
-        return new Promise((resolve) => {
+        return new Promise((resolve,reject) => {
             this.ws.onopen = () => {
                 console.log("[WS]websocket opened:" + this.url);
                 resolve();
             };
+            this.ws.onerror = (event) => {
+                console.log("[WS]websocket error:" + this.url);
+                reject();
+            };
         });
     }
 
+    static reconnect(){
+        if(this.ws){
+
+        }
+    }
     static receive(callback) {
         this.ws.onmessage = (event) => {
            callback(JSON.parse(event.data));
@@ -26,19 +35,10 @@ export default class Stream {
                 return;
             }
             this.ws.onclose = (event) => {
-                console.log("[WS]websocket closed:" + this.url);
+                console.log("[WS]websocket closed:code:"+event.code+":" + this.url);
                 resolve(event.code);
             };
             this.ws.close();
-        });
-    }
-
-    static onerror() {
-        return new Promise((resolve) => {
-            this.ws.onerror = (event) => {
-                console.log("[WS]websocket error:" + this.url);
-                resolve(event);
-            };
         });
     }
 }

@@ -22,7 +22,9 @@ export function start() {
         }
       });
     } catch (e) {
-      console.error(e);
+      alert("エラー","Streaming APIの接続に失敗しました");
+      dispatch({ type: Streaming.STREAM_STOP });
+      //console.error(e);
       return;
     }
   }
