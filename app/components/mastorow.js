@@ -8,6 +8,7 @@ import He from 'he';
 import Reply from './mainitem/reply';
 import Boost from './mainitem/boost';
 import Favourite from './mainitem/favourite';
+import Action from './mainitem/action';
 
 export default class MastoRow extends Component {
   constructor(props) {
@@ -73,7 +74,7 @@ export default class MastoRow extends Component {
             <Reply id={this.state.tootid} style={styles.itemFlex} />
             <Boost id={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
             <Favourite id={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
-            <FontAwesome style={styles.itemFlex} name="ellipsis-h" size={20} color="gray" />
+            <Action id={this.state.tootid} style={styles.itemFlex} />
           </View>
         </View>
       </View>

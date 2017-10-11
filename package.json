@@ -31,6 +31,7 @@
     "moment": "^2.18.1",
     "react": "16.0.0",
     "react-native": "^0.48.4",
+    "react-native-actionsheet": "^2.3.0",
     "react-native-hyperlink": "^0.0.11",
     "react-native-swiper": "^1.5.12",
     "react-navigation": "^1.0.0-beta.11",
