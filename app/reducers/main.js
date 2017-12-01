@@ -38,6 +38,9 @@ export default function Main(state = initialState, action = {}) {
     case MainActionTypes.REFRESHING_MASTOLIST:
       return Object.assign({}, state, { [reducerType]: { refreshing: true } });
 
+    case MainActionTypes.ALLCLEAR_MASTOLIST:
+      return initialState;
+
     case MastorowActionTypes.BOOST_MASTOROW:
       if (action.id === null) { return state; }
       return changeItem(action.type,state,action.id,action.boosted);
@@ -45,7 +48,6 @@ export default function Main(state = initialState, action = {}) {
     case MastorowActionTypes.FAVOURITE_MASTOROW:
       if (action.id === null) { return state; }
       return changeItem(action.type,state,action.id,action.favourited);
-    
     default:
       return state;
   }

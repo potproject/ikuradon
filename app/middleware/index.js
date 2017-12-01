@@ -3,5 +3,5 @@ import { createLogger } from 'redux-logger';
 
 export function createMiddleware(){
     const logger = createLogger();
-    return [/*logger,*/thunk]
+    return [logger,thunk]
 }

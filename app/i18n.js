@@ -18,6 +18,7 @@ export default class I18n{
 reactNativeI18n.translations = {
   "en-US": {
     setting_streamingapi: 'Streaming API',
+    logout: 'logout',
 
     //navigation
     navigation_home:"home",
@@ -27,7 +28,9 @@ reactNativeI18n.translations = {
     navigation_setting: "Setting",
   },
   "ja-JP": {
+    //setting
     setting_streamingapi: 'ストリーミング API',
+    logout: 'ログアウト',
 
     //navigation
     navigation_home:"ホーム",

@@ -9,7 +9,14 @@ export default function reducer(state = initialState, action = {}) {
   let nextState;
   switch (action.type) {
     case Nav.NAV_LOGIN:
-      AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Login'));
+      nextState = AppNavigator.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'Login' })
+          ]
+        })
+      );
       break;
     case Nav.NAV_AUTHORIZE:
       nextState = AppNavigator.router.getStateForAction(

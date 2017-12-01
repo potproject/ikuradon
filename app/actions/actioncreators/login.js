@@ -1,9 +1,11 @@
 import { Alert } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import * as Login from '../actiontypes/login';
 import * as CONST_API from '../../constants/api';
 import Networking from '../../networking';
-import * as Nav from '../actiontypes/nav'; 
-
+import * as Nav from '../actiontypes/nav';
+import * as Main from '../actiontypes/main';
+import * as Streaming from '../actiontypes/streaming';
 export function login(domain) {
   return async dispatch => {
     let url,client_id,client_secret;
@@ -20,6 +22,21 @@ export function login(domain) {
       return;
     } 
     dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
+    return;
+  };
+}
+
+export function logout() {
+  return async dispatch => {
+    try {
+      await AsyncStorage.removeItem('access_token');
+      await AsyncStorage.removeItem('domain');
+    } catch (e) {
+      console.log(e);
+    } 
+    dispatch({ type: Streaming.STREAM_STOP });
+    dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+    dispatch({ type: Nav.NAV_LOGIN });
     return;
   };
 }
