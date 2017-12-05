@@ -1,4 +1,6 @@
 import reactNativeI18n from 'ex-react-native-i18n';
+import lang_en_US from './lang/en-US';
+import lang_ja_JP from './lang/ja-JP';
 
 const supported = ["en-US","ja-JP"];
 
@@ -16,27 +18,6 @@ export default class I18n{
 }
 
 reactNativeI18n.translations = {
-  "en-US": {
-    setting_streamingapi: 'Streaming API',
-    logout: 'logout',
-
-    //navigation
-    navigation_home:"home",
-    navigation_local:"local",
-    navigation_federal: "Federal",
-    navigation_notifications: "Notifications",
-    navigation_setting: "Setting",
-  },
-  "ja-JP": {
-    //setting
-    setting_streamingapi: 'ストリーミング API',
-    logout: 'ログアウト',
-
-    //navigation
-    navigation_home:"ホーム",
-    navigation_local:"ローカル",
-    navigation_federal: "連合",
-    navigation_notifications: "通知",
-    navigation_setting: "設定",
-  }
+  "en-US": lang_en_US,
+  "ja-JP": lang_ja_JP
 }
