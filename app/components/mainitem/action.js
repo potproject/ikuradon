@@ -3,14 +3,18 @@ import { TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ActionSheet from 'react-native-actionsheet';
 import I18n from '../../i18n';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as ActionActions from '../../actions/actioncreators/action';
 
-export default class Action extends React.Component {
+class Action extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
       style: props.style
     }
+    this.handlePress = this.handlePress.bind(this);
   }
   render() {
     return (
@@ -32,10 +36,26 @@ export default class Action extends React.Component {
   handlePress(i) {
     switch(i){
       case 0: //Open in Browser
+        this.props.ActionActions.openinbrowser(this.state.id);
+        return;
       case 1: //Share
+        this.props.ActionActions.share(this.state.id);
+        return;
       case 2: //Copy
+        this.props.ActionActions.copy(this.state.id);
+        return;
       case 3: //Mention
+        this.props.ActionActions.mention(this.state.id);
+        return;
       case 4: //Hide
+        this.props.ActionActions.hide(this.state.id);
+        return;
     }
   }
 }
+
+export default connect(state => state,
+  (dispatch) => ({
+    ActionActions: bindActionCreators(ActionActions, dispatch)
+  })
+)(Action);
