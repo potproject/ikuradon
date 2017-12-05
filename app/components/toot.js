@@ -13,6 +13,7 @@ import { bindActionCreators } from 'redux';
 import * as TootActions from '../actions/actioncreators/toot';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
+import I18n from '../i18n';
 
 const MAX_TOOT_LENGTH = 500;
 
@@ -22,6 +23,7 @@ class Toot extends React.Component {
   };
   constructor(props) {
     super(props);
+    Toot.navigationOptions.title = I18n.t("toot_title");
     this.state = {
       nsfwFlag: false,
       text: "",
@@ -35,7 +37,7 @@ class Toot extends React.Component {
       <View style={styles.container}>
         {this.toggleCw()}
         <TextInput
-          placeholder={"What is on yor mind?"}
+          placeholder={I18n.t("toot_placeholder")}
           style={styles.toottext}
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}

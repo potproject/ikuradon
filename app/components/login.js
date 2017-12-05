@@ -11,6 +11,7 @@ import Dimensions from 'Dimensions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as LoginActions from '../actions/actioncreators/login';
+import I18n from '../i18n';
 
 class Login extends React.Component {
   static navigationOptions = {
@@ -18,6 +19,7 @@ class Login extends React.Component {
   };
   constructor(props) {
     super(props);
+    //Login.navigationOptions.title = I18n.t("login_title");
     this.state = {
       domain: "mastodon.social",
     };
@@ -30,7 +32,7 @@ class Login extends React.Component {
           source={require('../../assets/image/icon250.png')}
         />
         <Text style={styles.text}>
-          Please enter Mastodon instance domain.
+          {I18n.t("login_message")}
         </Text>
         <TextInput
           style={styles.textinput}
@@ -39,8 +41,10 @@ class Login extends React.Component {
         <Button
           style={styles.button}
           onPress={() => this.props.LoginActions.login(this.state.domain)}
-          title="Login"
+          title={I18n.t("login_button")}
         />
+        <View style={styles.space}>
+        </View>
       </View>
     );
   }
@@ -70,6 +74,9 @@ const styles = StyleSheet.create({
     height: 75,
     marginBottom: 75
   },
+  space: {
+    height:252
+  }
 });
 
 export default connect(state => state,
