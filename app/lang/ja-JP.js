@@ -14,9 +14,20 @@ export default {
     login_title: "ログイン",
     login_message: "Mastodon インスタンスドメインを入力してください",
     login_button: "ログイン",
-    
+
     //トゥート
     toot_title:"トゥート",
-    toot_placeholder: "今何してる?"
-    //エラー
+    toot_placeholder: "今何してる?",
+
+    //Actions
+    "action_openinbrowser": "ブラウザで開く",
+    "action_share": "共有",
+    "action_copy": "コピー",
+    "action_mention": "返信",
+    "action_hide": "隠す",
+    //Errors
+
+    //Global
+    "global_ok" : "OK",
+    "global_cancel": "キャンセル",
 }
