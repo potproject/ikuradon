@@ -85,6 +85,7 @@ class Mastolist extends React.Component {
             notification_type={data.type}
             notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
             media_attachments={[]}
+            url={data.url}
           />;
       }
     }
@@ -104,6 +105,7 @@ class Mastolist extends React.Component {
         notification_type={null}
         notification_name={null}
         media_attachments={data.media_attachments}
+        url={data.url}
       />
     } else {
       return <MastoRow
@@ -121,6 +123,7 @@ class Mastolist extends React.Component {
         notification_type={"reblog"}
         notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
         media_attachments={data.reblog.media_attachments}
+        url={data.url}
       />
     }
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Linking, Clipboard } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import ActionSheet from 'react-native-actionsheet';
 import I18n from '../../i18n';
@@ -7,12 +7,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ActionActions from '../../actions/actioncreators/action';
 
+import { bodyFormat } from '../../util/parser';
+
 class Action extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: props.id,
-      style: props.style
+      style: props.style,
+      url: props.url,
+      body: props.body
     }
     this.handlePress = this.handlePress.bind(this);
   }
@@ -36,13 +40,13 @@ class Action extends React.Component {
   handlePress(i) {
     switch(i){
       case 0: //Open in Browser
-        this.props.ActionActions.openinbrowser(this.state.id);
+        Linking.openURL(this.state.url);
         return;
       case 1: //Share
         this.props.ActionActions.share(this.state.id);
         return;
       case 2: //Copy
-        this.props.ActionActions.copy(this.state.id);
+        Clipboard.setString(bodyFormat(this.state.body));
         return;
       case 3: //Mention
         this.props.ActionActions.mention(this.state.id);

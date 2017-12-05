@@ -3,12 +3,11 @@ import { View, Text, StyleSheet, Image, Linking } from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
 import MastoMedia from './mastomedia';
 import { FontAwesome } from '@expo/vector-icons';
-import Moment from 'moment';
-import He from 'he';
 import Reply from './mainitem/reply';
 import Boost from './mainitem/boost';
 import Favourite from './mainitem/favourite';
 import Action from './mainitem/action';
+import { bodyFormat, dateFormat } from '../util/parser';
 
 export default class MastoRow extends Component {
   constructor(props) {
@@ -26,7 +25,8 @@ export default class MastoRow extends Component {
       acct: "@" + props.acct,
       notification_type: props.notification_type,
       notification_name: props.notification_name,
-      media_attachments: props.media_attachments
+      media_attachments: props.media_attachments,
+      url: props.url
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -54,7 +54,7 @@ export default class MastoRow extends Component {
             <Hyperlink onPress={url => this.openUrl(url)}>
               <View>
                 <Text style={styles.body}>
-                  {this.bodyFormat(this.state.body)}
+                  {bodyFormat(this.state.body)}
                 </Text>
               </View>
             </Hyperlink>
@@ -65,7 +65,7 @@ export default class MastoRow extends Component {
         </View>
         <View style={styles.container}>
           <Text style={styles.dateFlex}>
-            {this.dateFormat(this.state.date)}
+            {dateFormat(this.state.date)}
           </Text>
         </View>
         {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
@@ -74,7 +74,7 @@ export default class MastoRow extends Component {
             <Reply id={this.state.tootid} style={styles.itemFlex} />
             <Boost id={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
             <Favourite id={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
-            <Action id={this.state.tootid} style={styles.itemFlex} />
+            <Action id={this.state.tootid} style={styles.itemFlex} url={this.state.url} body={this.state.body} />
           </View>
         </View>
       </View>
@@ -91,13 +91,6 @@ export default class MastoRow extends Component {
     } catch (e) {
       console.error('Linking error', e);
     }
-  }
-  dateFormat(date) {
-    return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
-  }
-  bodyFormat(body){
-    let newbody =body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '');
-    return He.unescape(newbody);
   }
   notificationFormat(type, name) {
     if (type === null) {
