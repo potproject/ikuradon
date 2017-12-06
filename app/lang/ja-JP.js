@@ -21,7 +21,6 @@ export default {
 
     //Actions
     "action_openinbrowser": "ブラウザで開く",
-    "action_share": "共有",
     "action_copy": "コピー",
     "action_mention": "返信",
     "action_hide": "隠す",

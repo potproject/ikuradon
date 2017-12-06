@@ -21,7 +21,6 @@ export default {
 
     //Actions
     "action_openinbrowser": "Open in Browser",
-    "action_share": "Share",
     "action_copy": "Copy",
     "action_mention": "Mention",
     "action_hide": "Hide",

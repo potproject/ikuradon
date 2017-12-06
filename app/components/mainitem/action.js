@@ -26,9 +26,9 @@ class Action extends React.Component {
         <FontAwesome name="ellipsis-h" size={20} color="gray" />
         <ActionSheet
           ref={component => this.ActionSheet = component}
-          options={[ I18n.t("action_openinbrowser"), I18n.t("action_share"), I18n.t("action_copy"), I18n.t("action_mention"), I18n.t("action_hide"), I18n.t("global_cancel")]}
-          cancelButtonIndex={5}
-          destructiveButtonIndex={4}
+          options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_mention"), I18n.t("action_hide"), I18n.t("global_cancel")]}
+          cancelButtonIndex={4}
+          destructiveButtonIndex={3}
           onPress={this.handlePress}
         />
       </TouchableOpacity>
@@ -42,16 +42,13 @@ class Action extends React.Component {
       case 0: //Open in Browser
         Linking.openURL(this.state.url);
         return;
-      case 1: //Share
-        this.props.ActionActions.share(this.state.id);
-        return;
-      case 2: //Copy
+      case 1: //Copy
         Clipboard.setString(bodyFormat(this.state.body));
         return;
-      case 3: //Mention
+      case 2: //Mention
         this.props.ActionActions.mention(this.state.id);
         return;
-      case 4: //Hide
+      case 3: //Hide
         this.props.ActionActions.hide(this.state.id);
         return;
     }

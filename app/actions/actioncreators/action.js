@@ -1,13 +1,5 @@
 import * as Action from '../actiontypes/action';
 
-export function share(id) {
-    return async dispatch => {
-        //TODO
-        dispatch({ type: Action.ACTION_SHARE });
-        return;
-    };
-}
-
 export function mention(id) {
     return async dispatch => {
         //TODO
