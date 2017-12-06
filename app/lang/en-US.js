@@ -17,6 +17,7 @@ export default {
 
     //Toots
     toot_title: "Toot",
+    toot_cw_placeholder: "Write your warning here",
     toot_placeholder: "What is on your mind?",
 
     //Actions

@@ -94,7 +94,7 @@ class Toot extends React.Component {
   toggleCw() {
     if (this.state.nsfwFlag) {
       return <TextInput
-        placeholder={"Write your warning here"}
+        placeholder={I18n.t("toot_cw_placeholder")}
         style={styles.warningtext}
         onChangeText={(warning) => this.setState({ warning })}
         value={this.state.warning}

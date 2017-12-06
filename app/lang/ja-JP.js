@@ -17,7 +17,8 @@ export default {
 
     //トゥート
     toot_title:"トゥート",
-    toot_placeholder: "今何してる?",
+    toot_placeholder: "今何してる？",
+    toot_cw_placeholder: "ここに警告を書いてください",
 
     //Actions
     "action_openinbrowser": "ブラウザで開く",
