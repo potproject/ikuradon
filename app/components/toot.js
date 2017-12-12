@@ -35,7 +35,7 @@ class Toot extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.toggleCw()}
+        {this.toggleCwText()}
         <TextInput
           placeholder={I18n.t("toot_placeholder")}
           style={styles.toottext}
@@ -53,10 +53,10 @@ class Toot extends React.Component {
               <FontAwesome name="camera" size={30} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => this.setState({ visibilityModal: true })}>
-              <Text style={styles.textvisibility}>{this.state.visibility}</Text>
+              {this.visibilityIconSet()}
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={() => this.setState({ nsfwFlag: !this.state.nsfwFlag })}>
-              <Text style={styles.textcw}>CW</Text>
+              <Text style={this.toggleCwColor()}>CW</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.tootbuttonview}>
@@ -77,21 +77,30 @@ class Toot extends React.Component {
             <Picker
               selectedValue={this.state.visibility}
               onValueChange={(visibility) => this.setState({ visibility })}>
-              <Picker.Item label="public" value="public" />
-              <Picker.Item label="unlisted" value="unlisted" />
-              <Picker.Item label="private" value="private" />
-              <Picker.Item label="direct" value="direct" />
+              <Picker.Item label={I18n.t("toot_visibility_public")} value="public" />
+              <Picker.Item label={I18n.t("toot_visibility_unlisted")} value="unlisted" />
+              <Picker.Item label={I18n.t("toot_visibility_private")} value="private" />
+              <Picker.Item label={I18n.t("toot_visibility_direct")} value="direct" />
             </Picker>
             <TouchableOpacity onPress={() => this.setState({ visibilityModal: false })}>
-              <Text>OK!</Text>
+              <Text>{I18n.t("global_ok")}</Text>
             </TouchableOpacity>
           </View>
         </Modal>
       </View>
     );
   }
+
+  toggleCwColor() {
+    if (this.state.nsfwFlag) {
+      return [styles.textcw,{color:"#1E90FF"}];
+    } else {
+      return styles.textcw;
+    }
+  }
+
   //warningとtoot、合わせて500文字
-  toggleCw() {
+  toggleCwText() {
     if (this.state.nsfwFlag) {
       return <TextInput
         placeholder={I18n.t("toot_cw_placeholder")}
@@ -103,6 +112,20 @@ class Toot extends React.Component {
       />;
     } else {
       return;
+    }
+  }
+  visibilityIconSet() {
+    switch(this.state.visibility){
+      case "public":
+        return <FontAwesome name="globe" size={30} color="#1E90FF" />;
+      case "unlisted":
+        return <FontAwesome name="unlock-alt" size={30} color="#1E90FF" />;
+      case "private":
+        return <FontAwesome name="lock" size={30} color="#1E90FF" />;
+      case "direct":
+        return <FontAwesome name="envelope" size={30} color="#1E90FF" />;
+      default: 
+        return <FontAwesome name="globe" size={30} color="#1E90FF" />;
     }
   }
 }

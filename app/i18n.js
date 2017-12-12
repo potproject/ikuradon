@@ -10,6 +10,8 @@ export default class I18n{
     if(!supported.includes(reactNativeI18n.locale)){
         reactNativeI18n.locale = "en-US";
     }
+    //force Set
+    //reactNativeI18n.locale = "ja-JP";
   }
 
   static t(text) {
