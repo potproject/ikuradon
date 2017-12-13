@@ -15,6 +15,8 @@
     },
     "parser": "babel-eslint",
     "rules": {
+        //indentは4spaces
+        "indent": ["error", 4,{ "SwitchCase": 1 }],
         //constを変更してはいけない
         "no-const-assign": "error",
         
@@ -50,7 +52,7 @@
         //if文等で必ず値を返す
         //O: if(flag){return 1;}else{return 2;}
         //X: if(flag){return 1;}else{return;}
-        "consistent-return":"error",
+        //"consistent-return":"error",
 
         //中括弧必須
         //O: if(flag){return 1;}

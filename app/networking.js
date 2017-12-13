@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as CONST_API from './constants/api';
+import axios from "axios";
+import * as CONST_API from "./constants/api";
 
 export default class Networking {
     static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {
@@ -22,11 +22,11 @@ export default class Networking {
 
     static createHeaders(access_token = null) {
         let headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         };
         if (access_token !== null) {
-            headers['Authorization'] = "Bearer " + access_token;
+            headers.Authorization = "Bearer " + access_token;
         }
         return headers;
     }
@@ -39,10 +39,10 @@ export default class Networking {
                 let api = CONST_API.UPLOAD_POST_MEDIA;
                 let headers = Object.assign(this.createHeaders(access_token), { 'content-type': 'multipart/form-data' });
                 const data = new FormData();
-                data.append('file', {
+                data.append("file", {
                     uri: file.uri,
-                    type: 'image/jpeg',
-                    name: 'upload.jpg'
+                    type: "image/jpeg",
+                    name: "upload.jpg"
                 });
                 let response = await axios({
                     url: baseurl + api.url,

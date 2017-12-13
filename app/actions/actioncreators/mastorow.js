@@ -1,8 +1,8 @@
-import { Alert, AsyncStorage } from 'react-native';
-import * as Mastorow from '../actiontypes/mastorow';
-import * as Nav from '../actiontypes/nav';
-import * as CONST_API from '../../constants/api';
-import Networking from '../../networking';
+import { Alert, AsyncStorage } from "react-native";
+import * as Mastorow from "../actiontypes/mastorow";
+import * as Nav from "../actiontypes/nav";
+import * as CONST_API from "../../constants/api";
+import Networking from "../../networking";
 
 export function boost(id, boosted) {
     return async dispatch => {

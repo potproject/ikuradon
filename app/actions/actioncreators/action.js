@@ -1,4 +1,4 @@
-import * as Action from '../actiontypes/action';
+import * as Action from "../actiontypes/action";
 
 export function mention(id) {
     return async dispatch => {

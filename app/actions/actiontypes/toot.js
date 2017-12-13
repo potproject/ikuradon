@@ -1,1 +1,1 @@
-export const TOOT_FAILURE = 'TOOT_FAILURE';
+export const TOOT_FAILURE = "TOOT_FAILURE";

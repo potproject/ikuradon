@@ -5,7 +5,7 @@ export default class Stream {
     }
 
     static open() {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             this.ws.onopen = () => {
                 console.log("[WS]websocket opened:" + this.url);
                 resolve();
@@ -17,25 +17,25 @@ export default class Stream {
         });
     }
 
-    static reconnect(){
-        if(this.ws){
+    static reconnect() {
+        if (this.ws) {
 
         }
     }
     static receive(callback) {
         this.ws.onmessage = (event) => {
-           callback(JSON.parse(event.data));
+            callback(JSON.parse(event.data));
         };
     }
 
     static close() {
         return new Promise((resolve) => {
-            if(!this.ws || !this.ws.close){
+            if (!this.ws || !this.ws.close) {
                 resolve(1001);
                 return;
             }
             this.ws.onclose = (event) => {
-                console.log("[WS]websocket closed:code:"+event.code+":" + this.url);
+                console.log("[WS]websocket closed:code:" + event.code + ":" + this.url);
                 resolve(event.code);
             };
             this.ws.close();

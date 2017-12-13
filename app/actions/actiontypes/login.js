@@ -1,1 +1,1 @@
-export const DOMAIN_FAILURE = 'DOMAIN_FAILURE';
+export const DOMAIN_FAILURE = "DOMAIN_FAILURE";

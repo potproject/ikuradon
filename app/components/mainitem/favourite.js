@@ -1,38 +1,38 @@
-import React from 'react';
-import { TouchableOpacity  } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as MastorowActions from '../../actions/actioncreators/mastorow';
+import React from "react";
+import { TouchableOpacity  } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
+import * as MastorowActions from "../../actions/actioncreators/mastorow";
 
 class Favourite extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id:props.id,
-      style:props.style,
-      favourited:props.favourited
+    constructor(props) {
+        super(props);
+        this.state = {
+            id:props.id,
+            style:props.style,
+            favourited:props.favourited
+        }
     }
-  }
-  componentWillReceiveProps(nextProps){
-    if(this.state.favourited !== nextProps.favourited){
-      this.state.favourited = nextProps.favourited;
+    componentWillReceiveProps(nextProps){
+        if(this.state.favourited !== nextProps.favourited){
+            this.state.favourited = nextProps.favourited;
+        }
     }
-  }
-  render() {
-    return (
-      <TouchableOpacity style={this.state.style} onPress={()=>this.props.MastorowActions.favourite(this.state.id,!this.state.favourited)}>
-        <FontAwesome name="star" size={20} color={this.setColor(this.state.favourited)} />
-      </TouchableOpacity>
-    );
-  }
-  setColor(favourited){
-    return favourited ? "#ca8f04" : "gray";
-  }
+    render() {
+        return (
+            <TouchableOpacity style={this.state.style} onPress={()=>this.props.MastorowActions.favourite(this.state.id,!this.state.favourited)}>
+                <FontAwesome name="star" size={20} color={this.setColor(this.state.favourited)} />
+            </TouchableOpacity>
+        );
+    }
+    setColor(favourited){
+        return favourited ? "#ca8f04" : "gray";
+    }
 }
 
 export default connect(state => state,
-  (dispatch) => ({
-    MastorowActions:bindActionCreators(MastorowActions,dispatch)
-  })
+    (dispatch) => ({
+        MastorowActions:bindActionCreators(MastorowActions,dispatch)
+    })
 )(Favourite);

@@ -1,7 +1,7 @@
-import * as Nav from '../actiontypes/nav';
-import * as CONST_API from '../../constants/api';
-import { Alert, AsyncStorage } from 'react-native';
-import Networking from '../../networking';
+import * as Nav from "../actiontypes/nav";
+import * as CONST_API from "../../constants/api";
+import { Alert, AsyncStorage } from "react-native";
+import Networking from "../../networking";
 import { ImagePicker } from "expo";
 
 export function toot(status,visibility,sensitive,spoiler_text) {
