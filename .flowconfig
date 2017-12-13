@@ -57,4 +57,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 unsafe.enable_getters_and_setters=false
 
 [version]
-^0.55.0
+^0.61.0
