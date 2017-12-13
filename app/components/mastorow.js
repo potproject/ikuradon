@@ -26,7 +26,8 @@ export default class MastoRow extends Component {
             notification_type: props.notification_type,
             notification_name: props.notification_name,
             media_attachments: props.media_attachments,
-            url: props.url
+            url: props.url,
+            emojis:props.emojis
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -53,9 +54,7 @@ export default class MastoRow extends Component {
                         </Text>
                         <Hyperlink onPress={url => this.openUrl(url)}>
                             <View>
-                                <Text style={styles.body}>
-                                    {bodyFormat(this.state.body)}
-                                </Text>
+                                {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
                             </View>
                         </Hyperlink>
                         <MastoMedia
@@ -91,6 +90,14 @@ export default class MastoRow extends Component {
         } catch (e) {
             console.error("Linking error", e);
         }
+    }
+    mastorowBodyFormat(body,emojis){
+        let newbody = bodyFormat(body);
+        //emoji
+        /**for(let emoji in emojis){
+            newbody = newbody.replace(":"+emojis[emoji].shortcode+":","");
+        }*/
+        return <Text style={styles.body}>{newbody}</Text>;
     }
     notificationFormat(type, name) {
         if (type === null) {
