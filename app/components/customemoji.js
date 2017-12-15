@@ -9,8 +9,7 @@ import { parse } from "path-to-regexp";
 
 
 const defaultEmojis = {};
-const defaultEmojiWidth = 50;
-const defaultEmojiHeight = 50;
+const defaultEmojiStyle = {};
 /**
  *  Emojis Setting 
  *  key:value = [DisplayName] : [Image Source]
@@ -28,10 +27,8 @@ class CustomEmoji extends React.Component {
         super(props);
         this.parse = this.parse.bind(this);
         this.emojiCheck = this.emojiCheck.bind(this);
-        this.width = props.width || defaultEmojiWidth;
-        this.height = props.height || defaultEmojiHeight;
+        this.emojiStyle = props.emojiStyle || defaultEmojiStyle;
         this.emojis = props.emojis || defaultEmojis;
-        console.log(this.width,this.height,this.emojis);
     }
 
     render(){

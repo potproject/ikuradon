@@ -97,7 +97,7 @@ export default class MastoRow extends Component {
         /**for(let emoji in emojis){
             newbody = newbody.replace(":"+emojis[emoji].shortcode+":","");
         }*/
-        return <CustomEmoji width={12} height={12} emojis={{}}>
+        return <CustomEmoji emojiStyle={{ width: 12, height:12 }} emojis={{}}>
             <Text style={styles.body}>{newbody}</Text>
         </CustomEmoji>;
     }
