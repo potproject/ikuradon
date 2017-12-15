@@ -8,7 +8,7 @@ import Boost from "./mainitem/boost";
 import Favourite from "./mainitem/favourite";
 import Action from "./mainitem/action";
 import { bodyFormat, dateFormat } from "../util/parser";
-
+import CustomEmoji from "./customemoji";
 export default class MastoRow extends Component {
     constructor(props) {
         super(props);
@@ -97,7 +97,9 @@ export default class MastoRow extends Component {
         /**for(let emoji in emojis){
             newbody = newbody.replace(":"+emojis[emoji].shortcode+":","");
         }*/
-        return <Text style={styles.body}>{newbody}</Text>;
+        return <CustomEmoji width={12} height={12} emojis={{}}>
+            <Text style={styles.body}>{newbody}</Text>
+        </CustomEmoji>;
     }
     notificationFormat(type, name) {
         if (type === null) {
