@@ -97,9 +97,16 @@ export default class MastoRow extends Component {
         /**for(let emoji in emojis){
             newbody = newbody.replace(":"+emojis[emoji].shortcode+":","");
         }*/
-        return <CustomEmoji emojiStyle={{ width: 12, height:12 }} emojis={{}}>
-            <Text style={styles.body}>{newbody}</Text>
-        </CustomEmoji>;
+        if(emojis.length > 0){
+            let emojiArray = {};
+            emojis.forEach((emoji)=>{
+                emojiArray[":"+emoji.shortcode+":"] = {uri:emoji.url};
+            });
+            return <CustomEmoji emojiStyle={{ width: 12, height:12 }} emojis={emojiArray}>
+                <Text style={styles.body}>{newbody}</Text>
+            </CustomEmoji>;
+        }
+        return <Text style={styles.body}>{newbody}</Text>;
     }
     notificationFormat(type, name) {
         if (type === null) {

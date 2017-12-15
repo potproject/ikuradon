@@ -3,7 +3,7 @@
  **/
 
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 import { View, Text, Image } from "react-native";
 import { parse } from "path-to-regexp";
 
@@ -62,8 +62,40 @@ class CustomEmoji extends React.Component {
 	    	return this.parse(child);
 	    }));
     }
-    emojiCheck(body){
-        return body;
+    emojiCheck(component){
+        let text = component.props.children;
+        if(typeof text !== "string"){
+            return component;
+        }
+        const componentProps = {
+		    ...component.props,
+		    ref: undefined,
+		    key: undefined,
+        }
+        let lastIndex = 0;
+        let element = [];
+        //正規表現は必要ないし、文字列を1文字ずつ処理する独自パーサを作るしかないかな、って感じ
+        //まだちゃんと動作しません
+        for(var nextIndex = 0;nextIndex<text.length;){
+            for(let emoji in this.emojis){
+                if(text.slice(nextIndex,nextIndex+emoji.length) === emoji){
+                    if(lastIndex<nextIndex){
+                        //Text
+                        element.push(<Text {...componentProps}>{text.slice(lastIndex,nextIndex)}</Text>);
+                    }
+                    //Image
+                    console.log(this.emojis[emoji]);
+                    element.push(<Image key={component.props.key} style={[this.emojiStyle, component.props.style]} source={this.emojis[emoji]} />);
+                    lastIndex = nextIndex + emoji.length;
+                    nextIndex = nextIndex + emoji.length;
+                }else{
+                    nextIndex++;
+                }
+            }
+        }
+        //Text
+        element.push(<Text {...componentProps}>{text.slice(lastIndex)}</Text>);
+        return <View>{element}</View>;
     }
 
     isTextNested(component){
