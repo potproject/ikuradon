@@ -36,7 +36,7 @@ class CustomEmoji extends React.Component {
             style={ this.props.style }
         >
             {
-                this.parse(this).props.children
+                this.emojis ? this.parse(this).props.children : this.props.children
             }
         </View>;
     }
@@ -73,19 +73,17 @@ class CustomEmoji extends React.Component {
 		    key: undefined,
         }
         let lastIndex = 0;
-        let element = [];
+        let elements = [];
         //正規表現は必要ないし、文字列を1文字ずつ処理する独自パーサを作るしかないかな、って感じ
-        //まだちゃんと動作しません
         for(var nextIndex = 0;nextIndex<text.length;){
             for(let emoji in this.emojis){
                 if(text.slice(nextIndex,nextIndex+emoji.length) === emoji){
                     if(lastIndex<nextIndex){
                         //Text
-                        element.push(<Text {...componentProps}>{text.slice(lastIndex,nextIndex)}</Text>);
+                        elements.push(<Text key={+elements.length}>{text.slice(lastIndex,nextIndex)}</Text>);
                     }
                     //Image
-                    console.log(this.emojis[emoji]);
-                    element.push(<Image key={component.props.key} style={[this.emojiStyle, component.props.style]} source={this.emojis[emoji]} />);
+                    elements.push(<Image key={elements.length} style={this.emojiStyle} source={this.emojis[emoji]} />);
                     lastIndex = nextIndex + emoji.length;
                     nextIndex = nextIndex + emoji.length;
                 }else{
@@ -94,8 +92,9 @@ class CustomEmoji extends React.Component {
             }
         }
         //Text
-        element.push(<Text {...componentProps}>{text.slice(lastIndex)}</Text>);
-        return <View>{element}</View>;
+        elements.push(<Text key={elements.length}>{text.slice(lastIndex)}</Text>);
+        console.log(elements);
+        return React.cloneElement(component, componentProps, elements);
     }
 
     isTextNested(component){

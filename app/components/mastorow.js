@@ -102,7 +102,7 @@ export default class MastoRow extends Component {
             emojis.forEach((emoji)=>{
                 emojiArray[":"+emoji.shortcode+":"] = {uri:emoji.url};
             });
-            return <CustomEmoji emojiStyle={{ width: 12, height:12 }} emojis={emojiArray}>
+            return <CustomEmoji emojiStyle={{ width: 12, height:12}} emojis={emojiArray}>
                 <Text style={styles.body}>{newbody}</Text>
             </CustomEmoji>;
         }

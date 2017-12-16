@@ -20,7 +20,7 @@ This project was created at [Create React Native App](https://github.com/react-c
 * □ Video Viewer
 * ☑ NFSW Toot
 * □ Media Toot
-* □ Custom Emoji Support (2.x)
+* ☑ Custom Emoji Support (2.x)
 
 ## ScreenShots
 <div>
