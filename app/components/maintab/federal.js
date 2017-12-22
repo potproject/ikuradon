@@ -15,6 +15,7 @@ export default class Federal extends React.Component {
     constructor(props) {
         super(props);
         Federal.navigationOptions.title = I18n.t("navigation_federal");
+        Federal.navigationOptions.headerRight = <Button title={I18n.t("navigation_button_toot")} onPress={() => headerRightHandler()} />;
     }
     render() {
         return <Mastolist type={"federal"} />

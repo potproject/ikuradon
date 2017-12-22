@@ -7,7 +7,7 @@ import I18n from "../../i18n";
 export default class Home extends React.Component {
     static navigationOptions = {
         title: "Home",
-        headerRight: <Button title="toot" onPress={() => headerRightHandler()} />,
+        headerRight: <Button title="Toot" onPress={() => headerRightHandler()} />,
         tabBarIcon: ({ focused, tintColor }) => (
             <FontAwesome name="home" size={32} color={tintColor} />
         )
@@ -15,6 +15,7 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
         Home.navigationOptions.title = I18n.t("navigation_home");
+        Home.navigationOptions.headerRight = <Button title={I18n.t("navigation_button_toot")} onPress={() => headerRightHandler()} />;
     }
     render() {
         return <Mastolist type={"home"}/>

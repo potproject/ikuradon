@@ -10,6 +10,9 @@ export default {
     navigation_notifications: "通知",
     navigation_setting: "設定",
 
+    //ナビゲーションボタン
+    navigation_button_toot: "トゥート",
+
     //ログイン
     login_title: "ログイン",
     login_message: "Mastodon インスタンスドメインを入力してください",

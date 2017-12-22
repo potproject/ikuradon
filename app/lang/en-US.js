@@ -10,6 +10,9 @@ export default {
     navigation_notifications: "Notifications",
     navigation_setting: "Setting",
 
+    //Navigation Button
+    navigation_button_toot: "Toot",
+
     //Login
     login_title: "Login",
     login_message: "Please enter Mastodon instance domain.",

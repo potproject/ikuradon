@@ -93,7 +93,6 @@ class CustomEmoji extends React.Component {
         }
         //Text
         elements.push(<Text key={elements.length}>{text.slice(lastIndex)}</Text>);
-        console.log(elements);
         return React.cloneElement(component, componentProps, elements);
     }
 
