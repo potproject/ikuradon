@@ -126,7 +126,7 @@ class Mastolist extends React.Component {
                 notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                 media_attachments={data.reblog.media_attachments}
                 url={data.url}
-                emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
+                emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
             />
         }
     }
