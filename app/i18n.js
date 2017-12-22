@@ -1,6 +1,7 @@
 import reactNativeI18n from "ex-react-native-i18n";
 import lang_en_US from "./lang/en-US";
 import lang_ja_JP from "./lang/ja-JP";
+import Moment from "moment/min/moment-with-locales";
 
 const supported = ["en-US", "ja-JP"];
 
@@ -10,6 +11,7 @@ export default class I18n {
         if (!supported.includes(reactNativeI18n.locale)) {
             reactNativeI18n.locale = "en-US";
         }
+        Moment.locale(reactNativeI18n.locale);
         //force Set
         //reactNativeI18n.locale = "ja-JP";
     }
