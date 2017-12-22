@@ -3,7 +3,7 @@
     "name": "ikuradon",
     "description": "ikuradon - React Native Mastodon App",
     "slug":"potproject-ikuradon",
-    "sdkVersion": "21.0.0",
+    "sdkVersion": "24.0.0",
     "icon":"assets/image/icon250.png"
   }
 }
