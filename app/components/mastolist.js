@@ -80,6 +80,7 @@ class Mastolist extends React.Component {
                         reblogged={data.status.reblogged}
                         favourited={data.status.favourited}
                         date={data.status.created_at}
+                        visibility={data.status.visibility}
                         username={data.status.account.username}
                         acct={data.status.account.acct}
                         notification_type={data.type}
@@ -101,6 +102,7 @@ class Mastolist extends React.Component {
                 reblogged={data.reblogged}
                 favourited={data.favourited}
                 date={data.created_at}
+                visibility={data.visibility}
                 username={data.account.username}
                 acct={data.account.acct}
                 notification_type={null}
@@ -120,6 +122,7 @@ class Mastolist extends React.Component {
                 reblogged={data.reblog.reblogged}
                 favourited={data.reblog.favourited}
                 date={data.reblog.created_at}
+                visibility={data.reblog.visibility}
                 username={data.reblog.account.username}
                 acct={data.reblog.account.acct}
                 notification_type={"reblog"}

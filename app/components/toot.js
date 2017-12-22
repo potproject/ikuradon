@@ -14,6 +14,7 @@ import * as TootActions from "../actions/actioncreators/toot";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import I18n from "../i18n";
+import VisibilityIcon from "./visibilityicon";
 
 const MAX_TOOT_LENGTH = 500;
 
@@ -53,7 +54,7 @@ class Toot extends React.Component {
                             <FontAwesome name="camera" size={30} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ visibilityModal: true })}>
-                            {this.visibilityIconSet()}
+                            <VisibilityIcon visibility={this.state.visibility} color="#1E90FF" size={30} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ nsfwFlag: !this.state.nsfwFlag })}>
                             <Text style={this.toggleCwColor()}>CW</Text>
@@ -112,20 +113,6 @@ class Toot extends React.Component {
             />;
         } else {
             return;
-        }
-    }
-    visibilityIconSet() {
-        switch(this.state.visibility){
-            case "public":
-                return <FontAwesome name="globe" size={30} color="#1E90FF" />;
-            case "unlisted":
-                return <FontAwesome name="unlock-alt" size={30} color="#1E90FF" />;
-            case "private":
-                return <FontAwesome name="lock" size={30} color="#1E90FF" />;
-            case "direct":
-                return <FontAwesome name="envelope" size={30} color="#1E90FF" />;
-            default: 
-                return <FontAwesome name="globe" size={30} color="#1E90FF" />;
         }
     }
 }

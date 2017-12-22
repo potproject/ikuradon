@@ -9,6 +9,8 @@ import Favourite from "./mainitem/favourite";
 import Action from "./mainitem/action";
 import { bodyFormat, dateFormat } from "../util/parser";
 import CustomEmoji from "./customemoji";
+import VisibilityIcon from "./visibilityicon";
+
 export default class MastoRow extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +29,8 @@ export default class MastoRow extends Component {
             notification_name: props.notification_name,
             media_attachments: props.media_attachments,
             url: props.url,
-            emojis:props.emojis
+            emojis:props.emojis,
+            visibility:props.visibility,
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -64,7 +67,8 @@ export default class MastoRow extends Component {
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.dateFlex}>
-                        {dateFormat(this.state.date)}
+                        {dateFormat(this.state.date)+" "}
+                        <VisibilityIcon visibility={this.state.visibility} size={12} />
                     </Text>
                 </View>
                 {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
