@@ -46,11 +46,7 @@ export function favourite(id, favourited) {
     };
 }
 
-export function mediaOpen(mediatype, media_attachments, index) {
-    if(mediatype === "image"){
-        return { type: Nav.NAV_IMAGEVIEWER ,media_attachments ,index };
-    }else if(mediatype === "video"){
-        return { type: Nav.NAV_VIDEOVIEWER ,media_attachments ,index };
-    }
-    return;
+export function mediaOpen(media_attachments, index) {
+    return { type: Nav.NAV_MEDIAVIEWER ,media_attachments ,index };
+
 }

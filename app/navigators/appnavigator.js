@@ -14,7 +14,7 @@ import AuthorizeScreen from "../components/authorize";
 import MainScreen from "../components/main";
 import LoginScreen from "../components/login";
 import TootScreen from "../components/toot";
-import ImageViewerScreen from "../components/mediaviewer/imageviewer";
+import MediaViewerScreen from "../components/mediaviewer/mediaviewer";
 
 import * as AppInitActions from "../actions/actioncreators/appinit";
 
@@ -31,8 +31,8 @@ export const AppNavigator = StackNavigator({
     Toot: {
         screen: TootScreen
     },
-    ImageViewer: {
-        screen: ImageViewerScreen
+    MediaViewer: {
+        screen: MediaViewerScreen
     }
 });
 

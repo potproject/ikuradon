@@ -12,14 +12,15 @@ This project was created at [Create React Native App](https://github.com/react-c
 
 
 ## TODO
-* ☑ Streaming API
-* ☑ i18n
 * □ Reply/Mention
 * □ View User
-* ☑ Image Viewer
-* □ Video Viewer
-* ☑ NFSW Toot
+* □ View NFSW
 * □ Media Toot
+* ☑ Streaming API
+* ☑ i18n
+* ☑ Image Viewer
+* ☑ Video Viewer
+* ☑ NFSW Toot
 * ☑ Custom Emoji Support (2.x)
 
 ## ScreenShots

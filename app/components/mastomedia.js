@@ -30,7 +30,7 @@ class MastoMedia extends React.Component {
             return this.state.media_attachments.map((media, index) => {
                 if (media.type === "image" || media.type === "video") {
                     return <TouchableHighlight key={media.id} onPress={() =>
-                        onPress(media.type, this.state.media_attachments, index)}>
+                        onPress(this.state.media_attachments, index)}>
                         <View style={styles.mediaview}>
                             <Image
                                 source={{ uri: media.preview_url }}
