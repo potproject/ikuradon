@@ -31,6 +31,8 @@ export default class MastoRow extends Component {
             url: props.url,
             emojis:props.emojis,
             visibility:props.visibility,
+            sensitive:props.sensitive,
+            spoiler_text:props.spoiler_text
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -69,6 +71,8 @@ export default class MastoRow extends Component {
                     <Text style={styles.dateFlex}>
                         {dateFormat(this.state.date)+" "}
                         <VisibilityIcon visibility={this.state.visibility} size={12} />
+                        {" "}
+                        {this.state.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> :""}
                     </Text>
                 </View>
                 {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
@@ -97,10 +101,9 @@ export default class MastoRow extends Component {
     }
     mastorowBodyFormat(body,emojis){
         let newbody = bodyFormat(body);
-        //emoji
-        /**for(let emoji in emojis){
-            newbody = newbody.replace(":"+emojis[emoji].shortcode+":","");
-        }*/
+        if(this.state.sensitive){
+            newbody = "[!] " + this.state.spoiler_text + "\n\n" + newbody;
+        }
         if(emojis.length > 0){
             let emojiArray = {};
             emojis.forEach((emoji)=>{
@@ -117,20 +120,23 @@ export default class MastoRow extends Component {
             return;
         }
         let faName;
+        let color = "gray";
         switch (type) {
             case "favourite":
                 faName = "star";
+                color = "#ca8f04";
                 break;
             case "reblog":
                 faName = "retweet";
+                color = "#2b90d9";
                 break;
             case "mention":
                 faName = "reply";
                 break;
         }
         return  <View style={styles.container}>
-            <Text style={styles.dateFlex}>
-                <Text>{" "}<FontAwesome name={faName} size={12} />{" " + name}</Text>
+            <Text style={[styles.dateFlex,{color}]}>
+                <Text>{" "}<FontAwesome name={faName} size={12} color={color} />{" " + name}</Text>
             </Text>
         </View>;
     }

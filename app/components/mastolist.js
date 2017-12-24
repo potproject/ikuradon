@@ -81,6 +81,8 @@ class Mastolist extends React.Component {
                         favourited={data.status.favourited}
                         date={data.status.created_at}
                         visibility={data.status.visibility}
+                        sensitive={data.status.sensitive}
+                        spoiler_text={data.status.spoiler_text}
                         username={data.status.account.username}
                         acct={data.status.account.acct}
                         notification_type={data.type}
@@ -103,6 +105,8 @@ class Mastolist extends React.Component {
                 favourited={data.favourited}
                 date={data.created_at}
                 visibility={data.visibility}
+                sensitive={data.sensitive}
+                spoiler_text={data.spoiler_text}
                 username={data.account.username}
                 acct={data.account.acct}
                 notification_type={null}
@@ -123,6 +127,8 @@ class Mastolist extends React.Component {
                 favourited={data.reblog.favourited}
                 date={data.reblog.created_at}
                 visibility={data.reblog.visibility}
+                sensitive={data.reblog.sensitive}
+                spoiler_text={data.reblog.spoiler_text}
                 username={data.reblog.account.username}
                 acct={data.reblog.account.acct}
                 notification_type={"reblog"}
