@@ -8,12 +8,6 @@ import { bindActionCreators } from "redux";
 import I18n from "../../i18n";
 
 class Setting extends React.Component {
-    static navigationOptions = {
-        title: "Setting",
-        tabBarIcon: ({ focused, tintColor }) => (
-            <FontAwesome name="cogs" size={26} color={tintColor} />
-        )
-    };
     constructor(props) {
         super(props);
         this.props = props;
@@ -22,7 +16,6 @@ class Setting extends React.Component {
                 streaming_api_checked: false,
             }
         };
-        Setting.navigationOptions.title = I18n.t("navigation_setting");
     }
     render() {
         return <View>
