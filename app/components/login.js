@@ -14,12 +14,8 @@ import * as LoginActions from "../actions/actioncreators/login";
 import I18n from "../i18n";
 
 class Login extends React.Component {
-    static navigationOptions = {
-        title: "Login",
-    };
     constructor(props) {
         super(props);
-        //Login.navigationOptions.title = I18n.t("login_title");
         this.state = {
             domain: "mastodon.social",
         };

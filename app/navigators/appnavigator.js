@@ -18,21 +18,35 @@ import MediaViewerScreen from "../components/mediaviewer/mediaviewer";
 
 import * as AppInitActions from "../actions/actioncreators/appinit";
 
+import I18n from "../i18n";
+
 export const AppNavigator = StackNavigator({
     Login: {
-        screen: LoginScreen
+        screen: LoginScreen,
+        navigationOptions: () => ({
+            title: I18n.t("login_title"),
+        }),
     },
     Main: {
         screen: MainScreen
     },
     Authorize: {
-        screen: AuthorizeScreen
+        screen: AuthorizeScreen,
+        navigationOptions: () => ({
+            title: I18n.t("authorize_title"),
+        }),
     },
     Toot: {
-        screen: TootScreen
+        screen: TootScreen,
+        navigationOptions: () => ({
+            title: I18n.t("toot_title"),
+        }),
     },
     MediaViewer: {
-        screen: MediaViewerScreen
+        screen: MediaViewerScreen,
+        navigationOptions: () => ({
+            title: I18n.t("mediaviewer_title"),
+        }),
     }
 });
 

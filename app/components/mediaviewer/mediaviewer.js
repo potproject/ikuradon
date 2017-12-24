@@ -10,9 +10,6 @@ import Swiper from "react-native-swiper";
 import { Video } from "expo";
 
 export default class MediaViewer extends React.Component {
-    static navigationOptions = {
-        title: "Media",
-    };
     constructor(props) {
         super(props);
         this.state = {

@@ -19,12 +19,8 @@ import VisibilityIcon from "./visibilityicon";
 const MAX_TOOT_LENGTH = 500;
 
 class Toot extends React.Component {
-    static navigationOptions = {
-        title: "Toot",
-    };
     constructor(props) {
         super(props);
-        Toot.navigationOptions.title = I18n.t("toot_title");
         this.state = {
             nsfwFlag: false,
             text: "",

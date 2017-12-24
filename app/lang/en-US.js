@@ -18,7 +18,10 @@ export default {
     login_message: "Please enter Mastodon instance domain.",
     login_button: "Login",
 
-    //Toots
+    //Authorize
+    authorize_title: "Authorize",
+
+    //Toot
     toot_title: "Toot",
     toot_cw_placeholder: "Write your warning here",
     toot_placeholder: "What is on your mind?",
@@ -34,6 +37,10 @@ export default {
     action_copy: "Copy",
     action_mention: "Mention",
     action_hide: "Hide",
+
+    //MediaViewer
+    mediaviewer_title: "Media",
+
     //Errors
 
     //Global
