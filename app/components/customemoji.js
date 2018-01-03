@@ -3,10 +3,9 @@
  **/
 
 import React from "react";
-import PropTypes, { element } from "prop-types";
-import { View, Text, Image } from "react-native";
-import { parse } from "path-to-regexp";
+import { View, Text } from "react-native";
 
+import InlineImage from "./inlineimage";
 
 const defaultEmojis = {};
 const defaultEmojiStyle = {};
@@ -83,7 +82,7 @@ class CustomEmoji extends React.Component {
                         elements.push(<Text key={+elements.length}>{text.slice(lastIndex,nextIndex)}</Text>);
                     }
                     //Image
-                    elements.push(<Image key={elements.length} style={this.emojiStyle} source={this.emojis[emoji]} />);
+                    elements.push(<InlineImage key={elements.length} style={this.emojiStyle} source={this.emojis[emoji]} />);
                     lastIndex = nextIndex + emoji.length;
                     nextIndex = nextIndex + emoji.length;
                 }else{
