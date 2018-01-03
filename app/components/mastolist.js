@@ -45,6 +45,25 @@ class Mastolist extends React.Component {
                 />
             </View>
         );
+        /*<FlatList
+            style={styles.container}
+            data={this.listdata.data}
+            renderItem={(data) => this.mastoRowIdentification(data.item)}
+            keyExtractor={(data) => data.id}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            refreshControl={
+                <RefreshControl
+                    refreshing={this.listdata.refreshing}
+                    onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
+                />
+            }
+            onEndReachedThreshold={0.1}
+            onEndReached={(e)=>{
+                //TODO onEndReached twice event Bug!
+                //このバグを解消できればflatlistに移行できますけど
+                this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
+            }
+        />*/
     }
     
     reducerType(nextProps) {
