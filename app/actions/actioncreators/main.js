@@ -26,11 +26,11 @@ export function getTimeline(reducerType,limit = 40) {
             console.error(e);
             return;
         }
-        dispatch({ type: Main.UPDATE_MASTOLIST, data: data, reducerType });
+        dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType });
     }
 }
 
-export function refreshTimeline(reducerType,since_id, limit = 40) {
+export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType })
         let data;
@@ -42,6 +42,22 @@ export function refreshTimeline(reducerType,since_id, limit = 40) {
             console.error(e);
             return;
         }
-        dispatch({ type: Main.UPDATE_MASTOLIST, data: data , reducerType });
+        dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data , reducerType });
+    }
+}
+
+export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
+    return async dispatch => {
+        dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType })
+        let data;
+        try {
+            let access_token = await AsyncStorage.getItem("access_token");
+            let domain = await AsyncStorage.getItem("domain");
+            data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, max_id }, access_token);
+        } catch (e) {
+            console.error(e);
+            return;
+        }
+        dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType ,});
     }
 }

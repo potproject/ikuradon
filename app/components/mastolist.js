@@ -35,13 +35,18 @@ class Mastolist extends React.Component {
                     refreshControl={
                         <RefreshControl
                             refreshing={this.listdata.refreshing}
-                            onRefresh={() => this.props.MainActions.refreshTimeline(this.type, this.listdata.maxId)}
+                            onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
                         />
                     }
+                    onEndReachedThreshold={1000}
+                    onEndReached={(e)=>{
+                        if(e){this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
+                    }}
                 />
             </View>
         );
     }
+    
     reducerType(nextProps) {
         switch (this.type) {
             case "home":

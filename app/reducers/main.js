@@ -29,13 +29,19 @@ const initialState = {
 
 export default function Main(state = initialState, action = {}) {
     switch (action.type) {
-        case MainActionTypes.UPDATE_MASTOLIST:
+        case MainActionTypes.NEW_UPDATE_MASTOLIST:
+        case MainActionTypes.OLD_UPDATE_MASTOLIST:
             let reducerType = action.reducerType;
             let {
                 minId,
                 maxId
             } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
-            let data = action.data.concat(state[reducerType].data);
+            let data;
+            if(action.type===MainActionTypes.OLD_UPDATE_MASTOLIST){
+                data = state[reducerType].data.concat(action.data);
+            }else{
+                data = action.data.concat(state[reducerType].data);
+            }
             return Object.assign({}, state, {
                 [reducerType]: {
                     data,

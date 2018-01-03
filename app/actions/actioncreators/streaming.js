@@ -14,9 +14,9 @@ export function start() {
             dispatch({ type: Streaming.STREAM_START });
             Stream.receive((message) => {
                 if (message.event === "update" && message.payload) {
-                    dispatch({ type: Main.UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "home" });
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "home" });
                 }else if (message.event === "notification" && message.payload) {
-                    dispatch({ type: Main.UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "notifications" });
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "notifications" });
                 }else if (message.event === "delete" && message.payload) {
                 //いつか実装します
                 }
