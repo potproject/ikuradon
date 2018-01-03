@@ -29,7 +29,7 @@ This project was created at [Create React Native App](https://github.com/react-c
     <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview.png?raw=true">
   </div>
   <div style="clear: both;">
-    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.PNG?raw=true">
+    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.png?raw=true">
   </div>
 </div>
 
