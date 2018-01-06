@@ -64,6 +64,7 @@ export default class MastoRow extends Component {
                         </Hyperlink>
                         <MastoMedia
                             media_attachments={this.state.media_attachments}
+                            sensitive={this.state.sensitive}
                         />
                     </View>
                 </View>

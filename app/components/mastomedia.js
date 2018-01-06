@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import {
+    Text,
     Image,
     View,
     StyleSheet,
@@ -14,8 +15,9 @@ class MastoMedia extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            media_attachments: props.media_attachments
-        }
+            media_attachments: props.media_attachments,
+            sensitive: props.sensitive
+        };
     }
     render() {
         return (
@@ -35,13 +37,25 @@ class MastoMedia extends React.Component {
                             <Image
                                 source={{ uri: media.preview_url }}
                                 style={styles.media}
+                                blurRadius={this.state.sensitive ? 100 : 0}
                             />
                             <FontAwesome name={media.type === "image"?"file-image-o":"file-video-o"} size={30} color="gray" style={styles.mediaicon}/>
+                            <Text style={styles.description}>{this.descriptionSetting(media.description)}</Text>
                         </View>
                     </TouchableHighlight>;
                 }
             });
         }
+    }
+    descriptionSetting(description){
+        if(typeof description === "undefined" || description === null){
+            description = "";
+        }
+        if(this.state.sensitive){
+            return "[!] "+description;
+        }
+        return description;
+
     }
 }
 
@@ -62,6 +76,13 @@ const styles = StyleSheet.create({
     },
     mediaicon:{
         margin:5,
+        position: "absolute",
+    },
+    description:{
+        margin:5,
+        paddingLeft:30,
+        color:"gray",
+        fontSize:22,
         position: "absolute",
     }
 });
