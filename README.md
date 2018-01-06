@@ -10,16 +10,14 @@ This project was created at [Create React Native App](https://github.com/react-c
 ライブラリに[React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)を使用しています。  
 まだ開発中です。一部未実装の機能があります。
 
-
 ## TODO
 * □ Reply/Mention
-* □ View User
-* □ View NFSW
+* □ View User Data
 * □ Media Toot
-* ☑ Streaming API
-* ☑ i18n
-* ☑ Image Viewer
-* ☑ Video Viewer
+* ☑ View NFSW Timeline
+* ☑ Streaming API Support
+* ☑ i18n (EN/JP)
+* ☑ Media Viewer (Video/Image/gifv)
 * ☑ NFSW Toot
 * ☑ Custom Emoji Support (2.x)
 

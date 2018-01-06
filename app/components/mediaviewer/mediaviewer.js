@@ -48,6 +48,22 @@ export default class MediaViewer extends React.Component {
                         />
                     </View>
                 );
+            }else if(data.type === "gifv"){
+                return (
+                    <View style={styles.videoContainer} key={data.id} >
+                        <Video
+                            source={{ uri: data.url }}
+                            rate={1.0}
+                            volume={1.0}
+                            isMuted={true}
+                            shouldPlay
+                            useNativeControls={false}
+                            isLooping
+                            style={styles.video}
+                            onError={(e)=>{this.onError(e)}}
+                        />
+                    </View>
+                );
             }
         });
     }

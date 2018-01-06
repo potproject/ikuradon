@@ -30,7 +30,7 @@ class MastoMedia extends React.Component {
         if (this.state.media_attachments) {
             let onPress = this.props.MastorowActions.mediaOpen;
             return this.state.media_attachments.map((media, index) => {
-                if (media.type === "image" || media.type === "video") {
+                if (media.type === "image" || media.type === "video" || media.type === "gifv") {
                     return <TouchableHighlight key={media.id} onPress={() =>
                         onPress(this.state.media_attachments, index)}>
                         <View style={styles.mediaview}>
