@@ -15,21 +15,6 @@ export function toot() {
     return { type: Nav.NAV_TOOT };
 }
 
-export function getTimeline(reducerType,limit = 40) {
-    return async dispatch => {
-        let data;
-        try {
-            let access_token = await AsyncStorage.getItem("access_token");
-            let domain = await AsyncStorage.getItem("domain");
-            data = await Networking.fetch(domain, reducerTypeArray[reducerType], null,{ limit }, access_token);
-        } catch (e) {
-            console.error(e);
-            return;
-        }
-        dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType });
-    };
-}
-
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });
@@ -37,7 +22,7 @@ export function newLoadingTimeline(reducerType,since_id, limit = 40) {
         try {
             let access_token = await AsyncStorage.getItem("access_token");
             let domain = await AsyncStorage.getItem("domain");
-            data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id }, access_token);
+            data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id, max_id:null }, access_token);
         } catch (e) {
             console.error(e);
             return;
@@ -53,11 +38,11 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         try {
             let access_token = await AsyncStorage.getItem("access_token");
             let domain = await AsyncStorage.getItem("domain");
-            data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, max_id }, access_token);
+            data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id:null, max_id }, access_token);
         } catch (e) {
             console.error(e);
             return;
         }
-        dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType ,});
+        dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType });
     };
 }

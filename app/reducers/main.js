@@ -1,5 +1,10 @@
 import * as MainActionTypes from "../actions/actiontypes/main";
 import * as MastorowActionTypes from "../actions/actiontypes/mastorow";
+import { getMinMaxId } from "../util/manageid";
+import { AsyncStorage } from "react-native";
+
+const TIMELINE_LOCAL_AUTOSAVE = true; // Timeline Local Auto Load (Experimental)
+
 const initialState = {
     home: {
         data: [],
@@ -29,6 +34,11 @@ const initialState = {
 
 export default function Main(state = initialState, action = {}) {
     switch (action.type) {
+        case MainActionTypes.GETLOCALDATA_MASTOLIST:
+            if(action.data === null){
+                return state;
+            }
+            return Object.assign({}, action.data);
         case MainActionTypes.NEW_UPDATE_MASTOLIST:
         case MainActionTypes.OLD_UPDATE_MASTOLIST:
             let reducerType = action.reducerType;
@@ -42,7 +52,7 @@ export default function Main(state = initialState, action = {}) {
             }else{
                 data = action.data.concat(state[reducerType].data);
             }
-            return Object.assign({}, state, {
+            let newstate = Object.assign({}, state, {
                 [reducerType]: {
                     data,
                     refreshing: false,
@@ -50,11 +60,17 @@ export default function Main(state = initialState, action = {}) {
                     maxId
                 }
             });
-
+            if(TIMELINE_LOCAL_AUTOSAVE){
+                AsyncStorage.setItem("timeline_cache",autoSave(Object.assign({},newstate)));
+            }
+            return newstate;
         case MainActionTypes.REFRESHING_MASTOLIST:
             return Object.assign({}, state, {
-                [reducerType]: {
-                    refreshing: true
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: true,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId
                 }
             });
 
@@ -77,6 +93,10 @@ export default function Main(state = initialState, action = {}) {
     }
 }
 
+function autoSave(state){
+    return JSON.stringify(state);
+}
+
 function changeItem(type, state, id, bool) {
     let item;
     switch (type) {
@@ -94,25 +114,14 @@ function changeItem(type, state, id, bool) {
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {
-                statecopy[viewType].data[row][item] = bool;
+                if(statecopy[viewType].data[row].reblog === null){
+                    statecopy[viewType].data[row][item] = bool;
+                }else{
+                    statecopy[viewType].data[row].reblog[item] = bool;
+                }
                 break;
             }
         }
     }
     return statecopy;
-}
-
-function getMinMaxId(lowest, highest, data) {
-    lowest = lowest === null ? Number.POSITIVE_INFINITY : lowest;
-    highest = highest === null ? Number.NEGATIVE_INFINITY : highest;
-    let tmp;
-    for (let i = data.length - 1; i >= 0; i--) {
-        tmp = data[i].id;
-        if (tmp < lowest) { lowest = tmp }
-        if (tmp > highest) { highest = tmp }
-    }
-    return {
-        minId: lowest,
-        maxId: highest
-    };
 }

@@ -19,6 +19,7 @@ This project was created at [Create React Native App](https://github.com/react-c
 * ☑ i18n (EN/JP)
 * ☑ Media Viewer (Video/Image/gifv)
 * ☑ NFSW Toot
+* ☑ TimeLine Local Auto Save
 * ☑ Custom Emoji Support (2.x)
 
 ## ScreenShots

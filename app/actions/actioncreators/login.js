@@ -32,11 +32,12 @@ export function logout() {
         try {
             await AsyncStorage.removeItem("access_token");
             await AsyncStorage.removeItem("domain");
+            await AsyncStorage.removeItem("timeline_cache");
         } catch (e) {
             console.log(e);
         } 
-        dispatch({ type: Streaming.STREAM_STOP });
-        dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+        await dispatch({ type: Streaming.STREAM_STOP });
+        await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
         dispatch({ type: Nav.NAV_LOGIN });
         return;
     };
