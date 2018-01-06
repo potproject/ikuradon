@@ -10,6 +10,7 @@ class Favourite extends React.Component {
         super(props);
         this.state = {
             id:props.id,
+            tootid:props.tootid,
             style:props.style,
             favourited:props.favourited
         };
@@ -21,7 +22,7 @@ class Favourite extends React.Component {
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={()=>this.props.MastorowActions.favourite(this.state.id,!this.state.favourited)}>
+            <TouchableOpacity style={this.state.style} onPress={()=>this.props.MastorowActions.favourite(this.state.id,this.state.tootid,!this.state.favourited)}>
                 <FontAwesome name="star" size={20} color={this.setColor(this.state.favourited)} />
             </TouchableOpacity>
         );

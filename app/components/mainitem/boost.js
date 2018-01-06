@@ -10,6 +10,7 @@ class Boost extends React.Component {
         super(props);
         this.state = {
             id: props.id,
+            tootid: props.tootid,
             style: props.style,
             reblogged: props.reblogged
         };
@@ -19,7 +20,7 @@ class Boost extends React.Component {
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={() => this.props.MastorowActions.boost(this.state.id, !this.state.reblogged)}>
+            <TouchableOpacity style={this.state.style} onPress={() => this.props.MastorowActions.boost(this.state.id, this.state.tootid, !this.state.reblogged)}>
                 <FontAwesome name="retweet" size={20} color={this.setColor(this.state.reblogged)} />
             </TouchableOpacity>
         );

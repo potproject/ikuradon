@@ -80,8 +80,8 @@ export default class MastoRow extends Component {
                 <View style={styles.container}>
                     <View style={styles.item}>
                         <Reply id={this.state.tootid} style={styles.itemFlex} />
-                        <Boost id={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
-                        <Favourite id={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
+                        <Boost id={this.state.id} tootid={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
+                        <Favourite id={this.state.id} tootid={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
                         <Action id={this.state.tootid} style={styles.itemFlex} url={this.state.url} body={this.state.body} />
                     </View>
                 </View>

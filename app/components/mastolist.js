@@ -14,7 +14,7 @@ class Mastolist extends React.Component {
         this.domain = this.props.navReducer.domain;
         this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => { r1.id !== r2.id } });
         this.listdata = this.reducerType(props);
-        this.props.MainActions.getTimeline(this.type);
+        this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         headerRightHandler = this.props.MainActions.toot;
     }
 
@@ -142,7 +142,7 @@ class Mastolist extends React.Component {
             return <MastoRow
                 key={data.id}
                 id={data.id}
-                tootid={data.id}
+                tootid={data.reblog.id}
                 user={data.reblog.account.display_name !== "" ? data.reblog.account.display_name : data.reblog.account.username}
                 body={data.reblog.content}
                 image={data.reblog.account.avatar}

@@ -4,13 +4,13 @@ import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
 
-export function boost(id, boosted) {
+export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
-            let data = await Networking.fetch(domain, POST_URL, id, {}, access_token);
+            let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
             Alert.alert("エラー", "ブースト失敗っす");
@@ -25,13 +25,13 @@ export function boost(id, boosted) {
     };
 }
 
-export function favourite(id, favourited) {
+export function favourite(id, tootid, favourited) {
     return async dispatch => {
         try {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
-            let data = await Networking.fetch(domain, POST_URL, id, {}, access_token);
+            let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
             Alert.alert("エラー", "お気に入り失敗っす");
