@@ -12,7 +12,7 @@ class Favourite extends React.Component {
             id:props.id,
             style:props.style,
             favourited:props.favourited
-        }
+        };
     }
     componentWillReceiveProps(nextProps){
         if(this.state.favourited !== nextProps.favourited){

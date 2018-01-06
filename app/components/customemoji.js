@@ -70,7 +70,7 @@ class CustomEmoji extends React.Component {
 		    ...component.props,
 		    ref: undefined,
 		    key: undefined,
-        }
+        };
         let lastIndex = 0;
         let elements = [];
         //正規表現は必要ないし、文字列を1文字ずつ処理する独自パーサを作るしかないかな、って感じ

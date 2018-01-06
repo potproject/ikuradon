@@ -12,7 +12,7 @@ export default class Networking {
                     method: api.method,
                     headers: this.createHeaders(access_token),
                     params: Object.assign(api.form, postParams)
-                })
+                });
                 resolve(response.data);
             } catch (e) {
                 reject(e);
@@ -37,7 +37,7 @@ export default class Networking {
             try {
                 let baseurl = "https://" + domain + "";
                 let api = CONST_API.UPLOAD_POST_MEDIA;
-                let headers = Object.assign(this.createHeaders(access_token), { 'content-type': 'multipart/form-data' });
+                let headers = Object.assign(this.createHeaders(access_token), { "content-type": "multipart/form-data" });
                 const data = new FormData();
                 data.append("file", {
                     uri: file.uri,
@@ -49,7 +49,7 @@ export default class Networking {
                     method: api.method,
                     headers,
                     data
-                })
+                });
                 resolve(response.data);
             } catch (e) {
                 reject(e);

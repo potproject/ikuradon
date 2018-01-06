@@ -41,7 +41,7 @@ class Setting extends React.Component {
 }
 
 export default connect((state) => {
-    return (state)
+    return (state);
 },
 (dispatch) => ({
     StreamingActions: bindActionCreators(StreamingActions, dispatch),

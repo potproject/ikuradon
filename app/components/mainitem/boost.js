@@ -12,7 +12,7 @@ class Boost extends React.Component {
             id: props.id,
             style: props.style,
             reblogged: props.reblogged
-        }
+        };
     }
     componentWillReceiveProps(nextProps) {
         this.state.reblogged = nextProps.reblogged;

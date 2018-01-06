@@ -27,7 +27,7 @@ export function start() {
             //console.error(e);
             return;
         }
-    }
+    };
 }
 
 export function stop() {
@@ -43,5 +43,5 @@ export function stop() {
             return;
         }
         dispatch({ type: Streaming.STREAM_STOP });
-    }
+    };
 }

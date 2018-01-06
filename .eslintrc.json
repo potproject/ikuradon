@@ -15,8 +15,12 @@
     },
     "parser": "babel-eslint",
     "rules": {
+        //セミコロン必須(但しワンラインブロックのコードのみ例外で不要)
+        "semi": ["error","always", {"omitLastInOneLineBlock": true}],
+        
         //indentは4spaces
         "indent": ["error", 4,{ "SwitchCase": 1 }],
+
         //constを変更してはいけない
         "no-const-assign": "error",
         

@@ -6,6 +6,6 @@ export default class Federal extends React.Component {
         super(props);
     }
     render() {
-        return <Mastolist type={"federal"} />
+        return <Mastolist type={"federal"} />;
     }
 }

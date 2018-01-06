@@ -8,7 +8,7 @@ export default class Reply extends React.Component {
         this.state = {
             id:props.id,
             style:props.style
-        }
+        };
     }
     render() {
         return (

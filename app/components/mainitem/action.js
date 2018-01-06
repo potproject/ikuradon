@@ -17,7 +17,7 @@ class Action extends React.Component {
             style: props.style,
             url: props.url,
             body: props.body
-        }
+        };
         this.handlePress = this.handlePress.bind(this);
     }
     render() {

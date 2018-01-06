@@ -5,7 +5,6 @@ import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
-
 class Mastolist extends React.Component {
 
     constructor(props) {
@@ -138,7 +137,7 @@ class Mastolist extends React.Component {
                 media_attachments={data.media_attachments}
                 url={data.url}
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
-            />
+            />;
         } else {
             return <MastoRow
                 key={data.id}
@@ -160,7 +159,7 @@ class Mastolist extends React.Component {
                 media_attachments={data.reblog.media_attachments}
                 url={data.url}
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
-            />
+            />;
         }
     }
 }
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
 
 
 export default connect((state) => {
-    return (state)
+    return (state);
 },
 (dispatch) => ({
     MainActions: bindActionCreators(MainActions, dispatch)

@@ -1,4 +1,4 @@
-import * as AuthorizeActionTypes from '../actions/actiontypes/authorize';
+import * as AuthorizeActionTypes from "../actions/actiontypes/authorize";
 
 const initialState = {
 

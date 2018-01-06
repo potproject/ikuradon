@@ -9,7 +9,7 @@ const reducerTypeArray = {
     local:CONST_API.GET_TIMELINES_LOCAL,
     federal:CONST_API.GET_TIMELINES_FEDERAL,
     notifications:CONST_API.GET_NOTIFICATIONS
-}
+};
 
 export function toot() {
     return { type: Nav.NAV_TOOT };
@@ -27,12 +27,12 @@ export function getTimeline(reducerType,limit = 40) {
             return;
         }
         dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType });
-    }
+    };
 }
 
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {
-        dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType })
+        dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });
         let data;
         try {
             let access_token = await AsyncStorage.getItem("access_token");
@@ -43,12 +43,12 @@ export function newLoadingTimeline(reducerType,since_id, limit = 40) {
             return;
         }
         dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data , reducerType });
-    }
+    };
 }
 
 export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
     return async dispatch => {
-        dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType })
+        dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });
         let data;
         try {
             let access_token = await AsyncStorage.getItem("access_token");
@@ -59,5 +59,5 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
             return;
         }
         dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType ,});
-    }
+    };
 }

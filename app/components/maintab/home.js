@@ -6,6 +6,6 @@ export default class Home extends React.Component {
         super(props);
     }
     render() {
-        return <Mastolist type={"home"}/>
+        return <Mastolist type={"home"}/>;
     }
 }

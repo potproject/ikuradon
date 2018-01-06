@@ -6,6 +6,6 @@ export default class Notifications extends React.Component {
         super(props);
     }
     render() {
-        return <Mastolist type={"notifications"}/>
+        return <Mastolist type={"notifications"}/>;
     }
 }

@@ -108,8 +108,8 @@ function getMinMaxId(lowest, highest, data) {
     let tmp;
     for (let i = data.length - 1; i >= 0; i--) {
         tmp = data[i].id;
-        if (tmp < lowest) { lowest = tmp; }
-        if (tmp > highest) { highest = tmp; }
+        if (tmp < lowest) { lowest = tmp }
+        if (tmp > highest) { highest = tmp }
     }
     return {
         minId: lowest,

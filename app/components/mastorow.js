@@ -33,7 +33,7 @@ export default class MastoRow extends Component {
             visibility:props.visibility,
             sensitive:props.sensitive,
             spoiler_text:props.spoiler_text
-        }
+        };
     }
     componentWillReceiveProps(nextProps) {
         if (this.state.favourited !== nextProps.favourited) {

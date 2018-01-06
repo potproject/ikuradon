@@ -12,7 +12,7 @@ export default class MastoRowNotificationfollow extends Component {
             image: props.image,
             username:"@"+props.username,
             acct: "@"+props.acct
-        }
+        };
     }
     render() {
         return (

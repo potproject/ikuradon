@@ -24,4 +24,4 @@ export default class I18n {
 reactNativeI18n.translations = {
     "en-US": lang_en_US,
     "ja-JP": lang_ja_JP
-}
+};

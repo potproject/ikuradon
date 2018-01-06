@@ -32,7 +32,7 @@ class Authorize extends React.Component {
         //mastodon.potproject.net
         const complateUrl = `https://${domain}/oauth/authorize/`;
         const index = navState.url.indexOf(complateUrl);
-        if(index != -1){
+        if(index !== -1){
             //complete!
             const authorizeCode= navState.url.substring(complateUrl.length);
             this.props.AuthorizeActions.getAccessTokenWithHomeAction(domain,client_id,client_secret,authorizeCode);
