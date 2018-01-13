@@ -60,6 +60,8 @@ export default function Main(state = initialState, action = {}) {
                     maxId
                 }
             });
+            //String化しないとExpoが落ちる模様(バグ?)
+            AsyncStorage.setItem("last_update",String(new Date().getTime()));
             if(TIMELINE_LOCAL_AUTOSAVE){
                 AsyncStorage.setItem("timeline_cache",autoSave(Object.assign({},newstate)));
             }
