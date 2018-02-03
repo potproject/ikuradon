@@ -33,6 +33,7 @@
     "react": "16.0.0",
     "react-native": "^0.51.0",
     "react-native-actionsheet": "^2.3.0",
+    "react-native-customemoji": "0.0.1",
     "react-native-hyperlink": "^0.0.11",
     "react-native-swiper": "^1.5.13",
     "react-navigation": "^1.0.0-beta.11",

@@ -8,7 +8,7 @@ import Boost from "./mainitem/boost";
 import Favourite from "./mainitem/favourite";
 import Action from "./mainitem/action";
 import { bodyFormat, dateFormat } from "../util/parser";
-import CustomEmoji from "./customemoji";
+import CustomEmoji from "react-native-customemoji";
 import VisibilityIcon from "./visibilityicon";
 
 export default class MastoRow extends Component {
@@ -108,7 +108,7 @@ export default class MastoRow extends Component {
         if(emojis.length > 0){
             let emojiArray = {};
             emojis.forEach((emoji)=>{
-                emojiArray[":"+emoji.shortcode+":"] = {uri:emoji.url};
+                emojiArray[emoji.shortcode] = {uri:emoji.url};
             });
             return <CustomEmoji emojiStyle={{ width: 12, height:12}} emojis={emojiArray}>
                 <Text style={styles.body}>{newbody}</Text>
