@@ -41,16 +41,12 @@ Open it in the [Expo app](https://expo.io) on your phone to view it.
 
 ## Installation
 ```
-npm install
-# or
 yarn
 ```
-requires npm or yarn.
-
-##
+requires yarn(npm is not recommended).
 
 ## Apps Run
-`npm start` or `yarn start`
+`yarn start`
 
 ## LICENSE
 

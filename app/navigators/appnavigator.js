@@ -59,7 +59,8 @@ class AppWithNavigationState extends React.Component {
         return <AppNavigator navigation = {
             addNavigationHelpers({
                 dispatch: this.props.dispatch,
-                state: this.props.navReducer
+                state: this.props.navReducer,
+                addListener: ()=>{return} //一時的な対処
             })
         }
         />;
