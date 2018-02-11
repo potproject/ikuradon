@@ -10,6 +10,8 @@ import {
     bindActionCreators
 } from "redux";
 
+import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
+
 import AuthorizeScreen from "../components/authorize";
 import MainScreen from "../components/main";
 import LoginScreen from "../components/login";
@@ -60,7 +62,7 @@ class AppWithNavigationState extends React.Component {
             addNavigationHelpers({
                 dispatch: this.props.dispatch,
                 state: this.props.navReducer,
-                addListener: ()=>{return} //一時的な対処
+                addListener: createReduxBoundAddListener("root")
             })
         }
         />;
