@@ -21,6 +21,7 @@ import MediaViewerScreen from "../components/mediaviewer/mediaviewer";
 import * as AppInitActions from "../actions/actioncreators/appinit";
 
 import I18n from "../i18n";
+import { translate } from "react-i18next";
 
 export const AppNavigator = StackNavigator({
     Login: {
@@ -51,20 +52,21 @@ export const AppNavigator = StackNavigator({
         }),
     }
 });
-
 class AppWithNavigationState extends React.Component {
     constructor(props) {
         super(props);
         props.AppInitActions.appInit();
     }
     render() {
-        return <AppNavigator navigation = {
-            addNavigationHelpers({
-                dispatch: this.props.dispatch,
-                state: this.props.navReducer,
-                addListener: createReduxBoundAddListener("root")
-            })
-        }
+        return <AppNavigator 
+            screenProps={{ t: I18n.getFixedT() }}
+            navigation = {
+                addNavigationHelpers({
+                    dispatch: this.props.dispatch,
+                    state: this.props.navReducer,
+                    addListener: createReduxBoundAddListener("root")
+                })
+            }
         />;
     }
 }
@@ -77,4 +79,4 @@ export default connect(state => state,
             AppInitActions: bindActionCreators(AppInitActions, dispatch)
         })
     )
-)(AppWithNavigationState);
+)(translate("translation",{wait:true})(AppWithNavigationState));
