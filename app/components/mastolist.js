@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, View, Text, StyleSheet, Image, ListView, RefreshControl } from "react-native";
+import { Button, View, Text, StyleSheet, Image, FlatList, RefreshControl } from "react-native";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
@@ -12,7 +12,6 @@ class Mastolist extends React.Component {
         this.type = this.props.type;
         this.access_token = this.props.navReducer.access_token;
         this.domain = this.props.navReducer.domain;
-        this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => { r1.id !== r2.id } });
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         headerRightHandler = this.props.MainActions.toot;
@@ -24,45 +23,27 @@ class Mastolist extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <ListView
+                <FlatList
                     style={styles.container}
-                    dataSource={this.dataSource.cloneWithRows(this.listdata.data)}
-                    enableEmptySections={true}
-                    removeClippedSubviews={false}
-                    renderRow={(data) => this.mastoRowIdentification(data)}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+                    data={this.listdata.data}
+                    renderItem={(data) => this.mastoRowIdentification(data.item)}
+                    keyExtractor={(data) => data.id}
+                    ItemSeparatorComponent={() => <View style={styles.separator} />}
                     refreshControl={
                         <RefreshControl
                             refreshing={this.listdata.refreshing}
                             onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
                         />
                     }
-                    onEndReachedThreshold={1000}
-                    onEndReached={(e)=>{
-                        if(e){this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
-                    }}
+                    //TODO onEndReachedThresholdが正常に動かないバグ
+                    //ListViewの時はこの値はpixelだったが、今回は明らかに挙動が違う。
+                    //その他、レンダリングはまだまだ早いとは言えないし、処理が重いんだよ警告が出てるので見直しが必要です。最終目標は60FPS安定。
+                    onEndReachedThreshold={1}
+                    onEndReached={()=>(this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId))
+                    }
                 />
             </View>
         );
-        /*<FlatList
-            style={styles.container}
-            data={this.listdata.data}
-            renderItem={(data) => this.mastoRowIdentification(data.item)}
-            keyExtractor={(data) => data.id}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            refreshControl={
-                <RefreshControl
-                    refreshing={this.listdata.refreshing}
-                    onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
-                />
-            }
-            onEndReachedThreshold={0.1}
-            onEndReached={(e)=>{
-                //TODO onEndReached twice event Bug!
-                //このバグを解消できればflatlistに移行できますけど
-                this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
-            }
-        />*/
     }
     
     reducerType(nextProps) {
