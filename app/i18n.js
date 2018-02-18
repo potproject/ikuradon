@@ -4,6 +4,7 @@ import Expo from "expo";
 
 import i18next from "i18next";
 import { reactI18nextModule } from "react-i18next";
+import Moment from "moment/min/moment-with-locales";
 
 const languageDetector = {
     type: "languageDetector",
@@ -26,6 +27,11 @@ i18next
             interpolation: {
                 escapeValue: false // not needed for react
             }
+        }
+    })
+    .on("languageChanged", function(lng) {
+        if(lng === "ja-JP"){
+            return Moment.locale("ja");
         }
     });
 export default i18next;
