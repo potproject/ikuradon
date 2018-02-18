@@ -6,7 +6,7 @@ import I18n from "../../i18n";
 
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)
-const TIMELINE_LOCAL_LIMIT = 200; // Timeline Local Data Limit
+const TIMELINE_LOCAL_LIMIT = 50; // Timeline Local Data Limit
 //タイムラインが古くなってしまった場合、キャッシュを削除
 const TIMELINE_LOCAL_EXPIRED = 600; // Timeline Local Data Expired (sec)
 

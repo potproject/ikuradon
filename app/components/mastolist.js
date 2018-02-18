@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, View, Text, StyleSheet, Image, FlatList, RefreshControl } from "react-native";
+import { Button, View, Text, StyleSheet, Image, RefreshControl } from "react-native";
+import {OptimizedFlatList} from "react-native-optimized-flatlist";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
@@ -23,9 +24,13 @@ class Mastolist extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
+                <OptimizedFlatList
+                    //OptimizedFlatListでViewの最適化
                     style={styles.container}
                     data={this.listdata.data}
+                    //TODO onEndReachedThresholdが正常に動かないバグのため、過去実装ONにするlegacyImplementationをtrue
+                    //いつか動くようになるったら消すかな・・・
+                    legacyImplementation={true}
                     renderItem={(data) => this.mastoRowIdentification(data.item)}
                     keyExtractor={(data) => data.id}
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -35,10 +40,7 @@ class Mastolist extends React.Component {
                             onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
                         />
                     }
-                    //TODO onEndReachedThresholdが正常に動かないバグ
-                    //ListViewの時はこの値はpixelだったが、今回は明らかに挙動が違う。
-                    //その他、レンダリングはまだまだ早いとは言えないし、処理が重いんだよ警告が出てるので見直しが必要です。最終目標は60FPS安定。
-                    onEndReachedThreshold={1}
+                    onEndReachedThreshold={1000}
                     onEndReached={()=>(this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId))
                     }
                 />

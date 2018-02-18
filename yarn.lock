@@ -5003,6 +5003,12 @@ react-native-maps@0.17.1:
   version "0.17.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.17.1.tgz#ab2236341fd984dac8864202ae55331bc262f60c"
 
+react-native-optimized-flatlist@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-optimized-flatlist/-/react-native-optimized-flatlist-1.0.4.tgz#15c817ffb545e3c62e56a1b3c4654c1316414941"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-safe-area-view@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.6.0.tgz#ce01eb27905a77780219537e0f53fe9c783a8b3d"
