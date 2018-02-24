@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Button, View, Text, StyleSheet, Image, RefreshControl } from "react-native";
-import {OptimizedFlatList} from "react-native-optimized-flatlist";
+import { Button, View, Text, StyleSheet, Image, RefreshControl, FlatList } from "react-native";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
@@ -24,12 +23,12 @@ class Mastolist extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <OptimizedFlatList
-                    //OptimizedFlatListでViewの最適化
+                <FlatList
+                    //OptimizedFlatList、ちょっとイマイチかも・・・
+                    //TODO タブ切り替え時に描画されない。
                     style={styles.container}
                     data={this.listdata.data}
                     //TODO onEndReachedThresholdが正常に動かないバグのため、過去実装ONにするlegacyImplementationをtrue
-                    //いつか動くようになるったら消すかな・・・
                     legacyImplementation={true}
                     renderItem={(data) => this.mastoRowIdentification(data.item)}
                     keyExtractor={(data) => data.id}
