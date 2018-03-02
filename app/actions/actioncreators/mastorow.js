@@ -7,20 +7,16 @@ import Networking from "../../networking";
 export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
+            dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
             let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
-            Alert.alert("エラー", "ブースト失敗っす");
-            dispatch({
-                type: Mastorow.BOOST_MASTOROW,
-                id: null
-            });
+            dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted:!boosted });
             return;
         }
-        dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
         return;
     };
 }
@@ -28,20 +24,16 @@ export function boost(id, tootid, boosted) {
 export function favourite(id, tootid, favourited) {
     return async dispatch => {
         try {
+            dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
             let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
-            Alert.alert("エラー", "お気に入り失敗っす");
-            dispatch({
-                type: Mastorow.FAVOURITE_MASTOROW,
-                id: null
-            });
+            dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited:!favourited });
             return;
         }
-        dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
         return;
     };
 }
