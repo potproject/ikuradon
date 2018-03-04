@@ -57,7 +57,7 @@ export default class MastoRow extends Component {
                                 {this.state.acct}
                             </Text>
                         </Text>
-                        <Hyperlink onPress={url => this.openUrl(url)}>
+                        <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
                             <View>
                                 {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
                             </View>
@@ -167,7 +167,12 @@ const styles = StyleSheet.create({
     body: {
         flex: 2,
         marginLeft: 12,
-        fontSize: 12,
+        fontSize: 14,
+    },
+    link:{
+        color: "#2980b9",
+        fontSize: 14,
+        textDecorationLine: "underline"
     },
     photo: {
         height: 50,

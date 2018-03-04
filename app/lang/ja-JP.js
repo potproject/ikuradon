@@ -42,6 +42,11 @@ export default {
     mediaviewer_title: "メディア",
 
     //エラー
+    Errors_error: "エラー!",
+    Errors_network: "ネットワークエラー",
+    Errors_unauthorized: "認証エラー",
+    Errors_server: "サーバエラー",
+    Errors_unknown: "不明なエラー",
 
     //共通
     global_ok : "OK",

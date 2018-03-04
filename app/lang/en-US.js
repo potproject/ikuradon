@@ -42,6 +42,11 @@ export default {
     mediaviewer_title: "Media",
 
     //Errors
+    Errors_error: "Error!",
+    Errors_network: "Network Error",
+    Errors_unauthorized: "Unauthorized Error",
+    Errors_server: "Server Error",
+    Errors_unknown: "Unknown Error",
 
     //Global
     global_ok : "OK",

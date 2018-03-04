@@ -3,6 +3,7 @@ import * as Main from "../actiontypes/main";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import I18n from "../../i18n";
+import Font from "../../font";
 
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)
@@ -25,8 +26,11 @@ export function appInit() {
             type: Main.GETLOCALDATA_MASTOLIST,
             data: timeline_cache
         });
-
+        //i18n init
         await I18n.init();
+        //fontload init
+        //await Font.init();
+
         //ここにトークンが生きてるか判断させる
         if (AUTO_LOGIN && access_token && domain) {
             dispatch({
