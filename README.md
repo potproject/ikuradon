@@ -11,16 +11,18 @@ This project was created at [Create React Native App](https://github.com/react-c
 まだ開発中です。一部未実装の機能があります。
 
 ## TODO
-* □ Reply/Mention
 * □ View User Data
+* □ View Toot TimeLine Tree
 * □ Media Toot
+* □ Emoji & Custom Emoji Toot
+* ☑ Reply/Mention
 * ☑ View NFSW Timeline
 * ☑ Streaming API Support
 * ☑ i18n (EN/JP)
 * ☑ Media Viewer (Video/Image/gifv)
 * ☑ NFSW Toot
 * ☑ TimeLine Local Auto Save
-* ☑ Custom Emoji Support (2.x)
+* ☑ Custom Emoji Support (2.x,View Only)
 
 ## ScreenShots
 <div>
