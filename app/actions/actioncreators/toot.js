@@ -4,17 +4,22 @@ import { Alert, AsyncStorage } from "react-native";
 import Networking from "../../networking";
 import { ImagePicker } from "expo";
 
-export function toot(status,visibility,sensitive,spoiler_text) {
+export function toot(status, visibility, sensitive, spoiler_text, reply = null) {
     return async dispatch => {
         let url, client_id, client_secret;
         try {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
+            let in_reply_to_id = null;
+            if(reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined"){
+                in_reply_to_id = reply.tootid;
+            }
             let data = await Networking.fetch(domain, CONST_API.POST_STATUS, null, {
                 status,
                 visibility,
                 sensitive,
                 spoiler_text,
+                in_reply_to_id
             }, access_token);
         } catch (e) {
             Alert.alert("エラー", "問い合わせ失敗っす");
@@ -44,7 +49,7 @@ export function mediaOpen(openType) {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             //アップロード中とかほしいね
-            let data = await Networking.fileUpload(domain,access_token,fileData);
+            let data = await Networking.fileUpload(domain, access_token, fileData);
             console.log(data);
         } catch (e) {
             Alert.alert("エラー", "問い合わせ失敗っす");

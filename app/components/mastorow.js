@@ -79,7 +79,7 @@ export default class MastoRow extends Component {
                 {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
                 <View style={styles.container}>
                     <View style={styles.item}>
-                        <Reply id={this.state.tootid} style={styles.itemFlex} />
+                        <Reply id={this.state.tootid} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} style={styles.itemFlex} />
                         <Boost id={this.state.id} tootid={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
                         <Favourite id={this.state.id} tootid={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
                         <Action id={this.state.tootid} style={styles.itemFlex} url={this.state.url} body={this.state.body} />
@@ -168,6 +168,8 @@ const styles = StyleSheet.create({
         flex: 2,
         marginLeft: 12,
         fontSize: 14,
+        paddingTop: 3,
+        paddingBottom: 3,
     },
     link:{
         color: "#2980b9",

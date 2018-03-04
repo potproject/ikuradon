@@ -58,9 +58,17 @@ export default function reducer(state = initialState, action = {}) {
         case Nav.NAV_TOOT:
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({
-                    routeName: "Toot"
+                    routeName: "Toot",
                 }),
-                Object.assign({}, state)
+                Object.assign(state, { reply: null })
+            );
+            break;
+        case Nav.NAV_TOOT_REPLY:
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({
+                    routeName: "Toot",
+                }),
+                Object.assign(state, { reply: action.data })
             );
             break;
         case Nav.NAV_GO_BACK:

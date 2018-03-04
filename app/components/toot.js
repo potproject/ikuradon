@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
     Text,
-    Button,
+    Image,
     TextInput,
     StyleSheet,
     Modal,
@@ -15,6 +15,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import I18n from "../i18n";
 import VisibilityIcon from "./visibilityicon";
+import { bodyFormat } from "../util/parser";
 
 const MAX_TOOT_LENGTH = 500;
 
@@ -27,11 +28,25 @@ class Toot extends React.Component {
             warning: "",
             visibilityModal: false,
             visibility: "public",
+            reply: null,
         };
+        //reply
+        if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
+            this.state.reply = {
+                id: props.navReducer.reply.id,
+                tootid: props.navReducer.reply.tootid,
+                user: props.navReducer.reply.user,
+                acct: props.navReducer.reply.acct,
+                body: props.navReducer.reply.body,
+                image: props.navReducer.reply.image
+            };
+            this.state.text = this.state.reply.acct + " ";
+        }
     }
     render() {
         return (
             <View style={styles.container}>
+                {this.replyText()}
                 {this.toggleCwText()}
                 <TextInput
                     placeholder={I18n.t("toot_placeholder")}
@@ -60,7 +75,7 @@ class Toot extends React.Component {
                         <View style={styles.button}>
                             <Text style={styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
                         </View>
-                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning)}>
+                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.reply)}>
                             <Text style={styles.texttoot}>Toot!</Text>
                         </TouchableOpacity>
                     </View>
@@ -90,7 +105,7 @@ class Toot extends React.Component {
 
     toggleCwColor() {
         if (this.state.nsfwFlag) {
-            return [styles.textcw,{color:"#1E90FF"}];
+            return [styles.textcw, { color: "#1E90FF" }];
         } else {
             return styles.textcw;
         }
@@ -111,6 +126,18 @@ class Toot extends React.Component {
             return;
         }
     }
+    replyText() {
+        if (!this.state.reply) {
+            return;
+        }
+        return <View style={styles.reply}>
+            <View style={styles.replyHeader}>
+                <Image source={{ uri: this.state.reply.image }} style={styles.replyPhoto} />
+                <Text style={styles.replyName} ellipsizeMode='tail' numberOfLines={1}>{this.state.reply.user + " " + this.state.reply.acct}</Text>
+            </View>
+            <Text style={styles.replyBody} ellipsizeMode='tail' numberOfLines={3} >{bodyFormat(this.state.reply.body)}</Text>
+        </View>;
+    }
 }
 
 const styles = StyleSheet.create({
@@ -118,7 +145,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     toottext: {
-        height: 200,
+        height: 180,
         margin: 5,
         padding: 5,
         borderWidth: 1
@@ -150,6 +177,36 @@ const styles = StyleSheet.create({
         margin: 5,
         alignItems: "center",
     },
+    reply: {
+        backgroundColor: "#D2E5FF",
+        margin: 5,
+        padding: 5,
+        borderRadius: 5,
+    },
+    replyHeader: {
+        alignItems: "center",
+        flexDirection: "row",
+        height: 26,
+        margin: 2,
+    },
+    replyPhoto: {
+        margin: 3,
+        height: 24,
+        width: 24,
+        borderRadius: 4
+    },
+    replyName: {
+        widht: 26,
+        fontSize: 16,
+        flex: 1,
+        flexWrap: "wrap"
+    },
+    replyBody: {
+        margin: 2,
+        paddingTop: 3,
+        paddingBottom: 3,
+        fontSize: 12,
+    },
     textcw: {
         fontSize: 24,
     },
@@ -161,7 +218,7 @@ const styles = StyleSheet.create({
     },
     texttoot: {
         fontSize: 20,
-        color:"#00008B"
+        color: "#00008B"
     }
 });
 
