@@ -19,6 +19,13 @@ export function reply(id, tootid, user, acct, image, body){
     return { type: Nav.NAV_TOOT_REPLY , data: {id, tootid, user, acct, image, body} };
 }
 
+export function hide(id) {
+    return async dispatch => {
+        //TODO
+        return;
+    };
+}
+
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });

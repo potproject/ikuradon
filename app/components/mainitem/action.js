@@ -5,7 +5,7 @@ import ActionSheet from "react-native-actionsheet";
 import I18n from "../../i18n";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as ActionActions from "../../actions/actioncreators/action";
+import * as MainActions from "../../actions/actioncreators/main";
 
 import { bodyFormat } from "../../util/parser";
 
@@ -16,6 +16,10 @@ class Action extends React.Component {
             id: props.id,
             style: props.style,
             url: props.url,
+            tootid: props.tootid,
+            user: props.user,
+            acct: props.acct,
+            image: props.image,
             body: props.body
         };
         this.handlePress = this.handlePress.bind(this);
@@ -26,7 +30,7 @@ class Action extends React.Component {
                 <FontAwesome name="ellipsis-h" size={20} color="gray" />
                 <ActionSheet
                     ref={component => this.ActionSheet = component}
-                    options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_mention"), I18n.t("action_hide"), I18n.t("global_cancel")]}
+                    options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_reply"), I18n.t("action_hide"), I18n.t("global_cancel")]}
                     cancelButtonIndex={4}
                     destructiveButtonIndex={3}
                     onPress={this.handlePress}
@@ -40,16 +44,17 @@ class Action extends React.Component {
     handlePress(i) {
         switch(i){
             case 0: //Open in Browser
+                //TODO must to Try/catch
                 Linking.openURL(this.state.url);
                 return;
             case 1: //Copy
                 Clipboard.setString(bodyFormat(this.state.body));
                 return;
-            case 2: //Mention
-                this.props.ActionActions.mention(this.state.id);
+            case 2: //reply
+                this.props.MainActions.reply(this.state.id, this.state.tootid, this.state.user, this.state.acct, this.state.image, this.state.body);
                 return;
             case 3: //Hide
-                this.props.ActionActions.hide(this.state.id);
+                this.props.MainActions.hide(this.state.id);
                 return;
         }
     }
@@ -57,6 +62,6 @@ class Action extends React.Component {
 
 export default connect(state => state,
     (dispatch) => ({
-        ActionActions: bindActionCreators(ActionActions, dispatch)
+        MainActions: bindActionCreators(MainActions, dispatch)
     })
 )(Action);
