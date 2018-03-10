@@ -8,7 +8,8 @@ import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
 
 //TODO OptimizedFlatListは設定で変更できるようにしよう・・・
-const UsingOptimizedFlatList = true;
+//やっぱりイマイチなのでfalseに
+const UsingOptimizedFlatList = false;
 
 class Mastolist extends React.Component {
 

@@ -5,6 +5,8 @@ import { AsyncStorage } from "react-native";
 
 const TIMELINE_LOCAL_AUTOSAVE = true; // Timeline Local Auto Load (Experimental)
 
+const viewTypeArray = ["home", "local", "federal"];
+
 const initialState = {
     home: {
         data: [],
@@ -75,7 +77,13 @@ export default function Main(state = initialState, action = {}) {
                     maxId: state[action.reducerType].maxId
                 }
             });
-
+        case MainActionTypes.HIDE_MASTOLIST:
+            for (let viewType of viewTypeArray) {
+                state[viewType].data = state[viewType].data.filter(function(v){
+                    return v.id !== action.id;
+                });
+            }
+            return Object.assign({}, state);
         case MainActionTypes.ALLCLEAR_MASTOLIST:
             return initialState;
 
@@ -112,7 +120,6 @@ function changeItem(type, state, id, bool) {
             return state;
     }
     let statecopy = Object.assign({}, state);
-    const viewTypeArray = ["home", "local", "federal"];
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {

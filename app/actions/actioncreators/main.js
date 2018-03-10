@@ -20,10 +20,7 @@ export function reply(id, tootid, user, acct, image, body){
 }
 
 export function hide(id) {
-    return async dispatch => {
-        //TODO
-        return;
-    };
+    return { type: Main.HIDE_MASTOLIST, id: id };
 }
 
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
