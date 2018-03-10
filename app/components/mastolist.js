@@ -1,10 +1,15 @@
 import React from "react";
 import { View, StyleSheet, RefreshControl, FlatList } from "react-native";
+import { OptimizedFlatList } from "react-native-optimized-flatlist";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
+
+//TODO OptimizedFlatListは設定で変更できるようにしよう・・・
+const UsingOptimizedFlatList = true;
+
 class Mastolist extends React.Component {
 
     constructor(props) {
@@ -15,16 +20,17 @@ class Mastolist extends React.Component {
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         headerRightHandler = this.props.MainActions.toot;
+        this.ChangeFlatView = UsingOptimizedFlatList ? OptimizedFlatList : FlatList;
     }
 
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
     }
     render() {
+        let ChangeFlatView = this.ChangeFlatView;
         return (
             <View style={styles.container}>
-                <FlatList
-                    //OptimizedFlatListのような仕組みが無いと、やはり重い
+                <ChangeFlatView
                     style={styles.container}
                     data={this.listdata.data}
                     renderItem={(data) => this.mastoRowIdentification(data.item)}
