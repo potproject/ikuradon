@@ -2,7 +2,10 @@ import He from "he";
 import Moment from "moment/min/moment-with-locales";
 
 export function bodyFormat(body) {
-    let newbody = body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, "");
+    console.log(body);
+    //改行
+    let newbody = body.replace(/(<br\s*>|<br\s*\/>)/g, "\n");
+    newbody = newbody.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, "");
     return He.unescape(newbody);
 }
 export function dateFormat(date) {
