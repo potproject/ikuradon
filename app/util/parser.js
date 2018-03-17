@@ -2,7 +2,6 @@ import He from "he";
 import Moment from "moment/min/moment-with-locales";
 
 export function bodyFormat(body) {
-    console.log(body);
     //改行 <br />
     let newbody = body.replace(/(<br\s*>|<br\s*\/>)/g, "\n");
     //URL <a > </a>
