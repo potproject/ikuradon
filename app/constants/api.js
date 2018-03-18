@@ -113,5 +113,4 @@ export const UPLOAD_POST_MEDIA = {
 export const STREAMING = {
     method:"get",
     url:"/api/v1/streaming",
-    stream:"user"
 };

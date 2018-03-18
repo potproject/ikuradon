@@ -1,44 +1,60 @@
 export default class Stream {
-    static init(domain, api, access_token = null) {
-        this.url = "wss://" + domain + api.url + "?access_token=" + access_token + "&stream=" + api.stream;
-        this.ws = new WebSocket(this.url);
+    static ws = {
+        home:null,
+        local:null,
+        federal:null,
+    };
+    static init(domain, api, access_token = null , reducerType = "home") {
+        let stream;
+        switch(reducerType){
+            case "federal":
+                stream = "public";
+                break;
+            case "local":
+                stream = "public:local";
+            case "home":
+            default:
+                stream = "user";
+                break;
+        }
+        let url = "wss://" + domain + api.url + "?access_token=" + access_token + "&stream=" + stream;
+        this.ws[reducerType] = new WebSocket(url);
     }
 
-    static open() {
+    static open(reducerType) {
         return new Promise((resolve, reject) => {
-            this.ws.onopen = () => {
-                console.log("[WS]websocket opened:" + this.url);
+            if(!this.ws[reducerType]){
+                reject();
+                return;
+            }
+            this.ws[reducerType].onopen = () => {
+                console.log("[WS]websocket opened:"+reducerType);
                 resolve();
             };
-            this.ws.onerror = (event) => {
-                console.log("[WS]websocket error:" + this.url);
+            this.ws[reducerType].onerror = () => {
+                console.log("[WS]websocket error:"+reducerType);
                 reject();
             };
         });
     }
 
-    static reconnect() {
-        if (this.ws) {
-
-        }
-    }
-    static receive(callback) {
-        this.ws.onmessage = (event) => {
+    static receive(callback,reducerType) {
+        this.ws[reducerType].onmessage = (event) => {
             callback(JSON.parse(event.data));
         };
     }
 
-    static close() {
+    static close(reducerType) {
         return new Promise((resolve) => {
-            if (!this.ws || !this.ws.close) {
+            if (!this.ws[reducerType] || !this.ws[reducerType].close) {
                 resolve(1001);
                 return;
             }
-            this.ws.onclose = (event) => {
-                console.log("[WS]websocket closed:code:" + event.code + ":" + this.url);
+            this.ws[reducerType].onclose = (event) => {
+                console.log("[WS]websocket closed code:" + event.code +" type:"+reducerType);
                 resolve(event.code);
             };
-            this.ws.close();
+            this.ws[reducerType].close();
         });
     }
 }
