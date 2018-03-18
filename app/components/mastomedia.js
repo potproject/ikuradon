@@ -64,8 +64,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     mediaview:{
-        margin: 5,
-        padding: 5,
+        marginTop:5,
+        marginButtom:5,
+        marginLeft: 12,
+        paddingTop: 3,
+        paddingBottom: 3,
         width: 300,
         height: 100,
     },
