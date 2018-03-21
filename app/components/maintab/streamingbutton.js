@@ -14,8 +14,8 @@ class StreamingButton extends React.Component {
         };
     }
     render() {
-        return <View style={styles.view}>
-            <TouchableOpacity onPress={() => this.streamSwitch()}>
+        return <View>
+            <TouchableOpacity onPress={() => this.streamSwitch()} style={styles.view}>
                 <FontAwesome name="feed" size={24} color={this.setColor(this.state.enabled)} />
             </TouchableOpacity>
         </View>;
@@ -32,7 +32,10 @@ class StreamingButton extends React.Component {
 
 const styles = StyleSheet.create({
     view: {
-        marginLeft:12
+        paddingTop: 4,
+        paddingButtom: 4,
+        paddingLeft: 12,
+        paddingRight: 4,
     },
 });
 

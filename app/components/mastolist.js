@@ -20,7 +20,6 @@ class Mastolist extends React.Component {
         this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
-        headerRightHandler = this.props.MainActions.toot;
         this.ChangeFlatView = UsingOptimizedFlatList ? OptimizedFlatList : FlatList;
     }
 

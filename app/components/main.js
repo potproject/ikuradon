@@ -9,6 +9,8 @@ import NotificationsTabScreen from "../components/maintab/notifications";
 import SettingTabScreen from "../components/maintab/setting";
 
 import StreamingButton from "./maintab/streamingbutton";
+import TootButton from "./maintab/tootbutton";
+
 import { FontAwesome } from "@expo/vector-icons";
 import I18n from "../i18n";
 
@@ -20,7 +22,7 @@ export default TabNavigator(
             navigationOptions: () => ({
                 title: I18n.t("navigation_home"),
                 headerLeft:<StreamingButton type={"home"} />,
-                headerRight: <Button title={I18n.t("navigation_button_toot")} onPress={() => this.headerRightHandler()} />,
+                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="home" size={32} color={tintColor} />
                 )
@@ -31,7 +33,7 @@ export default TabNavigator(
             navigationOptions: () => ({
                 title: I18n.t("navigation_local"),
                 //headerLeft:<StreamingButton type={"local"} />, //not working bug.
-                headerRight: <Button title={I18n.t("navigation_button_toot")} onPress={() => this.headerRightHandler()} />,
+                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="users" size={26} color={tintColor} />
                 )
@@ -42,7 +44,7 @@ export default TabNavigator(
             navigationOptions: () => ({
                 title: I18n.t("navigation_federal"),
                 //headerLeft:<StreamingButton type={"federal"} />, //not working bug.
-                headerRight: <Button title={I18n.t("navigation_button_toot")} onPress={() => this.headerRightHandler()} />,
+                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="globe" size={32} color={tintColor} />
                 )
@@ -52,7 +54,7 @@ export default TabNavigator(
             screen: NotificationsTabScreen,
             navigationOptions: () => ({
                 title: I18n.t("navigation_notifications"),
-                headerRight: <Button title={I18n.t("navigation_button_toot")} onPress={() => this.headerRightHandler()} />,
+                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="bell" size={26} color={tintColor} />
                 )
