@@ -45,7 +45,9 @@ class Action extends React.Component {
         switch(i){
             case 0: //Open in Browser
                 //TODO must to Try/catch
-                Linking.openURL(this.state.url);
+                if(this.state.url){
+                    Linking.openURL(this.state.url);
+                }
                 return;
             case 1: //Copy
                 Clipboard.setString(bodyFormat(this.state.body));
