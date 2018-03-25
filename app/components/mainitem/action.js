@@ -41,13 +41,23 @@ class Action extends React.Component {
     onPress() {
         this.ActionSheet.show();
     }
+
+    async openUrl(url){
+        try {
+            let supported = await Linking.canOpenURL(url);
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                console.log("not supported url");
+            }
+        } catch (e) {
+            console.error("Linking error", e);
+        }
+    }
     handlePress(i) {
         switch(i){
             case 0: //Open in Browser
-                //TODO must to Try/catch
-                if(this.state.url){
-                    Linking.openURL(this.state.url);
-                }
+                this.openUrl(this.state.url);
                 return;
             case 1: //Copy
                 Clipboard.setString(bodyFormat(this.state.body));

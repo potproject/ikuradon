@@ -57,11 +57,7 @@ export default class MastoRow extends Component {
                                 {this.state.acct}
                             </Text>
                         </Text>
-                        <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
-                            <View>
-                                {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
-                            </View>
-                        </Hyperlink>
+                        {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
                         <MastoMedia
                             media_attachments={this.state.media_attachments}
                             sensitive={this.state.sensitive}
@@ -110,11 +106,15 @@ export default class MastoRow extends Component {
             emojis.forEach((emoji)=>{
                 emojiArray[emoji.shortcode] = {uri:emoji.url};
             });
-            return <CustomEmoji emojiStyle={{ width: 12, height:12}} emojis={emojiArray}>
-                <Text style={styles.body}>{newbody}</Text>
-            </CustomEmoji>;
+            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
+                <CustomEmoji emojiStyle={{ width: 12, height:12}} emojis={emojiArray}>
+                    <Text style={styles.body}>{newbody}</Text>
+                </CustomEmoji>
+            </Hyperlink>;
         }
-        return <Text style={styles.body}>{newbody}</Text>;
+        return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
+            <Text style={styles.body}>{newbody}</Text>
+        </Hyperlink>;
     }
     notificationFormat(type, name) {
         if (type === null) {
