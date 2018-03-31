@@ -1,4 +1,4 @@
-import { Alert, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import * as Mastorow from "../actiontypes/mastorow";
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
@@ -11,7 +11,7 @@ export function boost(id, tootid, boosted) {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
-            let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted:!boosted });
@@ -28,7 +28,7 @@ export function favourite(id, tootid, favourited) {
             let domain = await AsyncStorage.getItem("domain");
             let access_token = await AsyncStorage.getItem("access_token");
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
-            let data = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             console.error(e);
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited:!favourited });

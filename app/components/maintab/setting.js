@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, Switch, Button } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { View, Button } from "react-native";
+//import { FontAwesome } from "@expo/vector-icons";
 import * as LoginActions from "../../actions/actioncreators/login";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

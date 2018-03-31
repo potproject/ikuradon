@@ -1,5 +1,4 @@
 import React from "react";
-import { Button, StyleSheet } from "react-native";
 import { TabNavigator } from "react-navigation";
 
 import HomeTabScreen from "../components/maintab/home";

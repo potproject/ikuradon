@@ -1,7 +1,4 @@
 import {
-    addNavigationHelpers
-} from "react-navigation";
-import {
     AppNavigator
 } from "../navigators/appnavigator";
 import {

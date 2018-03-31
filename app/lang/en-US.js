@@ -51,4 +51,4 @@ export default {
     //Global
     global_ok : "OK",
     global_cancel: "Cancel",
-}
+};

@@ -3,7 +3,7 @@ import * as Main from "../actiontypes/main";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import I18n from "../../i18n";
-import Font from "../../font";
+//import Font from "../../font";
 
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)

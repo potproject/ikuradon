@@ -1,4 +1,4 @@
-import React, { PropTypes } from "react";
+import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default class VisibilityIcon extends React.Component {

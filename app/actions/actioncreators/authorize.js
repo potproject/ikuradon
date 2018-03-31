@@ -1,4 +1,4 @@
-import { AsyncStorage,Alert } from "react-native";
+import { AsyncStorage } from "react-native";
 import * as Authorize from "../actiontypes/authorize";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
@@ -17,7 +17,6 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             await AsyncStorage.setItem("access_token", access_token);
             await AsyncStorage.setItem("domain", domain);
         } catch (e) {
-        //Alert.alert("エラー", "認証に失敗しましたはい");
             dispatch({
                 type: Authorize.AUTHORIZE_FAILURE,
             });
