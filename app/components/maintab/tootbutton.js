@@ -21,8 +21,8 @@ class TootButton extends React.Component {
 const styles = StyleSheet.create({
     view: {
         paddingTop: 4,
-        paddingButtom: 4,
-        paddingleft: 4,
+        paddingBottom: 4,
+        paddingLeft: 4,
         paddingRight: 12,
 
     },

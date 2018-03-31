@@ -33,7 +33,7 @@ class StreamingButton extends React.Component {
 const styles = StyleSheet.create({
     view: {
         paddingTop: 4,
-        paddingButtom: 4,
+        paddingBottom: 4,
         paddingLeft: 12,
         paddingRight: 4,
     },

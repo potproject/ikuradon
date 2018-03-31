@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     replyName: {
-        widht: 26,
+        width: 26,
         fontSize: 16,
         flex: 1,
         flexWrap: "wrap"
