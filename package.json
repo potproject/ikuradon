@@ -7,16 +7,17 @@
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-react": "^7.5.1",
+    "exp": "^51.2.0",
     "jest-expo": "~20.0.0",
-    "react-native-scripts": "1.8.1",
     "react-test-renderer": "16.2.0"
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
+    "start": "node_modules/.bin/exp start",
+    "development": "node_modules/.bin/exp start --dev",
+    "production": "node_modules/.bin/exp start --no-dev",
+    "android": "node_modules/.bin/exp --android",
+    "ios": "node_modules/.bin/exp --ios",
     "test": "node node_modules/jest/bin/jest.js --watch"
   },
   "jest": {
