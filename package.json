@@ -7,7 +7,7 @@
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-react": "^7.5.1",
-    "exp": "^51.2.0",
+    "exp": "^51.4.0",
     "jest-expo": "~20.0.0",
     "react-test-renderer": "16.2.0"
   },
@@ -33,7 +33,7 @@
     "moment": "^2.20.1",
     "react": "16.0.0",
     "react-i18next": "^7.3.6",
-    "react-native": "https://github.com/expo/react-native/archive/v0.51.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
     "react-native-actionsheet": "^2.3.0",
     "react-native-customemoji": "0.0.1",
     "react-native-hyperlink": "^0.0.12",
