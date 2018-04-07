@@ -6,19 +6,13 @@
     "development": {
       "plugins": [
         "transform-react-jsx-source",
-        [
-          "module-alias",
-          [
-            {
-              "src": "./app",
-              "expose": "app"
-            },
-            {
-              "src": "./assets",
-              "expose": "assets"
-            }
-          ]
-        ]
+        ["module-resolver", {
+          "root": ["./"],
+          "alias": {
+            "app": "./app",
+            "assets": "./assets"
+          }
+        }]
       ]
     }
   }
