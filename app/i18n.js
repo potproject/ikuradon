@@ -10,7 +10,7 @@ const languageDetector = {
     type: "languageDetector",
     async: true, // async detection
     detect: (callback) => {
-        return Expo.Util.getCurrentLocaleAsync().then(lng => { callback(lng) });
+        return Expo.DangerZone.Localization.getCurrentLocaleAsync().then(lng => { callback(lng.replace("_","-")) });
     },
     init: () => { },
     cacheUserLanguage: () => { }
