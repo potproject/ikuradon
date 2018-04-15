@@ -10,7 +10,7 @@ export default class Local extends React.Component {
     render() {
         return <View style={styles.container}>
             <Mastolist type={"local"}/>
-            <MessageBarComponent />
+            <MessageBarComponent refName="local_alert" />
         </View>;
     }
 }

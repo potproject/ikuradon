@@ -7,11 +7,10 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
     }
-
     render() {
         return <View style={styles.container}>
             <Mastolist type={"home"}/>
-            <MessageBarComponent />
+            <MessageBarComponent refName="home_alert" />
         </View>;
     }
 }

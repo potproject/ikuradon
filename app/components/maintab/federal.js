@@ -10,7 +10,7 @@ export default class Federal extends React.Component {
     render() {
         return <View style={styles.container}>
             <Mastolist type={"federal"}/>
-            <MessageBarComponent />
+            <MessageBarComponent refName="federal_alert" />
         </View>;
     }
 }

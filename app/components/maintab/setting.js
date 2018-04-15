@@ -5,26 +5,20 @@ import * as LoginActions from "../../actions/actioncreators/login";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import I18n from "../../i18n";
-import { MessageBar, MessageBarManager } from "react-native-message-bar";
+import MessageBarComponent from "../messagebar";
 
 class Setting extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
     }
-    componentDidMount() {
-        MessageBarManager.registerMessageBar(this.refs.alert);
-    }
-    componentWillUnmount() {
-        MessageBarManager.unregisterMessageBar();
-    }
     render() {
-        return <View>
+        return <View style={styles.container}>
             <Button
                 onPress={() => this.props.LoginActions.logout()}
                 title={I18n.t("logout")}
             />
-            <MessageBar ref="alert" />
+            <MessageBarComponent refName="notifications_alert" />
         </View>;
     }
 }

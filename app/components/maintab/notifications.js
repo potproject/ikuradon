@@ -10,7 +10,7 @@ export default class Notifications extends React.Component {
     render() {
         return <View style={styles.container}>
             <Mastolist type={"notifications"}/>
-            <MessageBarComponent />
+            <MessageBarComponent refName="notifications_alert" />
         </View>;
     }
 }
