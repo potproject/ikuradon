@@ -9,7 +9,7 @@ import {
 import {
     bindActionCreators
 } from "redux";
-
+import { View, StyleSheet } from "react-native";
 import { createReduxBoundAddListener } from "react-navigation-redux-helpers";
 
 import AuthorizeScreen from "../components/authorize";
@@ -22,6 +22,7 @@ import * as AppInitActions from "../actions/actioncreators/appinit";
 
 import I18n from "../i18n";
 import { translate } from "react-i18next";
+import MessageBarNavigator from "./messagebarnavigator";
 
 export const AppNavigator = StackNavigator({
     Login: {
@@ -58,7 +59,7 @@ class AppWithNavigationState extends React.Component {
         props.AppInitActions.appInit();
     }
     render() {
-        return <AppNavigator 
+        return <View style={styles.container}><AppNavigator 
             screenProps={{ t: I18n.getFixedT() }}
             navigation = {
                 addNavigationHelpers({
@@ -67,10 +68,15 @@ class AppWithNavigationState extends React.Component {
                     addListener: createReduxBoundAddListener("root")
                 })
             }
-        />;
+        />
+        <MessageBarNavigator refName="alert" /></View>;
     }
 }
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    }
+});
 export default connect(state => state,
     (dispatch) => (
         Object.assign({

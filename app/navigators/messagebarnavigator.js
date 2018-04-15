@@ -1,7 +1,7 @@
 import React from "react";
 import { MessageBar, MessageBarManager } from "react-native-message-bar";
 
-export default class MessageBarComponent extends React.Component {
+export default class MessageBarNavigator extends React.Component {
     constructor(props){
         super(props);
         this.refName = props.refName;

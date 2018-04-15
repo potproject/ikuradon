@@ -5,7 +5,6 @@ import * as LoginActions from "../../actions/actioncreators/login";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import I18n from "../../i18n";
-import MessageBarComponent from "../messagebar";
 
 class Setting extends React.Component {
     constructor(props) {
@@ -18,7 +17,6 @@ class Setting extends React.Component {
                 onPress={() => this.props.LoginActions.logout()}
                 title={I18n.t("logout")}
             />
-            <MessageBarComponent refName="notifications_alert" />
         </View>;
     }
 }
