@@ -4,6 +4,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as StreamingActions from "../../actions/actioncreators/streaming";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { MessageBarManager } from "react-native-message-bar";
+import I18n from "../../i18n";
 
 class StreamingButton extends React.Component {
     constructor(props) {
@@ -27,6 +29,17 @@ class StreamingButton extends React.Component {
         let enabled = !this.state.enabled;
         enabled ? this.props.StreamingActions.start(this.state.type) : this.props.StreamingActions.stop(this.state.type);
         this.setState({ enabled });
+        if(enabled){
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_button_enabled"),
+                alertType: "info",
+            });
+        }else{
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_button_disabled"),
+                alertType: "info",
+            });
+        }
     }
 }
 

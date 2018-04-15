@@ -51,4 +51,13 @@ export default {
     //共通
     global_ok : "OK",
     global_cancel: "キャンセル",
+
+    //メッセージ
+    messages:{
+        streaming_button_enabled:"ストリーミングを有効にしました!",
+        streaming_button_disabled:"ストリーミングを無効にしました!",
+
+        toot_success:"トゥートの投稿に成功しました!",
+        toot_failed:"トゥートの投稿に失敗しました!",
+    }
 };

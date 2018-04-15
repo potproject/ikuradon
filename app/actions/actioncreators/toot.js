@@ -1,8 +1,10 @@
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
-import { Alert, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import Networking from "../../networking";
 import { ImagePicker } from "expo";
+import I18n from "../../i18n";
+import { MessageBarManager } from "react-native-message-bar";
 
 export function toot(status, visibility, sensitive, spoiler_text, reply = null) {
     return async dispatch => {
@@ -20,12 +22,15 @@ export function toot(status, visibility, sensitive, spoiler_text, reply = null) 
                 spoiler_text,
                 in_reply_to_id
             }, access_token);
-        } catch (e) {
-            Alert.alert("エラー", "問い合わせ失敗っす");
-            dispatch({
-                type: Nav.NAV_GO_BACK,
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_success"),
+                alertType: "success",
             });
-            return;
+        } catch (e) {
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_failed"),
+                alertType: "error",
+            });
         }
         dispatch({ type: Nav.NAV_GO_BACK });
         return;

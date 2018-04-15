@@ -51,4 +51,13 @@ export default {
     //Global
     global_ok : "OK",
     global_cancel: "Cancel",
+
+    //Messages
+    messages:{
+        streaming_button_enabled:"Timeline Streaming Enabled!",
+        streaming_button_disabled:"Timeline Streaming Disabled!",
+
+        toot_success:"Successfully posted a toot.",
+        toot_failed:"Failed to posted a toot.",
+    }
 };

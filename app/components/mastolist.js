@@ -22,7 +22,6 @@ class Mastolist extends React.Component {
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         this.ChangeFlatView = UsingOptimizedFlatList ? OptimizedFlatList : FlatList;
     }
-
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
     }
