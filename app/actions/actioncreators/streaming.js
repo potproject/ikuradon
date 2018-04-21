@@ -3,6 +3,8 @@ import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
 import * as CONST_API from "../../constants/api";
 import Stream from "../../stream";
+import I18n from "../../i18n";
+import { MessageBarManager } from "react-native-message-bar";
 
 export function start(reducerType) {
     return async dispatch => {
@@ -11,6 +13,10 @@ export function start(reducerType) {
             let domain = await AsyncStorage.getItem("domain");
             Stream.init(domain, CONST_API.STREAMING, access_token, reducerType);
             await Stream.open(reducerType);
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_enabled"),
+                alertType: "info",
+            });
             dispatch({ type: Streaming.STREAM_START, reducerType });
             Stream.receive((message) => {
                 if (message.event === "update" && message.payload) {
@@ -22,9 +28,11 @@ export function start(reducerType) {
                 }
             },reducerType);
         } catch (e) {
-            alert("エラー","Streaming APIの接続に失敗しました");
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_failed"),
+                alertType: "error",
+            });
             dispatch({ type: Streaming.STREAM_STOP, reducerType });
-            //console.error(e);
             return;
         }
     };
@@ -38,8 +46,15 @@ export function stop(reducerType) {
                 //不明な切断
                 return;
             }
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_disabled"),
+                alertType: "info",
+            });
         } catch (e) {
-            console.error(e);
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.streaming_failed"),
+                alertType: "error",
+            });
             return;
         }
         dispatch({ type: Streaming.STREAM_STOP, reducerType });

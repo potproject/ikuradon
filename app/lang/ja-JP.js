@@ -54,10 +54,13 @@ export default {
 
     //メッセージ
     messages:{
-        streaming_button_enabled:"ストリーミングを有効にしました!",
-        streaming_button_disabled:"ストリーミングを無効にしました!",
+        network_error:"ネットワークエラーが発生しました",
 
-        toot_success:"トゥートの投稿に成功しました!",
-        toot_failed:"トゥートの投稿に失敗しました!",
+        streaming_enabled:"ストリーミングを有効にしました",
+        streaming_disabled:"ストリーミングを無効にしました",
+        streaming_failed:"ストリーミング接続に失敗しました",
+
+        toot_success:"トゥートの投稿に成功しました",
+        toot_failed:"トゥートの投稿に失敗しました",
     }
 };

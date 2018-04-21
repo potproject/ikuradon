@@ -54,8 +54,11 @@ export default {
 
     //Messages
     messages:{
-        streaming_button_enabled:"Timeline Streaming Enabled!",
-        streaming_button_disabled:"Timeline Streaming Disabled!",
+        network_error:"Network error occurred.",
+
+        streaming_enabled:"Timeline Streaming Enabled.",
+        streaming_disabled:"Timeline Streaming Disabled.",
+        streaming_failed:"Failed to connected a Streaming API.",
 
         toot_success:"Successfully posted a toot.",
         toot_failed:"Failed to posted a toot.",

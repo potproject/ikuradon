@@ -1,4 +1,3 @@
-import { Alert } from "react-native";
 import { AsyncStorage } from "react-native";
 import * as Login from "../actiontypes/login";
 import * as CONST_API from "../../constants/api";
@@ -6,6 +5,8 @@ import Networking from "../../networking";
 import * as Nav from "../actiontypes/nav";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
+import I18n from "../../i18n";
+import { MessageBarManager } from "react-native-message-bar";
 
 export function login(domain) {
     return async dispatch => {
@@ -15,15 +16,17 @@ export function login(domain) {
             url = createUrl(domain, data);
             client_id = data.client_id;
             client_secret = data.client_secret;
+            dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
         } catch (e) {
-            Alert.alert("エラー", "問い合わせ失敗っす");
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.network_error"),
+                message: e.message,
+                alertType: "error",
+            });
             dispatch({
                 type: Login.DOMAIN_FAILURE,
             });
-            return;
-        } 
-        dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
-        return;
+        }
     };
 }
 

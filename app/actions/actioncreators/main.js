@@ -3,6 +3,8 @@ import * as Main from "../actiontypes/main";
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
+import I18n from "../../i18n";
+import { MessageBarManager } from "react-native-message-bar";
 
 const reducerTypeArray = {
     home: CONST_API.GET_TIMELINES_HOME,
@@ -31,11 +33,14 @@ export function newLoadingTimeline(reducerType,since_id, limit = 40) {
             let access_token = await AsyncStorage.getItem("access_token");
             let domain = await AsyncStorage.getItem("domain");
             data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id, max_id:null }, access_token);
+            dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data , reducerType });
         } catch (e) {
-            console.error(e);
-            return;
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.network_error"),
+                message: e.message,
+                alertType: "error",
+            });
         }
-        dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data , reducerType });
     };
 }
 
@@ -47,10 +52,13 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
             let access_token = await AsyncStorage.getItem("access_token");
             let domain = await AsyncStorage.getItem("domain");
             data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id:null, max_id }, access_token);
+            dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType });
         } catch (e) {
-            console.error(e);
-            return;
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.network_error"),
+                message: e.message,
+                alertType: "error",
+            });
         }
-        dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType });
     };
 }
