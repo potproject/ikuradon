@@ -54,6 +54,12 @@ export default {
 
     //Messages
     messages:{
+        login_success:"Login Successfully.",
+        login_failed:"Failed to login.",
+
+        logout_success:"Logout Successfully.",
+        logout_failed:"Failed to logout.",
+
         network_error:"Network error occurred.",
 
         streaming_enabled:"Timeline Streaming Enabled.",

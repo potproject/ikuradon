@@ -54,6 +54,12 @@ export default {
 
     //メッセージ
     messages:{
+        login_success:"ログインしました",
+        login_failed:"ログインに失敗しました",
+
+        logout_success:"ログアウトしました",
+        logout_failed:"ログアウトに失敗しました",
+
         network_error:"ネットワークエラーが発生しました",
 
         streaming_enabled:"ストリーミングを有効にしました",

@@ -16,10 +16,14 @@ export function login(domain) {
             url = createUrl(domain, data);
             client_id = data.client_id;
             client_secret = data.client_secret;
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.login_success"),
+                alertType: "success",
+            });
             dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: I18n.t("messages.login_failed"),
                 message: e.message,
                 alertType: "error",
             });
@@ -36,13 +40,19 @@ export function logout() {
             await AsyncStorage.removeItem("access_token");
             await AsyncStorage.removeItem("domain");
             await AsyncStorage.removeItem("timeline_cache");
+            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.logout_success"),
+                alertType: "success",
+            });
+            dispatch({ type: Nav.NAV_LOGIN });
         } catch (e) {
-            console.log(e);
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.logout_failed"),
+                alertType: "error",
+            });
         } 
-        await dispatch({ type: Streaming.STREAM_STOP });
-        await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-        dispatch({ type: Nav.NAV_LOGIN });
-        return;
     };
 }
 
