@@ -1,7 +1,8 @@
 import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
-
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
+
+import { debug } from "../constants/debug";
 
 export function createMiddleware(){
     const logger = createLogger();
@@ -9,5 +10,9 @@ export function createMiddleware(){
         "root",
         state => state.navReducer,
     );
-    return [logger,thunk,navigationHelper];
+    let middlewares = [thunk,navigationHelper];
+    if(debug){
+        middlewares.push(logger);
+    }
+    return middlewares;
 }
