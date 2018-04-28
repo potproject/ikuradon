@@ -1,5 +1,4 @@
 import { AsyncStorage } from "react-native";
-import * as Login from "../actiontypes/login";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
 import * as Nav from "../actiontypes/nav";
@@ -16,19 +15,13 @@ export function login(domain) {
             url = createUrl(domain, data);
             client_id = data.client_id;
             client_secret = data.client_secret;
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.login_success"),
-                alertType: "success",
-            });
+            //この時点ではまだログインしていません
             dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_failed"),
                 message: e.message,
                 alertType: "error",
-            });
-            dispatch({
-                type: Login.DOMAIN_FAILURE,
             });
         }
     };
