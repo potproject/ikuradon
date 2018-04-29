@@ -15,6 +15,7 @@ class Authorize extends React.Component {
         this.domain = domain;
         this.client_id = client_id;
         this.client_secret = client_secret;
+        this.call = false;
     }
     render() {
         const self = this;
@@ -32,7 +33,8 @@ class Authorize extends React.Component {
         //mastodon.potproject.net
         const complateUrl = `https://${domain}/oauth/authorize/`;
         const index = navState.url.indexOf(complateUrl);
-        if(index !== -1){
+        if(!this.call && index !== -1){
+            this.call = true;
             //complete!
             const authorizeCode= navState.url.substring(complateUrl.length);
             this.props.AuthorizeActions.getAccessTokenWithHomeAction(domain,client_id,client_secret,authorizeCode);

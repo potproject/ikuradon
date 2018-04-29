@@ -5,12 +5,12 @@ import Networking from "../../networking";
 import { ImagePicker } from "expo";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
+import * as Session from "../../util/session";
 
 export function toot(status, visibility, sensitive, spoiler_text, reply = null) {
     return async dispatch => {
         try {
-            let domain = await AsyncStorage.getItem("domain");
-            let access_token = await AsyncStorage.getItem("access_token");
+            let { domain, access_token } = await Session.getDomainAndToken();
             let in_reply_to_id = null;
             if(reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined"){
                 in_reply_to_id = reply.tootid;
@@ -50,8 +50,7 @@ export function mediaOpen(openType) {
             if (!fileData || fileData.cancelled) {
                 return;
             }
-            let domain = await AsyncStorage.getItem("domain");
-            let access_token = await AsyncStorage.getItem("access_token");
+            let { domain, access_token } = await Session.getDomainAndToken();
             //アップロード中とかほしいね
             await Networking.fileUpload(domain, access_token, fileData);
             dispatch();

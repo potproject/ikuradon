@@ -46,10 +46,7 @@ export default function reducer(state = initialState, action = {}) {
                         })
                     ]
                 }),
-                Object.assign(state, {
-                    domain: action.domain,
-                    access_token: action.access_token,
-                })
+                Object.assign(state, {})
             );
             break;
         case Nav.NAV_TOOT:

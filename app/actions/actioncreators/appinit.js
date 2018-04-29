@@ -3,6 +3,7 @@ import * as Main from "../actiontypes/main";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import I18n from "../../i18n";
+import * as Session from "../../util/session";
 //import Font from "../../font";
 
 const AUTO_LOGIN = true; // Auto Login
@@ -13,9 +14,6 @@ const TIMELINE_LOCAL_EXPIRED = 600; // Timeline Local Data Expired (sec)
 
 export function appInit() {
     return async dispatch => {
-        const access_token = await AsyncStorage.getItem("access_token");
-        const domain = await AsyncStorage.getItem("domain");
-
         let timeline_cache = null;
         if(TIMELINE_LOCAL_AUTOLOAD){
             let last_update = await AsyncStorage.getItem("last_update");
@@ -28,15 +26,16 @@ export function appInit() {
         });
         //i18n init
         await I18n.init();
+        //Session init
+        await Session.init();
         //fontload init
         //await Font.init();
 
         //ここにトークンが生きてるか判断させる
+        let { domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
             dispatch({
                 type: Nav.NAV_MAIN,
-                access_token,
-                domain
             });
             return;
         }

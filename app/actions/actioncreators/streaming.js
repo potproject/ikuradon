@@ -1,16 +1,15 @@
-import { AsyncStorage } from "react-native";
 import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
 import * as CONST_API from "../../constants/api";
 import Stream from "../../stream";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
+import * as Session from "../../util/session";
 
 export function start(reducerType) {
     return async dispatch => {
         try {
-            let access_token = await AsyncStorage.getItem("access_token");
-            let domain = await AsyncStorage.getItem("domain");
+            let { domain, access_token } = await Session.getDomainAndToken();
             Stream.init(domain, CONST_API.STREAMING, access_token, reducerType);
             await Stream.open(reducerType);
             MessageBarManager.showAlert({

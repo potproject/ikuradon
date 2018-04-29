@@ -6,6 +6,7 @@ import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
+import * as Session from "../../util/session";
 
 export function login(domain) {
     return async dispatch => {
@@ -30,8 +31,7 @@ export function login(domain) {
 export function logout() {
     return async dispatch => {
         try {
-            await AsyncStorage.removeItem("access_token");
-            await AsyncStorage.removeItem("domain");
+            await Session.deleteAll();
             await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });

@@ -5,6 +5,7 @@ import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
+import * as Session from "../../util/session";
 
 const reducerTypeArray = {
     home: CONST_API.GET_TIMELINES_HOME,
@@ -30,8 +31,7 @@ export function newLoadingTimeline(reducerType,since_id, limit = 40) {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });
         let data;
         try {
-            let access_token = await AsyncStorage.getItem("access_token");
-            let domain = await AsyncStorage.getItem("domain");
+            let { domain, access_token } = await Session.getDomainAndToken();
             data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id, max_id:null }, access_token);
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data , reducerType });
         } catch (e) {
@@ -49,8 +49,7 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });
         let data;
         try {
-            let access_token = await AsyncStorage.getItem("access_token");
-            let domain = await AsyncStorage.getItem("domain");
+            let { domain, access_token } = await Session.getDomainAndToken();
             data = await Networking.fetch(domain,  reducerTypeArray[reducerType], null,{ limit, since_id:null, max_id }, access_token);
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data , reducerType });
         } catch (e) {
