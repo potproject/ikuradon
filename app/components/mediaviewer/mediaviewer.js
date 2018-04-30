@@ -32,7 +32,7 @@ export default class MediaViewer extends React.Component {
                         <Image style={styles.image} resizeMode={"contain"} source={{ uri: data.url }} onError={(e)=>{this.onError(e)}} />
                     </View>
                 );
-            }else if(data.type === "video"){
+            }else if(data.type === "video" || data.type === "gifv"){
                 return (
                     <View style={styles.videoContainer} key={data.id} >
                         <Video
@@ -41,23 +41,7 @@ export default class MediaViewer extends React.Component {
                             volume={1.0}
                             isMuted={false}
                             shouldPlay
-                            useNativeControls={true}
-                            isLooping
-                            style={styles.video}
-                            onError={(e)=>{this.onError(e)}}
-                        />
-                    </View>
-                );
-            }else if(data.type === "gifv"){
-                return (
-                    <View style={styles.videoContainer} key={data.id} >
-                        <Video
-                            source={{ uri: data.url }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={true}
-                            shouldPlay
-                            useNativeControls={false}
+                            useNativeControls={data.type === "video"}
                             isLooping
                             style={styles.video}
                             onError={(e)=>{this.onError(e)}}

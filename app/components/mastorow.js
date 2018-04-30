@@ -58,10 +58,7 @@ export default class MastoRow extends Component {
                             </Text>
                         </Text>
                         {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
-                        <MastoMedia
-                            media_attachments={this.state.media_attachments}
-                            sensitive={this.state.sensitive}
-                        />
+                        {this.mastorowMediaFormat(this.state.media_attachments,this.state.sensitive)}
                     </View>
                 </View>
                 <View style={styles.container}>
@@ -115,6 +112,15 @@ export default class MastoRow extends Component {
         return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
             <Text style={styles.body}>{newbody}</Text>
         </Hyperlink>;
+    }
+    mastorowMediaFormat(media_attachments,sensitive){
+        if(media_attachments && media_attachments.length > 0){
+            return <MastoMedia
+                media_attachments={media_attachments}
+                sensitive={sensitive}
+            />;
+        }
+        return;
     }
     notificationFormat(type, name) {
         if (type === null) {
