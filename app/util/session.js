@@ -33,7 +33,6 @@ export async function add(domain,access_token){
     }else{
         session.login_index = nextIndex;
     }
-    console.log(session);
     await AsyncStorage.setItem("session", JSON.stringify(session));
 }
 
@@ -44,6 +43,29 @@ export async function init(){
         deleteAll();
     }
 }
+
+export async function deleteCurrentItems(){
+    let sessionstr = await AsyncStorage.getItem("session");
+    let session = Object.assign({},JSON.parse(sessionstr));
+    if(session.login_index > -1){
+        session.access_token.splice(session.login_index,1);
+        session.domain.splice(session.login_index,1);
+        session.login_index = -1;
+    }
+    await AsyncStorage.setItem("session", JSON.stringify(session));
+}
+
+export async function deleteItems(index){
+    let sessionstr = await AsyncStorage.getItem("session");
+    let session = Object.assign({},JSON.parse(sessionstr));
+    if(index > -1){
+        session.access_token.splice(index,1);
+        session.domain.splice(index,1);
+        session.login_index = -1;
+    }
+    await AsyncStorage.setItem("session", JSON.stringify(session));
+}
+
 export async function deleteAll(){
     await AsyncStorage.removeItem("session");
     let session = {

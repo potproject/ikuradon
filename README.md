@@ -15,6 +15,7 @@ This project was created at [Create React Native App](https://github.com/react-c
 * □ View Toot TimeLine Tree
 * □ Media Toot
 * □ Emoji & Custom Emoji Toot
+* □ Multi Account Support
 * ☑ Reply/Mention
 * ☑ View NFSW Timeline
 * ☑ Streaming API Support
