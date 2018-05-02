@@ -6,6 +6,15 @@ export async function getAll(){
     return session;
 }
 
+export async function setDefault(){
+    let sessionstr = await AsyncStorage.getItem("session");
+    let session = JSON.parse(sessionstr);
+    if(session.login_index){
+        session.login_index = -1;
+    }
+    return session;
+}
+
 export async function getDomainAndToken(){
     let sessionstr = await AsyncStorage.getItem("session");
     let session = JSON.parse(sessionstr);

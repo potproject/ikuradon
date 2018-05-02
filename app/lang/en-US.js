@@ -1,11 +1,12 @@
 export default {
     //Settings
     setting_streamingapi: "Streaming API",
-    logout: "logout",
-
+    logout: "Logout",
+    account_change:"Account Change",
+    
     //Navigations
-    navigation_home: "home",
-    navigation_local: "local",
+    navigation_home: "Home",
+    navigation_local: "Local",
     navigation_federal: "Federal",
     navigation_notifications: "Notifications",
     navigation_setting: "Setting",

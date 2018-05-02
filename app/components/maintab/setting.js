@@ -14,6 +14,10 @@ class Setting extends React.Component {
     render() {
         return <View style={styles.container}>
             <Button
+                onPress={() => this.props.LoginActions.accountChange()}
+                title={I18n.t("account_change")}
+            />
+            <Button
                 onPress={() => this.props.LoginActions.logout()}
                 title={I18n.t("logout")}
             />

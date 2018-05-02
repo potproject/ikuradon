@@ -31,7 +31,28 @@ export function login(domain) {
 export function logout() {
     return async dispatch => {
         try {
-            await Session.deleteAll();
+            await Session.deleteCurrentItems();
+            await AsyncStorage.removeItem("timeline_cache");
+            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.logout_success"),
+                alertType: "success",
+            });
+            dispatch({ type: Nav.NAV_LOGIN });
+        } catch (e) {
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.logout_failed"),
+                alertType: "error",
+            });
+        } 
+    };
+}
+
+export function accountChange() {
+    return async dispatch => {
+        try {
+            await Session.setDefault();
             await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });

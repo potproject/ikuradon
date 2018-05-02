@@ -2,6 +2,7 @@ export default {
     //設定
     setting_streamingapi: "ストリーミング API",
     logout: "ログアウト",
+    account_change:"アカウント変更",
 
     //ナビゲーション
     navigation_home: "ホーム",
