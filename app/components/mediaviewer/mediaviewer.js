@@ -1,11 +1,11 @@
 import React from "react";
 import {
-    Alert,
     Image,
     View,
     StyleSheet,
     Dimensions
 } from "react-native";
+import { MessageBarManager } from "react-native-message-bar";
 import Swiper from "react-native-swiper";
 import { Video } from "expo";
 
@@ -52,7 +52,11 @@ export default class MediaViewer extends React.Component {
         });
     }
     onError(e){
-        Alert.alert(e);
+        MessageBarManager.showAlert({
+            title: I18n.t("messages.network_error"),
+            message: e.message,
+            alertType: "error",
+        });
     }
 }
 const window = Dimensions.get("window");
