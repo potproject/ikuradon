@@ -40,7 +40,7 @@ class MastoMedia extends React.Component {
                                 blurRadius={this.state.sensitive ? 100 : 0}
                             />
                             <FontAwesome name={media.type === "image"?"file-image-o":"file-video-o"} size={30} color="gray" style={styles.mediaicon}/>
-                            <Text style={styles.description}>{this.descriptionSetting(media.description)}</Text>
+                            <Text style={styles.description} ellipsizeMode='tail' numberOfLines={3}>{this.descriptionSetting(media.description)}</Text>
                         </View>
                     </TouchableHighlight>;
                 }
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         margin:5,
         paddingLeft:30,
         color:"gray",
-        fontSize:22,
+        fontSize:18,
         position: "absolute",
     }
 });
