@@ -8,6 +8,7 @@ import {
 import { MessageBarManager } from "react-native-message-bar";
 import Swiper from "react-native-swiper";
 import { Video } from "expo";
+import ImageZoom from 'react-native-image-pan-zoom';
 
 export default class MediaViewer extends React.Component {
     constructor(props) {
@@ -29,7 +30,12 @@ export default class MediaViewer extends React.Component {
             if(data.type === "image"){
                 return (
                     <View style={styles.imageContainer} key={data.id} >
-                        <Image style={styles.image} resizeMode={"contain"} source={{ uri: data.url }} onError={(e)=>{this.onError(e)}} />
+                        <ImageZoom cropWidth={Dimensions.get('window').width}
+                                cropHeight={Dimensions.get('window').height}
+                                imageWidth={Dimensions.get('window').width}
+                                imageHeight={Dimensions.get('window').height}>
+                            <Image style={styles.image} resizeMode={"contain"} source={{ uri: data.url }} onError={(e)=>{this.onError(e)}} />
+                        </ImageZoom>
                     </View>
                 );
             }else if(data.type === "video" || data.type === "gifv"){
