@@ -21,6 +21,13 @@ export const GET_OAUTH_ACCESSTOKEN = {
     }
 };
 
+export const GET_CURRENT_USER = {
+    method:"get",
+    url:"/api/v1/accounts/verify_credentials",
+    form:{
+    }
+};
+
 export const GET_TIMELINES_HOME = {
     method:"get",
     url:"/api/v1/timelines/home",

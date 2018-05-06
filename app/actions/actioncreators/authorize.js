@@ -15,7 +15,11 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
                 code,
             });
             access_token = data.access_token;
-            await Session.add(domain,access_token);
+            //get current user
+            let userCredentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER,null,{},access_token);
+            let username = userCredentials.acct;
+            let avatar = userCredentials.avatar;
+            await Session.add(domain, access_token, username, avatar);
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_success"),
                 alertType: "success",
