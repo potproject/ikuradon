@@ -35,10 +35,10 @@ export async function add(domain, access_token, username, avatar){
     let session = Object.assign({},JSON.parse(sessionstr));
     let existsCheck = -1;
     if(!session.accounts){
-        deleteAll
+        deleteAll();
     }
     for(let accountsIndex in session.accounts){
-        if(accounts.access_token[accountsIndex] === access_token){
+        if(session.accounts[accountsIndex] === access_token){
             existsCheck = accountsIndex;
             break;
         }

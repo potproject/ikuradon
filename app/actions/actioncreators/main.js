@@ -1,4 +1,3 @@
-import { AsyncStorage } from "react-native";
 import * as Main from "../actiontypes/main";
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";

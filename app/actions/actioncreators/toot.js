@@ -1,6 +1,5 @@
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
-import { AsyncStorage } from "react-native";
 import Networking from "../../networking";
 import { ImagePicker } from "expo";
 import I18n from "../../i18n";
