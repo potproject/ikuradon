@@ -18,6 +18,7 @@ export default {
     login_title: "Login",
     login_message: "Please enter Mastodon instance domain.",
     login_button: "Login",
+    login_selectaccounts: "Choose an account",
 
     //Authorize
     authorize_title: "Authorize",
@@ -57,6 +58,7 @@ export default {
     messages:{
         login_success:"Login Successfully.",
         login_failed:"Failed to login.",
+        login_notexist_accounts:"Accounts does not exist.",
 
         logout_success:"Logout Successfully.",
         logout_failed:"Failed to logout.",

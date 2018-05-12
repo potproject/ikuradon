@@ -3,15 +3,23 @@ import { AsyncStorage } from "react-native";
 export async function getAll(){
     let sessionstr = await AsyncStorage.getItem("session");
     let session = JSON.parse(sessionstr);
+    if(session === null){
+        session = deleteAll();
+    }
     return session;
 }
 
 export async function setDefault(){
     let sessionstr = await AsyncStorage.getItem("session");
     let session = JSON.parse(sessionstr);
-    if(session.login_index){
-        session.login_index = -1;
-    }
+    session.login_index = -1;
+    await AsyncStorage.setItem("session", JSON.stringify(session));
+    return session;
+}
+export async function setIndex(index){
+    let sessionstr = await AsyncStorage.getItem("session");
+    let session = JSON.parse(sessionstr);
+    session.login_index = index;
     await AsyncStorage.setItem("session", JSON.stringify(session));
     return session;
 }

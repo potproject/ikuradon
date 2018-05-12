@@ -28,6 +28,17 @@ export function login(domain) {
     };
 }
 
+export function loginSelectAccounts(index) {
+    return async dispatch => {
+        await Session.setIndex(index);
+        dispatch({
+            type: Nav.NAV_MAIN,
+        });
+        return;
+        
+    };
+}
+
 export function logout() {
     return async dispatch => {
         try {

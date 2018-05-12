@@ -18,6 +18,7 @@ export default {
     login_title: "ログイン",
     login_message: "Mastodon インスタンスドメインを入力してください",
     login_button: "ログイン",
+    login_selectaccounts: "アカウントを選択",
 
     //認証
     authorize_title: "認証",
@@ -57,6 +58,7 @@ export default {
     messages:{
         login_success:"ログインしました",
         login_failed:"ログインに失敗しました",
+        login_notexist_accounts:"アカウントが存在しません",
 
         logout_success:"ログアウトしました",
         logout_failed:"ログアウトに失敗しました",
