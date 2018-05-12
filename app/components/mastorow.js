@@ -104,7 +104,7 @@ export default class MastoRow extends Component {
                 emojiArray[emoji.shortcode] = {uri:emoji.url};
             });
             return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
-                <CustomEmoji emojiStyle={{ width: 12, height:12}} emojis={emojiArray}>
+                <CustomEmoji emojiStyle={{ width: 14, height:14}} emojis={emojiArray}>
                     <Text style={styles.body}>{newbody}</Text>
                 </CustomEmoji>
             </Hyperlink>;
