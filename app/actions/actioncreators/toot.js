@@ -1,7 +1,6 @@
 import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
-import { ImagePicker } from "expo";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
@@ -32,30 +31,6 @@ export function toot(status, visibility, sensitive, spoiler_text, reply = null) 
             });
         }
         dispatch({ type: Nav.NAV_GO_BACK });
-        return;
-    };
-}
-
-export function mediaOpen(openType) {
-    return async dispatch => {
-        let fileData;
-        try {
-            if (openType === "library") {
-                fileData = await ImagePicker.launchImageLibraryAsync();
-            }
-            if (openType === "camera") {
-                fileData = await ImagePicker.launchCameraAsync();
-            }
-            if (!fileData || fileData.cancelled) {
-                return;
-            }
-            let { domain, access_token } = await Session.getDomainAndToken();
-            //アップロード中とかほしいね
-            await Networking.fileUpload(domain, access_token, fileData);
-            dispatch();
-        } catch (e) {
-            console.error(e);
-        }
         return;
     };
 }

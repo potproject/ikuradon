@@ -16,6 +16,11 @@ import { TouchableOpacity } from "react-native";
 import I18n from "../i18n";
 import VisibilityIcon from "./visibilityicon";
 import { bodyFormat } from "../util/parser";
+import * as Permission from "../util/permission";
+import { ImagePicker } from "expo";
+import Networking from "../networking";
+import * as Session from "../util/session";
+import { MessageBarManager } from "react-native-message-bar";
 
 const MAX_TOOT_LENGTH = 500;
 
@@ -58,10 +63,10 @@ class Toot extends React.Component {
                 />
                 <View style={styles.buttonview}>
                     <View style={styles.tootbuttonview}>
-                        <TouchableOpacity style={styles.button} onPress={() => this.props.TootActions.mediaOpen("library")}>
+                        <TouchableOpacity style={styles.button} onPress={() => this.mediaOpen("library")}>
                             <FontAwesome name="picture-o" size={30} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={() => this.props.TootActions.mediaOpen("camera")}>
+                        <TouchableOpacity style={styles.button} onPress={() => this.mediaOpen("camera")}>
                             <FontAwesome name="camera" size={30} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ visibilityModal: true })}>
@@ -137,6 +142,37 @@ class Toot extends React.Component {
             </View>
             <Text style={styles.replyBody} ellipsizeMode='tail' numberOfLines={3} >{bodyFormat(this.state.reply.body)}</Text>
         </View>;
+    }
+
+    //とりあえず画像だけで
+    async mediaOpen(openType){
+        /*
+        let fileData;
+        try {
+            if (openType === "library") {
+                await Permission.getBeforeAsk(Permission.CAMERA_ROLL);
+                fileData = await ImagePicker.launchImageLibraryAsync();
+            }
+            if (openType === "camera") {
+                await Permission.getBeforeAsk(Permission.CAMERA);
+                fileData = await ImagePicker.launchCameraAsync();
+            }
+            if (!fileData || fileData.cancelled) {
+                return;
+            }
+            console.log(Session);
+            let { domain, access_token } = await Session.getDomainAndToken();
+            //アップロード中とかほしいね
+            let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg");
+        } catch (e) {
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_mediaopen_failed"),
+                message: e.message,
+                alertType: "error",
+            });
+        }
+        return;
+        */
     }
 }
 

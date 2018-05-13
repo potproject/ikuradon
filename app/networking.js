@@ -32,7 +32,7 @@ export default class Networking {
     }
 
     //MEDIA UPLOAD ONLY
-    static fileUpload(domain, access_token, file) {
+    static fileUpload(domain, access_token, file, type) {
         return new Promise(async (resolve, reject) => {
             try {
                 let baseurl = "https://" + domain + "";
@@ -41,7 +41,7 @@ export default class Networking {
                 const data = new FormData();
                 data.append("file", {
                     uri: file.uri,
-                    type: "image/jpeg",
+                    type: type,
                     name: "upload.jpg"
                 });
                 let response = await axios({

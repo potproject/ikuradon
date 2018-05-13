@@ -71,5 +71,6 @@ export default {
 
         toot_success:"Successfully posted a toot.",
         toot_failed:"Failed to posted a toot.",
+        toot_mediaopen_failed:"Failed to open a MediaLibrary.",
     }
 };
