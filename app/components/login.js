@@ -14,6 +14,7 @@ import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { MessageBarManager } from "react-native-message-bar";
+import KeyboardSpacer from "react-native-keyboard-spacer";
 import * as LoginActions from "../actions/actioncreators/login";
 import I18n from "../i18n";
 import * as Session from "../util/session";
@@ -49,15 +50,17 @@ class Login extends React.Component {
                 </Button>
                 <TextInput
                     style={styles.textinput}
+                    //onChange={(event) => {console.log(event);this.setState({ domain: "" })}}
+                    //!onChangeText Event Japanase Conversion Bug!
                     onChangeText={(text) => this.setState({ domain: text })}
                     value={this.state.domain} />
+                <View style={styles.space} />
                 <Button
                     style={styles.button}
                     onPress={() => this.props.LoginActions.login(this.state.domain)}
                     title={I18n.t("login_button")}
                 />
-                <View style={styles.space}>
-                </View>
+                <KeyboardSpacer />
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -133,13 +136,14 @@ const styles = StyleSheet.create({
         textAlign: "center",
         margin: 10,
     },
+    space: {
+        height: 30
+    },
     image: {
         width: 75,
         height: 75,
-        marginBottom: 0
-    },
-    space: {
-        height:252
+        marginTop: 0,
+        marginBottom: 25
     }
 });
 
