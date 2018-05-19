@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Modal,
     Picker,
+    ScrollView,
     View
 } from "react-native";
 import { connect } from "react-redux";
@@ -13,6 +14,7 @@ import { bindActionCreators } from "redux";
 import * as TootActions from "../actions/actioncreators/toot";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import MastoMedia from "./mastomedia";
 import I18n from "../i18n";
 import VisibilityIcon from "./visibilityicon";
 import { bodyFormat } from "../util/parser";
@@ -21,6 +23,7 @@ import { ImagePicker } from "expo";
 import Networking from "../networking";
 import * as Session from "../util/session";
 import { MessageBarManager } from "react-native-message-bar";
+import KeyboardSpacer from "react-native-keyboard-spacer";
 
 const MAX_TOOT_LENGTH = 500;
 
@@ -34,6 +37,8 @@ class Toot extends React.Component {
             visibilityModal: false,
             visibility: "public",
             reply: null,
+            mediaId: [],
+            mediaList: []
         };
         //reply
         if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
@@ -56,6 +61,8 @@ class Toot extends React.Component {
                 <TextInput
                     placeholder={I18n.t("toot_placeholder")}
                     style={styles.toottext}
+                    /** [BUG!]iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55 */
+                    /** Reference: https://github.com/facebook/react-native/issues/19339 */
                     onChangeText={(text) => this.setState({ text })}
                     value={this.state.text}
                     maxLength={MAX_TOOT_LENGTH}
@@ -80,11 +87,18 @@ class Toot extends React.Component {
                         <View style={styles.button}>
                             <Text style={styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
                         </View>
-                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.reply)}>
+                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply)}>
                             <Text style={styles.texttoot}>Toot!</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+                <ScrollView style={styles.mediaScroll}>
+                    <MastoMedia
+                        media_attachments={this.state.mediaList}
+                        sensitive={false}
+                    />
+                </ScrollView>
+                <KeyboardSpacer />
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -146,7 +160,15 @@ class Toot extends React.Component {
 
     //とりあえず画像だけで
     async mediaOpen(openType){
-        /*
+        //4枚まで
+        if(this.state.mediaList.length >= 4){
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_mediaupload_maximum_exceed"),
+                alertType: "warning",
+            });
+            return;
+        }
+
         let fileData;
         try {
             if (openType === "library") {
@@ -160,10 +182,16 @@ class Toot extends React.Component {
             if (!fileData || fileData.cancelled) {
                 return;
             }
-            console.log(Session);
             let { domain, access_token } = await Session.getDomainAndToken();
             //アップロード中とかほしいね
             let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg");
+            if(!res.id){
+                throw new Error("ID Unknown Error!");
+            }
+            this.setState(state => ({
+                mediaId: [...state.mediaId, res.id],
+                mediaList: [...state.mediaList, res]
+            }));
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.toot_mediaopen_failed"),
@@ -172,7 +200,6 @@ class Toot extends React.Component {
             });
         }
         return;
-        */
     }
 }
 
@@ -181,7 +208,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     toottext: {
-        height: 180,
+        height: 150,
         margin: 5,
         padding: 5,
         borderWidth: 1
@@ -255,6 +282,10 @@ const styles = StyleSheet.create({
     texttoot: {
         fontSize: 20,
         color: "#00008B"
+    },
+    mediaScroll: {
+        width: 400,
+        height: 140
     }
 });
 

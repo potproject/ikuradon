@@ -26,6 +26,13 @@ class MastoMedia extends React.Component {
             </View>
         );
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({ 
+            media_attachments: nextProps.media_attachments,
+            sensitive: nextProps.sensitive
+        });  
+    }
+
     mapView() {
         if (this.state.media_attachments) {
             let onPress = this.props.MastorowActions.mediaOpen;

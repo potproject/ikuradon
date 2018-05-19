@@ -5,7 +5,7 @@ import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
-export function toot(status, visibility, sensitive, spoiler_text, reply = null) {
+export function toot(status, visibility, sensitive, spoiler_text, media_ids = [], reply = null) {
     return async dispatch => {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
@@ -18,6 +18,7 @@ export function toot(status, visibility, sensitive, spoiler_text, reply = null) 
                 visibility,
                 sensitive,
                 spoiler_text,
+                media_ids,
                 in_reply_to_id
             }, access_token);
             MessageBarManager.showAlert({

@@ -72,5 +72,6 @@ export default {
         toot_success:"トゥートの投稿に成功しました",
         toot_failed:"トゥートの投稿に失敗しました",
         toot_mediaopen_failed:"ライブラリの起動に失敗しました",
+        toot_mediaupload_maximum_exceed:"最大アップロードファイル数が超過しています(最大 4 ファイル).",
     }
 };

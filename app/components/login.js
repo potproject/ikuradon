@@ -50,8 +50,8 @@ class Login extends React.Component {
                 </Button>
                 <TextInput
                     style={styles.textinput}
-                    //onChange={(event) => {console.log(event);this.setState({ domain: "" })}}
-                    //!onChangeText Event Japanase Conversion Bug!
+                    /** [BUG!]iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55 */
+                    /** Reference: https://github.com/facebook/react-native/issues/19339 */
                     onChangeText={(text) => this.setState({ domain: text })}
                     value={this.state.domain} />
                 <View style={styles.space} />
