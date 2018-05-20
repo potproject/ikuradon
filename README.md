@@ -13,8 +13,8 @@ This project was created at [Create React Native App](https://github.com/react-c
 ## TODO
 * □ View User Data
 * □ View Toot TimeLine Tree
-* □ Media Toot
 * □ Emoji & Custom Emoji Toot
+* ☑ Media Toot(Experimental,image only)
 * ☑ Multi Account Support
 * ☑ Reply/Mention
 * ☑ View NFSW Timeline
