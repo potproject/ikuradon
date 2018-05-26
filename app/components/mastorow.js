@@ -99,20 +99,25 @@ export default class MastoRow extends Component {
             newbody = "[!] " + this.state.spoiler_text + "\n\n" + newbody;
         }
         if(emojis.length > 0){
-            let emojiArray = {};
-            emojis.forEach((emoji)=>{
-                emojiArray[emoji.shortcode] = {uri:emoji.url};
-            });
-            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
-                <CustomEmoji emojiStyle={{ width: 14, height:14}} emojis={emojiArray}>
-                    <Text style={styles.body}>{newbody}</Text>
-                </CustomEmoji>
+            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
+                {this.mastorowSetCustomEmoji(newbody,emojis,styles.body)}
             </Hyperlink>;
         }
-        return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)} /* onPress Not working? */>
+        return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
             <Text style={styles.body}>{newbody}</Text>
         </Hyperlink>;
     }
+
+    mastorowSetCustomEmoji(text,emojis,style){
+        let emojiArray = {};
+        emojis.forEach((emoji)=>{
+            emojiArray[emoji.shortcode] = {uri:emoji.url};
+        });
+        return <CustomEmoji emojis={emojiArray}>
+            <Text style={style}>{text}</Text>
+        </CustomEmoji>;
+    }
+
     mastorowMediaFormat(media_attachments,sensitive){
         if(media_attachments && media_attachments.length > 0){
             return <MastoMedia
@@ -164,6 +169,7 @@ const styles = StyleSheet.create({
         paddingLeft: 12,
     },
     name: {
+        fontWeight: "bold",
         fontSize: 16,
     },
     acct: {
