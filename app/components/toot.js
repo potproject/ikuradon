@@ -9,6 +9,7 @@ import {
     ScrollView,
     View
 } from "react-native";
+import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as TootActions from "../actions/actioncreators/toot";
@@ -96,6 +97,8 @@ class Toot extends React.Component {
                     <MastoMedia
                         media_attachments={this.state.mediaList}
                         sensitive={false}
+                        width={Dimensions.get("window").width - 20}
+                        height={100}
                     />
                 </ScrollView>
                 <KeyboardSpacer />

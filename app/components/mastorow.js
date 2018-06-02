@@ -121,6 +121,8 @@ export default class MastoRow extends Component {
     mastorowMediaFormat(media_attachments,sensitive){
         if(media_attachments && media_attachments.length > 0){
             return <MastoMedia
+                width={300}
+                height={100}
                 media_attachments={media_attachments}
                 sensitive={sensitive}
             />;

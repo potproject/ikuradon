@@ -14,6 +14,8 @@ import { FontAwesome } from "@expo/vector-icons";
 class MastoMedia extends React.Component {
     constructor(props) {
         super(props);
+        this.width = props.width;
+        this.height = props.height;
         this.state = {
             media_attachments: props.media_attachments,
             sensitive: props.sensitive
@@ -40,10 +42,10 @@ class MastoMedia extends React.Component {
                 if (media.type === "image" || media.type === "video" || media.type === "gifv") {
                     return <TouchableHighlight key={media.id} onPress={() =>
                         onPress(this.state.media_attachments, index)}>
-                        <View style={styles.mediaview}>
+                        <View style={[styles.mediaview,{width:this.width,height:this.height}]}>
                             <Image
                                 source={{ uri: media.preview_url }}
-                                style={styles.media}
+                                style={[styles.media,{width:this.width,height:this.height}]}
                                 blurRadius={this.state.sensitive ? 100 : 0}
                             />
                             <FontAwesome name={media.type === "image"?"file-image-o":"file-video-o"} size={30} color="gray" style={styles.mediaicon}/>
@@ -76,12 +78,8 @@ const styles = StyleSheet.create({
         marginLeft: 12,
         paddingTop: 3,
         paddingBottom: 3,
-        width: 300,
-        height: 100,
     },
     media: {
-        width: 300,
-        height: 100,
         position: "absolute",
     },
     mediaicon:{
