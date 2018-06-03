@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../../actions/actioncreators/main";
 
-import { bodyFormat } from "../../util/parser";
+import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 
 class Action extends React.Component {
     constructor(props) {
@@ -30,9 +30,9 @@ class Action extends React.Component {
                 <FontAwesome name="ellipsis-h" size={20} color="gray" />
                 <ActionSheet
                     ref={component => this.ActionSheet = component}
-                    options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_reply"), I18n.t("action_hide"), I18n.t("global_cancel")]}
-                    cancelButtonIndex={4}
-                    destructiveButtonIndex={3}
+                    options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide"), I18n.t("global_cancel")]}
+                    cancelButtonIndex={5}
+                    destructiveButtonIndex={4}
                     onPress={this.handlePress}
                 />
             </TouchableOpacity>
@@ -62,10 +62,13 @@ class Action extends React.Component {
             case 1: //Copy
                 Clipboard.setString(bodyFormat(this.state.body));
                 return;
-            case 2: //reply
+            case 2: //URL Copy
+                Clipboard.setString(bodyExtractionUrl(this.state.body));
+                return;
+            case 3: //reply
                 this.props.MainActions.reply(this.state.id, this.state.tootid, this.state.user, this.state.acct, this.state.image, this.state.body);
                 return;
-            case 3: //Hide
+            case 4: //Hide
                 this.props.MainActions.hide(this.state.id);
                 return;
         }

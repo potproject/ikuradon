@@ -37,6 +37,7 @@ export default {
     //アクション
     action_openinbrowser: "ブラウザで開く",
     action_copy: "コピー",
+    action_copyurl: "URLをコピー",
     action_reply: "返信",
     action_hide: "隠す",
 

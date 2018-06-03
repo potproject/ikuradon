@@ -37,6 +37,7 @@ export default {
     //Actions
     action_openinbrowser: "Open in Browser",
     action_copy: "Copy",
+    action_copyurl: "Copy URL",
     action_reply: "Reply",
     action_hide: "Hide",
 
