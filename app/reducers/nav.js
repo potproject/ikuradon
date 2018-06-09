@@ -5,9 +5,10 @@ import {
     NavigationActions,
     StackActions
 } from "react-navigation";
+import * as RouterName from "../constants/routername";
 import * as Nav from "../actions/actiontypes/nav";
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams("Login"));
+const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams(RouterName.Login));
 
 export default function reducer(state = initialState, action = {}) {
     let nextState;
@@ -18,7 +19,7 @@ export default function reducer(state = initialState, action = {}) {
                     index: 0,
                     actions: [
                         NavigationActions.navigate({
-                            routeName: "Login"
+                            routeName: RouterName.Login
                         })
                     ]
                 })
@@ -27,7 +28,7 @@ export default function reducer(state = initialState, action = {}) {
         case Nav.NAV_AUTHORIZE:
             nextState = AppNavigator.router.getStateForAction(
                 StackActions.push({
-                    routeName: "Authorize"
+                    routeName: RouterName.Authorize
                 }),
                 Object.assign(state, {
                     domain: action.domain,
@@ -43,7 +44,7 @@ export default function reducer(state = initialState, action = {}) {
                     index: 0,
                     actions: [
                         NavigationActions.navigate({
-                            routeName: "Main"
+                            routeName: RouterName.Main
                         })
                     ]
                 }),
@@ -53,7 +54,7 @@ export default function reducer(state = initialState, action = {}) {
         case Nav.NAV_TOOT:
             nextState = AppNavigator.router.getStateForAction(
                 StackActions.push({
-                    routeName: "Toot",
+                    routeName: RouterName.Toot
                 }),
                 Object.assign(state, { reply: null })
             );
@@ -61,7 +62,7 @@ export default function reducer(state = initialState, action = {}) {
         case Nav.NAV_TOOT_REPLY:
             nextState = AppNavigator.router.getStateForAction(
                 StackActions.push({
-                    routeName: "Toot",
+                    routeName: RouterName.Toot
                 }),
                 Object.assign(state, { reply: action.data })
             );
@@ -75,7 +76,7 @@ export default function reducer(state = initialState, action = {}) {
         case Nav.NAV_MEDIAVIEWER:
             nextState = AppNavigator.router.getStateForAction(
                 StackActions.push({
-                    routeName: "MediaViewer",
+                    routeName: RouterName.MediaViewer,
                     params: {
                         media_attachments: action.media_attachments,
                         index: action.index
