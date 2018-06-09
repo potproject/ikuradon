@@ -1,5 +1,5 @@
 import React from "react";
-import { TabNavigator } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation";
 
 import HomeTabScreen from "../components/maintab/home";
 import LocalTabScreen from "../components/maintab/local";
@@ -14,25 +14,21 @@ import { FontAwesome } from "@expo/vector-icons";
 import I18n from "../i18n";
 
 
-export default TabNavigator(
+const TabNavigator = createBottomTabNavigator(
     {
-        Home: {
+        home: {
             screen: HomeTabScreen,
-            navigationOptions: () => ({
+            navigationOptions: ({navigation}) => ({
                 title: I18n.t("navigation_home"),
-                headerLeft:<StreamingButton type={"home"} />,
-                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="home" size={32} color={tintColor} />
                 )
             }),
         },
-        Local: {
+        local: {
             screen: LocalTabScreen,
             navigationOptions: () => ({
                 title: I18n.t("navigation_local"),
-                //headerLeft:<StreamingButton type={"local"} />, //not working bug.
-                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="users" size={26} color={tintColor} />
                 )
@@ -42,8 +38,6 @@ export default TabNavigator(
             screen: FederalTabScreen,
             navigationOptions: () => ({
                 title: I18n.t("navigation_federal"),
-                //headerLeft:<StreamingButton type={"federal"} />, //not working bug.
-                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="globe" size={32} color={tintColor} />
                 )
@@ -53,7 +47,6 @@ export default TabNavigator(
             screen: NotificationsTabScreen,
             navigationOptions: () => ({
                 title: I18n.t("navigation_notifications"),
-                headerRight: <TootButton />,
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="bell" size={26} color={tintColor} />
                 )
@@ -68,12 +61,22 @@ export default TabNavigator(
                 )
             }),
         }
-    },
-    {
-        tabBarOptions: {},
     }
 );
 
+TabNavigator.navigationOptions = ({ navigation }) => {
+    let { routeName } = navigation.state.routes[navigation.state.index];
+    let headerTitle = I18n.t(`navigation_${routeName}`);
+    let headerLeft = routeName === "home" ? <StreamingButton type={routeName} /> : null;
+    let headerRight = <TootButton />;
+    return {
+        headerTitle,
+        headerLeft,
+        headerRight,
+    };
+};
+
+export default TabNavigator;
 /*
 const styles = StyleSheet.create({
     container: {

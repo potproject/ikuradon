@@ -2,7 +2,8 @@ import {
     AppNavigator
 } from "../navigators/appnavigator";
 import {
-    NavigationActions
+    NavigationActions,
+    StackActions
 } from "react-navigation";
 import * as Nav from "../actions/actiontypes/nav";
 
@@ -13,7 +14,7 @@ export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
         case Nav.NAV_LOGIN:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.reset({
+                StackActions.reset({
                     index: 0,
                     actions: [
                         NavigationActions.navigate({
@@ -25,7 +26,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_AUTHORIZE:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({
+                StackActions.push({
                     routeName: "Authorize"
                 }),
                 Object.assign(state, {
@@ -38,7 +39,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_MAIN:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.reset({
+                StackActions.reset({
                     index: 0,
                     actions: [
                         NavigationActions.navigate({
@@ -51,7 +52,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_TOOT:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({
+                StackActions.push({
                     routeName: "Toot",
                 }),
                 Object.assign(state, { reply: null })
@@ -59,7 +60,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_TOOT_REPLY:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({
+                StackActions.push({
                     routeName: "Toot",
                 }),
                 Object.assign(state, { reply: action.data })
@@ -73,7 +74,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_MEDIAVIEWER:
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({
+                StackActions.push({
                     routeName: "MediaViewer",
                     params: {
                         media_attachments: action.media_attachments,

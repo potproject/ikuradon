@@ -61,12 +61,11 @@ class AppWithNavigationState extends React.Component {
     render() {
         return <View style={styles.container}><AppNavigator 
             screenProps={{ t: I18n.getFixedT() }}
-            navigation = {
-                addNavigationHelpers({
-                    dispatch: this.props.dispatch,
-                    state: this.props.navReducer,
-                    addListener: createReduxBoundAddListener("root")
-                })
+            navigation = {{
+                dispatch: this.props.dispatch,
+                state: this.props.navReducer,
+                addListener: createReduxBoundAddListener("root")
+            }
             }
         />
         <MessageBarNavigator refName="alert" /></View>;
