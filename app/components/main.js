@@ -12,13 +12,13 @@ import TootButton from "./maintab/tootbutton";
 
 import { FontAwesome } from "@expo/vector-icons";
 import I18n from "../i18n";
-
+import NotificationsIconBadge from "./maintab/notificationsiconbadge";
 
 const TabNavigator = createBottomTabNavigator(
     {
         home: {
             screen: HomeTabScreen,
-            navigationOptions: ({navigation}) => ({
+            navigationOptions: () => ({
                 title: I18n.t("navigation_home"),
                 tabBarIcon: ({ tintColor }) => (
                     <FontAwesome name="home" size={32} color={tintColor} />
@@ -48,7 +48,7 @@ const TabNavigator = createBottomTabNavigator(
             navigationOptions: () => ({
                 title: I18n.t("navigation_notifications"),
                 tabBarIcon: ({ tintColor }) => (
-                    <FontAwesome name="bell" size={26} color={tintColor} />
+                    <NotificationsIconBadge color={tintColor} count={0} />
                 )
             }),
         },
