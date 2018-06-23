@@ -25,6 +25,28 @@ export function hide(id) {
     return { type: Main.HIDE_MASTOLIST, id: id };
 }
 
+export function deleting(id) {
+    console.log(id);
+    return async dispatch => {
+        try {
+            let { domain, access_token } = await Session.getDomainAndToken();
+            await Networking.fetch(domain, CONST_API.DELETE_STATUS, id, {}, access_token);
+            dispatch({ type: Main.HIDE_MASTOLIST, id: id });
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_deleted_success"),
+                alertType: "success",
+            });
+        } catch (e) {
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.toot_deleted_failed"),
+                message: e.message,
+                alertType: "error",
+            });
+        }
+    };
+}
+
+
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST , reducerType });

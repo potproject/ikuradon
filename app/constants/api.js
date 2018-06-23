@@ -83,6 +83,13 @@ export const POST_STATUS = {
     }
 };
 
+export const DELETE_STATUS = {
+    method:"delete",
+    url:"/api/v1/statuses/:param:",
+    form:{
+    }
+};
+
 export const POST_REBLOG = {
     method:"post",
     url:"/api/v1/statuses/:param:/reblog",

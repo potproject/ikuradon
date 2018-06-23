@@ -40,6 +40,7 @@ export default {
     action_copyurl: "Copy URL",
     action_reply: "Reply",
     action_hide: "Hide",
+    action_delete: "Delete",
 
     //MediaViewer
     mediaviewer_title: "Media",
@@ -74,5 +75,8 @@ export default {
         toot_failed:"Failed to posted a toot.",
         toot_mediaopen_failed:"Failed to open a MediaLibrary.",
         toot_mediaupload_maximum_exceed:"Maximum Upload File Exceeded(Max 4 files).",
+
+        toot_deleted_success:"Successfully deleted a toot.",
+        toot_deleted_failed:"Failed to deleted a toot.",
     }
 };

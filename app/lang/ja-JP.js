@@ -40,6 +40,7 @@ export default {
     action_copyurl: "URLをコピー",
     action_reply: "返信",
     action_hide: "隠す",
+    action_delete: "削除",
 
     //メディアビュアー
     mediaviewer_title: "メディア",
@@ -74,5 +75,8 @@ export default {
         toot_failed:"トゥートの投稿に失敗しました",
         toot_mediaopen_failed:"ライブラリの起動に失敗しました",
         toot_mediaupload_maximum_exceed:"最大アップロードファイル数が超過しています(最大 4 ファイル).",
+
+        toot_deleted_success:"トゥートの削除に成功しました",
+        toot_deleted_failed:"トゥートの削除に失敗しました",
     }
 };
