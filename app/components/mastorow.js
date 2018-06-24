@@ -32,7 +32,8 @@ export default class MastoRow extends Component {
             emojis:props.emojis,
             visibility:props.visibility,
             sensitive:props.sensitive,
-            spoiler_text:props.spoiler_text
+            spoiler_text:props.spoiler_text,
+            my:props.my,
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -75,7 +76,7 @@ export default class MastoRow extends Component {
                         <Reply id={this.state.id} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} style={styles.itemFlex} />
                         <Boost id={this.state.id} tootid={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
                         <Favourite id={this.state.id} tootid={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
-                        <Action id={this.state.id} style={styles.itemFlex} url={this.state.url} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} />
+                        <Action id={this.state.id} style={styles.itemFlex} url={this.state.url} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} my={this.state.my} />
                     </View>
                 </View>
             </View>

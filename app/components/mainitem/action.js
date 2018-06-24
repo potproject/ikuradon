@@ -20,7 +20,8 @@ class Action extends React.Component {
             user: props.user,
             acct: props.acct,
             image: props.image,
-            body: props.body
+            body: props.body,
+            my: props.my,
         };
         this.handlePress = this.handlePress.bind(this);
     }
@@ -28,18 +29,32 @@ class Action extends React.Component {
         return (
             <TouchableOpacity style={this.state.style} onPress={this.onPress.bind(this)}>
                 <FontAwesome name="ellipsis-h" size={20} color="gray" />
-                <ActionSheet
-                    ref={component => this.ActionSheet = component}
-                    options={[ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide"), I18n.t("action_delete"), I18n.t("global_cancel")]}
-                    cancelButtonIndex={6}
-                    destructiveButtonIndex={5}
-                    onPress={this.handlePress}
-                />
+                {this.createAction()}
             </TouchableOpacity>
         );
     }
     onPress() {
         this.ActionSheet.show();
+    }
+
+    createAction(){
+        let cancelButtonIndex = 5;
+        let destructiveButtonIndex = 4;
+        let options = [ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
+        //自分のtootなら削除可能に
+        if(this.state.my){
+            options.push(I18n.t("action_delete"));
+            cancelButtonIndex++;
+            destructiveButtonIndex++;
+        }
+        options.push(I18n.t("global_cancel"));
+        return <ActionSheet
+            ref={component => this.ActionSheet = component}
+            options={options}
+            cancelButtonIndex={cancelButtonIndex}
+            destructiveButtonIndex={destructiveButtonIndex}
+            onPress={this.handlePress}
+        />;
     }
 
     async openUrl(url){
@@ -72,7 +87,9 @@ class Action extends React.Component {
                 this.props.MainActions.hide(this.state.id);
                 return;
             case 5: //Delete
-                this.props.MainActions.deleting(this.state.id);
+                if(this.state.my){
+                    this.props.MainActions.deleting(this.state.id);
+                }
                 return;
         }
     }

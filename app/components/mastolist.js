@@ -21,6 +21,7 @@ class Mastolist extends React.Component {
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         this.ChangeFlatView = UsingOptimizedFlatList ? OptimizedFlatList : FlatList;
+        this.myUserCredentials = props.currentUserReducer.user_credentials;
     }
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
@@ -97,6 +98,7 @@ class Mastolist extends React.Component {
                         media_attachments={[]}
                         url={data.url}
                         emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
+                        my={this.myUserCredentials.acct === data.status.account.acct}
                     />;
             }
         }
@@ -121,6 +123,7 @@ class Mastolist extends React.Component {
                 media_attachments={data.media_attachments}
                 url={data.url}
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
+                my={this.myUserCredentials.acct === data.account.acct}
             />;
         } else {
             return <MastoRow
@@ -143,6 +146,7 @@ class Mastolist extends React.Component {
                 media_attachments={data.reblog.media_attachments}
                 url={data.url}
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
+                my={this.myUserCredentials.acct === data.reblog.account.acct}
             />;
         }
     }
