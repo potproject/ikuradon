@@ -6,6 +6,10 @@ import I18n from "../../i18n";
 import * as Session from "../../util/session";
 //import Font from "../../font";
 
+import * as CONST_API from "../../constants/api";
+import Networking from "../../networking";
+import * as CurrentUser from "../actiontypes/currentuser";
+
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)
 const TIMELINE_LOCAL_LIMIT = 50; // Timeline Local Data Limit
@@ -34,13 +38,19 @@ export function appInit() {
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
-            dispatch({
-                type: Nav.NAV_MAIN,
-            });
-            return;
+            try {
+                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
+                dispatch({
+                    type: Nav.NAV_MAIN,
+                });
+                return;
+            } catch (e) {
+                //LOGIN ERROR!
+                await Session.setDefault();
+            }
         }
         dispatch({ type: Nav.NAV_LOGIN });
-        return;
     };
 }
 

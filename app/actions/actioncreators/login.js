@@ -7,10 +7,11 @@ import * as Streaming from "../actiontypes/streaming";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
+import * as CurrentUser from "../actiontypes/currentuser";
 
 export function login(domain) {
     return async dispatch => {
-        let url,client_id,client_secret;
+        let url, client_id, client_secret;
         try {
             let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
             url = createUrl(domain, data);
@@ -31,11 +32,21 @@ export function login(domain) {
 export function loginSelectAccounts(index) {
     return async dispatch => {
         await Session.setIndex(index);
-        dispatch({
-            type: Nav.NAV_MAIN,
-        });
-        return;
-        
+        let { domain, access_token } = await Session.getDomainAndToken();
+        if (access_token && domain) {
+            try {
+                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
+                dispatch({
+                    type: Nav.NAV_MAIN,
+                });
+                return;
+            } catch (e) {
+                //LOGIN ERROR!
+                await Session.setDefault();
+            }
+        }
+        dispatch({ type: Nav.NAV_LOGIN });
     };
 }
 
@@ -45,6 +56,7 @@ export function logout() {
             await Session.deleteCurrentItems();
             await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_success"),
@@ -56,7 +68,7 @@ export function logout() {
                 title: I18n.t("messages.logout_failed"),
                 alertType: "error",
             });
-        } 
+        }
     };
 }
 
@@ -67,6 +79,7 @@ export function accountChange() {
             await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+            await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_success"),
                 alertType: "success",
@@ -77,7 +90,7 @@ export function accountChange() {
                 title: I18n.t("messages.logout_failed"),
                 alertType: "error",
             });
-        } 
+        }
     };
 }
 
