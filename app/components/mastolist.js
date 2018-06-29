@@ -1,15 +1,14 @@
 import React from "react";
 import { View, StyleSheet, RefreshControl, FlatList } from "react-native";
-import { OptimizedFlatList } from "react-native-optimized-flatlist";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
 
-//TODO OptimizedFlatListは設定で変更できるようにしよう・・・
-//やっぱりイマイチなのでfalseに
-const UsingOptimizedFlatList = false;
+// removeClippedSubviews is buggy. Experimental functions.
+// Reference: https://facebook.github.io/react-native/docs/flatlist#removeclippedsubviews
+const UsingRemoveClippedSubviews = false;
 
 class Mastolist extends React.Component {
 
@@ -20,17 +19,16 @@ class Mastolist extends React.Component {
         this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
-        this.ChangeFlatView = UsingOptimizedFlatList ? OptimizedFlatList : FlatList;
+
         this.myUserCredentials = props.currentUserReducer.user_credentials;
     }
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
     }
     render() {
-        let ChangeFlatView = this.ChangeFlatView;
         return (
             <View style={styles.container}>
-                <ChangeFlatView
+                <FlatList
                     style={styles.container}
                     data={this.listdata.data}
                     renderItem={(data) => this.mastoRowIdentification(data.item)}
@@ -45,6 +43,7 @@ class Mastolist extends React.Component {
                     onEndReachedThreshold={1.5}
                     onEndReached={()=>(this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId))
                     }
+                    removeClippedSubviews={UsingRemoveClippedSubviews}
                 />
             </View>
         );
