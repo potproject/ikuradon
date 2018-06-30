@@ -85,7 +85,9 @@ class Mastolist extends React.Component {
                         body={data.status.content}
                         image={data.status.account.avatar}
                         reblogged={data.status.reblogged}
+                        reblogs_count={data.status.reblogs_count}
                         favourited={data.status.favourited}
+                        favourites_count={data.status.favourites_count}
                         date={data.status.created_at}
                         visibility={data.status.visibility}
                         sensitive={data.status.sensitive}
@@ -110,7 +112,9 @@ class Mastolist extends React.Component {
                 body={data.content}
                 image={data.account.avatar}
                 reblogged={data.reblogged}
+                reblogs_count={data.reblogs_count}
                 favourited={data.favourited}
+                favourites_count={data.favourites_count}
                 date={data.created_at}
                 visibility={data.visibility}
                 sensitive={data.sensitive}
@@ -133,7 +137,9 @@ class Mastolist extends React.Component {
                 body={data.reblog.content}
                 image={data.reblog.account.avatar}
                 reblogged={data.reblog.reblogged}
+                reblogs_count={data.reblog.reblogs_count}
                 favourited={data.reblog.favourited}
+                favourites_count={data.reblog.favourites_count}
                 date={data.reblog.created_at}
                 visibility={data.reblog.visibility}
                 sensitive={data.reblog.sensitive}

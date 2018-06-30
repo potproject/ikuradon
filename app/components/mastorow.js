@@ -21,7 +21,9 @@ export default class MastoRow extends Component {
             body: props.body,
             image: props.image,
             reblogged: props.reblogged,
+            reblogs_count: props.reblogs_count,
             favourited: props.favourited,
+            favourites_count: props.favourites_count,
             date: props.date,
             username: props.username,
             acct: "@" + props.acct,
@@ -40,8 +42,14 @@ export default class MastoRow extends Component {
         if (this.props.favourited !== nextProps.favourited) {
             this.props.favourited = nextProps.favourited;
         }
+        if (this.props.favourites_count !== nextProps.favourites_count) {
+            this.props.favourites_count = nextProps.favourites_count;
+        }
         if (this.props.reblogged !== nextProps.reblogged) {
             this.props.reblogged = nextProps.reblogged;
+        }
+        if (this.props.reblogs_count !== nextProps.reblogs_count) {
+            this.props.reblogs_count = nextProps.reblogs_count;
         }
     }
     render() {
@@ -74,8 +82,8 @@ export default class MastoRow extends Component {
                 <View style={styles.container}>
                     <View style={styles.item}>
                         <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} />
-                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} style={styles.itemFlex} />
-                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} style={styles.itemFlex} />
+                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} />
+                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} />
                         <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} />
                     </View>
                 </View>

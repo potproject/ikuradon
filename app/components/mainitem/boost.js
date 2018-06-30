@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -12,17 +12,26 @@ class Boost extends React.Component {
             id: props.id,
             tootid: props.tootid,
             style: props.style,
-            reblogged: props.reblogged
+            reblogged: props.reblogged,
+            count: props.count
         };
     }
     componentWillReceiveProps(nextProps) {
-        this.props.reblogged = nextProps.reblogged;
+        if (this.props.reblogged !== nextProps.reblogged) {
+            this.props.reblogged = nextProps.reblogged;
+        }
+        if (this.props.count !== nextProps.count) {
+            this.props.count = nextProps.count;
+        }
     }
     render() {
         return (
-            <TouchableOpacity style={this.props.style} onPress={() => this.props.MastorowActions.boost(this.props.id, this.props.tootid, !this.props.reblogged)}>
-                <FontAwesome name="retweet" size={20} color={this.setColor(this.props.reblogged)} />
-            </TouchableOpacity>
+            <View style={[this.props.style, styles.container]}>
+                <TouchableOpacity style={this.props.style} onPress={() => this.props.MastorowActions.boost(this.props.id, this.props.tootid, !this.props.reblogged)}>
+                    <FontAwesome name="retweet" size={20} color={this.setColor(this.props.reblogged)} />
+                </TouchableOpacity>
+                <Text style={styles.text}>{this.props.count !== 0 ? this.props.count : ""}</Text>
+            </View>
         );
     }
     setColor(reblogged) {
@@ -30,6 +39,17 @@ class Boost extends React.Component {
     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "row",
+    },
+    text: {
+        flex: 1,
+        fontSize: "16",
+        color: "gray"
+    }
+});
 
 export default connect(state => state,
     (dispatch) => ({
