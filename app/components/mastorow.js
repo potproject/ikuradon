@@ -14,7 +14,7 @@ import VisibilityIcon from "./visibilityicon";
 export default class MastoRow extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id: props.id,
             tootid: props.tootid,
             user: props.user,
@@ -37,46 +37,46 @@ export default class MastoRow extends Component {
         };
     }
     componentWillReceiveProps(nextProps) {
-        if (this.state.favourited !== nextProps.favourited) {
-            this.state.favourited = nextProps.favourited;
+        if (this.props.favourited !== nextProps.favourited) {
+            this.props.favourited = nextProps.favourited;
         }
-        if (this.state.reblogged !== nextProps.reblogged) {
-            this.state.reblogged = nextProps.reblogged;
+        if (this.props.reblogged !== nextProps.reblogged) {
+            this.props.reblogged = nextProps.reblogged;
         }
     }
     render() {
         return (
             <View>
                 <View style={styles.container}>
-                    <Image source={{ uri: this.state.image }} style={styles.photo} />
+                    <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
                         <Text style={styles.header} ellipsizeMode='tail' numberOfLines={1}>
                             <Text style={styles.name}>
-                                {this.state.user}
+                                {this.props.user}
                             </Text>
                             <Text style={styles.acct}>
-                                {this.state.acct}
+                                {this.props.acct}
                             </Text>
                         </Text>
-                        {this.mastorowBodyFormat(this.state.body,this.state.emojis)}
-                        {this.mastorowMediaFormat(this.state.media_attachments,this.state.sensitive)}
+                        {this.mastorowBodyFormat(this.props.body,this.props.emojis)}
+                        {this.mastorowMediaFormat(this.props.media_attachments,this.props.sensitive)}
                     </View>
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.dateFlex}>
-                        {dateFormat(this.state.date)+" "}
-                        <VisibilityIcon visibility={this.state.visibility} size={12} />
+                        {dateFormat(this.props.date)+" "}
+                        <VisibilityIcon visibility={this.props.visibility} size={12} />
                         {" "}
-                        {this.state.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> :""}
+                        {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> :""}
                     </Text>
                 </View>
-                {this.notificationFormat(this.state.notification_type, this.state.notification_name)}
+                {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
                 <View style={styles.container}>
                     <View style={styles.item}>
-                        <Reply id={this.state.id} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} style={styles.itemFlex} />
-                        <Boost id={this.state.id} tootid={this.state.tootid} reblogged={this.state.reblogged} style={styles.itemFlex} />
-                        <Favourite id={this.state.id} tootid={this.state.tootid} favourited={this.state.favourited} style={styles.itemFlex} />
-                        <Action id={this.state.id} style={styles.itemFlex} url={this.state.url} tootid={this.state.tootid} user={this.state.user} acct={this.state.acct} image={this.state.image} body={this.state.body} my={this.state.my} />
+                        <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} />
+                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} style={styles.itemFlex} />
+                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} style={styles.itemFlex} />
+                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} />
                     </View>
                 </View>
             </View>
@@ -96,8 +96,8 @@ export default class MastoRow extends Component {
     }
     mastorowBodyFormat(body,emojis){
         let newbody = bodyFormat(body);
-        if(this.state.sensitive){
-            newbody = "[!] " + this.state.spoiler_text + "\n\n" + newbody;
+        if(this.props.sensitive){
+            newbody = "[!] " + this.props.spoiler_text + "\n\n" + newbody;
         }
         if(emojis.length > 0){
             return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>

@@ -14,9 +14,9 @@ import { FontAwesome } from "@expo/vector-icons";
 class MastoMedia extends React.Component {
     constructor(props) {
         super(props);
-        this.width = props.width;
-        this.height = props.height;
-        this.state = {
+        this.props = {
+            width: props.width,
+            height: props.height,
             media_attachments: props.media_attachments,
             sensitive: props.sensitive
         };
@@ -29,24 +29,22 @@ class MastoMedia extends React.Component {
         );
     }
     componentWillReceiveProps(nextProps) {
-        this.setState({ 
-            media_attachments: nextProps.media_attachments,
-            sensitive: nextProps.sensitive
-        });  
+        this.props.media_attachments = nextProps.media_attachments;
+        this.props.sensitive = nextProps.sensitive;
     }
 
     mapView() {
-        if (this.state.media_attachments) {
+        if (this.props.media_attachments) {
             let onPress = this.props.MastorowActions.mediaOpen;
-            return this.state.media_attachments.map((media, index) => {
+            return this.props.media_attachments.map((media, index) => {
                 if (media.type === "image" || media.type === "video" || media.type === "gifv") {
                     return <TouchableHighlight key={media.id} onPress={() =>
-                        onPress(this.state.media_attachments, index)}>
-                        <View style={[styles.mediaview,{width:this.width,height:this.height}]}>
+                        onPress(this.props.media_attachments, index)}>
+                        <View style={[styles.mediaview,{width:this.props.width,height:this.props.height}]}>
                             <Image
                                 source={{ uri: media.preview_url }}
-                                style={[styles.media,{width:this.width,height:this.height}]}
-                                blurRadius={this.state.sensitive ? 100 : 0}
+                                style={[styles.media,{width:this.props.width,height:this.props.height}]}
+                                blurRadius={this.props.sensitive ? 100 : 0}
                             />
                             <FontAwesome name={media.type === "image"?"file-image-o":"file-video-o"} size={30} color="gray" style={styles.mediaicon}/>
                             <Text style={styles.description} ellipsizeMode='tail' numberOfLines={3}>{this.descriptionSetting(media.description)}</Text>
@@ -60,7 +58,7 @@ class MastoMedia extends React.Component {
         if(typeof description === "undefined" || description === null){
             description = "";
         }
-        if(this.state.sensitive){
+        if(this.props.sensitive){
             return "[!] "+description;
         }
         return description;

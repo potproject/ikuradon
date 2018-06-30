@@ -5,7 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 export default class MastoRowNotificationfollow extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id:props.id,
             type:props.type,
             user: props.user,
@@ -18,22 +18,22 @@ export default class MastoRowNotificationfollow extends Component {
         return (
             <View>
                 <View style={styles.container}>
-                    <Image source={{ uri: this.state.image }} style={styles.photo} />
+                    <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
                         <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
                             <Text style={styles.name}>
-                                {this.state.user}
+                                {this.props.user}
                             </Text>
                         </Text>
                         <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
                             <FontAwesome name={"user-plus"} size={16} />
                             <Text style={styles.username}>
-                                {" "+this.state.username}
+                                {" "+this.props.username}
                             </Text>
                         </Text>
                         <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
                             <Text style={styles.acct}>
-                                {this.state.acct}
+                                {this.props.acct}
                             </Text>
                         </Text>
                     </View>
