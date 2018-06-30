@@ -8,7 +8,7 @@ import * as MastorowActions from "../../actions/actioncreators/mastorow";
 class Favourite extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id:props.id,
             tootid:props.tootid,
             style:props.style,
@@ -16,14 +16,14 @@ class Favourite extends React.Component {
         };
     }
     componentWillReceiveProps(nextProps){
-        if(this.state.favourited !== nextProps.favourited){
-            this.state.favourited = nextProps.favourited;
+        if(this.props.favourited !== nextProps.favourited){
+            this.props.favourited = nextProps.favourited;
         }
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={()=>this.props.MastorowActions.favourite(this.state.id,this.state.tootid,!this.state.favourited)}>
-                <FontAwesome name="star" size={20} color={this.setColor(this.state.favourited)} />
+            <TouchableOpacity style={this.props.style} onPress={()=>this.props.MastorowActions.favourite(this.props.id,this.props.tootid,!this.props.favourited)}>
+                <FontAwesome name="star" size={20} color={this.setColor(this.props.favourited)} />
             </TouchableOpacity>
         );
     }

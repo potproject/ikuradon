@@ -7,22 +7,20 @@ import { connect } from "react-redux";
 class NotificationsIconBadge extends React.Component {
     constructor(props) {
         super(props);
-        this.color = props.color;
         this.props = {
+            color: props.color,
             count: props.count
         };
     }
     componentWillReceiveProps(nextProps) {
         if(typeof nextProps.navReducer.count === "number"){
-            this.setState(
-                {count: nextProps.navReducer.count}
-            );
+            this.props.count = nextProps.navReducer.count;
         }
     }
     render() {
         return <IconBadge
             MainElement={
-                <FontAwesome name="bell" size={26} color={this.color} />
+                <FontAwesome name="bell" size={26} color={this.props.color} />
             }
             BadgeElement={
                 <Text style={{ color: "#FFFFFF" }}>{this.props.count}</Text>

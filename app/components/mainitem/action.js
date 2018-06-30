@@ -12,7 +12,7 @@ import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 class Action extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id: props.id,
             style: props.style,
             url: props.url,
@@ -27,7 +27,7 @@ class Action extends React.Component {
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={this.onPress.bind(this)}>
+            <TouchableOpacity style={this.props.style} onPress={this.onPress.bind(this)}>
                 <FontAwesome name="ellipsis-h" size={20} color="gray" />
                 {this.createAction()}
             </TouchableOpacity>
@@ -42,7 +42,7 @@ class Action extends React.Component {
         let destructiveButtonIndex = 4;
         let options = [ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
         //自分のtootなら削除可能に
-        if(this.state.my){
+        if(this.props.my){
             options.push(I18n.t("action_delete"));
             cancelButtonIndex++;
             destructiveButtonIndex++;
@@ -72,23 +72,23 @@ class Action extends React.Component {
     handlePress(i) {
         switch(i){
             case 0: //Open in Browser
-                this.openUrl(this.state.url);
+                this.openUrl(this.props.url);
                 return;
             case 1: //Copy
-                Clipboard.setString(bodyFormat(this.state.body));
+                Clipboard.setString(bodyFormat(this.props.body));
                 return;
             case 2: //URL Copy
-                Clipboard.setString(bodyExtractionUrl(this.state.body));
+                Clipboard.setString(bodyExtractionUrl(this.props.body));
                 return;
             case 3: //reply
-                this.props.MainActions.reply(this.state.id, this.state.tootid, this.state.user, this.state.acct, this.state.image, this.state.body);
+                this.props.MainActions.reply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
                 return;
             case 4: //Hide
-                this.props.MainActions.hide(this.state.id);
+                this.props.MainActions.hide(this.props.id);
                 return;
             case 5: //Delete
-                if(this.state.my){
-                    this.props.MainActions.deleting(this.state.id);
+                if(this.props.my){
+                    this.props.MainActions.deleting(this.props.id);
                 }
                 return;
         }

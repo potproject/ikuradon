@@ -8,7 +8,7 @@ import * as MastorowActions from "../../actions/actioncreators/mastorow";
 class Boost extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id: props.id,
             tootid: props.tootid,
             style: props.style,
@@ -16,12 +16,12 @@ class Boost extends React.Component {
         };
     }
     componentWillReceiveProps(nextProps) {
-        this.state.reblogged = nextProps.reblogged;
+        this.props.reblogged = nextProps.reblogged;
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={() => this.props.MastorowActions.boost(this.state.id, this.state.tootid, !this.state.reblogged)}>
-                <FontAwesome name="retweet" size={20} color={this.setColor(this.state.reblogged)} />
+            <TouchableOpacity style={this.props.style} onPress={() => this.props.MastorowActions.boost(this.props.id, this.props.tootid, !this.props.reblogged)}>
+                <FontAwesome name="retweet" size={20} color={this.setColor(this.props.reblogged)} />
             </TouchableOpacity>
         );
     }

@@ -8,7 +8,7 @@ import { bindActionCreators } from "redux";
 class Reply extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.props = {
             id:props.id,
             tootid:props.tootid,
             user:props.user,
@@ -20,13 +20,13 @@ class Reply extends React.Component {
     }
     render() {
         return (
-            <TouchableOpacity style={this.state.style} onPress={()=>this.onPress()}>
+            <TouchableOpacity style={this.props.style} onPress={()=>this.onPress()}>
                 <FontAwesome name="reply" size={20} color="gray" />
             </TouchableOpacity>
         );
     }
     onPress(){
-        this.props.MainActions.reply(this.state.id, this.state.tootid, this.state.user, this.state.acct, this.state.image, this.state.body);
+        this.props.MainActions.reply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
     }
 }
 
