@@ -60,7 +60,7 @@ class Toot extends React.Component {
             <View style={styles.container}>
                 {this.replyText()}
                 {this.toggleCwText()}
-                <TextInput
+                <TextInputBugFix
                     placeholder={I18n.t("toot_placeholder")}
                     style={styles.toottext}
                     onChangeText={(text) => this.setState({ text })}
