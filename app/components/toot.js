@@ -1,5 +1,6 @@
-import React from "react";
+import React, {Component} from "react";
 import {
+    Platform,
     Text,
     Image,
     TextInput,
@@ -62,8 +63,6 @@ class Toot extends React.Component {
                 <TextInput
                     placeholder={I18n.t("toot_placeholder")}
                     style={styles.toottext}
-                    /** [BUG!]iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55 */
-                    /** Reference: https://github.com/facebook/react-native/issues/19339 */
                     onChangeText={(text) => this.setState({ text })}
                     value={this.state.text}
                     maxLength={MAX_TOOT_LENGTH}
@@ -297,3 +296,16 @@ export default connect(state => state,
         TootActions: bindActionCreators(TootActions, dispatch)
     })
 )(Toot);
+
+// iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55
+// Bug Fix Code
+// If this App is Updated to 0.56, This code is delete.
+// Reference: https://github.com/facebook/react-native/pull/18456#issuecomment-388171810
+class TextInputBugFix extends Component {
+    shouldComponentUpdate(nextProps){
+        return Platform.OS !== "ios" || this.props.value === nextProps.value;
+    }
+    render() {
+        return <TextInput {...this.props} />;
+    }
+};
