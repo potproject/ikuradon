@@ -10,33 +10,31 @@ import Action from "./mainitem/action";
 import { bodyFormat, dateFormat } from "../util/parser";
 import CustomEmoji from "react-native-customemoji";
 import VisibilityIcon from "./visibilityicon";
+import PropTypes from "prop-types";
 
 export default class MastoRow extends Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            id: props.id,
-            tootid: props.tootid,
-            user: props.user,
-            body: props.body,
-            image: props.image,
-            reblogged: props.reblogged,
-            reblogs_count: props.reblogs_count,
-            favourited: props.favourited,
-            favourites_count: props.favourites_count,
-            date: props.date,
-            username: props.username,
-            acct: "@" + props.acct,
-            notification_type: props.notification_type,
-            notification_name: props.notification_name,
-            media_attachments: props.media_attachments,
-            url: props.url,
-            emojis:props.emojis,
-            visibility:props.visibility,
-            sensitive:props.sensitive,
-            spoiler_text:props.spoiler_text,
-            my:props.my,
-        };
+    static propTypes = {
+        id: PropTypes.string,
+        tootid: PropTypes.string,
+        user: PropTypes.string,
+        body: PropTypes.string,
+        image: PropTypes.string,
+        reblogged: PropTypes.bool,
+        reblogs_count: PropTypes.number,
+        favourited: PropTypes.bool,
+        favourites_count: PropTypes.number,
+        date: PropTypes.string,
+        username: PropTypes.string,
+        acct: PropTypes.string,
+        notification_type: PropTypes.string,
+        notification_name: PropTypes.string,
+        media_attachments: PropTypes.array,
+        url: PropTypes.string,
+        emojis: PropTypes.array,
+        visibility: PropTypes.string,
+        sensitive: PropTypes.bool,
+        spoiler_text: PropTypes.string,
+        my: PropTypes.bool,
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.favourited !== nextProps.favourited) {
@@ -66,16 +64,16 @@ export default class MastoRow extends Component {
                                 {this.props.acct}
                             </Text>
                         </Text>
-                        {this.mastorowBodyFormat(this.props.body,this.props.emojis)}
-                        {this.mastorowMediaFormat(this.props.media_attachments,this.props.sensitive)}
+                        {this.mastorowBodyFormat(this.props.body, this.props.emojis)}
+                        {this.mastorowMediaFormat(this.props.media_attachments, this.props.sensitive)}
                     </View>
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.dateFlex}>
-                        {dateFormat(this.props.date)+" "}
+                        {dateFormat(this.props.date) + " "}
                         <VisibilityIcon visibility={this.props.visibility} size={12} />
                         {" "}
-                        {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> :""}
+                        {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> : ""}
                     </Text>
                 </View>
                 {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
@@ -102,14 +100,14 @@ export default class MastoRow extends Component {
             console.error("Linking error", e);
         }
     }
-    mastorowBodyFormat(body,emojis){
+    mastorowBodyFormat(body, emojis) {
         let newbody = bodyFormat(body);
-        if(this.props.sensitive){
+        if (this.props.sensitive) {
             newbody = "[!] " + this.props.spoiler_text + "\n\n" + newbody;
         }
-        if(emojis.length > 0){
+        if (emojis.length > 0) {
             return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
-                {this.mastorowSetCustomEmoji(newbody,emojis,styles.body)}
+                {this.mastorowSetCustomEmoji(newbody, emojis, styles.body)}
             </Hyperlink>;
         }
         return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
@@ -117,18 +115,18 @@ export default class MastoRow extends Component {
         </Hyperlink>;
     }
 
-    mastorowSetCustomEmoji(text,emojis,style){
+    mastorowSetCustomEmoji(text, emojis, style) {
         let emojiArray = {};
-        emojis.forEach((emoji)=>{
-            emojiArray[emoji.shortcode] = {uri:emoji.url};
+        emojis.forEach((emoji) => {
+            emojiArray[emoji.shortcode] = { uri: emoji.url };
         });
         return <CustomEmoji emojis={emojiArray}>
             <Text style={style}>{text}</Text>
         </CustomEmoji>;
     }
 
-    mastorowMediaFormat(media_attachments,sensitive){
-        if(media_attachments && media_attachments.length > 0){
+    mastorowMediaFormat(media_attachments, sensitive) {
+        if (media_attachments && media_attachments.length > 0) {
             return <MastoMedia
                 width={300}
                 height={100}
@@ -157,8 +155,8 @@ export default class MastoRow extends Component {
                 faName = "reply";
                 break;
         }
-        return  <View style={styles.container}>
-            <Text style={[styles.dateFlex,{color}]}>
+        return <View style={styles.container}>
+            <Text style={[styles.dateFlex, { color }]}>
                 <Text>{" "}<FontAwesome name={faName} size={12} color={color} />{" " + name}</Text>
             </Text>
         </View>;
@@ -194,7 +192,7 @@ const styles = StyleSheet.create({
         paddingTop: 3,
         paddingBottom: 3,
     },
-    link:{
+    link: {
         color: "#2980b9",
         fontSize: 14,
         textDecorationLine: "underline"
