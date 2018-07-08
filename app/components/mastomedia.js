@@ -10,16 +10,14 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MastorowActions from "../actions/actioncreators/mastorow";
 import { FontAwesome } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
 class MastoMedia extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            width: props.width,
-            height: props.height,
-            media_attachments: props.media_attachments,
-            sensitive: props.sensitive
-        };
+    static propTypes = {
+        width: PropTypes.number,
+        height: PropTypes.number,
+        media_attachments: PropTypes.array,
+        sensitive: PropTypes.bool
     }
     render() {
         return (

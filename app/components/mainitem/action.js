@@ -6,23 +6,23 @@ import I18n from "../../i18n";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../../actions/actioncreators/main";
-
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
+import PropTypes from "prop-types";
 
 class Action extends React.Component {
+    static propTypes = {
+        id: PropTypes.string,
+        tootid: PropTypes.string,
+        style: PropTypes.number,
+        url: PropTypes.string,
+        user: PropTypes.string,
+        acct: PropTypes.string,
+        image: PropTypes.string,
+        body: PropTypes.string,
+        my: PropTypes.bool
+    }
     constructor(props) {
         super(props);
-        this.props = {
-            id: props.id,
-            style: props.style,
-            url: props.url,
-            tootid: props.tootid,
-            user: props.user,
-            acct: props.acct,
-            image: props.image,
-            body: props.body,
-            my: props.my,
-        };
         this.handlePress = this.handlePress.bind(this);
     }
     render() {

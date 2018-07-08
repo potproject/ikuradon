@@ -4,19 +4,17 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as MainActions from "../../actions/actioncreators/main";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 
 class Reply extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            id:props.id,
-            tootid:props.tootid,
-            user:props.user,
-            acct:props.acct,
-            image:props.image,
-            body:props.body,
-            style:props.style
-        };
+    static propTypes = {
+        id: PropTypes.string,
+        tootid: PropTypes.string,
+        user: PropTypes.string,
+        acct: PropTypes.string,
+        image: PropTypes.string,
+        body: PropTypes.string,
+        style: PropTypes.number
     }
     render() {
         return (

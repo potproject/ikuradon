@@ -4,17 +4,15 @@ import { FontAwesome } from "@expo/vector-icons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MastorowActions from "../../actions/actioncreators/mastorow";
+import PropTypes from "prop-types";
 
 class Boost extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            id: props.id,
-            tootid: props.tootid,
-            style: props.style,
-            reblogged: props.reblogged,
-            count: props.count
-        };
+    static propTypes = {
+        id: PropTypes.string,
+        tootid: PropTypes.string,
+        style: PropTypes.number,
+        reblogged: PropTypes.bool,
+        count: PropTypes.number
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.reblogged !== nextProps.reblogged) {

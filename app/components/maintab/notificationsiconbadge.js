@@ -3,14 +3,12 @@ import IconBadge from "react-native-icon-badge";
 import { FontAwesome } from "@expo/vector-icons";
 import { Text } from "react-native";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class NotificationsIconBadge extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            color: props.color,
-            count: props.count
-        };
+    static propTypes = {
+        color: PropTypes.string,
+        count: PropTypes.number,
     }
     componentWillReceiveProps(nextProps) {
         if(typeof nextProps.navReducer.count === "number"){
