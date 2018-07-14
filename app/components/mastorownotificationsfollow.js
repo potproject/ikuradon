@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Image, Linking } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
 export default class MastoRowNotificationfollow extends Component {
-    constructor(props) {
-        super(props);
-        this.props = {
-            id:props.id,
-            type:props.type,
-            user: props.user,
-            image: props.image,
-            username:"@"+props.username,
-            acct: "@"+props.acct
-        };
+    static propTypes = {
+        id: PropTypes.string,
+        type: PropTypes.string,
+        user: PropTypes.string,
+        image: PropTypes.string,
+        username: PropTypes.string,
+        acct: PropTypes.string,
     }
     render() {
         return (
@@ -28,7 +26,7 @@ export default class MastoRowNotificationfollow extends Component {
                         <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
                             <FontAwesome name={"user-plus"} size={16} />
                             <Text style={styles.username}>
-                                {" "+this.props.username}
+                                {" " + this.props.username}
                             </Text>
                         </Text>
                         <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
