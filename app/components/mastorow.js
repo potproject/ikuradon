@@ -52,7 +52,7 @@ export default class MastoRow extends Component {
     }
     render() {
         return (
-            <View>
+            <View style={this.props.my ? styles.mycolor : []}>
                 <View style={styles.container}>
                     <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
@@ -165,6 +165,9 @@ export default class MastoRow extends Component {
 
 
 const styles = StyleSheet.create({
+    mycolor:{
+        backgroundColor: "#cecece"
+    },
     container: {
         flex: 1,
         padding: 4,
