@@ -14,6 +14,9 @@ export default {
     //ナビゲーションボタン
     navigation_button_toot: "トゥート",
 
+    //AppInit
+    appinit_title: "初期化中...",
+
     //ログイン
     login_title: "ログイン",
     login_message: "Mastodon インスタンスドメインを入力してください",

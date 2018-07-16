@@ -14,6 +14,9 @@ export default {
     //Navigation Button
     navigation_button_toot: "Toot",
 
+    //AppInit
+    appinit_title: "initialize...",
+
     //Login
     login_title: "Login",
     login_message: "Please enter Mastodon instance domain.",

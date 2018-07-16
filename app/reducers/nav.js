@@ -8,7 +8,7 @@ import {
 import * as RouterName from "../constants/routername";
 import * as Nav from "../actions/actiontypes/nav";
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams(RouterName.Login));
+const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams(RouterName.AppInit));
 
 export default function reducer(state = initialState, action = {}) {
     let nextState;
@@ -22,7 +22,8 @@ export default function reducer(state = initialState, action = {}) {
                             routeName: RouterName.Login
                         })
                     ]
-                })
+                }),
+                Object.assign(state, {})
             );
             break;
         case Nav.NAV_AUTHORIZE:
