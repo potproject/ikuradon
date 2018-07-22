@@ -35,6 +35,12 @@ export default class MastoRow extends Component {
         sensitive: PropTypes.bool,
         spoiler_text: PropTypes.string,
         my: PropTypes.bool,
+
+        onReply: PropTypes.func,
+        onBoost: PropTypes.func,
+        onFavourite: PropTypes.func,
+        onHide: PropTypes.func,
+        onDeleting: PropTypes.func
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.favourited !== nextProps.favourited) {
@@ -79,10 +85,10 @@ export default class MastoRow extends Component {
                 {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
                 <View style={styles.container}>
                     <View style={styles.item}>
-                        <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} />
-                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} />
-                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} />
-                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} />
+                        <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} onReply={this.props.onReply}/>
+                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} onBoost={this.props.onBoost} />
+                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} onFavourite={this.props.onFavourite}/>
+                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
                     </View>
                 </View>
             </View>

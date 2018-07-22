@@ -3,13 +3,10 @@ import { TouchableOpacity, Linking, Clipboard } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ActionSheet from "react-native-actionsheet";
 import I18n from "../../i18n";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as MainActions from "../../actions/actioncreators/main";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 
-class Action extends React.Component {
+export default class Action extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
@@ -19,7 +16,11 @@ class Action extends React.Component {
         acct: PropTypes.string,
         image: PropTypes.string,
         body: PropTypes.string,
-        my: PropTypes.bool
+        my: PropTypes.bool,
+
+        onReply: PropTypes.func,
+        onHide: PropTypes.func,
+        onDeleting: PropTypes.func
     }
     constructor(props) {
         super(props);
@@ -81,22 +82,16 @@ class Action extends React.Component {
                 Clipboard.setString(bodyExtractionUrl(this.props.body));
                 return;
             case 3: //reply
-                this.props.MainActions.reply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
+                this.props.onReply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
                 return;
             case 4: //Hide
-                this.props.MainActions.hide(this.props.id);
+                this.props.onHide(this.props.id);
                 return;
             case 5: //Delete
                 if(this.props.my){
-                    this.props.MainActions.deleting(this.props.id);
+                    this.props.onDeleting(this.props.id);
                 }
                 return;
         }
     }
 }
-
-export default connect(state => state,
-    (dispatch) => ({
-        MainActions: bindActionCreators(MainActions, dispatch)
-    })
-)(Action);

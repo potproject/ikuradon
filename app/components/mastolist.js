@@ -5,6 +5,7 @@ import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
+import * as MastoRowActions from "../actions/actioncreators/mastorow";
 
 // removeClippedSubviews is buggy. Experimental functions.
 // Reference: https://facebook.github.io/react-native/docs/flatlist#removeclippedsubviews
@@ -100,6 +101,12 @@ class Mastolist extends React.Component {
                         url={data.url}
                         emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                         my={this.myUserCredentials.acct === data.status.account.acct}
+                        
+                        onReply={this.props.MainActions.reply}
+                        onBoost={this.props.MastoRowActions.boost}
+                        onFavourite={this.props.MastoRowActions.favourite}
+                        onHide={this.props.MainActions.hide}
+                        onDeleting={this.props.MainActions.deleting}
                     />;
             }
         }
@@ -127,6 +134,12 @@ class Mastolist extends React.Component {
                 url={data.url}
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                 my={this.myUserCredentials.acct === data.account.acct}
+
+                onReply={this.props.MainActions.reply}
+                onBoost={this.props.MastoRowActions.boost}
+                onFavourite={this.props.MastoRowActions.favourite}
+                onHide={this.props.MainActions.hide}
+                onDeleting={this.props.MainActions.deleting}
             />;
         } else {
             return <MastoRow
@@ -152,6 +165,12 @@ class Mastolist extends React.Component {
                 url={data.url}
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
                 my={this.myUserCredentials.acct === data.reblog.account.acct}
+
+                onReply={this.props.MainActions.reply}
+                onBoost={this.props.MastoRowActions.boost}
+                onFavourite={this.props.MastoRowActions.favourite}
+                onHide={this.props.MainActions.hide}
+                onDeleting={this.props.MainActions.deleting}
             />;
         }
     }
@@ -175,6 +194,7 @@ export default connect((state) => {
     return (state);
 },
 (dispatch) => ({
-    MainActions: bindActionCreators(MainActions, dispatch)
+    MainActions: bindActionCreators(MainActions, dispatch),
+    MastoRowActions: bindActionCreators(MastoRowActions, dispatch)
 })
 )(Mastolist);

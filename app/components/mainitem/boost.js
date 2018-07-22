@@ -1,18 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as MastorowActions from "../../actions/actioncreators/mastorow";
 import PropTypes from "prop-types";
 
-class Boost extends React.Component {
+export default class Boost extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
         style: PropTypes.number,
         reblogged: PropTypes.bool,
-        count: PropTypes.number
+        count: PropTypes.number,
+
+        onBoost: PropTypes.func,
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.reblogged !== nextProps.reblogged) {
@@ -25,7 +24,7 @@ class Boost extends React.Component {
     render() {
         return (
             <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={this.props.style} onPress={() => this.props.MastorowActions.boost(this.props.id, this.props.tootid, !this.props.reblogged)}>
+                <TouchableOpacity style={this.props.style} onPress={() => this.props.onBoost(this.props.id, this.props.tootid, !this.props.reblogged)}>
                     <FontAwesome name="retweet" size={20} color={this.setColor(this.props.reblogged)} />
                 </TouchableOpacity>
                 <Text style={styles.text}>{this.props.count !== 0 ? this.props.count : ""}</Text>
@@ -48,9 +47,3 @@ const styles = StyleSheet.create({
         color: "gray"
     }
 });
-
-export default connect(state => state,
-    (dispatch) => ({
-        MastorowActions: bindActionCreators(MastorowActions, dispatch)
-    })
-)(Boost);
