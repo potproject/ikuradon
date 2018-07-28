@@ -21,6 +21,11 @@ export function bodyExtractionUrl(body) {
     return null;
 }
 
+export function bodySearchUrl(body) {
+    //(http|https)のリンクが含まれているかどうかの判定
+    return (~body.indexOf("http://") || ~body.indexOf("https://"));
+}
+
 export function dateFormat(date) {
     return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
 }

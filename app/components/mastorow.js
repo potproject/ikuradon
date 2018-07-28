@@ -7,7 +7,7 @@ import Reply from "./mainitem/reply";
 import Boost from "./mainitem/boost";
 import Favourite from "./mainitem/favourite";
 import Action from "./mainitem/action";
-import { bodyFormat, dateFormat } from "../util/parser";
+import { bodyFormat, dateFormat, bodySearchUrl } from "../util/parser";
 import CustomEmoji from "react-native-customemoji";
 import VisibilityIcon from "./visibilityicon";
 import PropTypes from "prop-types";
@@ -108,17 +108,24 @@ export default class MastoRow extends Component {
     }
     mastorowBodyFormat(body, emojis) {
         let newbody = bodyFormat(body);
+        let existsURL = bodySearchUrl(newbody);
         if (this.props.sensitive) {
             newbody = "[!] " + this.props.spoiler_text + "\n\n" + newbody;
         }
-        if (emojis.length > 0) {
+        if (emojis.length > 0 && existsURL) {
             return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
                 {this.mastorowSetCustomEmoji(newbody, emojis, styles.body)}
             </Hyperlink>;
         }
-        return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
-            <Text style={styles.body}>{newbody}</Text>
-        </Hyperlink>;
+        if(emojis.length > 0){
+            return this.mastorowSetCustomEmoji(newbody, emojis, styles.body);
+        }
+        if(existsURL){
+            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
+                <Text style={styles.body}>{newbody}</Text>
+            </Hyperlink>;
+        }
+        return <Text style={styles.body}>{newbody}</Text>;
     }
 
     mastorowSetCustomEmoji(text, emojis, style) {
