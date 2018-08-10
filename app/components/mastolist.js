@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, RefreshControl, FlatList } from "react-native";
+import { View, StyleSheet, RefreshControl, FlatList, ImageBackground } from "react-native";
 import MastoRow from "./mastorow";
 import MastoRowNotificationsFollow from "./mastorownotificationsfollow";
 import { connect } from "react-redux";
@@ -20,6 +20,7 @@ class Mastolist extends React.Component {
         this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
+        this.backgroundImage = null;
 
         this.myUserCredentials = props.currentUserReducer.user_credentials;
     }
@@ -28,25 +29,27 @@ class Mastolist extends React.Component {
     }
     render() {
         return (
-            <View style={styles.container}>
-                <FlatList
-                    style={styles.container}
-                    data={this.listdata.data}
-                    renderItem={(data) => this.mastoRowIdentification(data.item)}
-                    keyExtractor={(data) => data.id}
-                    ItemSeparatorComponent={() => <View style={styles.separator} />}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.listdata.refreshing}
-                            onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
-                        />
-                    }
-                    onEndReachedThreshold={1.5}
-                    onEndReached={()=>(this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId))
-                    }
-                    removeClippedSubviews={UsingRemoveClippedSubviews}
-                />
-            </View>
+            <ImageBackground source={this.backgroundImage} style={styles.background}>
+                <View style={styles.container}>
+                    <FlatList
+                        style={styles.container}
+                        data={this.listdata.data}
+                        renderItem={(data) => this.mastoRowIdentification(data.item)}
+                        keyExtractor={(data) => data.id}
+                        ItemSeparatorComponent={() => <View style={styles.separator} />}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.listdata.refreshing}
+                                onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)}
+                            />
+                        }
+                        onEndReachedThreshold={1.5}
+                        onEndReached={()=>(this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId))
+                        }
+                        removeClippedSubviews={UsingRemoveClippedSubviews}
+                    />
+                </View>
+            </ImageBackground>
         );
     }
     
@@ -177,6 +180,10 @@ class Mastolist extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    background: {
+        width: "100%", 
+        height: "100%",
+    },
     container: {
         flex: 1,
     },
