@@ -6,6 +6,7 @@ import mainReducer from "./main";
 import navigationReducer from "./navigation";
 import streamingReducer from "./streaming";
 import currentUserReducer from "./currentuser";
+import configReducer from "./config";
 // ... other reducers
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
     mainReducer,
     navigationReducer,
     streamingReducer,
-    currentUserReducer
+    currentUserReducer,
+    configReducer
     // ... other reducers
 });

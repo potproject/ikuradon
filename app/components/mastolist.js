@@ -20,7 +20,7 @@ class Mastolist extends React.Component {
         this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
         this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
-        this.backgroundImage = null;
+        this.backgroundImage = this.props.configReducer.backgroundImage;
 
         this.myUserCredentials = props.currentUserReducer.user_credentials;
     }
