@@ -3,7 +3,8 @@ export default {
     setting_streamingapi: "Streaming API",
     logout: "Logout",
     account_change:"Account Change",
-    
+    setting_background: "Setting up Background Image",
+  
     //Navigations
     navigation_home: "Home",
     navigation_local: "Local",

@@ -29,7 +29,7 @@ class Mastolist extends React.Component {
     }
     render() {
         return (
-            <ImageBackground source={this.backgroundImage} style={styles.background}>
+            <ImageBackground source={this.backgroundImage ? {uri:this.backgroundImage} : null} style={styles.background}>
                 <View style={styles.container}>
                     <FlatList
                         style={styles.container}

@@ -3,6 +3,7 @@ export default {
     setting_streamingapi: "ストリーミング API",
     logout: "ログアウト",
     account_change:"アカウント変更",
+    setting_background: "背景画像を設定",
 
     //ナビゲーション
     navigation_home: "ホーム",

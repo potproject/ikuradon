@@ -179,7 +179,7 @@ export default class MastoRow extends Component {
 
 const styles = StyleSheet.create({
     mycolor:{
-        backgroundColor: "#cecece"
+        backgroundColor: "#cecece66"
     },
     container: {
         flex: 1,
