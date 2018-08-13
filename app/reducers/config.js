@@ -1,4 +1,5 @@
 import * as ConfigActionTypes from "../actions/actiontypes/config";
+import { AsyncStorage } from "react-native";
 
 const initialState = {
     backgroundImage:null,
@@ -6,16 +7,27 @@ const initialState = {
 };
 
 export default function Config(state = initialState, action = {}) {
+    let newstate;
     switch (action.type) {
         case ConfigActionTypes.SET_BACKGROUNDIMAGE:
-            return Object.assign(state,{
+            newstate = Object.assign({},state,{
                 backgroundImage : action.backgroundImage
             });
+            break;
         case ConfigActionTypes.DELETE_BACKGROUNDIMAGE:
-            return Object.assign(state,{
+            newstate = Object.assign({},state,{
                 backgroundImage : null
             });
+            break;
+        case ConfigActionTypes.CONFIG_LOAD:
+            newstate = Object.assign({},action.config);
+            break;
         default:
-            return state;
+            newstate = state;
+            break;
     }
+    if(state !== newstate){
+        AsyncStorage.setItem("config",JSON.stringify(newstate));
+    }
+    return newstate;
 }

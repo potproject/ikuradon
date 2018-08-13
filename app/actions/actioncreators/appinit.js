@@ -1,5 +1,6 @@
 import * as Nav from "../actiontypes/nav";
 import * as Main from "../actiontypes/main";
+import * as Config from "../actiontypes/config";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import I18n from "../../i18n";
@@ -28,6 +29,14 @@ export function appInit() {
             type: Main.GETLOCALDATA_MASTOLIST,
             data: timeline_cache
         });
+
+        //config init load
+        let configstr = await AsyncStorage.getItem("config");
+        let config = JSON.parse(configstr);
+        if(config !== null){
+            await dispatch({ type: Config.CONFIG_LOAD, config });
+        }
+
         //i18n init
         await I18n.init();
         //Session init

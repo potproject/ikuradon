@@ -2,6 +2,8 @@ import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
 import * as Nav from "../actiontypes/nav";
+import { MessageBarManager } from "react-native-message-bar";
+import I18n from "../../i18n";
 
 export function setBackground() {
     return async dispatch => {
