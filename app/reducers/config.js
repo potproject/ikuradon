@@ -22,6 +22,9 @@ export default function Config(state = initialState, action = {}) {
         case ConfigActionTypes.CONFIG_LOAD:
             newstate = Object.assign({},action.config);
             break;
+        case ConfigActionTypes.CONFIG_RESET:
+            newstate = initialState;
+            break;
         default:
             newstate = state;
             break;

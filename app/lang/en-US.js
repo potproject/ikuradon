@@ -4,7 +4,8 @@ export default {
     logout: "Logout",
     account_change:"Account Change",
     setting_background: "Setting up Background Image",
-  
+    setting_allclear: "Setting Reset",
+
     //Navigations
     navigation_home: "Home",
     navigation_local: "Local",

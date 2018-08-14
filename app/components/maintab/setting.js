@@ -26,6 +26,10 @@ class Setting extends React.Component {
                 onPress={() => this.props.ConfigActions.setBackground()}
                 title={I18n.t("setting_background")}
             />
+            <Button
+                onPress={() => this.props.ConfigActions.allClear()}
+                title={I18n.t("setting_allclear")}
+            />
         </View>;
     }
 }

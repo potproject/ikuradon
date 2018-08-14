@@ -4,6 +4,7 @@ export default {
     logout: "ログアウト",
     account_change:"アカウント変更",
     setting_background: "背景画像を設定",
+    setting_allclear: "設定をリセット",
 
     //ナビゲーション
     navigation_home: "ホーム",

@@ -5,6 +5,13 @@ import * as Nav from "../actiontypes/nav";
 import { MessageBarManager } from "react-native-message-bar";
 import I18n from "../../i18n";
 
+export function allClear(){
+    return async dispatch => {
+        dispatch({ type: Config.CONFIG_RESET });
+        dispatch({ type: Nav.NAV_MAIN });
+    };
+}
+
 export function setBackground() {
     return async dispatch => {
         try {
