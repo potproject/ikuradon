@@ -6,6 +6,10 @@ export default {
     setting_background: "背景画像を設定",
     setting_allclear: "設定をリセット",
 
+    //設定ヘッダ
+    setting_header_personal: "個人",
+    setting_header_accounts: "アカウント",
+
     //ナビゲーション
     navigation_home: "ホーム",
     navigation_local: "ローカル",

@@ -6,6 +6,10 @@ export default {
     setting_background: "Setting up Background Image",
     setting_allclear: "Setting Reset",
 
+    //Settings Header
+    setting_header_personal: "Personal",
+    setting_header_accounts: "Accounts",
+
     //Navigations
     navigation_home: "Home",
     navigation_local: "Local",
