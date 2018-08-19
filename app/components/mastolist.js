@@ -104,7 +104,8 @@ class Mastolist extends React.Component {
                         url={data.url}
                         emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                         my={this.myUserCredentials.acct === data.status.account.acct}
-                        
+                        application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
+
                         onReply={this.props.MainActions.reply}
                         onBoost={this.props.MastoRowActions.boost}
                         onFavourite={this.props.MastoRowActions.favourite}
@@ -137,6 +138,7 @@ class Mastolist extends React.Component {
                 url={data.url}
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                 my={this.myUserCredentials.acct === data.account.acct}
+                application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
 
                 onReply={this.props.MainActions.reply}
                 onBoost={this.props.MastoRowActions.boost}
@@ -168,6 +170,7 @@ class Mastolist extends React.Component {
                 url={data.url}
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
                 my={this.myUserCredentials.acct === data.reblog.account.acct}
+                application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
 
                 onReply={this.props.MainActions.reply}
                 onBoost={this.props.MastoRowActions.boost}

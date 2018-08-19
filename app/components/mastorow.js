@@ -34,6 +34,7 @@ export default class MastoRow extends Component {
         visibility: PropTypes.string,
         sensitive: PropTypes.bool,
         spoiler_text: PropTypes.string,
+        application_name: PropTypes.string,
         my: PropTypes.bool,
 
         onReply: PropTypes.func,
@@ -80,6 +81,7 @@ export default class MastoRow extends Component {
                         <VisibilityIcon visibility={this.props.visibility} size={12} />
                         {" "}
                         {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> : ""}
+                        {this.props.application_name ? " via "+this.props.application_name : ""}
                     </Text>
                 </View>
                 {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
