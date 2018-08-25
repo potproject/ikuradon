@@ -1,5 +1,8 @@
 
 # ikuradon
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/potproject/ikuradon.svg)](https://greenkeeper.io/)
+
 <img width="100" heigth="100" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true">
    
 Mastodon client app for React Native  
