@@ -17,7 +17,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest"
+    "test": "jest",
+    "ci-publish": "exp login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && exp publish"
   },
   "jest": {
     "preset": "jest-expo"
@@ -26,6 +27,7 @@
     "axios": "^0.18.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-module-resolver": "^3.1.1",
+    "exp": "^57.0.0",
     "expo": "^29.0.0",
     "he": "^1.1.1",
     "i18next": "^11.5.0",

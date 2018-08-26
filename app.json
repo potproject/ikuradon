@@ -1,9 +1,11 @@
 {
   "expo": {
     "name": "ikuradon",
-    "description": "ikuradon - React Native Mastodon App",
+    "description": "ikuradon - Mastodon Client App",
     "slug":"potproject-ikuradon",
     "sdkVersion": "29.0.0",
-    "icon":"assets/image/icon250.png"
+    "githubUrl": "https://github.com/potproject/ikuradon",
+    "icon":"assets/image/icon250.png",
+    "privacy": "public"
   }
 }
