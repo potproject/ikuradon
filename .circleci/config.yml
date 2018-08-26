@@ -18,6 +18,6 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - publish:
+      - deploy:
           name: Expo CDN Auto Publish
           command: yarn run ci-publish
