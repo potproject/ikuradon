@@ -1,7 +1,8 @@
 import React from "react";
 import {
     StyleSheet,
-    View
+    View,
+    Image
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -13,14 +14,23 @@ class AppInit extends React.Component {
         props.AppInitActions.appInit();
     }
     render() {
-        return <View style={styles.container}>
-        </View>;
+        return (
+            <View style={styles.container}>
+                <Image style={styles.logo} source={require("../../assets/image/icon250.png")} />
+            </View>
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    logo: {
+        width: 100,
+        height: 100
     }
 });
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Linking, Clipboard } from "react-native";
+import { TouchableOpacity, Linking, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ActionSheet from "react-native-actionsheet";
 import I18n from "../../i18n";
@@ -28,10 +28,13 @@ export default class Action extends React.Component {
     }
     render() {
         return (
-            <TouchableOpacity style={this.props.style} onPress={this.onPress.bind(this)}>
-                <FontAwesome name="ellipsis-h" size={20} color="gray" />
-                {this.createAction()}
-            </TouchableOpacity>
+            <View style={[this.props.style, styles.container]}>
+                <TouchableOpacity style={this.props.style} onPress={this.onPress.bind(this)}>
+                    <FontAwesome name="ellipsis-h" size={20} color="gray" />
+                    {this.createAction()}
+                </TouchableOpacity>
+                <View style={styles.container}></View>
+            </View>
         );
     }
     onPress() {
@@ -95,3 +98,10 @@ export default class Action extends React.Component {
         }
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "row",
+    }
+});
