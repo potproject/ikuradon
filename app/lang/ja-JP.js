@@ -6,9 +6,15 @@ export default {
     setting_background: "背景画像を設定",
     setting_allclear: "設定をリセット",
 
+    setting_visible_home:"ホームタイムラインを非表示",
+    setting_visible_local:"ローカルタイムラインを非表示",
+    setting_visible_federal:"連合タイムラインを非表示",
+    setting_visible_notifications:"通知タイムラインを非表示",
+
     //設定ヘッダ
     setting_header_personal: "個人",
     setting_header_accounts: "アカウント",
+    setting_header_visible: "表示",
 
     //ナビゲーション
     navigation_home: "ホーム",

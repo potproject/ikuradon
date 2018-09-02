@@ -31,3 +31,12 @@ export function setBackground() {
         }
     };
 }
+
+export function setInvisibleTimeline(type, value){
+    return async dispatch => {
+        let invisible = {};
+        invisible[type] = value;
+        dispatch({ type: Config.INVISIBLE_SETTING, invisible });
+        dispatch({ type: Nav.NAV_MAIN });
+    };
+}

@@ -3,6 +3,14 @@ import { AsyncStorage } from "react-native";
 
 const initialState = {
     backgroundImage:null,
+
+    invisible:{
+        //表示設定 trueで非表示
+        home:false,
+        local:false,
+        federal:false,
+        notifications:false,
+    }
     //textsize,textcolor,etc...
 };
 
@@ -18,6 +26,10 @@ export default function Config(state = initialState, action = {}) {
             newstate = Object.assign({},state,{
                 backgroundImage : null
             });
+            break;
+        case ConfigActionTypes.INVISIBLE_SETTING:
+            let mergeInvisible = Object.assign(state.invisible,action.invisible);
+            newstate = Object.assign({},state,{invisible: mergeInvisible});
             break;
         case ConfigActionTypes.CONFIG_LOAD:
             newstate = Object.assign({},action.config);

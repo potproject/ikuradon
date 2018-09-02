@@ -6,9 +6,15 @@ export default {
     setting_background: "Setting up Background Image",
     setting_allclear: "Setting Reset",
 
+    setting_visible_home:"Do not show Home Timeline",
+    setting_visible_local:"Do not show Local Timeline",
+    setting_visible_federal:"Do not show Federal Timeline",
+    setting_visible_notifications:"Do not show Notifications Timeline",
+
     //Settings Header
     setting_header_personal: "Personal",
     setting_header_accounts: "Accounts",
+    setting_header_visible: "Visible",
 
     //Navigations
     navigation_home: "Home",
