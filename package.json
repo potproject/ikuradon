@@ -9,7 +9,7 @@
     "eslint-plugin-react": "^7.8.2",
     "jest-expo": "29.0.0",
     "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.4.2"
+    "react-test-renderer": "16.5.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
