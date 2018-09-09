@@ -36,6 +36,7 @@ export default class MastoRow extends Component {
         spoiler_text: PropTypes.string,
         application_name: PropTypes.string,
         my: PropTypes.bool,
+        smartMode: PropTypes.bool,
 
         onReply: PropTypes.func,
         onBoost: PropTypes.func,
@@ -85,6 +86,7 @@ export default class MastoRow extends Component {
                     </Text>
                 </View>
                 {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
+                { !this.props.smartMode &&
                 <View style={styles.container}>
                     <View style={styles.item}>
                         <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} onReply={this.props.onReply}/>
@@ -93,6 +95,7 @@ export default class MastoRow extends Component {
                         <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
                     </View>
                 </View>
+                }
             </View>
         );
     }

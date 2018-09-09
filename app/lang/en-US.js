@@ -11,6 +11,8 @@ export default {
     setting_visible_federal:"Do not show Federal Timeline",
     setting_visible_notifications:"Do not show Notifications Timeline",
 
+    setting_smartmode: "Enabled SmartMode",
+
     //Settings Header
     setting_header_personal: "Personal",
     setting_header_accounts: "Accounts",

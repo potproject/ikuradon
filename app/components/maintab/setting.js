@@ -24,6 +24,14 @@ class Setting extends React.Component {
                     />
                     <SettingsList.Item
                         hasNavArrow={false}
+                        titleStyle={styles.text}
+                        title={I18n.t("setting_smartmode")}
+                        switchState={this.props.ConfigReducer.smartMode}
+                        switchOnValueChange={(value) => this.props.ConfigActions.setSmartMode(value)}
+                        hasSwitch={true}
+                    />
+                    <SettingsList.Item
+                        hasNavArrow={false}
                         titleStyle={styles.button}
                         onPress={() => this.props.ConfigActions.allClear()}
                         title={I18n.t("setting_allclear")}

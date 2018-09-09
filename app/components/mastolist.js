@@ -23,6 +23,7 @@ class Mastolist extends React.Component {
         this.backgroundImage = this.props.configReducer.backgroundImage;
 
         this.myUserCredentials = props.currentUserReducer.user_credentials;
+        this.smartMode = props.configReducer.smartMode;
     }
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
@@ -105,6 +106,7 @@ class Mastolist extends React.Component {
                         emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                         my={this.myUserCredentials.acct === data.status.account.acct}
                         application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
+                        smartMode={this.smartMode}
 
                         onReply={this.props.MainActions.reply}
                         onBoost={this.props.MastoRowActions.boost}
@@ -139,6 +141,7 @@ class Mastolist extends React.Component {
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                 my={this.myUserCredentials.acct === data.account.acct}
                 application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
+                smartMode={this.smartMode}
 
                 onReply={this.props.MainActions.reply}
                 onBoost={this.props.MastoRowActions.boost}
@@ -171,6 +174,7 @@ class Mastolist extends React.Component {
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
                 my={this.myUserCredentials.acct === data.reblog.account.acct}
                 application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
+                smartMode={this.smartMode}
 
                 onReply={this.props.MainActions.reply}
                 onBoost={this.props.MastoRowActions.boost}

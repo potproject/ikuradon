@@ -11,6 +11,8 @@ export default {
     setting_visible_federal:"連合タイムラインを非表示",
     setting_visible_notifications:"通知タイムラインを非表示",
 
+    setting_smartmode: "スマートモードを有効にする",
+
     //設定ヘッダ
     setting_header_personal: "個人",
     setting_header_accounts: "アカウント",

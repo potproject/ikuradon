@@ -40,3 +40,10 @@ export function setInvisibleTimeline(type, value){
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
+
+export function setSmartMode(value){
+    return async dispatch => {
+        dispatch({ type: Config.SMART_MODE, smartMode: value });
+        dispatch({ type: Nav.NAV_MAIN });
+    };
+}
