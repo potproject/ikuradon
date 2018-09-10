@@ -36,7 +36,6 @@ class Setting extends React.Component {
                         onPress={() => this.props.ConfigActions.allClear()}
                         title={I18n.t("setting_allclear")}
                     />
-                    { /*
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_visible")}/>
                     <SettingsList.Item
                         hasNavArrow={false}
@@ -70,7 +69,6 @@ class Setting extends React.Component {
                         switchOnValueChange={(value) => this.props.ConfigActions.setInvisibleTimeline("notifications", value)}
                         hasSwitch={true}
                     />
-                    */}
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_accounts")}/>
                     <SettingsList.Item
                         hasNavArrow={false}
