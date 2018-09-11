@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/ikuradon
     docker:
       - image: circleci/node:8
+    branches:
+        only:
+          - master
     steps:
       - checkout
       - restore_cache:
