@@ -36,7 +36,11 @@ class Authorize extends React.Component {
         if(!this.call && index !== -1){
             this.call = true;
             //complete!
-            const authorizeCode= navState.url.substring(complateUrl.length);
+            let authorizeCode = navState.url.substring(complateUrl.length);
+            //v2.5.0 Support
+            if(authorizeCode.substr(0,12) === "native?code="){
+                authorizeCode = authorizeCode.substr(12);
+            }
             this.props.AuthorizeActions.getAccessTokenWithHomeAction(domain,client_id,client_secret,authorizeCode);
         }
         return true;
