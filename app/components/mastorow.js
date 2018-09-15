@@ -90,7 +90,7 @@ export default class MastoRow extends Component {
                 <View style={styles.container}>
                     <View style={styles.item}>
                         <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} onReply={this.props.onReply}/>
-                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} onBoost={this.props.onBoost} />
+                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} onBoost={this.props.onBoost} disabled={this.props.visibility === "private" || this.props.visibility === "direct"} />
                         <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} onFavourite={this.props.onFavourite}/>
                         <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
                     </View>
@@ -190,6 +190,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 4,
         flexDirection: "row",
+        paddingTop:5,
+        paddingBottom:5,
     },
     textarea: {
         flex: 1,

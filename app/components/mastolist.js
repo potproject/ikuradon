@@ -79,7 +79,7 @@ class Mastolist extends React.Component {
                         user={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                         image={data.account.avatar}
                         username={data.account.username}
-                        acct={data.account.acct}
+                        acct={"@"+data.account.acct}
                     />;
                 case "favourite":
                 case "reblog":
@@ -100,7 +100,7 @@ class Mastolist extends React.Component {
                         sensitive={data.status.sensitive}
                         spoiler_text={data.status.spoiler_text}
                         username={data.status.account.username}
-                        acct={data.status.account.acct}
+                        acct={"@"+data.status.account.acct}
                         notification_type={data.type}
                         notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                         media_attachments={[]}
@@ -135,7 +135,7 @@ class Mastolist extends React.Component {
                 sensitive={data.sensitive}
                 spoiler_text={data.spoiler_text}
                 username={data.account.username}
-                acct={data.account.acct}
+                acct={"@"+data.account.acct}
                 notification_type={null}
                 notification_name={null}
                 media_attachments={data.media_attachments}
@@ -168,7 +168,7 @@ class Mastolist extends React.Component {
                 sensitive={data.reblog.sensitive}
                 spoiler_text={data.reblog.spoiler_text}
                 username={data.reblog.account.username}
-                acct={data.reblog.account.acct}
+                acct={"@"+data.reblog.account.acct}
                 notification_type={"reblog"}
                 notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                 media_attachments={data.reblog.media_attachments}
@@ -199,8 +199,6 @@ const styles = StyleSheet.create({
     separator: {
         flex: 1,
         height: StyleSheet.hairlineWidth,
-        marginTop:5,
-        marginBottom:5,
         backgroundColor: "#cecece",
     },
 });
