@@ -19,11 +19,13 @@ class Mastolist extends React.Component {
         this.access_token = this.props.navReducer.access_token;
         this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
-        this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
         this.backgroundImage = this.props.configReducer.backgroundImage;
 
         this.myUserCredentials = props.currentUserReducer.user_credentials;
         this.smartMode = props.configReducer.smartMode;
+        if(this.listdata && this.listdata.data instanceof Array && this.listdata.data.length < 1){
+            this.props.MainActions.newLoadingTimeline(this.type,this.listdata.maxId);
+        }
     }
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
