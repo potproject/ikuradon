@@ -12,6 +12,7 @@ export default class Action extends React.Component {
         tootid: PropTypes.string,
         style: PropTypes.number,
         url: PropTypes.string,
+        account_url: PropTypes.string,
         user: PropTypes.string,
         acct: PropTypes.string,
         image: PropTypes.string,
@@ -42,9 +43,9 @@ export default class Action extends React.Component {
     }
 
     createAction(){
-        let cancelButtonIndex = 5;
-        let destructiveButtonIndex = 4;
-        let options = [ I18n.t("action_openinbrowser"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
+        let cancelButtonIndex = 6;
+        let destructiveButtonIndex = 5;
+        let options = [ I18n.t("action_openinbrowser"),I18n.t("action_openinbrowserprofile"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
         //自分のtootなら削除可能に
         if(this.props.my){
             options.push(I18n.t("action_delete"));
@@ -78,19 +79,22 @@ export default class Action extends React.Component {
             case 0: //Open in Browser
                 this.openUrl(this.props.url);
                 return;
-            case 1: //Copy
+            case 1: //Open in Browser Profile
+                this.openUrl(this.props.account_url);
+                return;
+            case 2: //Copy
                 Clipboard.setString(bodyFormat(this.props.body));
                 return;
-            case 2: //URL Copy
+            case 3: //URL Copy
                 Clipboard.setString(bodyExtractionUrl(this.props.body));
                 return;
-            case 3: //reply
+            case 4: //reply
                 this.props.onReply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
                 return;
-            case 4: //Hide
+            case 5: //Hide
                 this.props.onHide(this.props.id);
                 return;
-            case 5: //Delete
+            case 6: //Delete
                 if(this.props.my){
                     this.props.onDeleting(this.props.id);
                 }

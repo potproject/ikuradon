@@ -45,6 +45,9 @@ class MastoMedia extends React.Component {
                                 blurRadius={this.props.sensitive ? 100 : 0}
                             />
                             <FontAwesome name={media.type === "image"?"file-image-o":"file-video-o"} size={30} color="gray" style={styles.mediaicon}/>
+                            { this.props.sensitive &&
+                            <FontAwesome name={"exclamation-circle"} size={16} style={styles.mediaiconSensitive} />
+                            }
                             <Text style={styles.description} ellipsizeMode='tail' numberOfLines={3}>{this.descriptionSetting(media.description)}</Text>
                         </View>
                     </TouchableHighlight>;
@@ -55,9 +58,6 @@ class MastoMedia extends React.Component {
     descriptionSetting(description){
         if(typeof description === "undefined" || description === null){
             description = "";
-        }
-        if(this.props.sensitive){
-            return "[!] "+description;
         }
         return description;
 
@@ -80,6 +80,10 @@ const styles = StyleSheet.create({
     },
     mediaicon:{
         margin:5,
+        position: "absolute",
+    },
+    mediaiconSensitive:{
+        margin:20,
         position: "absolute",
     },
     description:{

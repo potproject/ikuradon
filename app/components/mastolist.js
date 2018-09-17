@@ -105,6 +105,7 @@ class Mastolist extends React.Component {
                         notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                         media_attachments={[]}
                         url={data.url}
+                        account_url={data.status.account.url}
                         emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                         my={this.myUserCredentials.acct === data.status.account.acct}
                         application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
@@ -140,6 +141,7 @@ class Mastolist extends React.Component {
                 notification_name={null}
                 media_attachments={data.media_attachments}
                 url={data.url}
+                account_url={data.account.url}
                 emojis={typeof data.emojis !== "undefined" ? data.emojis : [] }
                 my={this.myUserCredentials.acct === data.account.acct}
                 application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}
@@ -173,6 +175,7 @@ class Mastolist extends React.Component {
                 notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                 media_attachments={data.reblog.media_attachments}
                 url={data.url}
+                account_url={data.reblog.account.url}
                 emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : [] }
                 my={this.myUserCredentials.acct === data.reblog.account.acct}
                 application_name={data.application && typeof data.application.name === "string" ? data.application.name : ""}

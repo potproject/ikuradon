@@ -53,6 +53,7 @@ export default {
 
     //アクション
     action_openinbrowser: "ブラウザで開く",
+    action_openinbrowserprofile: "プロフィールをブラウザで開く",
     action_copy: "コピー",
     action_copyurl: "URLをコピー",
     action_reply: "返信",

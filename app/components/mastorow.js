@@ -29,6 +29,7 @@ export default class MastoRow extends Component {
         notification_type: PropTypes.string,
         notification_name: PropTypes.string,
         media_attachments: PropTypes.array,
+        account_url: PropTypes.string,
         url: PropTypes.string,
         emojis: PropTypes.array,
         visibility: PropTypes.string,
@@ -92,7 +93,7 @@ export default class MastoRow extends Component {
                         <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} onReply={this.props.onReply}/>
                         <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} onBoost={this.props.onBoost} disabled={this.props.visibility === "private" || this.props.visibility === "direct"} />
                         <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} onFavourite={this.props.onFavourite}/>
-                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
+                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} account_url={this.props.account_url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
                     </View>
                 </View>
                 }
@@ -115,7 +116,7 @@ export default class MastoRow extends Component {
         let newbody = bodyFormat(body);
         let existsURL = bodySearchUrl(newbody);
         if (this.props.sensitive) {
-            newbody = "[!] " + this.props.spoiler_text + "\n\n" + newbody;
+            newbody = "[NSFW] " + this.props.spoiler_text + "\n" + newbody;
         }
         if (emojis.length > 0 && existsURL) {
             return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
@@ -173,7 +174,7 @@ export default class MastoRow extends Component {
                 faName = "reply";
                 break;
         }
-        return <View style={styles.container}>
+        return <View style={styles.notification}>
             <Text style={[styles.dateFlex, { color }]}>
                 <Text>{" "}<FontAwesome name={faName} size={12} color={color} />{" " + name}</Text>
             </Text>
@@ -192,6 +193,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingTop:5,
         paddingBottom:5,
+    },
+    notification:{
+        flex: 1,
+        flexDirection: "row",
     },
     textarea: {
         flex: 1,
