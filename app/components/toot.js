@@ -28,6 +28,7 @@ import { MessageBarManager } from "react-native-message-bar";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 
 const MAX_TOOT_LENGTH = 500;
+const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
 
 class Toot extends React.Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class Toot extends React.Component {
                     </View>
                     <View style={styles.tootbuttonview}>
                         <View style={styles.button}>
-                            <Text style={styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
+                            <Text style={MAX_TOOT_WARNING > (MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length) ? styles.textlimitwarning : styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
                         </View>
                         <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply)}>
                             <Text style={styles.texttoot}>Toot!</Text>
@@ -211,9 +212,11 @@ const styles = StyleSheet.create({
     },
     toottext: {
         height: 150,
-        margin: 5,
-        padding: 5,
-        borderWidth: 1
+        margin: 8,
+        padding: 7,
+        borderRadius: 4,
+        borderWidth: 1,
+        backgroundColor: "#FFFFFF",
     },
     warningtext: {
         height: 30,
@@ -232,12 +235,6 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 40,
-        height: 40,
-        margin: 5,
-        alignItems: "center",
-    },
-    tootbutton: {
-        width: 80,
         height: 40,
         margin: 5,
         alignItems: "center",
@@ -279,11 +276,26 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     textlimit: {
+        color: "#2b90d9",
         fontSize: 20,
     },
-    texttoot: {
+    textlimitwarning: {
+        color: "#ff5050",
         fontSize: 20,
-        color: "#00008B"
+    },
+    tootbutton: {
+        width: 60,
+        height: 40,
+        alignItems: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: "#2b90d9",
+        backgroundColor: "#2b90d9",
+    },
+    texttoot: {
+        paddingTop: 5,
+        fontSize: 20,
+        color: "#FFFFFF",
     },
     mediaScroll: {
         width: 400,
