@@ -4,7 +4,7 @@ import {
     Image,
     View,
     StyleSheet,
-    TouchableHighlight
+    TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -36,7 +36,7 @@ class MastoMedia extends React.Component {
             let onPress = this.props.MastorowActions.mediaOpen;
             return this.props.media_attachments.map((media, index) => {
                 if (media.type === "image" || media.type === "video" || media.type === "gifv") {
-                    return <TouchableHighlight key={media.id} onPress={() =>
+                    return <TouchableOpacity key={media.id} onPress={() =>
                         onPress(this.props.media_attachments, index)}>
                         <View style={[styles.mediaview,{width:this.props.width,height:this.props.height}]}>
                             <Image
@@ -50,7 +50,7 @@ class MastoMedia extends React.Component {
                             }
                             <Text style={styles.description} ellipsizeMode='tail' numberOfLines={3}>{this.descriptionSetting(media.description)}</Text>
                         </View>
-                    </TouchableHighlight>;
+                    </TouchableOpacity>;
                 }
             });
         }

@@ -123,6 +123,13 @@ export const UPLOAD_POST_MEDIA = {
     url:"/api/v1/media",
 };
 
+export const GET_CUSTOMEMOJIS = {
+    method:"get",
+    url:"/api/v1/custom_emojis",
+    form:{
+    }
+};
+
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
     method:"get",
