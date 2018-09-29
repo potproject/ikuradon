@@ -26,6 +26,7 @@ import Networking from "../networking";
 import * as Session from "../util/session";
 import { MessageBarManager } from "react-native-message-bar";
 import KeyboardSpacer from "react-native-keyboard-spacer";
+import CustomEmojisSelector from "./customemojisselector";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -38,10 +39,12 @@ class Toot extends React.Component {
             text: "",
             warning: "",
             visibilityModal: false,
+            customEmojisSelectorModal: false,
             visibility: "public",
             reply: null,
             mediaId: [],
-            mediaList: []
+            mediaList: [],
+            textBugForcetick: false
         };
         //reply
         if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
@@ -68,6 +71,7 @@ class Toot extends React.Component {
                     value={this.state.text}
                     maxLength={MAX_TOOT_LENGTH}
                     multiline={true}
+                    tick={this.state.textBugForcetick}
                 />
                 <View style={styles.buttonview}>
                     <View style={styles.tootbuttonview}>
@@ -82,6 +86,9 @@ class Toot extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ nsfwFlag: !this.state.nsfwFlag })}>
                             <Text style={this.toggleCwColor()}>CW</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => this.setState({ customEmojisSelectorModal: true })}>
+                            <FontAwesome name="smile-o" size={30} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.tootbuttonview}>
@@ -121,8 +128,25 @@ class Toot extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </Modal>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.customEmojisSelectorModal}
+                >
+                    <View style={{marginTop:100}}>
+                        <CustomEmojisSelector onSelect={(shortcode) => this.selectEmoji(shortcode)}/>
+                    </View>
+                </Modal>
             </View>
         );
+    }
+
+    selectEmoji(shortcode){
+        this.setState({
+            text: `${this.state.text} :${shortcode}: `,
+            customEmojisSelectorModal: false,
+            textBugForcetick: !this.state.textBugForcetick,
+        });
     }
 
     toggleCwColor() {
@@ -315,7 +339,7 @@ export default connect(state => state,
 // Reference: https://github.com/facebook/react-native/pull/18456#issuecomment-388171810
 class TextInputBugFix extends Component {
     shouldComponentUpdate(nextProps){
-        return Platform.OS !== "ios" || this.props.value === nextProps.value;
+        return Platform.OS !== "ios" || this.props.tick !== nextProps.tick || this.props.value === nextProps.value;
     }
     render() {
         return <TextInput {...this.props} />;
