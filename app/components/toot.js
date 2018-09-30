@@ -133,8 +133,8 @@ class Toot extends React.Component {
                     transparent={false}
                     visible={this.state.customEmojisSelectorModal}
                 >
-                    <View style={{marginTop:100}}>
-                        <CustomEmojisSelector onSelect={(shortcode) => this.selectEmoji(shortcode)}/>
+                    <View style={{marginTop:40}}>
+                        <CustomEmojisSelector onSelect={(shortcode) => this.selectEmoji(shortcode)} onCancel={() => this.setState({customEmojisSelectorModal: false})}/>
                     </View>
                 </Modal>
             </View>

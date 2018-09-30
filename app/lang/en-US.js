@@ -73,6 +73,7 @@ export default {
     //Global
     global_ok : "OK",
     global_cancel: "Cancel",
+    global_back: "Back",
 
     //Messages
     messages:{

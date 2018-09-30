@@ -73,6 +73,7 @@ export default {
     //共通
     global_ok : "OK",
     global_cancel: "キャンセル",
+    global_back: "戻る",
 
     //メッセージ
     messages:{
