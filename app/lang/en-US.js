@@ -97,5 +97,13 @@ export default {
 
         toot_deleted_success:"Successfully deleted a toot.",
         toot_deleted_failed:"Failed to deleted a toot.",
+    },
+
+    //Notifications Title
+    notifications:{
+        followed:" followed you.",
+        mentioned:" mentioned you.",
+        boosted:" boosted you.",
+        favourited:" favourited you.",
     }
 };

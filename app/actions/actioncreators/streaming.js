@@ -5,6 +5,7 @@ import Stream from "../../stream";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
+import { bodyFormat } from "../../util/parser";
 
 export function start(reducerType) {
     return async dispatch => {
@@ -17,12 +18,41 @@ export function start(reducerType) {
                 alertType: "info",
             });
             dispatch({ type: Streaming.STREAM_START, reducerType });
-            Stream.receive((message) => {
-                if (message.event === "update" && message.payload) {
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType });
-                }else if (message.event === "notification" && message.payload) {
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(message.payload)], reducerType: "notifications" });
-                }else if (message.event === "delete" && message.payload) {
+            Stream.receive((streamMessage) => {
+                if (streamMessage.event === "update" && streamMessage.payload) {
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(streamMessage.payload)], reducerType });
+                }else if (streamMessage.event === "notification" && streamMessage.payload) {
+                    let data = JSON.parse(streamMessage.payload);
+                    let name = data.account.display_name !== "" ? data.account.display_name : data.account.username; 
+                    let title= "";
+                    let message = "";
+                    switch (data.type) {
+                        case "follow":
+                            title = name + I18n.t("notifications.followed");
+                            message = null;
+                            break;
+                        case "favourite":
+                            title = name + I18n.t("notifications.favourited");
+                            message = bodyFormat(data.status.content);
+                            break;
+                        case "reblog":
+                            title = name + I18n.t("notifications.boosted");
+                            message = bodyFormat(data.status.content);
+                            break;
+                        case "mention":
+                            title = name + I18n.t("notifications.mentioned");
+                            message = bodyFormat(data.status.content);
+                            break;
+                        default:
+                            return;
+                    }
+                    MessageBarManager.showAlert({
+                        title,
+                        message,
+                        alertType: "info",
+                    });
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications" });
+                }else if (streamMessage.event === "delete" && streamMessage.payload) {
                 //いつか実装します
                 }
             },reducerType);

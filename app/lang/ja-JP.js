@@ -97,5 +97,13 @@ export default {
 
         toot_deleted_success:"トゥートの削除に成功しました",
         toot_deleted_failed:"トゥートの削除に失敗しました",
+    },
+
+    //通知タイトル
+    notifications:{
+        followed:" があなたをフォローしました",
+        mentioned:" があなたに返信しました",
+        boosted:" がブーストしました",
+        favourited:" がお気に入りに登録しました",
     }
 };
