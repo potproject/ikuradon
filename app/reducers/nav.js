@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_AUTHORIZE:
             nextState = AppNavigator.router.getStateForAction(
-                StackActions.push({
+                NavigationActions.navigate({
                     routeName: RouterName.Authorize
                 }),
                 Object.assign(state, {
@@ -54,7 +54,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_TOOT:
             nextState = AppNavigator.router.getStateForAction(
-                StackActions.push({
+                NavigationActions.navigate({
                     routeName: RouterName.Toot
                 }),
                 Object.assign(state, { reply: null })
@@ -62,7 +62,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_TOOT_REPLY:
             nextState = AppNavigator.router.getStateForAction(
-                StackActions.push({
+                NavigationActions.navigate({
                     routeName: RouterName.Toot
                 }),
                 Object.assign(state, { reply: action.data })
@@ -76,7 +76,7 @@ export default function reducer(state = initialState, action = {}) {
             break;
         case Nav.NAV_MEDIAVIEWER:
             nextState = AppNavigator.router.getStateForAction(
-                StackActions.push({
+                NavigationActions.navigate({
                     routeName: RouterName.MediaViewer,
                     params: {
                         media_attachments: action.media_attachments,
