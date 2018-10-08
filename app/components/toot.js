@@ -30,6 +30,7 @@ import CustomEmojisSelector from "./customemojisselector";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
+const SEND_TOOT_TIMEOUT = 5000;
 
 class Toot extends React.Component {
     constructor(props) {
@@ -44,7 +45,8 @@ class Toot extends React.Component {
             reply: null,
             mediaId: [],
             mediaList: [],
-            textBugForcetick: false
+            textBugForcetick: false,
+            send: false,
         };
         //reply
         if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
@@ -95,7 +97,7 @@ class Toot extends React.Component {
                         <View style={styles.button}>
                             <Text style={MAX_TOOT_WARNING > (MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length) ? styles.textlimitwarning : styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
                         </View>
-                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply)}>
+                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.send()}>
                             <Text style={styles.texttoot}>Toot!</Text>
                         </TouchableOpacity>
                     </View>
@@ -139,6 +141,17 @@ class Toot extends React.Component {
                 </Modal>
             </View>
         );
+    }
+
+    send(){
+        if(this.state.text !== "" && !this.state.send){
+            let self = this;
+            self.setState({send:true});
+            setTimeout(function(){
+                self.setState({send:false});
+            }, SEND_TOOT_TIMEOUT);
+            this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply);
+        }
     }
 
     selectEmoji(shortcode){
