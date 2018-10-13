@@ -97,7 +97,7 @@ class Toot extends React.Component {
                         <View style={styles.button}>
                             <Text style={MAX_TOOT_WARNING > (MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length) ? styles.textlimitwarning : styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
                         </View>
-                        <TouchableOpacity style={styles.tootbutton} onPress={() => this.send()}>
+                        <TouchableOpacity style={this.state.send ? styles.tootbuttonsend : styles.tootbutton} onPress={() => this.send()}>
                             <Text style={styles.texttoot}>Toot!</Text>
                         </TouchableOpacity>
                     </View>
@@ -328,6 +328,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#2b90d9",
         backgroundColor: "#2b90d9",
+    },
+    tootbuttonsend: {
+        width: 60,
+        height: 40,
+        alignItems: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: "#bfddf3",
+        backgroundColor: "#bfddf3",
     },
     texttoot: {
         paddingTop: 5,
