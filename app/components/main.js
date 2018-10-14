@@ -58,7 +58,7 @@ class Main extends React.Component {
                     };
                 },
                 tabBarOptions: {
-                    activeTintColor: "tomato",
+                    activeTintColor: "#FF6347",
                     inactiveTintColor: "gray",
                 },
             }
