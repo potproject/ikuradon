@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Linking } from "react-native";
+import { View, Text, StyleSheet, Image, Linking, TouchableOpacity } from "react-native";
 import Hyperlink from "react-native-hyperlink";
 import MastoMedia from "./mastomedia";
 import { FontAwesome } from "@expo/vector-icons";
@@ -43,7 +43,8 @@ export default class MastoRow extends Component {
         onBoost: PropTypes.func,
         onFavourite: PropTypes.func,
         onHide: PropTypes.func,
-        onDeleting: PropTypes.func
+        onDeleting: PropTypes.func,
+        onDetail: PropTypes.func,
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.favourited !== nextProps.favourited) {
@@ -62,6 +63,7 @@ export default class MastoRow extends Component {
     render() {
         return (
             <View style={this.props.my ? styles.mycolor : []}>
+                { /*<TouchableOpacity onPress={()=>this.props.onDetail(this.props.id)}> */ }
                 <View style={styles.container}>
                     <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
@@ -97,6 +99,7 @@ export default class MastoRow extends Component {
                     </View>
                 </View>
                 }
+                { /* </TouchableOpacity> */ }
             </View>
         );
     }

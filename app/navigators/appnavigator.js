@@ -9,6 +9,7 @@ import AuthorizeScreen from "../components/authorize";
 import MainScreen from "../components/main";
 import LoginScreen from "../components/login";
 import TootScreen from "../components/toot";
+import DetailScreen from "../components/detail";
 import MediaViewerScreen from "../components/mediaviewer/mediaviewer";
 
 import I18n from "../i18n";
@@ -21,6 +22,7 @@ export const AppNavigator = createStackNavigator({
     [RouterName.Main]: MainScreen,
     [RouterName.Authorize]: AuthorizeScreen,
     [RouterName.Toot]: TootScreen,
+    [RouterName.Detail]: DetailScreen,
     [RouterName.MediaViewer]: MediaViewerScreen,
 },{
     navigationOptions: ({ navigation })=>{
@@ -28,7 +30,6 @@ export const AppNavigator = createStackNavigator({
         if(RouterName.Main === navigation.state.routeName){
             return { header: null };
         }
-
         return {
             title: I18n.t(`${routeName}_title`)
         };

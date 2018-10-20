@@ -51,6 +51,9 @@ export default {
     toot_visibility_private: "フォロワーのみ",
     toot_visibility_direct: "ダイレクト",
 
+    //詳細
+    detail_title:"詳細",
+
     //アクション
     action_openinbrowser: "ブラウザで開く",
     action_openinbrowserprofile: "プロフィールをブラウザで開く",

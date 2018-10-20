@@ -116,6 +116,7 @@ class Mastolist extends React.Component {
                         onFavourite={this.props.MastoRowActions.favourite}
                         onHide={this.props.MainActions.hide}
                         onDeleting={this.props.MainActions.deleting}
+                        onDetail={this.props.MainActions.detail}
                     />;
             }
         }
@@ -152,6 +153,7 @@ class Mastolist extends React.Component {
                 onFavourite={this.props.MastoRowActions.favourite}
                 onHide={this.props.MainActions.hide}
                 onDeleting={this.props.MainActions.deleting}
+                onDetail={this.props.MainActions.detail}
             />;
         } else {
             return <MastoRow
@@ -186,6 +188,7 @@ class Mastolist extends React.Component {
                 onFavourite={this.props.MastoRowActions.favourite}
                 onHide={this.props.MainActions.hide}
                 onDeleting={this.props.MainActions.deleting}
+                onDetail={this.props.MainActions.detail}
             />;
         }
     }

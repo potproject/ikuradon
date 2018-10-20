@@ -46,6 +46,9 @@ export function deleting(id) {
     };
 }
 
+export function detail(id){
+    return { type: Nav.NAV_DETAIL , id };
+}
 
 export function newLoadingTimeline(reducerType,since_id, limit = 40) {
     return async dispatch => {

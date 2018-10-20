@@ -68,6 +68,14 @@ export default function reducer(state = initialState, action = {}) {
                 Object.assign(state, { reply: action.data })
             );
             break;
+        case Nav.NAV_DETAIL:
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({
+                    routeName: RouterName.Detail
+                }),
+                Object.assign(state, { id: action.id })
+            );
+            break;
         case Nav.NAV_GO_BACK:
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.back(),

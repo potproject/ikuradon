@@ -51,6 +51,9 @@ export default {
     toot_visibility_private: "private",
     toot_visibility_direct: "direct",
     
+    //詳細
+    detail_title:"Detail",
+
     //Actions
     action_openinbrowser: "Open in Browser",
     action_openinbrowserprofile: "Open Profile in Browser",
