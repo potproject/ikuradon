@@ -50,6 +50,32 @@ export function loginSelectAccounts(index) {
     };
 }
 
+export function loginWithAccessToken(domain, access_token) {
+    return async dispatch => {
+        try {
+            //get current user
+            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER,null,{},access_token);
+            let username = user_credentials.acct;
+            let avatar = user_credentials.avatar;
+            await Session.add(domain, access_token, username, avatar);
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.login_success"),
+                alertType: "success",
+            });
+            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
+            dispatch({
+                type: Nav.NAV_MAIN,
+            });
+        } catch (e) {
+            MessageBarManager.showAlert({
+                title: I18n.t("messages.network_error"),
+                message: e.message,
+                alertType: "error",
+            });
+        }
+    };
+}
+
 export function logout() {
     return async dispatch => {
         try {

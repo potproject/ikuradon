@@ -8,16 +8,15 @@ import * as CurrentUser from "../actiontypes/currentuser";
 
 export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {
     return async dispatch => {
-        let access_token;
         try {
-            let data = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN,null, {
+            let data = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN, null, {
                 client_id,
                 client_secret,
                 code,
             });
-            access_token = data.access_token;
+            let access_token = data.access_token;
             //get current user
-            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER,null,{},access_token);
+            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);

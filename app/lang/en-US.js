@@ -35,6 +35,7 @@ export default {
     login_title: "Login",
     login_message: "Please enter Mastodon instance domain.",
     login_button: "Login",
+    login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",
 
     //Authorize

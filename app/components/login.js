@@ -24,7 +24,9 @@ class Login extends React.Component {
         super(props);
         this.state = {
             domain: "mastodon.social",
+            token: "",
             isVisibleAccountsModal: false,
+            isVisibleTokenModal: false,
             accounts: [],
             accountsValue: [],
             selectedAccountIndex : 0,
@@ -60,6 +62,11 @@ class Login extends React.Component {
                     onPress={() => this.props.LoginActions.login(this.state.domain)}
                     title={I18n.t("login_button")}
                 />
+                { /**<Button
+                    style={styles.button}
+                    onPress={() => this.openTokenModal()}
+                    title={I18n.t("login_token_button")}
+                /> **/ }
                 <KeyboardSpacer />
                 <Modal
                     animationType="slide"
@@ -82,6 +89,27 @@ class Login extends React.Component {
                         </TouchableHighlight>
                     </View>
                 </Modal>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={this.state.isVisibleTokenModal}
+                >
+                    <View>
+                        <TextInput
+                            style={styles.textinput}
+                            onChangeText={(token) => this.setState({ token })}
+                            value={this.state.token} />
+                        <TouchableHighlight onPress={() => {
+                            this.setState({ isVisibleTokenModal: false });
+                            this.props.LoginActions.loginWithAccessToken(this.state.domain,this.state.token);
+                        }}>
+                            <Text>{I18n.t("global_ok")}</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => this.setState({ isVisibleTokenModal: false })}>
+                            <Text>{I18n.t("global_cancel")}</Text>
+                        </TouchableHighlight>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -94,6 +122,11 @@ class Login extends React.Component {
                 title: I18n.t("messages.login_notexist_accounts"),
                 alertType: "warning",
             });
+        }
+    }
+    openTokenModal(){
+        if(this.state.domain){
+            this.setState({isVisibleTokenModal: true});
         }
     }
     accountsGet(){
