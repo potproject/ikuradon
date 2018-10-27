@@ -37,6 +37,9 @@ export default {
     login_button: "Login",
     login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",
+    login_accesstoken_message: "Please enter Mastodon Access Token.",
+
+    copy_access_token: "Copy an Access Token",
 
     //Authorize
     authorize_title: "Authorize",
@@ -84,6 +87,7 @@ export default {
         login_success:"Login Successfully.",
         login_failed:"Failed to login.",
         login_notexist_accounts:"Accounts does not exist.",
+        login_copy_accesstoken:"Copied an Access Token.",
 
         logout_success:"Logout Successfully.",
         logout_failed:"Failed to logout.",

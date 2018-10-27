@@ -37,7 +37,9 @@ export default {
     login_button: "ログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",
+    login_accesstoken_message: "アクセストークンを入力してください",
 
+    copy_access_token: "アクセストークンをコピーする",
     //認証
     authorize_title: "認証",
 
@@ -84,6 +86,7 @@ export default {
         login_success:"ログインしました",
         login_failed:"ログインに失敗しました",
         login_notexist_accounts:"アカウントが存在しません",
+        login_copy_accesstoken:"アクセストークンをコピーしました",
 
         logout_success:"ログアウトしました",
         logout_failed:"ログアウトに失敗しました",

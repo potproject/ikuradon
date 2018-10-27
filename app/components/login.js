@@ -1,6 +1,7 @@
 import React from "react";
 import {
     StyleSheet,
+    Clipboard,
     TextInput,
     Button,
     Image,
@@ -62,11 +63,11 @@ class Login extends React.Component {
                     onPress={() => this.props.LoginActions.login(this.state.domain)}
                     title={I18n.t("login_button")}
                 />
-                { /**<Button
+                <Button
                     style={styles.button}
                     onPress={() => this.openTokenModal()}
                     title={I18n.t("login_token_button")}
-                /> **/ }
+                />
                 <KeyboardSpacer />
                 <Modal
                     animationType="slide"
@@ -78,6 +79,9 @@ class Login extends React.Component {
                             onValueChange={(selectedAccountIndex) => this.setState({ selectedAccountIndex })}>
                             {this.pickerList()}
                         </Picker>
+                        <TouchableHighlight onPress={() => this.copyAccessToken()}>
+                            <Text>{I18n.t("copy_access_token")}</Text>
+                        </TouchableHighlight>
                         <TouchableHighlight onPress={() => {
                             this.setState({ isVisibleAccountsModal: false });
                             this.props.LoginActions.loginSelectAccounts(this.state.selectedAccountIndex);
@@ -95,6 +99,7 @@ class Login extends React.Component {
                     visible={this.state.isVisibleTokenModal}
                 >
                     <View>
+                        <Text style={styles.text}>{I18n.t("login_accesstoken_message")}</Text>
                         <TextInput
                             style={styles.textinput}
                             onChangeText={(token) => this.setState({ token })}
@@ -114,6 +119,14 @@ class Login extends React.Component {
         );
     }
 
+    copyAccessToken(){
+        Clipboard.setString(this.state.accounts[this.state.selectedAccountIndex].access_token);
+        this.setState({isVisibleAccountsModal: false});
+        MessageBarManager.showAlert({
+            title: I18n.t("messages.login_copy_accesstoken"),
+            alertType: "info",
+        });
+    }
     openAccountsModal(){
         if(this.state.accounts.length > 0){
             this.setState({isVisibleAccountsModal: true});

@@ -52,9 +52,9 @@ export function loginSelectAccounts(index) {
 
 export function loginWithAccessToken(domain, access_token) {
     return async dispatch => {
-        try {
-            //get current user
-            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER,null,{},access_token);
+        try{
+            //アクセストークンでログイン
+            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
@@ -73,6 +73,8 @@ export function loginWithAccessToken(domain, access_token) {
                 alertType: "error",
             });
         }
+
+
     };
 }
 
