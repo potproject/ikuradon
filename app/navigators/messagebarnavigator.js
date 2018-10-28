@@ -2,7 +2,7 @@ import React from "react";
 import { MessageBar, MessageBarManager } from "react-native-message-bar";
 
 export default class MessageBarNavigator extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.refName = props.refName;
     }
@@ -15,6 +15,9 @@ export default class MessageBarNavigator extends React.Component {
     }
 
     render() {
-        return <MessageBar ref={this.refName} />;
+        return <MessageBar
+            ref={this.refName}
+            viewTopInset={20}
+        />;
     }
 }
