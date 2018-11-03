@@ -17,7 +17,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "jest",
-    "ci-publish": "expo login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && exp publish"
+    "ci-publish": "expo login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && expo publish"
   },
   "jest": {
     "preset": "jest-expo"
