@@ -3,9 +3,16 @@
     "name": "ikuradon",
     "description": "ikuradon - Mastodon Client App",
     "slug":"potproject-ikuradon",
-    "sdkVersion": "29.0.0",
+    "version": "1.0.0",
+    "sdkVersion": "30.0.0",
     "githubUrl": "https://github.com/potproject/ikuradon",
     "icon":"assets/image/icon250.png",
-    "privacy": "public"
+    "privacy": "public",
+    "ios": {
+      "bundleIdentifier": "net.potproject.ikuradon"
+    },
+    "android": {
+      "package": "net.potproject.ikuradon"
+    }
   }
 }

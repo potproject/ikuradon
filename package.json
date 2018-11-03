@@ -1,24 +1,23 @@
 {
   "name": "ikuradon",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-react": "^7.8.2",
-    "jest-expo": "29.0.0",
-    "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.4.2"
+    "jest-expo": "30.0.0",
+    "react-test-renderer": "16.3.1"
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
     "test": "jest",
-    "ci-publish": "exp login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && exp publish"
+    "ci-publish": "expo login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && exp publish"
   },
   "jest": {
     "preset": "jest-expo"
@@ -27,8 +26,8 @@
     "axios": "^0.18.0",
     "babel-eslint": "^8.2.6",
     "babel-plugin-module-resolver": "^3.1.1",
-    "exp": "^57.2.1",
-    "expo": "^29.0.0",
+    "expo": "^30.0.0",
+    "expo-cli": "^2.2.5",
     "he": "^1.2.0",
     "i18next": "^11.9.1",
     "moment": "^2.22.2",
@@ -44,7 +43,7 @@
     "react-native-message-bar": "^2.0.10",
     "react-native-settings-list": "^1.8.0",
     "react-native-swiper": "^1.5.13",
-    "react-navigation": "^2.18.0",
+    "react-navigation": "^2.18.2",
     "react-navigation-redux-helpers": "^2.0.6",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
