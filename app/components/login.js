@@ -63,6 +63,7 @@ class Login extends React.Component {
                     onPress={() => this.props.LoginActions.login(this.state.domain)}
                     title={I18n.t("login_button")}
                 />
+                <View style={styles.space} />
                 <Button
                     style={styles.button}
                     onPress={() => this.openTokenModal()}
@@ -164,6 +165,9 @@ class Login extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    button:{
+        margin:20,
+    },
     container: {
         flex: 1,
         justifyContent: "center",
@@ -183,7 +187,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     space: {
-        height: 30
+        height: 15
     },
     image: {
         width: 75,
