@@ -1,6 +1,6 @@
 import lang_en_US from "./lang/en-US";
 import lang_ja_JP from "./lang/ja-JP";
-import Expo from "expo";
+import { Localization } from "expo-localization";
 
 import i18next from "i18next";
 import { reactI18nextModule } from "react-i18next";
@@ -10,7 +10,7 @@ const languageDetector = {
     type: "languageDetector",
     async: true, // async detection
     detect: (callback) => {
-        return Expo.DangerZone.Localization.getCurrentLocaleAsync().then(lng => { callback(lng.replace("_","-")) });
+        return Localization.getLocalizationAsync().then(lng => { callback(lng.locale) });
     },
     init: () => { },
     cacheUserLanguage: () => { }

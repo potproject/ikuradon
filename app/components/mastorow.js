@@ -99,7 +99,6 @@ export default class MastoRow extends Component {
                     </View>
                 </View>
                 }
-                { /* </TouchableOpacity> */ }
             </View>
         );
     }

@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
+    "babel-preset-expo": "^5.0.0",
     "eslint": "^4.19.1",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-react": "^7.8.2",
-    "jest-expo": "30.0.0",
-    "react-test-renderer": "16.3.1"
+    "jest-expo": "31.0.0",
+    "react-test-renderer": "16.5.0"
   },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -24,16 +25,17 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-eslint": "^8.2.6",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-module-resolver": "^3.1.1",
-    "expo": "^30.0.0",
-    "expo-cli": "^2.2.5",
+    "expo": "^31.0.4",
+    "expo-cli": "^2.3.8",
+    "expo-localization": "^1.0.0",
     "he": "^1.2.0",
     "i18next": "^11.9.1",
     "moment": "^2.22.2",
-    "react": "16.3.1",
+    "react": "16.5.0",
     "react-i18next": "^7.12.0",
-    "react-native": "0.55.4",
+    "react-native": "0.57.1",
     "react-native-actionsheet": "^2.4.2",
     "react-native-customemoji": "0.0.1",
     "react-native-hyperlink": "^0.0.14",
