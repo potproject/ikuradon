@@ -10,7 +10,7 @@ export default class Action extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
-        style: PropTypes.number,
+        style: PropTypes.object,
         url: PropTypes.string,
         account_url: PropTypes.string,
         user: PropTypes.string,

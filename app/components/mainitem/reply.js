@@ -11,7 +11,7 @@ export default class Reply extends React.Component {
         acct: PropTypes.string,
         image: PropTypes.string,
         body: PropTypes.string,
-        style: PropTypes.number,
+        style: PropTypes.object,
 
         onReply: PropTypes.func,
     }

@@ -7,7 +7,7 @@ export default class Boost extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
-        style: PropTypes.number,
+        style: PropTypes.object,
         reblogged: PropTypes.bool,
         count: PropTypes.number,
         disabled: PropTypes.bool,

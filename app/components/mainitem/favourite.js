@@ -7,7 +7,7 @@ export default class Favourite extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
-        style: PropTypes.number,
+        style: PropTypes.object,
         favourited: PropTypes.bool,
         count: PropTypes.number,
 

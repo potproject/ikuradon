@@ -8,7 +8,7 @@ export default class Follow extends React.Component {
         id: PropTypes.string,
         user: PropTypes.string,
         acct: PropTypes.string,
-        style: PropTypes.number,
+        style: PropTypes.object,
 
         onFollow: PropTypes.func,
     }
