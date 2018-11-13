@@ -33,7 +33,7 @@
     "he": "^1.2.0",
     "i18next": "^11.9.1",
     "moment": "^2.22.2",
-    "react": "16.5.0",
+    "react": "16.6.2",
     "react-i18next": "^7.12.0",
     "react-native": "0.57.1",
     "react-native-actionsheet": "^2.4.2",
