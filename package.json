@@ -9,7 +9,7 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-react": "^7.8.2",
     "jest-expo": "31.0.0",
-    "react-test-renderer": "16.5.0"
+    "react-test-renderer": "16.6.2"
   },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
