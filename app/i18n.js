@@ -9,11 +9,13 @@ import Moment from "moment/min/moment-with-locales";
 const languageDetector = {
     type: "languageDetector",
     async: true, // async detection
-    detect: (callback) => {
-        return Localization.getLocalizationAsync().then(lng => { callback(lng.locale) });
+    detect: callback => {
+        return Localization.getLocalizationAsync().then(lng => {
+            callback(lng.locale);
+        });
     },
-    init: () => { },
-    cacheUserLanguage: () => { }
+    init: () => {},
+    cacheUserLanguage: () => {}
 };
 
 i18next
@@ -30,7 +32,7 @@ i18next
         }
     })
     .on("languageChanged", function(lng) {
-        if(lng === "ja-JP"){
+        if (lng === "ja-JP") {
             return Moment.locale("ja");
         }
     });

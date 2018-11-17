@@ -15,16 +15,16 @@ export function start(reducerType) {
             await Stream.open(reducerType);
             MessageBarManager.showAlert({
                 title: I18n.t("messages.streaming_enabled"),
-                alertType: "info",
+                alertType: "info"
             });
             dispatch({ type: Streaming.STREAM_START, reducerType });
-            Stream.receive((streamMessage) => {
+            Stream.receive(streamMessage => {
                 if (streamMessage.event === "update" && streamMessage.payload) {
                     dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(streamMessage.payload)], reducerType });
-                }else if (streamMessage.event === "notification" && streamMessage.payload) {
+                } else if (streamMessage.event === "notification" && streamMessage.payload) {
                     let data = JSON.parse(streamMessage.payload);
-                    let name = data.account.display_name !== "" ? data.account.display_name : data.account.username; 
-                    let title= "";
+                    let name = data.account.display_name !== "" ? data.account.display_name : data.account.username;
+                    let title = "";
                     let message = "";
                     switch (data.type) {
                         case "follow":
@@ -49,17 +49,17 @@ export function start(reducerType) {
                     MessageBarManager.showAlert({
                         title,
                         message,
-                        alertType: "info",
+                        alertType: "info"
                     });
                     dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications" });
-                }else if (streamMessage.event === "delete" && streamMessage.payload) {
-                //いつか実装します
+                } else if (streamMessage.event === "delete" && streamMessage.payload) {
+                    //いつか実装します
                 }
-            },reducerType);
+            }, reducerType);
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.streaming_failed"),
-                alertType: "error",
+                alertType: "error"
             });
             dispatch({ type: Streaming.STREAM_STOP, reducerType });
             return;
@@ -77,12 +77,12 @@ export function stop(reducerType) {
             }
             MessageBarManager.showAlert({
                 title: I18n.t("messages.streaming_disabled"),
-                alertType: "info",
+                alertType: "info"
             });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.streaming_failed"),
-                alertType: "error",
+                alertType: "error"
             });
             return;
         }

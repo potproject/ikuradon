@@ -5,7 +5,7 @@ import * as Nav from "../actiontypes/nav";
 import { MessageBarManager } from "react-native-message-bar";
 import I18n from "../../i18n";
 
-export function allClear(){
+export function allClear() {
     return async dispatch => {
         dispatch({ type: Config.CONFIG_RESET });
         dispatch({ type: Nav.NAV_MAIN });
@@ -20,19 +20,19 @@ export function setBackground() {
             if (!fileData || !fileData.uri || fileData.cancelled) {
                 return;
             }
-            dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage:fileData.uri });
+            dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage: fileData.uri });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
         }
     };
 }
 
-export function setInvisibleTimeline(type, value){
+export function setInvisibleTimeline(type, value) {
     return async dispatch => {
         let invisible = {};
         invisible[type] = value;
@@ -41,7 +41,7 @@ export function setInvisibleTimeline(type, value){
     };
 }
 
-export function setSmartMode(value){
+export function setSmartMode(value) {
     return async dispatch => {
         dispatch({ type: Config.SMART_MODE, smartMode: value });
         dispatch({ type: Nav.NAV_MAIN });

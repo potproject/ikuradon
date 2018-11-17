@@ -11,8 +11,8 @@ export default class Favourite extends React.Component {
         favourited: PropTypes.bool,
         count: PropTypes.number,
 
-        onFavourite: PropTypes.func,
-    }
+        onFavourite: PropTypes.func
+    };
     componentWillReceiveProps(nextProps) {
         if (this.props.favourited !== nextProps.favourited) {
             this.props.favourited = nextProps.favourited;
@@ -39,7 +39,7 @@ export default class Favourite extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     text: {
         flex: 1,

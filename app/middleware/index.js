@@ -4,14 +4,11 @@ import { createReactNavigationReduxMiddleware } from "react-navigation-redux-hel
 
 import { debug } from "../constants/debug";
 
-export function createMiddleware(){
+export function createMiddleware() {
     const logger = createLogger();
-    const navigationHelper = createReactNavigationReduxMiddleware(
-        "root",
-        state => state.navReducer,
-    );
-    let middlewares = [thunk,navigationHelper];
-    if(debug){
+    const navigationHelper = createReactNavigationReduxMiddleware("root", state => state.navReducer);
+    let middlewares = [thunk, navigationHelper];
+    if (debug) {
         middlewares.push(logger);
     }
     return middlewares;

@@ -10,25 +10,25 @@ export default class Follow extends React.Component {
         acct: PropTypes.string,
         style: PropTypes.object,
 
-        onFollow: PropTypes.func,
-    }
+        onFollow: PropTypes.func
+    };
     constructor(props) {
         super(props);
         this.state = {
-            followed : false
+            followed: false
         };
         this.checkFollow();
     }
     render() {
         return (
             <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={this.props.style} onPress={() => this.props.onFollow(this.props.id,!this.state.followed)}>
+                <TouchableOpacity style={this.props.style} onPress={() => this.props.onFollow(this.props.id, !this.state.followed)}>
                     <FontAwesome name={"user-plus"} size={20} color={this.state.followed === true ? "#2b90d9" : "gray"} />
                 </TouchableOpacity>
             </View>
         );
     }
-    async checkFollow(){
+    async checkFollow() {
         // TODO
         return false;
     }
@@ -37,7 +37,7 @@ export default class Follow extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     text: {
         flex: 1,

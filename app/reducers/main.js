@@ -37,21 +37,18 @@ const initialState = {
 export default function Main(state = initialState, action = {}) {
     switch (action.type) {
         case MainActionTypes.GETLOCALDATA_MASTOLIST:
-            if(action.data === null){
+            if (action.data === null) {
                 return state;
             }
             return Object.assign({}, action.data);
         case MainActionTypes.NEW_UPDATE_MASTOLIST:
         case MainActionTypes.OLD_UPDATE_MASTOLIST:
             let reducerType = action.reducerType;
-            let {
-                minId,
-                maxId
-            } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
+            let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
             let data;
-            if(action.type===MainActionTypes.OLD_UPDATE_MASTOLIST){
+            if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                 data = state[reducerType].data.concat(action.data);
-            }else{
+            } else {
                 data = action.data.concat(state[reducerType].data);
             }
             let newstate = Object.assign({}, state, {
@@ -63,9 +60,9 @@ export default function Main(state = initialState, action = {}) {
                 }
             });
             //String化しないとExpoが落ちる模様(バグ?)
-            AsyncStorage.setItem("last_update",String(new Date().getTime()));
-            if(TIMELINE_LOCAL_AUTOSAVE){
-                AsyncStorage.setItem("timeline_cache",autoSave(Object.assign({},newstate)));
+            AsyncStorage.setItem("last_update", String(new Date().getTime()));
+            if (TIMELINE_LOCAL_AUTOSAVE) {
+                AsyncStorage.setItem("timeline_cache", autoSave(Object.assign({}, newstate)));
             }
             return newstate;
         case MainActionTypes.REFRESHING_MASTOLIST:
@@ -79,7 +76,7 @@ export default function Main(state = initialState, action = {}) {
             });
         case MainActionTypes.HIDE_MASTOLIST:
             for (let viewType of viewTypeArray) {
-                state[viewType].data = state[viewType].data.filter(function(v){
+                state[viewType].data = state[viewType].data.filter(function(v) {
                     return v.id !== action.id;
                 });
             }
@@ -103,7 +100,7 @@ export default function Main(state = initialState, action = {}) {
     }
 }
 
-function autoSave(state){
+function autoSave(state) {
     return JSON.stringify(state);
 }
 
@@ -123,9 +120,9 @@ function changeItem(type, state, id, bool) {
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {
-                if(statecopy[viewType].data[row].reblog === null){
+                if (statecopy[viewType].data[row].reblog === null) {
                     statecopy[viewType].data[row][item] = bool;
-                }else{
+                } else {
                     statecopy[viewType].data[row].reblog[item] = bool;
                 }
                 break;

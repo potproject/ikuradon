@@ -15,9 +15,6 @@ export default class MessageBarNavigator extends React.Component {
     }
 
     render() {
-        return <MessageBar
-            ref={this.refName}
-            viewTopInset={20}
-        />;
+        return <MessageBar ref={this.refName} viewTopInset={20} />;
     }
 }

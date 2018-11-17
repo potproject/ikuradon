@@ -12,8 +12,8 @@ export default class Boost extends React.Component {
         count: PropTypes.number,
         disabled: PropTypes.bool,
 
-        onBoost: PropTypes.func,
-    }
+        onBoost: PropTypes.func
+    };
     componentWillReceiveProps(nextProps) {
         if (this.props.reblogged !== nextProps.reblogged) {
             this.props.reblogged = nextProps.reblogged;
@@ -26,7 +26,7 @@ export default class Boost extends React.Component {
         return (
             <View style={[this.props.style, styles.container]}>
                 <TouchableOpacity style={this.props.style} onPress={() => this.props.onBoost(this.props.id, this.props.tootid, !this.props.reblogged)} disabled={this.props.disabled}>
-                    <FontAwesome name={this.props.disabled ? "lock": "retweet"} size={20} color={this.setColor(this.props.reblogged)} />
+                    <FontAwesome name={this.props.disabled ? "lock" : "retweet"} size={20} color={this.setColor(this.props.reblogged)} />
                 </TouchableOpacity>
                 <Text style={styles.text}>{this.props.count !== 0 ? this.props.count : ""}</Text>
             </View>
@@ -40,7 +40,7 @@ export default class Boost extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     text: {
         flex: 1,

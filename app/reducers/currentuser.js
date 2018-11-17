@@ -14,7 +14,7 @@ export default function CurrentUser(state = initialState, action = {}) {
                 user_credentials: action.user_credentials,
                 domain: action.domain,
                 access_token: action.access_token,
-                notification_count: 0,
+                notification_count: 0
             };
         case CurrentUserActionTypes.DELETED_CURRENT_USER:
             return initialState;

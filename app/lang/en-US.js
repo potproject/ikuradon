@@ -2,14 +2,14 @@ export default {
     //Settings
     setting_streamingapi: "Streaming API",
     logout: "Logout",
-    account_change:"Account Change",
+    account_change: "Account Change",
     setting_background: "Setting up Background Image",
     setting_allclear: "Setting Reset",
 
-    setting_visible_home:"Do not show Home Timeline",
-    setting_visible_local:"Do not show Local Timeline",
-    setting_visible_federal:"Do not show Federal Timeline",
-    setting_visible_notifications:"Do not show Notifications Timeline",
+    setting_visible_home: "Do not show Home Timeline",
+    setting_visible_local: "Do not show Local Timeline",
+    setting_visible_federal: "Do not show Federal Timeline",
+    setting_visible_notifications: "Do not show Notifications Timeline",
 
     setting_smartmode: "Enabled SmartMode",
 
@@ -54,9 +54,9 @@ export default {
     toot_visibility_unlisted: "unlisted",
     toot_visibility_private: "private",
     toot_visibility_direct: "direct",
-    
+
     //詳細
-    detail_title:"Detail",
+    detail_title: "Detail",
 
     //Actions
     action_openinbrowser: "Open in Browser",
@@ -78,40 +78,40 @@ export default {
     Errors_unknown: "Unknown Error",
 
     //Global
-    global_ok : "OK",
+    global_ok: "OK",
     global_cancel: "Cancel",
     global_back: "Back",
 
     //Messages
-    messages:{
-        login_success:"Login Successfully.",
-        login_failed:"Failed to login.",
-        login_notexist_accounts:"Accounts does not exist.",
-        login_copy_accesstoken:"Copied an Access Token.",
+    messages: {
+        login_success: "Login Successfully.",
+        login_failed: "Failed to login.",
+        login_notexist_accounts: "Accounts does not exist.",
+        login_copy_accesstoken: "Copied an Access Token.",
 
-        logout_success:"Logout Successfully.",
-        logout_failed:"Failed to logout.",
+        logout_success: "Logout Successfully.",
+        logout_failed: "Failed to logout.",
 
-        network_error:"Network error occurred.",
+        network_error: "Network error occurred.",
 
-        streaming_enabled:"Timeline Streaming Enabled.",
-        streaming_disabled:"Timeline Streaming Disabled.",
-        streaming_failed:"Failed to connected a Streaming API.",
+        streaming_enabled: "Timeline Streaming Enabled.",
+        streaming_disabled: "Timeline Streaming Disabled.",
+        streaming_failed: "Failed to connected a Streaming API.",
 
-        toot_success:"Successfully posted a toot.",
-        toot_failed:"Failed to posted a toot.",
-        toot_mediaopen_failed:"Failed to open a MediaLibrary.",
-        toot_mediaupload_maximum_exceed:"Maximum Upload File Exceeded(Max 4 files).",
+        toot_success: "Successfully posted a toot.",
+        toot_failed: "Failed to posted a toot.",
+        toot_mediaopen_failed: "Failed to open a MediaLibrary.",
+        toot_mediaupload_maximum_exceed: "Maximum Upload File Exceeded(Max 4 files).",
 
-        toot_deleted_success:"Successfully deleted a toot.",
-        toot_deleted_failed:"Failed to deleted a toot.",
+        toot_deleted_success: "Successfully deleted a toot.",
+        toot_deleted_failed: "Failed to deleted a toot."
     },
 
     //Notifications Title
-    notifications:{
-        followed:" followed you.",
-        mentioned:" mentioned you.",
-        boosted:" boosted you.",
-        favourited:" favourited you.",
+    notifications: {
+        followed: " followed you.",
+        mentioned: " mentioned you.",
+        boosted: " boosted you.",
+        favourited: " favourited you."
     }
 };

@@ -1,6 +1,4 @@
-import {
-    combineReducers
-} from "redux";
+import { combineReducers } from "redux";
 import navReducer from "./nav";
 import mainReducer from "./main";
 import navigationReducer from "./navigation";

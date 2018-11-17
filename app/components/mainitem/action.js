@@ -22,7 +22,7 @@ export default class Action extends React.Component {
         onReply: PropTypes.func,
         onHide: PropTypes.func,
         onDeleting: PropTypes.func
-    }
+    };
     constructor(props) {
         super(props);
         this.handlePress = this.handlePress.bind(this);
@@ -34,7 +34,7 @@ export default class Action extends React.Component {
                     <FontAwesome name="ellipsis-h" size={20} color="gray" />
                     {this.createAction()}
                 </TouchableOpacity>
-                <View style={styles.container}></View>
+                <View style={styles.container} />
             </View>
         );
     }
@@ -42,27 +42,29 @@ export default class Action extends React.Component {
         this.ActionSheet.show();
     }
 
-    createAction(){
+    createAction() {
         let cancelButtonIndex = 6;
         let destructiveButtonIndex = 5;
-        let options = [ I18n.t("action_openinbrowser"),I18n.t("action_openinbrowserprofile"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
+        let options = [I18n.t("action_openinbrowser"), I18n.t("action_openinbrowserprofile"), I18n.t("action_copy"), I18n.t("action_copyurl"), I18n.t("action_reply"), I18n.t("action_hide")];
         //自分のtootなら削除可能に
-        if(this.props.my){
+        if (this.props.my) {
             options.push(I18n.t("action_delete"));
             cancelButtonIndex++;
             destructiveButtonIndex++;
         }
         options.push(I18n.t("global_cancel"));
-        return <ActionSheet
-            ref={component => this.ActionSheet = component}
-            options={options}
-            cancelButtonIndex={cancelButtonIndex}
-            destructiveButtonIndex={destructiveButtonIndex}
-            onPress={this.handlePress}
-        />;
+        return (
+            <ActionSheet
+                ref={component => (this.ActionSheet = component)}
+                options={options}
+                cancelButtonIndex={cancelButtonIndex}
+                destructiveButtonIndex={destructiveButtonIndex}
+                onPress={this.handlePress}
+            />
+        );
     }
 
-    async openUrl(url){
+    async openUrl(url) {
         try {
             let supported = await Linking.canOpenURL(url);
             if (supported) {
@@ -75,7 +77,7 @@ export default class Action extends React.Component {
         }
     }
     handlePress(i) {
-        switch(i){
+        switch (i) {
             case 0: //Open in Browser
                 this.openUrl(this.props.url);
                 return;
@@ -95,7 +97,7 @@ export default class Action extends React.Component {
                 this.props.onHide(this.props.id);
                 return;
             case 6: //Delete
-                if(this.props.my){
+                if (this.props.my) {
                     this.props.onDeleting(this.props.id);
                 }
                 return;
@@ -106,6 +108,6 @@ export default class Action extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     }
 });

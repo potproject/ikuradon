@@ -23,7 +23,7 @@ export function login(domain) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_failed"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
         }
     };
@@ -38,7 +38,7 @@ export function loginSelectAccounts(index) {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
                 dispatch({
-                    type: Nav.NAV_MAIN,
+                    type: Nav.NAV_MAIN
                 });
                 return;
             } catch (e) {
@@ -52,7 +52,7 @@ export function loginSelectAccounts(index) {
 
 export function loginWithAccessToken(domain, access_token) {
     return async dispatch => {
-        try{
+        try {
             //アクセストークンでログイン
             let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
             let username = user_credentials.acct;
@@ -60,21 +60,19 @@ export function loginWithAccessToken(domain, access_token) {
             await Session.add(domain, access_token, username, avatar);
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_success"),
-                alertType: "success",
+                alertType: "success"
             });
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
             dispatch({
-                type: Nav.NAV_MAIN,
+                type: Nav.NAV_MAIN
             });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
         }
-
-
     };
 }
 
@@ -88,13 +86,13 @@ export function logout() {
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_success"),
-                alertType: "success",
+                alertType: "success"
             });
             dispatch({ type: Nav.NAV_LOGIN });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_failed"),
-                alertType: "error",
+                alertType: "error"
             });
         }
     };
@@ -110,23 +108,18 @@ export function accountChange() {
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_success"),
-                alertType: "success",
+                alertType: "success"
             });
             dispatch({ type: Nav.NAV_LOGIN });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_failed"),
-                alertType: "error",
+                alertType: "error"
             });
         }
     };
 }
 
 function createUrl(domain, data) {
-    return `https://${domain}/oauth/authorize?` +
-        `client_id=${data.client_id}&` +
-        "response_type=code&" +
-        "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" +
-        "scope=read%20write%20follow";
+    return `https://${domain}/oauth/authorize?` + `client_id=${data.client_id}&` + "response_type=code&" + "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" + "scope=read%20write%20follow";
 }
-

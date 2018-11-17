@@ -12,7 +12,7 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             let data = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN, null, {
                 client_id,
                 client_secret,
-                code,
+                code
             });
             let access_token = data.access_token;
             //get current user
@@ -22,19 +22,18 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             await Session.add(domain, access_token, username, avatar);
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_success"),
-                alertType: "success",
+                alertType: "success"
             });
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
             dispatch({
-                type: Nav.NAV_MAIN,
+                type: Nav.NAV_MAIN
             });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
         }
     };
 }
-

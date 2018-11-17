@@ -1,10 +1,5 @@
-import {
-    AppNavigator
-} from "../navigators/appnavigator";
-import {
-    NavigationActions,
-    StackActions
-} from "react-navigation";
+import { AppNavigator } from "../navigators/appnavigator";
+import { NavigationActions, StackActions } from "react-navigation";
 import * as RouterName from "../constants/routername";
 import * as Nav from "../actions/actiontypes/nav";
 
@@ -77,10 +72,7 @@ export default function reducer(state = initialState, action = {}) {
             );
             break;
         case Nav.NAV_GO_BACK:
-            nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.back(),
-                Object.assign({}, state)
-            );
+            nextState = AppNavigator.router.getStateForAction(NavigationActions.back(), Object.assign({}, state));
             break;
         case Nav.NAV_MEDIAVIEWER:
             nextState = AppNavigator.router.getStateForAction(

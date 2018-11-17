@@ -13,15 +13,15 @@ export default class Reply extends React.Component {
         body: PropTypes.string,
         style: PropTypes.object,
 
-        onReply: PropTypes.func,
-    }
+        onReply: PropTypes.func
+    };
     render() {
         return (
             <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={styles.container} onPress={()=>this.props.onReply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body)}>
+                <TouchableOpacity style={styles.container} onPress={() => this.props.onReply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body)}>
                     <FontAwesome name="reply" size={20} color="gray" />
                 </TouchableOpacity>
-                <View style={styles.container}></View>
+                <View style={styles.container} />
             </View>
         );
     }
@@ -29,6 +29,6 @@ export default class Reply extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     }
 });

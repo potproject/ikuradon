@@ -15,7 +15,7 @@ export function bodyExtractionUrl(body) {
     //a hrefのURLを抜き出す
     let urlReg = /<a[^>]href\s?=\s?[\"\']([^\"\']+)[\"\'][^>]*>/i;
     let list = body.match(urlReg);
-    if(list && list[1]){
+    if (list && list[1]) {
         return list[1];
     }
     return null;
@@ -23,7 +23,7 @@ export function bodyExtractionUrl(body) {
 
 export function bodySearchUrl(body) {
     //(http|https)のリンクが含まれているかどうかの判定
-    return (~body.indexOf("http://") || ~body.indexOf("https://"));
+    return ~body.indexOf("http://") || ~body.indexOf("https://");
 }
 
 export function dateFormat(date) {

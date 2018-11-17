@@ -2,14 +2,14 @@ export default {
     //設定
     setting_streamingapi: "ストリーミング API",
     logout: "ログアウト",
-    account_change:"アカウント変更",
+    account_change: "アカウント変更",
     setting_background: "背景画像を設定",
     setting_allclear: "設定をリセット",
 
-    setting_visible_home:"ホームタイムラインを非表示",
-    setting_visible_local:"ローカルタイムラインを非表示",
-    setting_visible_federal:"連合タイムラインを非表示",
-    setting_visible_notifications:"通知タイムラインを非表示",
+    setting_visible_home: "ホームタイムラインを非表示",
+    setting_visible_local: "ローカルタイムラインを非表示",
+    setting_visible_federal: "連合タイムラインを非表示",
+    setting_visible_notifications: "通知タイムラインを非表示",
 
     setting_smartmode: "スマートモードを有効にする",
 
@@ -44,7 +44,7 @@ export default {
     authorize_title: "認証",
 
     //トゥート
-    toot_title:"トゥート",
+    toot_title: "トゥート",
     toot_placeholder: "今何してる？",
     toot_cw_placeholder: "ここに警告を書いてください",
 
@@ -55,7 +55,7 @@ export default {
     toot_visibility_direct: "ダイレクト",
 
     //詳細
-    detail_title:"詳細",
+    detail_title: "詳細",
 
     //アクション
     action_openinbrowser: "ブラウザで開く",
@@ -77,40 +77,40 @@ export default {
     Errors_unknown: "不明なエラー",
 
     //共通
-    global_ok : "OK",
+    global_ok: "OK",
     global_cancel: "キャンセル",
     global_back: "戻る",
 
     //メッセージ
-    messages:{
-        login_success:"ログインしました",
-        login_failed:"ログインに失敗しました",
-        login_notexist_accounts:"アカウントが存在しません",
-        login_copy_accesstoken:"アクセストークンをコピーしました",
+    messages: {
+        login_success: "ログインしました",
+        login_failed: "ログインに失敗しました",
+        login_notexist_accounts: "アカウントが存在しません",
+        login_copy_accesstoken: "アクセストークンをコピーしました",
 
-        logout_success:"ログアウトしました",
-        logout_failed:"ログアウトに失敗しました",
+        logout_success: "ログアウトしました",
+        logout_failed: "ログアウトに失敗しました",
 
-        network_error:"ネットワークエラーが発生しました",
+        network_error: "ネットワークエラーが発生しました",
 
-        streaming_enabled:"ストリーミングを有効にしました",
-        streaming_disabled:"ストリーミングを無効にしました",
-        streaming_failed:"ストリーミング接続に失敗しました",
+        streaming_enabled: "ストリーミングを有効にしました",
+        streaming_disabled: "ストリーミングを無効にしました",
+        streaming_failed: "ストリーミング接続に失敗しました",
 
-        toot_success:"トゥートの投稿に成功しました",
-        toot_failed:"トゥートの投稿に失敗しました",
-        toot_mediaopen_failed:"ライブラリの起動に失敗しました",
-        toot_mediaupload_maximum_exceed:"最大アップロードファイル数が超過しています(最大 4 ファイル).",
+        toot_success: "トゥートの投稿に成功しました",
+        toot_failed: "トゥートの投稿に失敗しました",
+        toot_mediaopen_failed: "ライブラリの起動に失敗しました",
+        toot_mediaupload_maximum_exceed: "最大アップロードファイル数が超過しています(最大 4 ファイル).",
 
-        toot_deleted_success:"トゥートの削除に成功しました",
-        toot_deleted_failed:"トゥートの削除に失敗しました",
+        toot_deleted_success: "トゥートの削除に成功しました",
+        toot_deleted_failed: "トゥートの削除に失敗しました"
     },
 
     //通知タイトル
-    notifications:{
-        followed:" があなたをフォローしました",
-        mentioned:" があなたに返信しました",
-        boosted:" がブーストしました",
-        favourited:" がお気に入りに登録しました",
+    notifications: {
+        followed: " があなたをフォローしました",
+        mentioned: " があなたに返信しました",
+        boosted: " がブーストしました",
+        favourited: " がお気に入りに登録しました"
     }
 };

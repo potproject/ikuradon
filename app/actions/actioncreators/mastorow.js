@@ -17,9 +17,9 @@ export function boost(id, tootid, boosted) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
-            dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted:!boosted });
+            dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted: !boosted });
         }
         return;
     };
@@ -36,9 +36,9 @@ export function favourite(id, tootid, favourited) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
-            dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited:!favourited });
+            dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited: !favourited });
             return;
         }
         return;
@@ -46,6 +46,5 @@ export function favourite(id, tootid, favourited) {
 }
 
 export function mediaOpen(media_attachments, index) {
-    return { type: Nav.NAV_MEDIAVIEWER ,media_attachments ,index };
-
+    return { type: Nav.NAV_MEDIAVIEWER, media_attachments, index };
 }

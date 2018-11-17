@@ -5,10 +5,14 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
     "eslint": "^4.19.1",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-flowtype": "^2.47.1",
     "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.8.2",
     "jest-expo": "31.0.0",
+    "prettier": "^1.15.2",
+    "prettier-eslint-cli": "^4.7.1",
     "react-test-renderer": "16.5.0"
   },
   "main": "node_modules/expo/AppEntry.js",

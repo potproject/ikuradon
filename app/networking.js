@@ -22,7 +22,7 @@ export default class Networking {
 
     static createHeaders(access_token = null) {
         let headers = {
-            "Accept": "application/json",
+            Accept: "application/json",
             "Content-Type": "application/json"
         };
         if (access_token !== null) {
