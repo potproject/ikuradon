@@ -10,29 +10,23 @@ export default class MastoRowNotificationfollow extends Component {
         user: PropTypes.string,
         image: PropTypes.string,
         username: PropTypes.string,
-        acct: PropTypes.string,
-    }
+        acct: PropTypes.string
+    };
     render() {
         return (
             <View>
                 <View style={styles.container}>
                     <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
-                        <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
-                            <Text style={styles.name}>
-                                {this.props.user}
-                            </Text>
+                        <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
+                            <Text style={styles.name}>{this.props.user}</Text>
                         </Text>
-                        <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
+                        <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
                             <FontAwesome name={"user-plus"} size={16} />
-                            <Text style={styles.username}>
-                                {" " + this.props.username}
-                            </Text>
+                            <Text style={styles.username}>{" " + this.props.username}</Text>
                         </Text>
-                        <Text style={styles.text} ellipsizeMode='tail' numberOfLines={1}>
-                            <Text style={styles.acct}>
-                                {this.props.acct}
-                            </Text>
+                        <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
+                            <Text style={styles.acct}>{this.props.acct}</Text>
                         </Text>
                     </View>
                 </View>
@@ -53,20 +47,19 @@ export default class MastoRowNotificationfollow extends Component {
     }
 }
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 4,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     textarea: {
-        flex: 1,
+        flex: 1
     },
     body: {
         flex: 2,
         marginLeft: 12,
-        fontSize: 12,
+        fontSize: 12
     },
     photo: {
         height: 50,
@@ -75,16 +68,16 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
-        paddingLeft: 12,
+        paddingLeft: 12
     },
     name: {
-        fontSize: 16,
+        fontSize: 16
     },
     acct: {
         color: "#5f5f5f",
-        fontSize: 12,
+        fontSize: 12
     },
     username: {
-        fontSize: 14,
-    },
+        fontSize: 14
+    }
 });

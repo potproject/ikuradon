@@ -44,8 +44,8 @@ export default class MastoRow extends Component {
         onFavourite: PropTypes.func,
         onHide: PropTypes.func,
         onDeleting: PropTypes.func,
-        onDetail: PropTypes.func,
-    }
+        onDetail: PropTypes.func
+    };
     componentWillReceiveProps(nextProps) {
         if (this.props.favourited !== nextProps.favourited) {
             this.props.favourited = nextProps.favourited;
@@ -63,17 +63,13 @@ export default class MastoRow extends Component {
     render() {
         return (
             <View style={this.props.my ? styles.mycolor : []}>
-                { /*<TouchableOpacity onPress={()=>this.props.onDetail(this.props.id)}> */ }
+                {/*<TouchableOpacity onPress={()=>this.props.onDetail(this.props.id)}> */}
                 <View style={styles.container}>
                     <Image source={{ uri: this.props.image }} style={styles.photo} />
                     <View style={styles.textarea}>
-                        <Text style={styles.header} ellipsizeMode='tail' numberOfLines={1}>
-                            <Text style={styles.name}>
-                                {this.props.user}
-                            </Text>
-                            <Text style={styles.acct}>
-                                {this.props.acct}
-                            </Text>
+                        <Text style={styles.header} ellipsizeMode="tail" numberOfLines={1}>
+                            <Text style={styles.name}>{this.props.user}</Text>
+                            <Text style={styles.acct}>{this.props.acct}</Text>
                         </Text>
                         {this.mastorowBodyFormat(this.props.body, this.props.emojis)}
                         {this.mastorowMediaFormat(this.props.media_attachments, this.props.sensitive)}
@@ -82,23 +78,59 @@ export default class MastoRow extends Component {
                 <View style={styles.container}>
                     <Text style={styles.dateFlex}>
                         {dateFormat(this.props.date) + " "}
-                        <VisibilityIcon visibility={this.props.visibility} size={12} />
-                        {" "}
-                        {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> : ""}
-                        {this.props.application_name ? " via "+this.props.application_name : ""}
+                        <VisibilityIcon visibility={this.props.visibility} size={12} /> {this.props.sensitive ? <FontAwesome name={"exclamation-circle"} size={12} /> : ""}
+                        {this.props.application_name ? " via " + this.props.application_name : ""}
                     </Text>
                 </View>
                 {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
-                { !this.props.smartMode &&
-                <View style={styles.container}>
-                    <View style={styles.item}>
-                        <Reply id={this.props.id} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} style={styles.itemFlex} onReply={this.props.onReply}/>
-                        <Boost id={this.props.id} tootid={this.props.tootid} reblogged={this.props.reblogged} count={this.props.reblogs_count} style={styles.itemFlex} onBoost={this.props.onBoost} disabled={this.props.visibility === "private" || this.props.visibility === "direct"} />
-                        <Favourite id={this.props.id} tootid={this.props.tootid} favourited={this.props.favourited} count={this.props.favourites_count} style={styles.itemFlex} onFavourite={this.props.onFavourite}/>
-                        <Action id={this.props.id} style={styles.itemFlex} url={this.props.url} account_url={this.props.account_url} tootid={this.props.tootid} user={this.props.user} acct={this.props.acct} image={this.props.image} body={this.props.body} my={this.props.my} onReply={this.props.onReply} onHide={this.props.onHide} onDeleting={this.props.onDeleting}/>
+                {!this.props.smartMode && (
+                    <View style={styles.container}>
+                        <View style={styles.item}>
+                            <Reply
+                                id={this.props.id}
+                                tootid={this.props.tootid}
+                                user={this.props.user}
+                                acct={this.props.acct}
+                                image={this.props.image}
+                                body={this.props.body}
+                                style={styles.itemFlex}
+                                onReply={this.props.onReply}
+                            />
+                            <Boost
+                                id={this.props.id}
+                                tootid={this.props.tootid}
+                                reblogged={this.props.reblogged}
+                                count={this.props.reblogs_count}
+                                style={styles.itemFlex}
+                                onBoost={this.props.onBoost}
+                                disabled={this.props.visibility === "private" || this.props.visibility === "direct"}
+                            />
+                            <Favourite
+                                id={this.props.id}
+                                tootid={this.props.tootid}
+                                favourited={this.props.favourited}
+                                count={this.props.favourites_count}
+                                style={styles.itemFlex}
+                                onFavourite={this.props.onFavourite}
+                            />
+                            <Action
+                                id={this.props.id}
+                                style={styles.itemFlex}
+                                url={this.props.url}
+                                account_url={this.props.account_url}
+                                tootid={this.props.tootid}
+                                user={this.props.user}
+                                acct={this.props.acct}
+                                image={this.props.image}
+                                body={this.props.body}
+                                my={this.props.my}
+                                onReply={this.props.onReply}
+                                onHide={this.props.onHide}
+                                onDeleting={this.props.onDeleting}
+                            />
+                        </View>
                     </View>
-                </View>
-                }
+                )}
             </View>
         );
     }
@@ -121,39 +153,40 @@ export default class MastoRow extends Component {
             newbody = "[NSFW] " + this.props.spoiler_text + "\n" + newbody;
         }
         if (emojis.length > 0 && existsURL) {
-            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
-                {this.mastorowSetCustomEmoji(newbody, emojis, styles.body)}
-            </Hyperlink>;
+            return (
+                <Hyperlink linkStyle={styles.link} onPress={url => this.openUrl(url)}>
+                    {this.mastorowSetCustomEmoji(newbody, emojis, styles.body)}
+                </Hyperlink>
+            );
         }
-        if(emojis.length > 0){
+        if (emojis.length > 0) {
             return this.mastorowSetCustomEmoji(newbody, emojis, styles.body);
         }
-        if(existsURL){
-            return <Hyperlink linkStyle={styles.link} onPress={(url) => this.openUrl(url)}>
-                <Text style={styles.body}>{newbody}</Text>
-            </Hyperlink>;
+        if (existsURL) {
+            return (
+                <Hyperlink linkStyle={styles.link} onPress={url => this.openUrl(url)}>
+                    <Text style={styles.body}>{newbody}</Text>
+                </Hyperlink>
+            );
         }
         return <Text style={styles.body}>{newbody}</Text>;
     }
 
     mastorowSetCustomEmoji(text, emojis, style) {
         let emojiArray = {};
-        emojis.forEach((emoji) => {
+        emojis.forEach(emoji => {
             emojiArray[emoji.shortcode] = { uri: emoji.url };
         });
-        return <CustomEmoji emojis={emojiArray}>
-            <Text style={style}>{text}</Text>
-        </CustomEmoji>;
+        return (
+            <CustomEmoji emojis={emojiArray}>
+                <Text style={style}>{text}</Text>
+            </CustomEmoji>
+        );
     }
 
     mastorowMediaFormat(media_attachments, sensitive) {
         if (media_attachments && media_attachments.length > 0) {
-            return <MastoMedia
-                width={300}
-                height={100}
-                media_attachments={media_attachments}
-                sensitive={sensitive}
-            />;
+            return <MastoMedia width={300} height={100} media_attachments={media_attachments} sensitive={sensitive} />;
         }
         return;
     }
@@ -176,51 +209,56 @@ export default class MastoRow extends Component {
                 faName = "reply";
                 break;
         }
-        return <View style={styles.notification}>
-            <Text style={[styles.dateFlex, { color }]}>
-                <Text>{" "}<FontAwesome name={faName} size={12} color={color} />{" " + name}</Text>
-            </Text>
-        </View>;
+        return (
+            <View style={styles.notification}>
+                <Text style={[styles.dateFlex, { color }]}>
+                    <Text>
+                        {" "}
+                        <FontAwesome name={faName} size={12} color={color} />
+                        {" " + name}
+                    </Text>
+                </Text>
+            </View>
+        );
     }
 }
 
-
 const styles = StyleSheet.create({
-    mycolor:{
+    mycolor: {
         backgroundColor: "#cecece66"
     },
     container: {
         flex: 1,
         padding: 4,
         flexDirection: "row",
-        paddingTop:5,
-        paddingBottom:5,
+        paddingTop: 5,
+        paddingBottom: 5
     },
-    notification:{
+    notification: {
         flex: 1,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     textarea: {
-        flex: 1,
+        flex: 1
     },
     header: {
         flex: 1,
-        paddingLeft: 12,
+        paddingLeft: 12
     },
     name: {
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 16
     },
     acct: {
         color: "#5f5f5f",
-        fontSize: 12,
+        fontSize: 12
     },
     body: {
         flex: 2,
         marginLeft: 12,
         fontSize: 14,
         paddingTop: 3,
-        paddingBottom: 3,
+        paddingBottom: 3
     },
     link: {
         color: "#2980b9",
@@ -238,7 +276,7 @@ const styles = StyleSheet.create({
         paddingLeft: 12,
         paddingTop: 0,
         paddingBottom: 0,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     itemFlex: {
         flex: 1
@@ -249,6 +287,6 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 0,
         color: "#5f5f5f",
-        fontSize: 12,
+        fontSize: 12
     }
 });

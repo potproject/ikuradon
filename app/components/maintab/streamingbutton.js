@@ -8,18 +8,21 @@ import { bindActionCreators } from "redux";
 class StreamingButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            enabled:props.StreamingReducer[props.type],
+        this.state = {
+            enabled: props.StreamingReducer[props.type],
             type: props.type
         };
     }
     render() {
-        return <View>
-            <TouchableOpacity onPress={() => this.streamSwitch()} style={styles.view}>
-                <FontAwesome name="feed" size={24} color={this.setColor(this.state.enabled)} />
-            </TouchableOpacity>
-        </View>;
+        return (
+            <View>
+                <TouchableOpacity onPress={() => this.streamSwitch()} style={styles.view}>
+                    <FontAwesome name="feed" size={24} color={this.setColor(this.state.enabled)} />
+                </TouchableOpacity>
+            </View>
+        );
     }
+
     setColor(enabled) {
         return enabled === true ? "#2b90d9" : "gray";
     }
@@ -35,16 +38,17 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         paddingBottom: 4,
         paddingLeft: 12,
-        paddingRight: 4,
-    },
+        paddingRight: 4
+    }
 });
 
-export default connect((state) => {
-    return ({
-        StreamingReducer : state.streamingReducer
-    });
-},
-(dispatch) => ({
-    StreamingActions: bindActionCreators(StreamingActions, dispatch),
-})
+export default connect(
+    state => {
+        return {
+            StreamingReducer: state.streamingReducer
+        };
+    },
+    dispatch => ({
+        StreamingActions: bindActionCreators(StreamingActions, dispatch)
+    })
 )(StreamingButton);

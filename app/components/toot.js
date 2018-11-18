@@ -1,15 +1,5 @@
-import React, {Component} from "react";
-import {
-    Platform,
-    Text,
-    Image,
-    TextInput,
-    StyleSheet,
-    Modal,
-    Picker,
-    ScrollView,
-    View
-} from "react-native";
+import React from "react";
+import { Text, Image, TextInput, StyleSheet, Modal, Picker, ScrollView, View } from "react-native";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -45,8 +35,7 @@ class Toot extends React.Component {
             reply: null,
             mediaId: [],
             mediaList: [],
-            textBugForcetick: false,
-            send: false,
+            send: false
         };
         //reply
         if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
@@ -66,14 +55,13 @@ class Toot extends React.Component {
             <View style={styles.container}>
                 {this.replyText()}
                 {this.toggleCwText()}
-                <TextInputBugFix
+                <TextInput
                     placeholder={I18n.t("toot_placeholder")}
                     style={styles.toottext}
-                    onChangeText={(text) => this.setState({ text })}
+                    onChangeText={text => this.setState({ text })}
                     value={this.state.text}
                     maxLength={MAX_TOOT_LENGTH}
                     multiline={true}
-                    tick={this.state.textBugForcetick}
                 />
                 <View style={styles.buttonview}>
                     <View style={styles.tootbuttonview}>
@@ -95,7 +83,9 @@ class Toot extends React.Component {
                     </View>
                     <View style={styles.tootbuttonview}>
                         <View style={styles.button}>
-                            <Text style={MAX_TOOT_WARNING > (MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length) ? styles.textlimitwarning : styles.textlimit}>{MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}</Text>
+                            <Text style={MAX_TOOT_WARNING > MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length ? styles.textlimitwarning : styles.textlimit}>
+                                {MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}
+                            </Text>
                         </View>
                         <TouchableOpacity style={this.state.send ? styles.tootbuttonsend : styles.tootbutton} onPress={() => this.send()}>
                             <Text style={styles.texttoot}>Toot!</Text>
@@ -103,23 +93,12 @@ class Toot extends React.Component {
                     </View>
                 </View>
                 <ScrollView style={styles.mediaScroll}>
-                    <MastoMedia
-                        media_attachments={this.state.mediaList}
-                        sensitive={false}
-                        width={Dimensions.get("window").width - 20}
-                        height={100}
-                    />
+                    <MastoMedia media_attachments={this.state.mediaList} sensitive={false} width={Dimensions.get("window").width - 20} height={100} />
                 </ScrollView>
                 <KeyboardSpacer />
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.visibilityModal}
-                >
+                <Modal animationType="slide" transparent={false} visible={this.state.visibilityModal}>
                     <View>
-                        <Picker
-                            selectedValue={this.state.visibility}
-                            onValueChange={(visibility) => this.setState({ visibility })}>
+                        <Picker selectedValue={this.state.visibility} onValueChange={visibility => this.setState({ visibility })}>
                             <Picker.Item label={I18n.t("toot_visibility_public")} value="public" />
                             <Picker.Item label={I18n.t("toot_visibility_unlisted")} value="unlisted" />
                             <Picker.Item label={I18n.t("toot_visibility_private")} value="private" />
@@ -130,35 +109,30 @@ class Toot extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.customEmojisSelectorModal}
-                >
-                    <View style={{marginTop:40}}>
-                        <CustomEmojisSelector onSelect={(shortcode) => this.selectEmoji(shortcode)} onCancel={() => this.setState({customEmojisSelectorModal: false})}/>
+                <Modal animationType="slide" transparent={false} visible={this.state.customEmojisSelectorModal}>
+                    <View style={{ marginTop: 40 }}>
+                        <CustomEmojisSelector onSelect={shortcode => this.selectEmoji(shortcode)} onCancel={() => this.setState({ customEmojisSelectorModal: false })} />
                     </View>
                 </Modal>
             </View>
         );
     }
 
-    send(){
-        if(this.state.text !== "" && !this.state.send){
+    send() {
+        if (this.state.text !== "" && !this.state.send) {
             let self = this;
-            self.setState({send:true});
-            setTimeout(function(){
-                self.setState({send:false});
+            self.setState({ send: true });
+            setTimeout(function() {
+                self.setState({ send: false });
             }, SEND_TOOT_TIMEOUT);
             this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply);
         }
     }
 
-    selectEmoji(shortcode){
+    selectEmoji(shortcode) {
         this.setState({
             text: `${this.state.text} :${shortcode}: `,
-            customEmojisSelectorModal: false,
-            textBugForcetick: !this.state.textBugForcetick,
+            customEmojisSelectorModal: false
         });
     }
 
@@ -173,38 +147,44 @@ class Toot extends React.Component {
     //warningとtoot、合わせて500文字
     toggleCwText() {
         if (this.state.nsfwFlag) {
-            return <TextInput
-                placeholder={I18n.t("toot_cw_placeholder")}
-                style={styles.warningtext}
-                onChangeText={(warning) => this.setState({ warning })}
-                value={this.state.warning}
-                maxLength={MAX_TOOT_LENGTH}
-                multiline={false}
-            />;
-        } else {
-            return;
+            return (
+                <TextInput
+                    placeholder={I18n.t("toot_cw_placeholder")}
+                    style={styles.warningtext}
+                    onChangeText={warning => this.setState({ warning })}
+                    value={this.state.warning}
+                    maxLength={MAX_TOOT_LENGTH}
+                    multiline={false}
+                />
+            );
         }
     }
     replyText() {
         if (!this.state.reply) {
             return;
         }
-        return <View style={styles.reply}>
-            <View style={styles.replyHeader}>
-                <Image source={{ uri: this.state.reply.image }} style={styles.replyPhoto} />
-                <Text style={styles.replyName} ellipsizeMode='tail' numberOfLines={1}>{this.state.reply.user + " " + this.state.reply.acct}</Text>
+        return (
+            <View style={styles.reply}>
+                <View style={styles.replyHeader}>
+                    <Image source={{ uri: this.state.reply.image }} style={styles.replyPhoto} />
+                    <Text style={styles.replyName} ellipsizeMode="tail" numberOfLines={1}>
+                        {this.state.reply.user + " " + this.state.reply.acct}
+                    </Text>
+                </View>
+                <Text style={styles.replyBody} ellipsizeMode="tail" numberOfLines={3}>
+                    {bodyFormat(this.state.reply.body)}
+                </Text>
             </View>
-            <Text style={styles.replyBody} ellipsizeMode='tail' numberOfLines={3} >{bodyFormat(this.state.reply.body)}</Text>
-        </View>;
+        );
     }
 
     //とりあえず画像だけで
-    async mediaOpen(openType){
+    async mediaOpen(openType) {
         //4枚まで
-        if(this.state.mediaList.length >= 4){
+        if (this.state.mediaList.length >= 4) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.toot_mediaupload_maximum_exceed"),
-                alertType: "warning",
+                alertType: "warning"
             });
             return;
         }
@@ -225,7 +205,7 @@ class Toot extends React.Component {
             let { domain, access_token } = await Session.getDomainAndToken();
             //アップロード中とかほしいね
             let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg");
-            if(!res.id){
+            if (!res.id) {
                 throw new Error("ID Unknown Error!");
             }
             this.setState(state => ({
@@ -236,7 +216,7 @@ class Toot extends React.Component {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.toot_mediaopen_failed"),
                 message: e.message,
-                alertType: "error",
+                alertType: "error"
             });
         }
         return;
@@ -245,7 +225,7 @@ class Toot extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     toottext: {
         height: 150,
@@ -253,7 +233,7 @@ const styles = StyleSheet.create({
         padding: 7,
         borderRadius: 4,
         borderWidth: 1,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#FFFFFF"
     },
     warningtext: {
         height: 30,
@@ -263,30 +243,30 @@ const styles = StyleSheet.create({
     },
     buttonview: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
     },
     tootbuttonview: {
         width: 120,
         height: 40,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     button: {
         width: 40,
         height: 40,
         margin: 5,
-        alignItems: "center",
+        alignItems: "center"
     },
     reply: {
         backgroundColor: "#D2E5FF",
         margin: 5,
         padding: 5,
-        borderRadius: 5,
+        borderRadius: 5
     },
     replyHeader: {
         alignItems: "center",
         flexDirection: "row",
         height: 26,
-        margin: 2,
+        margin: 2
     },
     replyPhoto: {
         margin: 3,
@@ -304,21 +284,21 @@ const styles = StyleSheet.create({
         margin: 2,
         paddingTop: 3,
         paddingBottom: 3,
-        fontSize: 12,
+        fontSize: 12
     },
     textcw: {
-        fontSize: 24,
+        fontSize: 24
     },
     textvisibility: {
-        fontSize: 12,
+        fontSize: 12
     },
     textlimit: {
         color: "#2b90d9",
-        fontSize: 20,
+        fontSize: 20
     },
     textlimitwarning: {
         color: "#ff5050",
-        fontSize: 20,
+        fontSize: 20
     },
     tootbutton: {
         width: 60,
@@ -327,7 +307,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: "#2b90d9",
-        backgroundColor: "#2b90d9",
+        backgroundColor: "#2b90d9"
     },
     tootbuttonsend: {
         width: 60,
@@ -336,12 +316,12 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: 1,
         borderColor: "#bfddf3",
-        backgroundColor: "#bfddf3",
+        backgroundColor: "#bfddf3"
     },
     texttoot: {
         paddingTop: 5,
         fontSize: 20,
-        color: "#FFFFFF",
+        color: "#FFFFFF"
     },
     mediaScroll: {
         width: 400,
@@ -349,21 +329,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(state => state,
-    (dispatch) => ({
+export default connect(
+    state => state,
+    dispatch => ({
         TootActions: bindActionCreators(TootActions, dispatch)
     })
 )(Toot);
-
-// iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55
-// Bug Fix Code
-// If this App is Updated to 0.56, This code is delete.
-// Reference: https://github.com/facebook/react-native/pull/18456#issuecomment-388171810
-class TextInputBugFix extends Component {
-    shouldComponentUpdate(nextProps){
-        return Platform.OS !== "ios" || this.props.tick !== nextProps.tick || this.props.value === nextProps.value;
-    }
-    render() {
-        return <TextInput {...this.props} />;
-    }
-};

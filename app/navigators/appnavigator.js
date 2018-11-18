@@ -16,26 +16,28 @@ import I18n from "../i18n";
 import * as RouterName from "../constants/routername";
 
 export const middleware = createMiddleware();
-export const AppNavigator = createStackNavigator({
-    [RouterName.AppInit]: AppInitScreen,
-    [RouterName.Login]: LoginScreen,
-    [RouterName.Main]: MainScreen,
-    [RouterName.Authorize]: AuthorizeScreen,
-    [RouterName.Toot]: TootScreen,
-    [RouterName.Detail]: DetailScreen,
-    [RouterName.MediaViewer]: MediaViewerScreen,
-},{
-    navigationOptions: ({ navigation })=>{
-        let routeName = navigation.state.routeName;
-        if(RouterName.Main === navigation.state.routeName){
-            return { header: null };
+export const AppNavigator = createStackNavigator(
+    {
+        [RouterName.AppInit]: AppInitScreen,
+        [RouterName.Login]: LoginScreen,
+        [RouterName.Main]: MainScreen,
+        [RouterName.Authorize]: AuthorizeScreen,
+        [RouterName.Toot]: TootScreen,
+        [RouterName.Detail]: DetailScreen,
+        [RouterName.MediaViewer]: MediaViewerScreen
+    },
+    {
+        navigationOptions: ({ navigation }) => {
+            let routeName = navigation.state.routeName;
+            if (RouterName.Main === navigation.state.routeName) {
+                return { header: null };
+            }
+            return {
+                title: I18n.t(`${routeName}_title`)
+            };
         }
-        return {
-            title: I18n.t(`${routeName}_title`)
-        };
     }
-});
+);
 
 let AppWithNavigationState = reduxifyNavigator(AppNavigator, "root");
-export default connect((state => ({state: state.navReducer})),
-)(AppWithNavigationState);
+export default connect(state => ({ state: state.navReducer }))(AppWithNavigationState);

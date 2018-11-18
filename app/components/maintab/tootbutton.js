@@ -10,11 +10,13 @@ class TootButton extends React.Component {
         super(props);
     }
     render() {
-        return <View>
-            <TouchableOpacity onPress={() => this.props.MainActions.toot()} style={styles.view}>
-                <FontAwesome name="pencil-square" size={26} color={"#2b90d9"} />
-            </TouchableOpacity>
-        </View>;
+        return (
+            <View>
+                <TouchableOpacity onPress={() => this.props.MainActions.toot()} style={styles.view}>
+                    <FontAwesome name="pencil-square" size={26} color={"#2b90d9"} />
+                </TouchableOpacity>
+            </View>
+        );
     }
 }
 
@@ -23,15 +25,15 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         paddingBottom: 4,
         paddingLeft: 4,
-        paddingRight: 12,
-
-    },
+        paddingRight: 12
+    }
 });
 
-export default connect((state) => {
-    return (state);
-},
-(dispatch) => ({
-    MainActions: bindActionCreators(MainActions, dispatch)
-})
+export default connect(
+    state => {
+        return state;
+    },
+    dispatch => ({
+        MainActions: bindActionCreators(MainActions, dispatch)
+    })
 )(TootButton);

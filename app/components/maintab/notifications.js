@@ -7,13 +7,15 @@ export default class Notifications extends React.Component {
         super(props);
     }
     render() {
-        return <View style={styles.container}>
-            <Mastolist type={"notifications"}/>
-        </View>;
+        return (
+            <View style={styles.container}>
+                <Mastolist type={"notifications"} />
+            </View>
+        );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     }
 });

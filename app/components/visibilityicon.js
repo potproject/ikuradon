@@ -12,16 +12,16 @@ export default class VisibilityIcon extends React.Component {
         return <FontAwesome name={this.visibilityIconSet()} size={this.props.size} color={this.props.color} />;
     }
     visibilityIconSet() {
-        switch(this.props.visibility){
+        switch (this.props.visibility) {
             case "public":
                 return "globe";
             case "unlisted":
-                return"unlock-alt";
+                return "unlock-alt";
             case "private":
                 return "lock";
             case "direct":
                 return "envelope";
-            default: 
+            default:
                 return "globe";
         }
     }

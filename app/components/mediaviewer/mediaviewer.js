@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    Image,
-    View,
-    StyleSheet,
-    Dimensions
-} from "react-native";
+import { Image, View, StyleSheet, Dimensions } from "react-native";
 import { MessageBarManager } from "react-native-message-bar";
 import Swiper from "react-native-swiper";
 import { Video } from "expo";
@@ -16,7 +11,7 @@ export default class MediaViewer extends React.Component {
         super(props);
         this.state = {
             media_attachments: props.navigation.state.params.media_attachments,
-            index: props.navigation.state.params.index,
+            index: props.navigation.state.params.index
         };
     }
     render() {
@@ -26,22 +21,31 @@ export default class MediaViewer extends React.Component {
             </Swiper>
         );
     }
-    imageRender(){
-        return this.state.media_attachments.map((data) => {
-            if(data.type === "image"){
+    imageRender() {
+        return this.state.media_attachments.map(data => {
+            if (data.type === "image") {
                 return (
-                    <View style={styles.imageContainer} key={data.id} >
-                        <ImageZoom cropWidth={Dimensions.get("window").width}
+                    <View style={styles.imageContainer} key={data.id}>
+                        <ImageZoom
+                            cropWidth={Dimensions.get("window").width}
                             cropHeight={Dimensions.get("window").height}
                             imageWidth={Dimensions.get("window").width}
-                            imageHeight={Dimensions.get("window").height}>
-                            <Image style={styles.image} resizeMode={"contain"} source={{ uri: data.url }} onError={(e)=>{this.onError(e)}} />
+                            imageHeight={Dimensions.get("window").height}
+                        >
+                            <Image
+                                style={styles.image}
+                                resizeMode={"contain"}
+                                source={{ uri: data.url }}
+                                onError={e => {
+                                    this.onError(e);
+                                }}
+                            />
                         </ImageZoom>
                     </View>
                 );
-            }else if(data.type === "video" || data.type === "gifv"){
+            } else if (data.type === "video" || data.type === "gifv") {
                 return (
-                    <View style={styles.videoContainer} key={data.id} >
+                    <View style={styles.videoContainer} key={data.id}>
                         <Video
                             source={{ uri: data.url }}
                             rate={1.0}
@@ -51,18 +55,20 @@ export default class MediaViewer extends React.Component {
                             useNativeControls={data.type === "video"}
                             isLooping
                             style={styles.video}
-                            onError={(e)=>{this.onError(e)}}
+                            onError={e => {
+                                this.onError(e);
+                            }}
                         />
                     </View>
                 );
             }
         });
     }
-    onError(e){
+    onError(e) {
         MessageBarManager.showAlert({
             title: I18n.t("messages.network_error"),
             message: e.message,
-            alertType: "error",
+            alertType: "error"
         });
     }
 }
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "stretch",
         width: window.width,
-        height: window.height,
+        height: window.height
     },
     image: {
         flex: 1
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
     videoContainer: {
         flex: 1,
         width: window.width,
-        height: window.height,
+        height: window.height
     },
     video: {
         flex: 1

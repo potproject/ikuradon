@@ -7,13 +7,15 @@ export default class Home extends React.Component {
         super(props);
     }
     render() {
-        return <View style={styles.container}>
-            <Mastolist type={"home"}/>
-        </View>;
+        return (
+            <View style={styles.container}>
+                <Mastolist type={"home"} />
+            </View>
+        );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     }
 });

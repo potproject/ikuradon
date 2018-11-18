@@ -15,34 +15,25 @@ class Setting extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <SettingsList borderColor='#c8c7cc' defaultItemSize={50}>
+                <SettingsList borderColor="#c8c7cc" defaultItemSize={50}>
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_personal")} />
-                    <SettingsList.Item
-                        titleStyle={styles.button}
-                        onPress={() => this.props.ConfigActions.setBackground()}
-                        title={I18n.t("setting_background")}
-                    />
+                    <SettingsList.Item titleStyle={styles.button} onPress={() => this.props.ConfigActions.setBackground()} title={I18n.t("setting_background")} />
                     <SettingsList.Item
                         hasNavArrow={false}
                         titleStyle={styles.text}
                         title={I18n.t("setting_smartmode")}
                         switchState={this.props.ConfigReducer.smartMode}
-                        switchOnValueChange={(value) => this.props.ConfigActions.setSmartMode(value)}
+                        switchOnValueChange={value => this.props.ConfigActions.setSmartMode(value)}
                         hasSwitch={true}
                     />
-                    <SettingsList.Item
-                        hasNavArrow={false}
-                        titleStyle={styles.button}
-                        onPress={() => this.props.ConfigActions.allClear()}
-                        title={I18n.t("setting_allclear")}
-                    />
-                    <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_visible")}/>
+                    <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} onPress={() => this.props.ConfigActions.allClear()} title={I18n.t("setting_allclear")} />
+                    <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_visible")} />
                     <SettingsList.Item
                         hasNavArrow={false}
                         titleStyle={styles.text}
                         title={I18n.t("setting_visible_home")}
                         switchState={this.props.ConfigReducer.invisible.home}
-                        switchOnValueChange={(value) => this.props.ConfigActions.setInvisibleTimeline("home", value)}
+                        switchOnValueChange={value => this.props.ConfigActions.setInvisibleTimeline("home", value)}
                         hasSwitch={true}
                     />
                     <SettingsList.Item
@@ -50,7 +41,7 @@ class Setting extends React.Component {
                         titleStyle={styles.text}
                         title={I18n.t("setting_visible_local")}
                         switchState={this.props.ConfigReducer.invisible.local}
-                        switchOnValueChange={(value) => this.props.ConfigActions.setInvisibleTimeline("local", value)}
+                        switchOnValueChange={value => this.props.ConfigActions.setInvisibleTimeline("local", value)}
                         hasSwitch={true}
                     />
                     <SettingsList.Item
@@ -58,7 +49,7 @@ class Setting extends React.Component {
                         titleStyle={styles.text}
                         title={I18n.t("setting_visible_federal")}
                         switchState={this.props.ConfigReducer.invisible.federal}
-                        switchOnValueChange={(value) => this.props.ConfigActions.setInvisibleTimeline("federal", value)}
+                        switchOnValueChange={value => this.props.ConfigActions.setInvisibleTimeline("federal", value)}
                         hasSwitch={true}
                     />
                     <SettingsList.Item
@@ -66,22 +57,12 @@ class Setting extends React.Component {
                         titleStyle={styles.text}
                         title={I18n.t("setting_visible_notifications")}
                         switchState={this.props.ConfigReducer.invisible.notifications}
-                        switchOnValueChange={(value) => this.props.ConfigActions.setInvisibleTimeline("notifications", value)}
+                        switchOnValueChange={value => this.props.ConfigActions.setInvisibleTimeline("notifications", value)}
                         hasSwitch={true}
                     />
-                    <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_accounts")}/>
-                    <SettingsList.Item
-                        hasNavArrow={false}
-                        titleStyle={styles.button}
-                        title={I18n.t("account_change")}
-                        onPress={() => this.props.LoginActions.accountChange()}
-                    />
-                    <SettingsList.Item
-                        hasNavArrow={false}
-                        titleStyle={styles.button}
-                        title={I18n.t("logout")}
-                        onPress={() => this.props.LoginActions.logout()}
-                    />
+                    <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_accounts")} />
+                    <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("account_change")} onPress={() => this.props.LoginActions.accountChange()} />
+                    <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("logout")} onPress={() => this.props.LoginActions.logout()} />
                 </SettingsList>
             </View>
         );
@@ -89,12 +70,12 @@ class Setting extends React.Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
-    header: { 
-        marginTop: 25, 
-        marginBottom: 5, 
-        fontSize: 18,
+    header: {
+        marginTop: 25,
+        marginBottom: 5,
+        fontSize: 18
     },
     button: {
         fontSize: 16,
@@ -106,13 +87,14 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect((state) => {
-    return ({
-        ConfigReducer : state.configReducer
-    });
-},
-(dispatch) => ({
-    LoginActions: bindActionCreators(LoginActions, dispatch),
-    ConfigActions: bindActionCreators(ConfigActions, dispatch)
-})
+export default connect(
+    state => {
+        return {
+            ConfigReducer: state.configReducer
+        };
+    },
+    dispatch => ({
+        LoginActions: bindActionCreators(LoginActions, dispatch),
+        ConfigActions: bindActionCreators(ConfigActions, dispatch)
+    })
 )(Setting);

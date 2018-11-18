@@ -1,16 +1,5 @@
 import React from "react";
-import {
-    StyleSheet,
-    Clipboard,
-    TextInput,
-    Button,
-    Image,
-    Text,
-    View,
-    TouchableHighlight,
-    Modal,
-    Picker,
-} from "react-native";
+import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, TouchableHighlight, Modal, Picker } from "react-native";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -30,63 +19,41 @@ class Login extends React.Component {
             isVisibleTokenModal: false,
             accounts: [],
             accountsValue: [],
-            selectedAccountIndex : 0,
+            selectedAccountIndex: 0
         };
         //非同期
         this.accountsGet();
-
     }
     render() {
         return (
             <View style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={require("../../assets/image/icon250.png")}
-                />
-                <Text style={styles.text}>
-                    {I18n.t("login_message")}
-                </Text>
-                <Button
-                    style={styles.button}
-                    onPress={() => this.openAccountsModal()}
-                    title={I18n.t("login_selectaccounts")}>
-                </Button>
+                <Image style={styles.image} source={require("../../assets/image/icon250.png")} />
+                <Text style={styles.text}>{I18n.t("login_message")}</Text>
+                <Button style={styles.button} onPress={() => this.openAccountsModal()} title={I18n.t("login_selectaccounts")} />
                 <TextInput
                     style={styles.textinput}
                     /** [BUG!]iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55 */
                     /** Reference: https://github.com/facebook/react-native/issues/19339 */
-                    onChangeText={(text) => this.setState({ domain: text })}
-                    value={this.state.domain} />
-                <View style={styles.space} />
-                <Button
-                    style={styles.button}
-                    onPress={() => this.props.LoginActions.login(this.state.domain)}
-                    title={I18n.t("login_button")}
+                    onChangeText={text => this.setState({ domain: text })}
+                    value={this.state.domain}
                 />
                 <View style={styles.space} />
-                <Button
-                    style={styles.button}
-                    onPress={() => this.openTokenModal()}
-                    title={I18n.t("login_token_button")}
-                />
+                <Button style={styles.button} onPress={() => this.props.LoginActions.login(this.state.domain)} title={I18n.t("login_button")} />
+                <View style={styles.space} />
+                <Button style={styles.button} onPress={() => this.openTokenModal()} title={I18n.t("login_token_button")} />
                 <KeyboardSpacer />
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.isVisibleAccountsModal}
-                >
+                <Modal animationType="slide" transparent={false} visible={this.state.isVisibleAccountsModal}>
                     <View>
-                        <Picker
-                            onValueChange={(selectedAccountIndex) => this.setState({ selectedAccountIndex })}>
-                            {this.pickerList()}
-                        </Picker>
+                        <Picker onValueChange={selectedAccountIndex => this.setState({ selectedAccountIndex })}>{this.pickerList()}</Picker>
                         <TouchableHighlight onPress={() => this.copyAccessToken()}>
                             <Text>{I18n.t("copy_access_token")}</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight onPress={() => {
-                            this.setState({ isVisibleAccountsModal: false });
-                            this.props.LoginActions.loginSelectAccounts(this.state.selectedAccountIndex);
-                        }}>
+                        <TouchableHighlight
+                            onPress={() => {
+                                this.setState({ isVisibleAccountsModal: false });
+                                this.props.LoginActions.loginSelectAccounts(this.state.selectedAccountIndex);
+                            }}
+                        >
                             <Text>{I18n.t("global_ok")}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => this.setState({ isVisibleAccountsModal: false })}>
@@ -94,21 +61,16 @@ class Login extends React.Component {
                         </TouchableHighlight>
                     </View>
                 </Modal>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.isVisibleTokenModal}
-                >
+                <Modal animationType="slide" transparent={false} visible={this.state.isVisibleTokenModal}>
                     <View>
                         <Text style={styles.text}>{I18n.t("login_accesstoken_message")}</Text>
-                        <TextInput
-                            style={styles.textinput}
-                            onChangeText={(token) => this.setState({ token })}
-                            value={this.state.token} />
-                        <TouchableHighlight onPress={() => {
-                            this.setState({ isVisibleTokenModal: false });
-                            this.props.LoginActions.loginWithAccessToken(this.state.domain,this.state.token);
-                        }}>
+                        <TextInput style={styles.textinput} onChangeText={token => this.setState({ token })} value={this.state.token} />
+                        <TouchableHighlight
+                            onPress={() => {
+                                this.setState({ isVisibleTokenModal: false });
+                                this.props.LoginActions.loginWithAccessToken(this.state.domain, this.state.token);
+                            }}
+                        >
                             <Text>{I18n.t("global_ok")}</Text>
                         </TouchableHighlight>
                         <TouchableHighlight onPress={() => this.setState({ isVisibleTokenModal: false })}>
@@ -120,58 +82,58 @@ class Login extends React.Component {
         );
     }
 
-    copyAccessToken(){
+    copyAccessToken() {
         Clipboard.setString(this.state.accounts[this.state.selectedAccountIndex].access_token);
-        this.setState({isVisibleAccountsModal: false});
+        this.setState({ isVisibleAccountsModal: false });
         MessageBarManager.showAlert({
             title: I18n.t("messages.login_copy_accesstoken"),
-            alertType: "info",
+            alertType: "info"
         });
     }
-    openAccountsModal(){
-        if(this.state.accounts.length > 0){
-            this.setState({isVisibleAccountsModal: true});
-        }else{
+    openAccountsModal() {
+        if (this.state.accounts.length > 0) {
+            this.setState({ isVisibleAccountsModal: true });
+        } else {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_notexist_accounts"),
-                alertType: "warning",
+                alertType: "warning"
             });
         }
     }
-    openTokenModal(){
-        if(this.state.domain){
-            this.setState({isVisibleTokenModal: true});
+    openTokenModal() {
+        if (this.state.domain) {
+            this.setState({ isVisibleTokenModal: true });
         }
     }
-    accountsGet(){
-        Session.getAll().then((list)=>{
+    accountsGet() {
+        Session.getAll().then(list => {
             //
             let accounts = list.accounts;
-            let accountsValue = list.accounts.map((account)=>{
+            let accountsValue = list.accounts.map(account => {
                 let domain = account.domain;
                 let username = account.username;
                 let access_token = account.access_token;
-                return `${username}@${domain}[${access_token.slice(0,6)}]`;
+                return `${username}@${domain}[${access_token.slice(0, 6)}]`;
             });
-            this.setState({accounts , accountsValue});
+            this.setState({ accounts, accountsValue });
         });
     }
-    pickerList(){
+    pickerList() {
         let accountsValue = this.state.accountsValue;
-        return accountsValue.map((value,index)=>{
+        return accountsValue.map((value, index) => {
             return <Picker.Item key={index} label={value} value={index} />;
         });
     }
 }
 
 const styles = StyleSheet.create({
-    button:{
-        margin:20,
+    button: {
+        margin: 20
     },
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     textinput: {
         height: 40,
@@ -181,10 +143,10 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 2
     },
-    text:{
+    text: {
         fontSize: 14,
         textAlign: "center",
-        margin: 10,
+        margin: 10
     },
     space: {
         height: 15
@@ -197,8 +159,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(state => state,
-    (dispatch) => ({
+export default connect(
+    state => state,
+    dispatch => ({
         LoginActions: bindActionCreators(LoginActions, dispatch)
     })
 )(Login);
