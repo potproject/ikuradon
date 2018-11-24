@@ -32,23 +32,11 @@ This project was created at [Create React Native App](https://github.com/react-c
 
 ## ScreenShots
 
-<div>
-  <div style="float: left;">
-    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview.png?raw=true">
-  </div>
-  <div style="clear: both;">
-    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.png?raw=true">
-  </div>
-</div>
+| Android                                                                                           | iOS                                                                                           |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview.png?raw=true)  | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.png?raw=true)  |
+| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview2.png?raw=true) | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview2.png?raw=true) |
 
-<div>
-  <div style="float: left;">
-    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview2.png?raw=true">
-  </div>
-  <div style="clear: both;">
-    <img width="270" heigth="480" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview2.png?raw=true">
-  </div>
-</div>
 ## Getting Starter
 
 `Expo CDN`:
