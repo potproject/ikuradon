@@ -47,3 +47,10 @@ export function setSmartMode(value) {
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
+
+export function setTimelinePerform(value) {
+    return async dispatch => {
+        dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
+        dispatch({ type: Nav.NAV_MAIN });
+    };
+}

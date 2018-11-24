@@ -12,7 +12,8 @@ const initialState = {
         notifications: false
     },
 
-    smartMode: false
+    smartMode: false,
+    timelinePerform: false
     //textsize,textcolor,etc...
 };
 
@@ -24,27 +25,38 @@ export default function Config(state = initialState, action = {}) {
                 backgroundImage: action.backgroundImage
             });
             break;
+
         case ConfigActionTypes.DELETE_BACKGROUNDIMAGE:
             newstate = Object.assign({}, state, {
                 backgroundImage: null
             });
             break;
+
         case ConfigActionTypes.INVISIBLE_SETTING:
             let mergeInvisible = Object.assign(state.invisible, action.invisible);
             newstate = Object.assign({}, state, { invisible: mergeInvisible });
             break;
+
         case ConfigActionTypes.SMART_MODE:
             newstate = Object.assign({}, state, {
                 smartMode: action.smartMode
             });
             break;
 
+        case ConfigActionTypes.TIMELINE_PERFORM:
+            newstate = Object.assign({}, state, {
+                timelinePerform: action.timelinePerform
+            });
+            break;
+
         case ConfigActionTypes.CONFIG_LOAD:
             newstate = Object.assign({}, action.config);
             break;
+
         case ConfigActionTypes.CONFIG_RESET:
             newstate = initialState;
             break;
+
         default:
             newstate = state;
             break;

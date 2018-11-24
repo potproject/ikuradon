@@ -7,10 +7,6 @@ import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
 import * as MastoRowActions from "../actions/actioncreators/mastorow";
 
-// removeClippedSubviews is buggy. Experimental functions.
-// Reference: https://facebook.github.io/react-native/docs/flatlist#removeclippedsubviews
-const UsingRemoveClippedSubviews = false;
-
 class Mastolist extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +21,7 @@ class Mastolist extends React.Component {
         if (this.listdata && this.listdata.data instanceof Array && this.listdata.data.length < 1) {
             this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId);
         }
+        this.listOptimized = this.props.configReducer.timelinePerform;
     }
     componentWillReceiveProps(nextProps) {
         this.listdata = this.reducerType(nextProps);
@@ -42,7 +39,8 @@ class Mastolist extends React.Component {
                         refreshControl={<RefreshControl refreshing={this.listdata.refreshing} onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)} />}
                         onEndReachedThreshold={1.5}
                         onEndReached={() => this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
-                        removeClippedSubviews={UsingRemoveClippedSubviews}
+                        removeClippedSubviews={this.listOptimized}
+                        legacyImplementation={this.listOptimized}
                     />
                 </View>
             </ImageBackground>

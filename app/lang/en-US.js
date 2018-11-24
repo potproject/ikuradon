@@ -12,6 +12,7 @@ export default {
     setting_visible_notifications: "Do not show Notifications Timeline",
 
     setting_smartmode: "Enabled SmartMode",
+    setting_timeline_perform: "Optimized the timeline(Experimental)",
 
     //Settings Header
     setting_header_personal: "Personal",

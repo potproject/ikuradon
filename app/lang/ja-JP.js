@@ -12,6 +12,7 @@ export default {
     setting_visible_notifications: "通知タイムラインを非表示",
 
     setting_smartmode: "スマートモードを有効にする",
+    setting_timeline_perform: "タイムラインの最適化を行う(実験的)",
 
     //設定ヘッダ
     setting_header_personal: "個人",

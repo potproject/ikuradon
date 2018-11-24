@@ -26,6 +26,14 @@ class Setting extends React.Component {
                         switchOnValueChange={value => this.props.ConfigActions.setSmartMode(value)}
                         hasSwitch={true}
                     />
+                    <SettingsList.Item
+                        hasNavArrow={false}
+                        titleStyle={styles.text}
+                        title={I18n.t("setting_timeline_perform")}
+                        switchState={this.props.ConfigReducer.timelinePerform}
+                        switchOnValueChange={value => this.props.ConfigActions.setTimelinePerform(value)}
+                        hasSwitch={true}
+                    />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} onPress={() => this.props.ConfigActions.allClear()} title={I18n.t("setting_allclear")} />
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_visible")} />
                     <SettingsList.Item
