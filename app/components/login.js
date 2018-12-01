@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, TouchableHighlight, Modal, Picker } from "react-native";
+import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, TouchableHighlight, Picker } from "react-native";
+import Modal from "react-native-modal";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -45,37 +46,33 @@ class Login extends React.Component {
                 <Modal animationType="slide" transparent={false} visible={this.state.isVisibleAccountsModal}>
                     <View>
                         <Picker onValueChange={selectedAccountIndex => this.setState({ selectedAccountIndex })}>{this.pickerList()}</Picker>
-                        <TouchableHighlight onPress={() => this.copyAccessToken()}>
-                            <Text>{I18n.t("copy_access_token")}</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
+                        <Button style={styles.button} onPress={() => this.copyAccessToken()} title={I18n.t("copy_access_token")} />
+                        <View style={styles.space} />
+                        <Button
+                            style={styles.button}
                             onPress={() => {
                                 this.setState({ isVisibleAccountsModal: false });
                                 this.props.LoginActions.loginSelectAccounts(this.state.selectedAccountIndex);
                             }}
-                        >
-                            <Text>{I18n.t("global_ok")}</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={() => this.setState({ isVisibleAccountsModal: false })}>
-                            <Text>{I18n.t("global_cancel")}</Text>
-                        </TouchableHighlight>
+                            title={I18n.t("global_ok")}
+                        />
+                        <View style={styles.space} />
+                        <Button style={styles.button} onPress={() => this.setState({ isVisibleAccountsModal: false })} title={I18n.t("global_cancel")} />
                     </View>
                 </Modal>
                 <Modal animationType="slide" transparent={false} visible={this.state.isVisibleTokenModal}>
                     <View>
                         <Text style={styles.text}>{I18n.t("login_accesstoken_message")}</Text>
-                        <TextInput style={styles.textinput} onChangeText={token => this.setState({ token })} value={this.state.token} />
-                        <TouchableHighlight
+                        <TextInput style={styles.textinputAccessToken} onChangeText={token => this.setState({ token })} value={this.state.token} />
+                        <Button
+                            style={styles.button}
                             onPress={() => {
                                 this.setState({ isVisibleTokenModal: false });
                                 this.props.LoginActions.loginWithAccessToken(this.state.domain, this.state.token);
                             }}
-                        >
-                            <Text>{I18n.t("global_ok")}</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={() => this.setState({ isVisibleTokenModal: false })}>
-                            <Text>{I18n.t("global_cancel")}</Text>
-                        </TouchableHighlight>
+                            title={I18n.t("global_ok")}
+                        />
+                        <Button style={styles.button} onPress={() => this.setState({ isVisibleTokenModal: false })} title={I18n.t("global_cancel")} />
                     </View>
                 </Modal>
             </View>
@@ -138,6 +135,13 @@ const styles = StyleSheet.create({
     textinput: {
         height: 40,
         width: Dimensions.get("window").width - 20,
+        borderColor: "gray",
+        borderWidth: 1,
+        margin: 10,
+        padding: 2
+    },
+    textinputAccessToken: {
+        height: 40,
         borderColor: "gray",
         borderWidth: 1,
         margin: 10,

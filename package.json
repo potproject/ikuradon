@@ -47,6 +47,7 @@
     "react-native-image-pan-zoom": "^2.1.11",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-message-bar": "^2.0.10",
+    "react-native-modal": "^7.0.1",
     "react-native-settings-list": "^1.8.0",
     "react-native-swiper": "^1.5.13",
     "react-navigation": "^2.18.2",
