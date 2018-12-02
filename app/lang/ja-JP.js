@@ -55,6 +55,12 @@ export default {
     toot_visibility_private: "フォロワーのみ",
     toot_visibility_direct: "ダイレクト",
 
+    //トゥート公開範囲説明
+    toot_visibility_public_detail: "公開TLに投稿する",
+    toot_visibility_unlisted_detail: "公開TLで表示しない",
+    toot_visibility_private_detail: "フォロワーだけに公開",
+    toot_visibility_direct_detail: "メンションしたユーザーだけに公開",
+
     //詳細
     detail_title: "詳細",
 

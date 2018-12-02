@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, TouchableHighlight, Picker } from "react-native";
+import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, Picker } from "react-native";
 import Modal from "react-native-modal";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
@@ -31,13 +31,7 @@ class Login extends React.Component {
                 <Image style={styles.image} source={require("../../assets/image/icon250.png")} />
                 <Text style={styles.text}>{I18n.t("login_message")}</Text>
                 <Button style={styles.button} onPress={() => this.openAccountsModal()} title={I18n.t("login_selectaccounts")} />
-                <TextInput
-                    style={styles.textinput}
-                    /** [BUG!]iOS ReactNative's state update via this.setState breaks text input mode for Korean, Chinese, Japanese characters in 0.54 and 0.55 */
-                    /** Reference: https://github.com/facebook/react-native/issues/19339 */
-                    onChangeText={text => this.setState({ domain: text })}
-                    value={this.state.domain}
-                />
+                <TextInput style={styles.textinput} onChangeText={text => this.setState({ domain: text })} value={this.state.domain} />
                 <View style={styles.space} />
                 <Button style={styles.button} onPress={() => this.props.LoginActions.login(this.state.domain)} title={I18n.t("login_button")} />
                 <View style={styles.space} />

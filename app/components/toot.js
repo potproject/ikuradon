@@ -1,11 +1,11 @@
 import React from "react";
-import { Text, Image, TextInput, StyleSheet, Modal, Picker, ScrollView, View } from "react-native";
+import { Text, Image, TextInput, StyleSheet, Picker, ScrollView, View, TouchableOpacity, Button } from "react-native";
+import Modal from "react-native-modal";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as TootActions from "../actions/actioncreators/toot";
 import { FontAwesome } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 import MastoMedia from "./mastomedia";
 import I18n from "../i18n";
 import VisibilityIcon from "./visibilityicon";
@@ -104,9 +104,11 @@ class Toot extends React.Component {
                             <Picker.Item label={I18n.t("toot_visibility_private")} value="private" />
                             <Picker.Item label={I18n.t("toot_visibility_direct")} value="direct" />
                         </Picker>
-                        <TouchableOpacity onPress={() => this.setState({ visibilityModal: false })}>
-                            <Text>{I18n.t("global_ok")}</Text>
-                        </TouchableOpacity>
+                        <Text>{I18n.t("toot_visibility_public") + ":" + I18n.t("toot_visibility_public_detail")}</Text>
+                        <Text>{I18n.t("toot_visibility_unlisted") + ":" + I18n.t("toot_visibility_unlisted_detail")}</Text>
+                        <Text>{I18n.t("toot_visibility_private") + ":" + I18n.t("toot_visibility_private_detail")}</Text>
+                        <Text>{I18n.t("toot_visibility_direct") + ":" + I18n.t("toot_visibility_direct_detail")}</Text>
+                        <Button style={styles.button} onPress={() => this.setState({ visibilityModal: false })} title={I18n.t("global_ok")} />
                     </View>
                 </Modal>
                 <Modal animationType="slide" transparent={false} visible={this.state.customEmojisSelectorModal}>

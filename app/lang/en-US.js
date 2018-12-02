@@ -56,7 +56,13 @@ export default {
     toot_visibility_private: "private",
     toot_visibility_direct: "direct",
 
-    //詳細
+    //Toot Visibility Detail
+    toot_visibility_public_detail: "Post to public timelines",
+    toot_visibility_unlisted_detail: "Do not post to public timelines",
+    toot_visibility_private_detail: "Post to followers only",
+    toot_visibility_direct_detail: "Post to mentioned users only",
+
+    //Detail
     detail_title: "Detail",
 
     //Actions
