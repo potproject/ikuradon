@@ -35,7 +35,7 @@
     "expo-cli": "^2.4.0",
     "expo-localization": "^1.0.0",
     "he": "^1.2.0",
-    "i18next": "^12.1.0",
+    "i18next": "^13.0.0",
     "moment": "^2.22.2",
     "react": "16.5.0",
     "react-i18next": "^8.3.8",
