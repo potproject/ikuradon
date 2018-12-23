@@ -13,6 +13,13 @@ class StreamingButton extends React.Component {
             type: props.type
         };
     }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            type: nextProps.type,
+            enabled: nextProps.StreamingReducer[nextProps.type]
+        });
+    }
+
     render() {
         return (
             <View>

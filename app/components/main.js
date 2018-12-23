@@ -68,7 +68,9 @@ class Main extends React.Component {
                 navigationOptions: ({ navigation }) => {
                     return {
                         headerTitle: I18n.t(`navigation_${navigation.state.routes[navigation.state.index].routeName}`),
-                        headerLeft: navigation.state.routes[navigation.state.index].routeName === "home" ? <StreamingButton type={navigation.state.routes[navigation.state.index].routeName} /> : null,
+                        headerLeft: ["home", "local", "federal"].includes(navigation.state.routes[navigation.state.index].routeName) ? (
+                            <StreamingButton type={navigation.state.routes[navigation.state.index].routeName} />
+                        ) : null,
                         headerRight: <TootButton />
                     };
                 }
