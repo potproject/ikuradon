@@ -13,7 +13,9 @@
       "bundleIdentifier": "net.potproject.ikuradon"
     },
     "android": {
-      "package": "net.potproject.ikuradon"
+      "package": "net.potproject.ikuradon",
+      "versionCode": 1,
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"]
     }
   }
 }
