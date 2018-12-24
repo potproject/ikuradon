@@ -192,6 +192,7 @@ class Mastolist extends React.Component {
 
 const styles = StyleSheet.create({
     background: {
+        backgroundColor: "#ffffff",
         width: "100%",
         height: "100%"
     },

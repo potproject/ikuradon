@@ -62,7 +62,7 @@ export default class MastoRow extends Component {
     }
     render() {
         return (
-            <View style={this.props.my ? styles.mycolor : []}>
+            <View style={this.props.my ? [styles.mycolor, styles.main] : styles.main}>
                 {/*<TouchableOpacity onPress={()=>this.props.onDetail(this.props.id)}> */}
                 <View style={styles.container}>
                     <Image source={{ uri: this.props.image }} style={styles.photo} />
@@ -224,6 +224,10 @@ export default class MastoRow extends Component {
 }
 
 const styles = StyleSheet.create({
+    main: {
+        paddingTop: 5,
+        paddingBottom: 5
+    },
     mycolor: {
         backgroundColor: "#cecece66"
     },
