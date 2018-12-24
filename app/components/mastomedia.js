@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, Image, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, Image, View, StyleSheet, TouchableOpacity, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MastorowActions from "../actions/actioncreators/mastorow";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
+import * as MainActions from "../actions/actioncreators/main";
 
 class MastoMedia extends React.Component {
     static propTypes = {
@@ -13,6 +14,13 @@ class MastoMedia extends React.Component {
         media_attachments: PropTypes.array,
         sensitive: PropTypes.bool
     };
+    componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
+
     render() {
         return <View style={styles.container}>{this.mapView()}</View>;
     }
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
 export default connect(
     state => state,
     dispatch => ({
-        MastorowActions: bindActionCreators(MastorowActions, dispatch)
+        MastorowActions: bindActionCreators(MastorowActions, dispatch),
+        MainActions: bindActionCreators(MainActions, dispatch)
     })
 )(MastoMedia);

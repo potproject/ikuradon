@@ -1,10 +1,12 @@
 import React from "react";
-import { Text, Image, TextInput, StyleSheet, Picker, ScrollView, View, TouchableOpacity, Button } from "react-native";
+import { Text, Image, TextInput, StyleSheet, Picker, ScrollView, View, TouchableOpacity, Button, BackHandler } from "react-native";
 import Modal from "react-native-modal";
 import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as TootActions from "../actions/actioncreators/toot";
+import * as MainActions from "../actions/actioncreators/main";
+
 import { FontAwesome } from "@expo/vector-icons";
 import MastoMedia from "./mastomedia";
 import I18n from "../i18n";
@@ -23,6 +25,12 @@ const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
 const SEND_TOOT_TIMEOUT = 5000;
 
 class Toot extends React.Component {
+    componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -334,6 +342,7 @@ const styles = StyleSheet.create({
 export default connect(
     state => state,
     dispatch => ({
-        TootActions: bindActionCreators(TootActions, dispatch)
+        TootActions: bindActionCreators(TootActions, dispatch),
+        MainActions: bindActionCreators(MainActions, dispatch)
     })
 )(Toot);

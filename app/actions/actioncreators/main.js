@@ -14,6 +14,10 @@ const reducerTypeArray = {
     notifications: CONST_API.GET_NOTIFICATIONS
 };
 
+export function back() {
+    return { type: Nav.NAV_GO_BACK };
+}
+
 export function toot() {
     return { type: Nav.NAV_TOOT };
 }

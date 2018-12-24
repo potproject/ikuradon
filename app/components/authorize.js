@@ -1,10 +1,17 @@
 import React from "react";
-import { StyleSheet, WebView } from "react-native";
+import { StyleSheet, WebView, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as AuthorizeActions from "../actions/actioncreators/authorize";
+import * as MainActions from "../actions/actioncreators/main";
 
 class Authorize extends React.Component {
+    componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
     constructor(props) {
         super(props);
         const { url, domain, client_id, client_secret } = props.navReducer;
@@ -52,6 +59,7 @@ const styles = StyleSheet.create({
 export default connect(
     state => state,
     dispatch => ({
-        AuthorizeActions: bindActionCreators(AuthorizeActions, dispatch)
+        AuthorizeActions: bindActionCreators(AuthorizeActions, dispatch),
+        MainActions: bindActionCreators(MainActions, dispatch)
     })
 )(Authorize);
