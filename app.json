@@ -2,11 +2,11 @@
   "expo": {
     "name": "ikuradon",
     "description": "ikuradon - Mastodon Client App",
-    "slug":"potproject-ikuradon",
+    "slug": "potproject-ikuradon",
     "version": "1.0.0",
     "sdkVersion": "31.0.0",
     "githubUrl": "https://github.com/potproject/ikuradon",
-    "icon":"assets/image/icon250.png",
+    "icon": "./assets/image/icon1024.png",
     "privacy": "public",
     "ios": {
       "bundleIdentifier": "net.potproject.ikuradon"
