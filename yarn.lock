@@ -6853,9 +6853,9 @@ react-native-view-shot@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.5.0.tgz#428a997f470d3148d0067c5b46abd988ef1aa4c0"
 
-react-native@0.57.1:
+"react-native@https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz":
   version "0.57.1"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.57.1.tgz#a8bffeac13e200b95bbebd11f7131570902e1e74"
+  resolved "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz#4e15edb8dca4159b47e80014029da30c6d4bef7e"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
