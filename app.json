@@ -6,8 +6,9 @@
     "version": "1.0.0",
     "sdkVersion": "31.0.0",
     "githubUrl": "https://github.com/potproject/ikuradon",
-    "icon": "./assets/image/icon1024.png",
+    "icon": "assets/image/icon512.png",
     "privacy": "public",
+    "assetBundlePatterns": ["assets/image/*"],
     "ios": {
       "bundleIdentifier": "net.potproject.ikuradon"
     },
