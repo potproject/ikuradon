@@ -7,6 +7,11 @@
     "sdkVersion": "31.0.0",
     "githubUrl": "https://github.com/potproject/ikuradon",
     "icon": "assets/image/icon512.png",
+    "splash": {
+      "image": "assets/image/splash.png",
+      "backgroundColor": "#ff3300",
+      "resizeMode": "contain"
+    },
     "privacy": "public",
     "assetBundlePatterns": ["assets/image/*"],
     "ios": {
