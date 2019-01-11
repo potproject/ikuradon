@@ -14,7 +14,7 @@ class Authorize extends React.Component {
     }
     constructor(props) {
         super(props);
-        const { url, domain, client_id, client_secret } = props.navReducer;
+        const { url, domain, client_id, client_secret } = props.navigation.state.params;
         this.url = url;
         this.domain = domain;
         this.client_id = client_id;

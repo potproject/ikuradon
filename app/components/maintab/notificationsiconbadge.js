@@ -11,9 +11,9 @@ class NotificationsIconBadge extends React.Component {
         count: PropTypes.number
     };
     componentWillReceiveProps(nextProps) {
-        if (typeof nextProps.navReducer.count === "number") {
+        /**if (typeof nextProps.navReducer.count === "number") {
             this.props.count = nextProps.navReducer.count;
-        }
+        }**/
     }
     render() {
         return (

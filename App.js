@@ -3,8 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { createMiddleware } from "./app/middleware";
-import AppWithNavigationState from "./app/navigators/appnavigator";
+import AppContainer from "./app/navigators/appnavigator";
 import MessageBarNavigator from "./app/navigators/messagebarnavigator";
+import NavigationService from "./app/navigationservice";
 
 import reducers from "./app/reducers";
 // other imports...
@@ -17,7 +18,11 @@ export default class App extends React.Component {
         return (
             <View style={styles.container}>
                 <Provider store={store}>
-                    <AppWithNavigationState />
+                    <AppContainer
+                        ref={navigatorRef => {
+                            NavigationService.setTopLevelNavigator(navigatorRef);
+                        }}
+                    />
                 </Provider>
                 <MessageBarNavigator refName="alert" />
             </View>

@@ -1,13 +1,16 @@
 import { AsyncStorage } from "react-native";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
-import * as Nav from "../actiontypes/nav";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
+
+import * as RouterName from "../../constants/routername";
+import NavigationService from "../../navigationservice";
+import * as Nav from "../actiontypes/nav";
 
 export function login(domain) {
     return async dispatch => {
@@ -18,7 +21,8 @@ export function login(domain) {
             client_id = data.client_id;
             client_secret = data.client_secret;
             //この時点ではまだログインしていません
-            dispatch({ type: Nav.NAV_AUTHORIZE, domain, url, client_id, client_secret });
+            NavigationService.navigate({ routeName: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
+            dispatch({ type: Nav.NAV_AUTHORIZE });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.login_failed"),
@@ -37,15 +41,15 @@ export function loginSelectAccounts(index) {
             try {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
-                dispatch({
-                    type: Nav.NAV_MAIN
-                });
+                NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+                dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
                 //LOGIN ERROR!
                 await Session.setDefault();
             }
         }
+        NavigationService.resetAndNavigate({ routeName: RouterName.login });
         dispatch({ type: Nav.NAV_LOGIN });
     };
 }
@@ -63,9 +67,8 @@ export function loginWithAccessToken(domain, access_token) {
                 alertType: "success"
             });
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
-            dispatch({
-                type: Nav.NAV_MAIN
-            });
+            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+            dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),
@@ -88,7 +91,7 @@ export function logout() {
                 title: I18n.t("messages.logout_success"),
                 alertType: "success"
             });
-            dispatch({ type: Nav.NAV_LOGIN });
+            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_failed"),
@@ -110,7 +113,7 @@ export function accountChange() {
                 title: I18n.t("messages.logout_success"),
                 alertType: "success"
             });
-            dispatch({ type: Nav.NAV_LOGIN });
+            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.logout_failed"),

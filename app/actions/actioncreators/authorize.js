@@ -1,10 +1,13 @@
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
-import * as Nav from "../actiontypes/nav";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
+
+import * as RouterName from "../../constants/routername";
+import NavigationService from "../../navigationservice";
+import * as Nav from "../actiontypes/nav";
 
 export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {
     return async dispatch => {
@@ -25,9 +28,8 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
                 alertType: "success"
             });
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
-            dispatch({
-                type: Nav.NAV_MAIN
-            });
+            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+            dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),

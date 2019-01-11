@@ -46,14 +46,14 @@ class Toot extends React.Component {
             send: false
         };
         //reply
-        if (props.navReducer.reply !== null && typeof props.navReducer.reply === "object") {
+        if (props.navigation.state !== null && typeof props.navigation.state.params === "object" && Object.keys(props.navigation.state.params).length !== 0) {
             this.state.reply = {
-                id: props.navReducer.reply.id,
-                tootid: props.navReducer.reply.tootid,
-                user: props.navReducer.reply.user,
-                acct: props.navReducer.reply.acct,
-                body: props.navReducer.reply.body,
-                image: props.navReducer.reply.image
+                id: props.navigation.state.params.id,
+                tootid: props.navigation.state.params.tootid,
+                user: props.navigation.state.params.user,
+                acct: props.navigation.state.params.acct,
+                body: props.navigation.state.params.body,
+                image: props.navigation.state.params.image
             };
             this.state.text = this.state.reply.acct + " ";
         }

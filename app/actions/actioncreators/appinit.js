@@ -1,4 +1,3 @@
-import * as Nav from "../actiontypes/nav";
 import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import { AsyncStorage } from "react-native";
@@ -10,6 +9,10 @@ import * as Session from "../../util/session";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
 import * as CurrentUser from "../actiontypes/currentuser";
+
+import * as RouterName from "../../constants/routername";
+import NavigationService from "../../navigationservice";
+import * as Nav from "../actiontypes/nav";
 
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)
@@ -50,15 +53,15 @@ export function appInit() {
             try {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
-                dispatch({
-                    type: Nav.NAV_MAIN
-                });
+                NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+                dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
                 //LOGIN ERROR!
                 await Session.setDefault();
             }
         }
+        NavigationService.resetAndNavigate({ routeName: RouterName.Login });
         dispatch({ type: Nav.NAV_LOGIN });
     };
 }

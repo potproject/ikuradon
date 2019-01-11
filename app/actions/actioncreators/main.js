@@ -1,11 +1,14 @@
 import * as Main from "../actiontypes/main";
 import * as CurrentUser from "../actiontypes/currentuser";
-import * as Nav from "../actiontypes/nav";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../networking";
 import I18n from "../../i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
+
+import * as RouterName from "../../constants/routername";
+import NavigationService from "../../navigationservice";
+import * as Nav from "../actiontypes/nav";
 
 const reducerTypeArray = {
     home: CONST_API.GET_TIMELINES_HOME,
@@ -15,15 +18,18 @@ const reducerTypeArray = {
 };
 
 export function back() {
+    NavigationService.back();
     return { type: Nav.NAV_GO_BACK };
 }
 
 export function toot() {
+    NavigationService.navigate({ routeName: RouterName.Toot });
     return { type: Nav.NAV_TOOT };
 }
 
 export function reply(id, tootid, user, acct, image, body) {
-    return { type: Nav.NAV_TOOT_REPLY, data: { id, tootid, user, acct, image, body } };
+    NavigationService.navigate({ routeName: RouterName.Toot, params: { id, tootid, user, acct, image, body } });
+    return { type: Nav.NAV_TOOT_REPLY };
 }
 
 export function hide(id) {
@@ -51,6 +57,7 @@ export function deleting(id) {
 }
 
 export function detail(id) {
+    NavigationService.navigate({ routeName: RouterName.Detail, params: { id } });
     return { type: Nav.NAV_DETAIL, id };
 }
 

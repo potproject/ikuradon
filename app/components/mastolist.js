@@ -11,8 +11,6 @@ class Mastolist extends React.Component {
     constructor(props) {
         super(props);
         this.type = this.props.type;
-        this.access_token = this.props.navReducer.access_token;
-        this.domain = this.props.navReducer.domain;
         this.listdata = this.reducerType(props);
         this.backgroundImage = this.props.configReducer.backgroundImage;
 

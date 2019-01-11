@@ -1,6 +1,4 @@
-import { connect } from "react-redux";
-import { createStackNavigator } from "react-navigation";
-import { reduxifyNavigator } from "react-navigation-redux-helpers";
+import { createStackNavigator, createNavigationContainer } from "react-navigation";
 
 import { createMiddleware } from "../middleware";
 
@@ -38,6 +36,5 @@ export const AppNavigator = createStackNavigator(
         }
     }
 );
-
-let AppWithNavigationState = reduxifyNavigator(AppNavigator, "root");
-export default connect(state => ({ state: state.navReducer }))(AppWithNavigationState);
+const AppContainer = createNavigationContainer(AppNavigator);
+export default AppContainer;
