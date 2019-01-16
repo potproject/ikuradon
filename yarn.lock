@@ -4624,9 +4624,10 @@ jest-environment-node@^23.4.0:
     jest-mock "^23.2.0"
     jest-util "^23.4.0"
 
-jest-expo@31.0.0:
-  version "31.0.0"
-  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-31.0.0.tgz#6f191eebb646b2654388f5166311385c118a7924"
+jest-expo@32.0.0:
+  version "32.0.0"
+  resolved "https://registry.yarnpkg.com/jest-expo/-/jest-expo-32.0.0.tgz#813ad3bc59163f904c6f71d6aac30748ab9d7933"
+  integrity sha512-976qA3FwRrd3ppC5p3wNvqLmV9W8TlHZfNU8sGyhSBFyEp+jrPBhy7511mt+wW8NjCVaIwjpWSO213V1XQxRTA==
   dependencies:
     "@babel/core" "^7.1.0"
     babel-core "^7.0.0-bridge.0"
