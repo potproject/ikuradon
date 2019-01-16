@@ -10,7 +10,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "jest-expo": "31.0.0",
+    "jest-expo": "32.0.0",
     "prettier": "^1.15.2",
     "prettier-eslint-cli": "^4.7.1",
     "react-test-renderer": "16.5.0"
