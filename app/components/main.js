@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createStackNavigator, createBottomTabNavigator } from "react-navigation";
-
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
 import HomeTabScreen from "../components/maintab/home";
 import LocalTabScreen from "../components/maintab/local";
 import FederalTabScreen from "../components/maintab/federal";
@@ -35,7 +34,7 @@ class Main extends React.Component {
         tabs.setting = SettingTabScreen;
 
         const TabNavigator = createBottomTabNavigator(tabs, {
-            navigationOptions: ({ navigation }) => {
+            defaultNavigationOptions: ({ navigation }) => {
                 return {
                     title: I18n.t(`navigation_${navigation.state.routeName}`),
                     tabBarIcon: ({ tintColor }) => {
@@ -60,12 +59,12 @@ class Main extends React.Component {
                 inactiveTintColor: "gray"
             }
         });
-        this.Main = createStackNavigator(
+        const MainAppNavigator = createStackNavigator(
             {
                 Tab: TabNavigator
             },
             {
-                navigationOptions: ({ navigation }) => {
+                defaultNavigationOptions: ({ navigation }) => {
                     return {
                         headerTitle: I18n.t(`navigation_${navigation.state.routes[navigation.state.index].routeName}`),
                         headerLeft: ["home", "local", "federal"].includes(navigation.state.routes[navigation.state.index].routeName) ? (
@@ -76,6 +75,7 @@ class Main extends React.Component {
                 }
             }
         );
+        this.Main = createAppContainer(MainAppNavigator);
     }
     render() {
         return <this.Main />;

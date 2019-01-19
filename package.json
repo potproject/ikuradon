@@ -51,7 +51,7 @@
     "react-native-modal": "^7.0.2",
     "react-native-settings-list": "^1.8.0",
     "react-native-swiper": "^1.5.14",
-    "react-navigation": "^2.18.2",
+    "react-navigation": "^3.0.9",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",

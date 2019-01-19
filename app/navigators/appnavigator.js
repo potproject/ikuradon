@@ -1,4 +1,4 @@
-import { createStackNavigator, createNavigationContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import { createMiddleware } from "../middleware";
 
@@ -25,7 +25,7 @@ export const AppNavigator = createStackNavigator(
         [RouterName.MediaViewer]: MediaViewerScreen
     },
     {
-        navigationOptions: ({ navigation }) => {
+        defaultNavigationOptions: ({ navigation }) => {
             let routeName = navigation.state.routeName;
             if (RouterName.Main === navigation.state.routeName) {
                 return { header: null };
@@ -36,5 +36,5 @@ export const AppNavigator = createStackNavigator(
         }
     }
 );
-const AppContainer = createNavigationContainer(AppNavigator);
+const AppContainer = createAppContainer(AppNavigator);
 export default AppContainer;
