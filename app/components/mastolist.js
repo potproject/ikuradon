@@ -20,8 +20,10 @@ class Mastolist extends React.Component {
             this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId);
         }
         this.listOptimized = this.props.configReducer.timelinePerform;
+        this.streaming = this.props.streamingReducer[this.type];
     }
     componentWillReceiveProps(nextProps) {
+        this.streaming = nextProps.streamingReducer[this.type];
         this.listdata = this.reducerType(nextProps);
     }
     render() {
@@ -34,7 +36,7 @@ class Mastolist extends React.Component {
                         renderItem={data => this.mastoRowIdentification(data.item)}
                         keyExtractor={data => data.id}
                         ItemSeparatorComponent={() => <View style={styles.separator} />}
-                        refreshControl={<RefreshControl refreshing={this.listdata.refreshing} onRefresh={() => this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId)} />}
+                        refreshControl={<RefreshControl refreshing={this.listdata.refreshing} onRefresh={() => this.onRefresh()} />}
                         onEndReachedThreshold={1.5}
                         onEndReached={() => this.props.MainActions.oldLoadingTimeline(this.type, this.listdata.minId)}
                         removeClippedSubviews={this.listOptimized}
@@ -44,7 +46,11 @@ class Mastolist extends React.Component {
             </ImageBackground>
         );
     }
-
+    onRefresh() {
+        if (!this.streaming) {
+            this.props.MainActions.newLoadingTimeline(this.type, this.listdata.maxId);
+        }
+    }
     reducerType(nextProps) {
         switch (this.type) {
             case "home":
