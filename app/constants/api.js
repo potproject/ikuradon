@@ -78,7 +78,8 @@ export const POST_STATUS = {
         media_ids: null, //optional
         sensitive: false, //optional, nsfw flag
         spoiler_text: null, //optional, nsfw message
-        visibility: "public" //"direct", "private", "unlisted" or "public"
+        visibility: "public", //"direct", "private", "unlisted" or "public"
+        scheduled_at: null // [v2.7.0 Support] scheduled statuses. timestamp string
     }
 };
 

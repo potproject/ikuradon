@@ -19,6 +19,7 @@ import * as Session from "../util/session";
 import { MessageBarManager } from "react-native-message-bar";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import CustomEmojisSelector from "./customemojisselector";
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -37,12 +38,16 @@ class Toot extends React.Component {
             nsfwFlag: false,
             text: "",
             warning: "",
-            visibilityModal: false,
-            customEmojisSelectorModal: false,
-            visibility: "public",
             reply: null,
             mediaId: [],
             mediaList: [],
+            visibility: "public",
+            scheduled: null,
+
+            visibilityModal: false,
+            customEmojisSelectorModal: false,
+            scheduledModal: false,
+
             send: false
         };
         //reply
@@ -76,9 +81,9 @@ class Toot extends React.Component {
                         <TouchableOpacity style={styles.button} onPress={() => this.mediaOpen("library")}>
                             <FontAwesome name="picture-o" size={30} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button} onPress={() => this.mediaOpen("camera")}>
+                        {/*<TouchableOpacity style={styles.button} onPress={() => this.mediaOpen("camera")}>
                             <FontAwesome name="camera" size={30} />
-                        </TouchableOpacity>
+                        </TouchableOpacity>*/}
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ visibilityModal: true })}>
                             <VisibilityIcon visibility={this.state.visibility} color="#1E90FF" size={30} />
                         </TouchableOpacity>
@@ -87,6 +92,9 @@ class Toot extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.button} onPress={() => this.setState({ customEmojisSelectorModal: true })}>
                             <FontAwesome name="smile-o" size={30} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => this.setState({ scheduledModal: true })}>
+                            <FontAwesome name="clock-o" color={this.state.scheduled ? "#1E90FF" : "#000000"} size={30} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.tootbuttonview}>
@@ -124,6 +132,13 @@ class Toot extends React.Component {
                         <CustomEmojisSelector onSelect={shortcode => this.selectEmoji(shortcode)} onCancel={() => this.setState({ customEmojisSelectorModal: false })} />
                     </View>
                 </Modal>
+                <DateTimePicker
+                    mode={"datetime"}
+                    date={this.setDefaultScheduled()}
+                    isVisible={this.state.scheduledModal}
+                    onConfirm={date => this.selectScheduled(date)}
+                    onCancel={() => this.setState({ scheduled: null, scheduledModal: false })}
+                />
             </View>
         );
     }
@@ -135,10 +150,25 @@ class Toot extends React.Component {
             setTimeout(function() {
                 self.setState({ send: false });
             }, SEND_TOOT_TIMEOUT);
-            this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply);
+            this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply, this.state.scheduled);
         }
     }
 
+    setDefaultScheduled() {
+        if (this.state.scheduled) {
+            return new Date(this.state.scheduled);
+        }
+        const defDate = new Date();
+        defDate.setSeconds(0);
+        defDate.setMilliseconds(0);
+        return defDate;
+    }
+    selectScheduled(date) {
+        this.setState({
+            scheduled: date.toISOString(),
+            scheduledModal: false
+        });
+    }
     selectEmoji(shortcode) {
         this.setState({
             text: `${this.state.text} :${shortcode}: `,

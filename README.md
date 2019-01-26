@@ -28,7 +28,8 @@ This project was created at [Create React Native App](https://github.com/react-c
 - ☑ Media Viewer (Video/Image/gifv)
 - ☑ NFSW Toot
 - ☑ TimeLine Local Auto Save
-- ☑ Custom Emoji Support (2.x)
+- ☑ Custom Emoji Support (2.0+)
+- ☑ Scheduled statuses Support (2.7+)
 
 ## ScreenShots
 
@@ -58,6 +59,7 @@ requires yarn(npm is not recommended).
 `yarn start`
 
 ## Production Apps
+
 [Google Play](https://play.google.com/store/apps/details?id=net.potproject.ikuradon)
 
 ## LICENSE

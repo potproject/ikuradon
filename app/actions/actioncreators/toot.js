@@ -7,7 +7,7 @@ import * as Session from "../../util/session";
 import NavigationService from "../../navigationservice";
 import * as Nav from "../actiontypes/nav";
 
-export function toot(status, visibility, sensitive, spoiler_text, media_ids = [], reply = null) {
+export function toot(status, visibility, sensitive, spoiler_text, media_ids = [], reply = null, scheduled_at = null) {
     return async dispatch => {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
@@ -25,7 +25,8 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
                     sensitive,
                     spoiler_text,
                     media_ids,
-                    in_reply_to_id
+                    in_reply_to_id,
+                    scheduled_at
                 },
                 access_token
             );
