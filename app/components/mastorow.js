@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Linking, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Linking } from "react-native";
+import ImagePlaceholder from "react-native-image-placeholder";
 import Hyperlink from "react-native-hyperlink";
 import MastoMedia from "./mastomedia";
 import { FontAwesome } from "@expo/vector-icons";
@@ -65,7 +66,14 @@ export default class MastoRow extends Component {
             <View style={this.props.my ? [styles.mycolor, styles.main] : styles.main}>
                 {/*<TouchableOpacity onPress={()=>this.props.onDetail(this.props.id)}> */}
                 <View style={styles.container}>
-                    <Image source={{ uri: this.props.image }} style={styles.photo} />
+                    <ImagePlaceholder
+                        borderRadius={8}
+                        isShowActivity={false}
+                        placeholderSource={require("../../assets/image/placeholder.png")}
+                        customImagePlaceholderDefaultStyle={styles.photo}
+                        source={{ uri: this.props.image }}
+                        style={styles.photo}
+                    />
                     <View style={styles.textarea}>
                         <Text style={styles.header} ellipsizeMode="tail" numberOfLines={1}>
                             <Text style={styles.name}>{this.props.user}</Text>
@@ -271,8 +279,7 @@ const styles = StyleSheet.create({
     },
     photo: {
         height: 50,
-        width: 50,
-        borderRadius: 8
+        width: 50
     },
     item: {
         flex: 1,
