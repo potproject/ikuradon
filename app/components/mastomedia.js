@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Image, View, StyleSheet, TouchableOpacity, BackHandler } from "react-native";
+import { Text, Image, View, StyleSheet, TouchableOpacity, BackHandler, Linking } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MastorowActions from "../actions/actioncreators/mastorow";
@@ -31,14 +31,13 @@ class MastoMedia extends React.Component {
 
     mapView() {
         if (this.props.media_attachments) {
-            let onPress = this.props.MastorowActions.mediaOpen;
             return this.props.media_attachments.map((media, index) => {
-                if (media.type === "image" || media.type === "video" || media.type === "gifv") {
+                if (media.type === "image" || media.type === "video" || media.type === "gifv" || media.type === "unknown") {
                     return (
-                        <TouchableOpacity key={media.id} onPress={() => onPress(this.props.media_attachments, index)}>
+                        <TouchableOpacity key={media.id} onPress={() => this.onPress(this.props.media_attachments, index)}>
                             <View style={[styles.mediaview, { width: this.props.width, height: this.props.height }]}>
                                 <Image source={{ uri: media.preview_url }} style={[styles.media, { width: this.props.width, height: this.props.height }]} blurRadius={this.props.sensitive ? 100 : 0} />
-                                <FontAwesome name={media.type === "image" ? "file-image-o" : "file-video-o"} size={30} color="gray" style={styles.mediaicon} />
+                                <FontAwesome name={this.typeIcon(media.type)} size={30} color="gray" style={styles.mediaicon} />
                                 {this.props.sensitive && <FontAwesome name={"exclamation-circle"} size={16} style={styles.mediaiconSensitive} />}
                                 <Text style={styles.description} ellipsizeMode="tail" numberOfLines={3}>
                                     {this.descriptionSetting(media.description)}
@@ -56,6 +55,38 @@ class MastoMedia extends React.Component {
         }
         return description;
     }
+    onPress(media_attachments, index) {
+        if (media_attachments[index].type === "unknown") {
+            this.openUrl(media_attachments[index].url);
+            return;
+        }
+        this.props.MastorowActions.mediaOpen(media_attachments, index);
+    }
+    async openUrl(url) {
+        try {
+            let supported = await Linking.canOpenURL(url);
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                console.log("not supported url");
+            }
+        } catch (e) {
+            console.error("Linking error", e);
+        }
+    }
+    typeIcon(type) {
+        switch (type) {
+            case "image":
+                return "file-image-o";
+            case "video":
+            case "gifv":
+                return "file-video-o";
+            case "unknown":
+                return "link";
+            default:
+                return "question";
+        }
+    }
 }
 
 const styles = StyleSheet.create({
@@ -67,7 +98,8 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginLeft: 12,
         paddingTop: 3,
-        paddingBottom: 3
+        paddingBottom: 3,
+        backgroundColor: "#cecece"
     },
     media: {
         position: "absolute"
