@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     body: {
         flex: 2,
         marginLeft: 12,
-        fontSize: 14,
+        fontSize: 15,
         paddingTop: 3,
         paddingBottom: 3
     },
