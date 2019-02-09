@@ -102,6 +102,7 @@ class Mastolist extends React.Component {
                             notification_type={data.type}
                             notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                             media_attachments={[]}
+                            card={null}
                             url={data.url}
                             account_url={data.status.account.url}
                             emojis={typeof data.emojis !== "undefined" ? data.emojis : []}
@@ -140,6 +141,7 @@ class Mastolist extends React.Component {
                     notification_type={null}
                     notification_name={null}
                     media_attachments={data.media_attachments}
+                    card={data.card}
                     url={data.url}
                     account_url={data.account.url}
                     emojis={typeof data.emojis !== "undefined" ? data.emojis : []}
@@ -176,6 +178,7 @@ class Mastolist extends React.Component {
                     notification_type={"reblog"}
                     notification_name={data.account.display_name !== "" ? data.account.display_name : data.account.username}
                     media_attachments={data.reblog.media_attachments}
+                    card={data.card}
                     url={data.url}
                     account_url={data.reblog.account.url}
                     emojis={typeof data.reblog.emojis !== "undefined" ? data.reblog.emojis : []}

@@ -99,10 +99,12 @@ const styles = StyleSheet.create({
         marginLeft: 12,
         paddingTop: 3,
         paddingBottom: 3,
-        backgroundColor: "#cecece"
+        backgroundColor: "#cecece",
+        borderRadius: 8
     },
     media: {
-        position: "absolute"
+        position: "absolute",
+        borderRadius: 8
     },
     mediaicon: {
         margin: 5,
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
     description: {
         margin: 5,
         paddingLeft: 30,
-        color: "gray",
         fontSize: 18,
         position: "absolute"
     }

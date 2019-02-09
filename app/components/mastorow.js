@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Linking } from "react-native";
 import ImagePlaceholder from "react-native-image-placeholder";
 import Hyperlink from "react-native-hyperlink";
 import MastoMedia from "./mastomedia";
+import MastoCard from "./mastocard";
 import { FontAwesome } from "@expo/vector-icons";
 import Reply from "./mainitem/reply";
 import Boost from "./mainitem/boost";
@@ -30,6 +31,7 @@ export default class MastoRow extends Component {
         notification_type: PropTypes.string,
         notification_name: PropTypes.string,
         media_attachments: PropTypes.array,
+        card: PropTypes.object,
         account_url: PropTypes.string,
         url: PropTypes.string,
         emojis: PropTypes.array,
@@ -81,6 +83,7 @@ export default class MastoRow extends Component {
                         </Text>
                         {this.mastorowBodyFormat(this.props.body, this.props.emojis)}
                         {this.mastorowMediaFormat(this.props.media_attachments, this.props.sensitive)}
+                        {this.mastorowCardFormat(this.props.card, this.props.sensitive)}
                     </View>
                 </View>
                 <View style={styles.container}>
@@ -198,6 +201,14 @@ export default class MastoRow extends Component {
         }
         return;
     }
+
+    mastorowCardFormat(card, sensitive) {
+        if (card) {
+            return <MastoCard width={300} height={60} card={card} sensitive={sensitive} />;
+        }
+        return;
+    }
+
     notificationFormat(type, name) {
         if (type === null) {
             return;
