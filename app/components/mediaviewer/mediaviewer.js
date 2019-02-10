@@ -15,54 +15,46 @@ export default class MediaViewer extends React.Component {
         };
     }
     render() {
-        return (
-            <Swiper loop={false} index={this.state.index}>
-                {this.imageRender()}
-            </Swiper>
-        );
-    }
-    imageRender() {
-        return this.state.media_attachments.map(data => {
-            if (data.type === "image") {
-                return (
-                    <View style={styles.imageContainer} key={data.id}>
-                        <ImageZoom
-                            cropWidth={Dimensions.get("window").width}
-                            cropHeight={Dimensions.get("window").height}
-                            imageWidth={Dimensions.get("window").width}
-                            imageHeight={Dimensions.get("window").height}
-                        >
-                            <Image
-                                style={styles.image}
-                                resizeMode={"contain"}
-                                source={{ uri: data.url }}
-                                onError={e => {
-                                    this.onError(e);
-                                }}
-                            />
-                        </ImageZoom>
-                    </View>
-                );
-            } else if (data.type === "video" || data.type === "gifv") {
-                return (
-                    <View style={styles.videoContainer} key={data.id}>
-                        <Video
+        let data = this.state.media_attachments[this.state.index];
+        if (data.type === "image") {
+            return (
+                <View style={styles.imageContainer} key={data.id}>
+                    <ImageZoom
+                        cropWidth={Dimensions.get("window").width}
+                        cropHeight={Dimensions.get("window").height}
+                        imageWidth={Dimensions.get("window").width}
+                        imageHeight={Dimensions.get("window").height}
+                    >
+                        <Image
+                            style={styles.image}
+                            resizeMode={"contain"}
                             source={{ uri: data.url }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            shouldPlay
-                            useNativeControls={data.type === "video"}
-                            isLooping
-                            style={styles.video}
                             onError={e => {
                                 this.onError(e);
                             }}
                         />
-                    </View>
-                );
-            }
-        });
+                    </ImageZoom>
+                </View>
+            );
+        } else if (data.type === "video" || data.type === "gifv") {
+            return (
+                <View style={styles.videoContainer} key={data.id}>
+                    <Video
+                        source={{ uri: data.url }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        shouldPlay
+                        useNativeControls={data.type === "video"}
+                        isLooping
+                        style={styles.video}
+                        onError={e => {
+                            this.onError(e);
+                        }}
+                    />
+                </View>
+            );
+        }
     }
     onError(e) {
         MessageBarManager.showAlert({
