@@ -6761,9 +6761,10 @@ react-native-branch@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
 
-react-native-customemoji@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-customemoji/-/react-native-customemoji-0.0.1.tgz#dc0f4fbefef0c3e2f9ccd74a865a08579fae30ea"
+react-native-customemoji@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-customemoji/-/react-native-customemoji-0.0.2.tgz#0562bcbb015537dde281fd5fb30ce4983e68097e"
+  integrity sha512-+Xf84QQG/+NIq4/xKI/Vi7fdUfFZ2Eu9uyT5jGKvmcyxlvFlc0MAv6skAQzLMOPGyDfu+VdP5okdPvuM9g0cKQ==
 
 react-native-gesture-handler@1.0.9:
   version "1.0.9"
