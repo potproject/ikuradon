@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, View, StyleSheet, Dimensions } from "react-native";
 import { MessageBarManager } from "react-native-message-bar";
-import Swiper from "react-native-swiper";
 import { Video } from "expo";
 import ImageZoom from "react-native-image-pan-zoom";
 import I18n from "../../i18n";
