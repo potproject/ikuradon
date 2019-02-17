@@ -33,6 +33,7 @@ export default class MastoRow extends Component {
         media_attachments: PropTypes.array,
         card: PropTypes.object,
         account_url: PropTypes.string,
+        account_emojis: PropTypes.array,
         url: PropTypes.string,
         emojis: PropTypes.array,
         visibility: PropTypes.string,
@@ -77,10 +78,13 @@ export default class MastoRow extends Component {
                         style={styles.photo}
                     />
                     <View style={styles.textarea}>
-                        <Text style={styles.header} ellipsizeMode="tail" numberOfLines={1}>
-                            <Text style={styles.name}>{this.props.user}</Text>
-                            <Text style={styles.acct}>{this.props.acct}</Text>
-                        </Text>
+                        <CustomEmoji emojis={this.changeEmojis(this.props.account_emojis)} style={styles.header}>
+                            <Text ellipsizeMode="tail" numberOfLines={1}>
+                                <Text style={styles.name}>{this.props.user}</Text>
+                                <Text> </Text>
+                                <Text style={styles.acct}>{this.props.acct}</Text>
+                            </Text>
+                        </CustomEmoji>
                         {this.mastorowBodyFormat(this.props.body, this.props.emojis)}
                         {this.mastorowMediaFormat(this.props.media_attachments, this.props.sensitive)}
                         {this.mastorowCardFormat(this.props.card, this.props.sensitive)}
@@ -182,12 +186,18 @@ export default class MastoRow extends Component {
         }
         return <Text style={styles.body}>{newbody}</Text>;
     }
-
-    mastorowSetCustomEmoji(text, emojis, style) {
+    changeEmojis(emojis) {
         let emojiArray = {};
+        if (emojis.length < 1) {
+            return emojiArray;
+        }
         emojis.forEach(emoji => {
             emojiArray[emoji.shortcode] = { uri: emoji.url };
         });
+        return emojiArray;
+    }
+    mastorowSetCustomEmoji(text, emojis, style) {
+        let emojiArray = this.changeEmojis(emojis);
         return (
             <CustomEmoji emojis={emojiArray}>
                 <Text style={style}>{text}</Text>
