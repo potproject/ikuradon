@@ -75,6 +75,7 @@ export function newLoadingTimeline(reducerType, since_id, limit = 40) {
                 message: e.message,
                 alertType: "error"
             });
+            dispatch({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType });
         }
     };
 }

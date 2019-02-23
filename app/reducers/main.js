@@ -74,6 +74,15 @@ export default function Main(state = initialState, action = {}) {
                     maxId: state[action.reducerType].maxId
                 }
             });
+        case MainActionTypes.STOP_REFRESHING_MASTOLIST:
+            return Object.assign({}, state, {
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: false,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId
+                }
+            });
         case MainActionTypes.HIDE_MASTOLIST:
             for (let viewType of viewTypeArray) {
                 state[viewType].data = state[viewType].data.filter(function(v) {
