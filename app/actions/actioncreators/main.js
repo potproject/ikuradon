@@ -104,7 +104,8 @@ export function getCurrentUser() {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token });
+            let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.network_error"),

@@ -27,6 +27,12 @@ export const GET_CURRENT_USER = {
     form: {}
 };
 
+export const GET_INSTANCE = {
+    method: "get",
+    url: "/api/v1/instance",
+    form: {}
+};
+
 export const GET_TIMELINES_HOME = {
     method: "get",
     url: "/api/v1/timelines/home",
