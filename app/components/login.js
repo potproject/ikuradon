@@ -39,7 +39,9 @@ class Login extends React.Component {
                 <KeyboardSpacer />
                 <Modal animationType="slide" transparent={false} visible={this.state.isVisibleAccountsModal}>
                     <View>
-                        <Picker onValueChange={selectedAccountIndex => this.setState({ selectedAccountIndex })}>{this.pickerList()}</Picker>
+                        <Picker selectedValue={this.state.selectedAccountIndex} onValueChange={selectedAccountIndex => this.setState({ selectedAccountIndex })}>
+                            {this.pickerList()}
+                        </Picker>
                         <Button style={styles.button} onPress={() => this.copyAccessToken()} title={I18n.t("copy_access_token")} />
                         <View style={styles.space} />
                         <Button
