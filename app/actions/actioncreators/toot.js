@@ -34,14 +34,14 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
                 title: I18n.t("messages.toot_success"),
                 alertType: "success"
             });
+            NavigationService.back();
+            dispatch({ type: Nav.NAV_GO_BACK });
         } catch (e) {
             MessageBarManager.showAlert({
                 title: I18n.t("messages.toot_failed"),
                 alertType: "error"
             });
         }
-        NavigationService.back();
-        dispatch({ type: Nav.NAV_GO_BACK });
         return;
     };
 }
