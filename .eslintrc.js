@@ -1,5 +1,5 @@
 module.exports = {
-    plugins: ["react", "flowtype", "prettier"],
+    plugins: ["react", "prettier"],
     extends: ["prettier"],
     env: {
         browser: true,
