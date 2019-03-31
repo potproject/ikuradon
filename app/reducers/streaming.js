@@ -6,7 +6,7 @@ const initialState = {
     federal: false
 };
 
-export default function Streaming(state = initialState, action = {}) {
+export default function reducer(state = initialState, action = {}) {
     let newstate = Object.assign({}, state);
     switch (action.type) {
         case StreamingActionTypes.STREAM_START:

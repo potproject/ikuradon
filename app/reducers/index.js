@@ -5,6 +5,7 @@ import navigationReducer from "./navigation";
 import streamingReducer from "./streaming";
 import currentUserReducer from "./currentuser";
 import configReducer from "./config";
+import tootReducer from "./toot";
 // ... other reducers
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
     navigationReducer,
     streamingReducer,
     currentUserReducer,
-    configReducer
+    configReducer,
+    tootReducer
     // ... other reducers
 });

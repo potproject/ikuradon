@@ -23,7 +23,6 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
-const SEND_TOOT_TIMEOUT = 5000;
 
 class Toot extends React.Component {
     componentDidMount() {
@@ -31,6 +30,9 @@ class Toot extends React.Component {
     }
     componentWillUnmount() {
         BackHandler.removeEventListener("hardwareBackPress", this.props.MainActions.back);
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({ waiting: nextProps.TootReducer.tootWaiting });
     }
     constructor(props) {
         super(props);
@@ -48,7 +50,7 @@ class Toot extends React.Component {
             customEmojisSelectorModal: false,
             scheduledModal: false,
 
-            send: false
+            waiting: props.TootReducer.tootWaiting
         };
         //reply
         if (props.navigation.state !== null && typeof props.navigation.state.params === "object" && Object.keys(props.navigation.state.params).length !== 0) {
@@ -103,7 +105,11 @@ class Toot extends React.Component {
                                 {MAX_TOOT_LENGTH - this.state.text.length - this.state.warning.length}
                             </Text>
                         </View>
-                        <TouchableOpacity style={this.state.send ? styles.tootbuttonsend : styles.tootbutton} onPress={() => this.send()}>
+                        <TouchableOpacity
+                            style={this.state.text === "" || this.state.waiting ? styles.tootbuttonwaiting : styles.tootbutton}
+                            onPress={() => this.send()}
+                            disabled={this.state.text === "" || this.state.waiting}
+                        >
                             <Text style={styles.texttoot}>Toot!</Text>
                         </TouchableOpacity>
                     </View>
@@ -144,12 +150,7 @@ class Toot extends React.Component {
     }
 
     send() {
-        if (this.state.text !== "" && !this.state.send) {
-            let self = this;
-            self.setState({ send: true });
-            setTimeout(function() {
-                self.setState({ send: false });
-            }, SEND_TOOT_TIMEOUT);
+        if (this.state.text !== "" && !this.state.waiting) {
             this.props.TootActions.toot(this.state.text, this.state.visibility, this.state.nsfwFlag, this.state.warning, this.state.mediaId, this.state.reply, this.state.scheduled);
         }
     }
@@ -349,7 +350,7 @@ const styles = StyleSheet.create({
         borderColor: "#2b90d9",
         backgroundColor: "#2b90d9"
     },
-    tootbuttonsend: {
+    tootbuttonwaiting: {
         width: 60,
         height: 40,
         alignItems: "center",
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
 });
 
 export default connect(
-    state => state,
+    state => ({ TootReducer: state.tootReducer }),
     dispatch => ({
         TootActions: bindActionCreators(TootActions, dispatch),
         MainActions: bindActionCreators(MainActions, dispatch)
