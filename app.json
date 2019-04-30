@@ -4,7 +4,8 @@
     "description": "ikuradon - Mastodon Client App",
     "slug": "potproject-ikuradon",
     "version": "1.0.1",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "32.0.0",
+    "platforms": ["android", "ios"],
     "githubUrl": "https://github.com/potproject/ikuradon",
     "icon": "assets/image/icon512.png",
     "splash": {
