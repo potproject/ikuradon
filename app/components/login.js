@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { MessageBarManager } from "react-native-message-bar";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import * as LoginActions from "../actions/actioncreators/login";
-import I18n from "../i18n";
+import I18n from "../services/i18n";
 import * as Session from "../util/session";
 
 class Login extends React.Component {

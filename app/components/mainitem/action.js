@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, Linking, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ActionSheet from "react-native-actionsheet";
-import I18n from "../../i18n";
+import I18n from "../../services/i18n";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 

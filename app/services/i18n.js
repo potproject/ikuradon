@@ -1,5 +1,5 @@
-import lang_en_US from "./lang/en-US";
-import lang_ja_JP from "./lang/ja-JP";
+import lang_en_US from "../lang/en-US";
+import lang_ja_JP from "../lang/ja-JP";
 import { Localization } from "expo";
 
 import i18next from "i18next";

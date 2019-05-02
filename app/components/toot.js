@@ -9,12 +9,12 @@ import * as MainActions from "../actions/actioncreators/main";
 
 import { FontAwesome } from "@expo/vector-icons";
 import MastoMedia from "./mastomedia";
-import I18n from "../i18n";
+import I18n from "../services/i18n";
 import VisibilityIcon from "./visibilityicon";
 import { bodyFormat } from "../util/parser";
 import * as Permission from "../util/permission";
 import { ImagePicker } from "expo";
-import Networking from "../networking";
+import Networking from "../services/networking";
 import * as Session from "../util/session";
 import { MessageBarManager } from "react-native-message-bar";
 import KeyboardSpacer from "react-native-keyboard-spacer";

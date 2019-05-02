@@ -2,10 +2,10 @@ import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
 import { MessageBarManager } from "react-native-message-bar";
-import I18n from "../../i18n";
+import I18n from "../../services/i18n";
 
 import * as RouterName from "../../constants/routername";
-import NavigationService from "../../navigationservice";
+import NavigationService from "../../services/navigationservice";
 import * as Nav from "../actiontypes/nav";
 
 export function allClear() {

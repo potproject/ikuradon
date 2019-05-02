@@ -5,7 +5,7 @@ import * as LoginActions from "../../actions/actioncreators/login";
 import * as ConfigActions from "../../actions/actioncreators/config";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import I18n from "../../i18n";
+import I18n from "../../services/i18n";
 
 class Setting extends React.Component {
     constructor(props) {

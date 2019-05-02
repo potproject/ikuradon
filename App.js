@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from "redux";
 import { createMiddleware } from "./app/middleware";
 import AppContainer from "./app/navigators/appnavigator";
 import MessageBarNavigator from "./app/navigators/messagebarnavigator";
-import NavigationService from "./app/navigationservice";
+import NavigationService from "./app/services/navigationservice";
 
 import reducers from "./app/reducers";
 // other imports...

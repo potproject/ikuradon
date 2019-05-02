@@ -1,15 +1,15 @@
 import { AsyncStorage } from "react-native";
 import * as CONST_API from "../../constants/api";
-import Networking from "../../networking";
+import Networking from "../../services/networking";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
-import I18n from "../../i18n";
+import I18n from "../../services/i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 
 import * as RouterName from "../../constants/routername";
-import NavigationService from "../../navigationservice";
+import NavigationService from "../../services/navigationservice";
 import * as Nav from "../actiontypes/nav";
 
 export function login(domain) {

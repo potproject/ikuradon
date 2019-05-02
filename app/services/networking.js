@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as CONST_API from "./constants/api";
+import * as CONST_API from "../constants/api";
 
 export default class Networking {
     static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {

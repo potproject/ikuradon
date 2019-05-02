@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity, Button } from "react-native";
 import * as CONST_API from "../constants/api";
-import Networking from "../networking";
+import Networking from "../services/networking";
 import { MessageBarManager } from "react-native-message-bar";
 import PropTypes from "prop-types";
 import { getDomainAndToken } from "../util/session";
-import I18n from "../i18n";
+import I18n from "../services/i18n";
 
 export default class CustomEmojisSelector extends React.Component {
     static propTypes = {

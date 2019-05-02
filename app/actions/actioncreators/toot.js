@@ -1,10 +1,10 @@
 import * as CONST_API from "../../constants/api";
-import Networking from "../../networking";
-import I18n from "../../i18n";
+import Networking from "../../services/networking";
+import I18n from "../../services/i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
-import NavigationService from "../../navigationservice";
+import NavigationService from "../../services/navigationservice";
 import * as Nav from "../actiontypes/nav";
 import * as Toot from "../actiontypes/toot";
 

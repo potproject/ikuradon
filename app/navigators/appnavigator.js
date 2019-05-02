@@ -10,7 +10,7 @@ import TootScreen from "../components/toot";
 import DetailScreen from "../components/detail";
 import MediaViewerScreen from "../components/mediaviewer/mediaviewer";
 
-import I18n from "../i18n";
+import I18n from "../services/i18n";
 import * as RouterName from "../constants/routername";
 
 export const middleware = createMiddleware();

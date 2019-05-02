@@ -8,7 +8,7 @@ import NotificationsTabScreen from "../components/maintab/notifications";
 import SettingTabScreen from "../components/maintab/setting";
 
 import { FontAwesome } from "@expo/vector-icons";
-import I18n from "../i18n";
+import I18n from "../services/i18n";
 import NotificationsIconBadge from "./maintab/notificationsiconbadge";
 
 import StreamingButton from "../components/maintab/streamingbutton";

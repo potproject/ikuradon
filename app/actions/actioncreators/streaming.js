@@ -1,8 +1,8 @@
 import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
 import * as CONST_API from "../../constants/api";
-import Stream from "../../stream";
-import I18n from "../../i18n";
+import Stream from "../../services/stream";
+import I18n from "../../services/i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import { bodyFormat } from "../../util/parser";
