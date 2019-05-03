@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Linking } from "react-native";
+import { View, Text, Image, Linking } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
+import styles from "../stylesheets/default/mastorownotificationsfollow";
 
 export default class MastoRowNotificationfollow extends Component {
     static propTypes = {
@@ -46,38 +47,3 @@ export default class MastoRowNotificationfollow extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 4,
-        flexDirection: "row"
-    },
-    textarea: {
-        flex: 1
-    },
-    body: {
-        flex: 2,
-        marginLeft: 12,
-        fontSize: 12
-    },
-    photo: {
-        height: 50,
-        width: 50,
-        borderRadius: 8
-    },
-    text: {
-        flex: 1,
-        paddingLeft: 12
-    },
-    name: {
-        fontSize: 16
-    },
-    acct: {
-        color: "#5f5f5f",
-        fontSize: 12
-    },
-    username: {
-        fontSize: 14
-    }
-});

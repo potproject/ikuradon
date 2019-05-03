@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as MainActions from "../actions/actioncreators/main";
 import * as MastoRowActions from "../actions/actioncreators/mastorow";
+import styles from "../stylesheets/default/mastolist";
 
 class Mastolist extends React.Component {
     constructor(props) {
@@ -199,22 +200,6 @@ class Mastolist extends React.Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    background: {
-        backgroundColor: "#ffffff",
-        width: "100%",
-        height: "100%"
-    },
-    container: {
-        flex: 1
-    },
-    separator: {
-        flex: 1,
-        height: StyleSheet.hairlineWidth,
-        backgroundColor: "#cecece"
-    }
-});
 
 export default connect(
     state => {

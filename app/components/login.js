@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Clipboard, TextInput, Button, Image, Text, View, Picker } from "react-native";
+import { Clipboard, TextInput, Button, Image, Text, View, Picker } from "react-native";
 import Modal from "react-native-modal";
-import Dimensions from "Dimensions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { MessageBarManager } from "react-native-message-bar";
@@ -9,6 +8,8 @@ import KeyboardSpacer from "react-native-keyboard-spacer";
 import * as LoginActions from "../actions/actioncreators/login";
 import I18n from "../services/i18n";
 import * as Session from "../util/session";
+import styles from "../stylesheets/default/login";
+
 
 class Login extends React.Component {
     constructor(props) {
@@ -118,46 +119,6 @@ class Login extends React.Component {
         });
     }
 }
-
-const styles = StyleSheet.create({
-    button: {
-        margin: 20
-    },
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    textinput: {
-        height: 40,
-        width: Dimensions.get("window").width - 20,
-        borderColor: "gray",
-        borderWidth: 1,
-        margin: 10,
-        padding: 2
-    },
-    textinputAccessToken: {
-        height: 40,
-        borderColor: "gray",
-        borderWidth: 1,
-        margin: 10,
-        padding: 2
-    },
-    text: {
-        fontSize: 14,
-        textAlign: "center",
-        margin: 10
-    },
-    space: {
-        height: 15
-    },
-    image: {
-        width: 75,
-        height: 75,
-        marginTop: 0,
-        marginBottom: 25
-    }
-});
 
 export default connect(
     state => state,
