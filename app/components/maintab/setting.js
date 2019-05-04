@@ -68,6 +68,9 @@ class Setting extends React.Component {
                         switchOnValueChange={value => this.props.ConfigActions.setInvisibleTimeline("notifications", value)}
                         hasSwitch={true}
                     />
+                    <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_instance")} />
+                    <SettingsList.Item hasNavArrow={false} titleStyle={styles.text} title={I18n.t("setting_instance_uri")} titleInfo={typeof this.props.CurrentUserReducer.instance.uri !== undefined ? this.props.CurrentUserReducer.instance.uri : "Unknown"} />
+                    <SettingsList.Item hasNavArrow={false} titleStyle={styles.text} title={I18n.t("setting_instance_version")} titleInfo={typeof this.props.CurrentUserReducer.instance.version !== undefined ? this.props.CurrentUserReducer.instance.version : "Unknown"} />
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_accounts")} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("account_change")} onPress={() => this.props.LoginActions.accountChange()} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("logout")} onPress={() => this.props.LoginActions.logout()} />
@@ -98,7 +101,8 @@ const styles = StyleSheet.create({
 export default connect(
     state => {
         return {
-            ConfigReducer: state.configReducer
+            ConfigReducer: state.configReducer,
+            CurrentUserReducer: state.currentUserReducer
         };
     },
     dispatch => ({

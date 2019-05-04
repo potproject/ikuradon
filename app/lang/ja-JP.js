@@ -14,10 +14,14 @@ export default {
     setting_smartmode: "スマートモードを有効にする",
     setting_timeline_perform: "タイムラインの最適化を行う(実験的)",
 
+    setting_instance_uri: "URL",
+    setting_instance_version: "バージョン",
+
     //設定ヘッダ
     setting_header_personal: "個人",
     setting_header_accounts: "アカウント",
     setting_header_visible: "表示",
+    setting_header_instance: "サーバ情報",
 
     //ナビゲーション
     navigation_home: "ホーム",

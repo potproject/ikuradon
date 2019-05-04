@@ -14,10 +14,14 @@ export default {
     setting_smartmode: "Enabled SmartMode",
     setting_timeline_perform: "Optimized the timeline(Experimental)",
 
+    setting_instance_uri: "URL",
+    setting_instance_version: "Mastodon Version",
+
     //Settings Header
     setting_header_personal: "Personal",
     setting_header_accounts: "Accounts",
     setting_header_visible: "Visible",
+    setting_header_instance: "Server Information",
 
     //Navigations
     navigation_home: "Home",
