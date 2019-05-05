@@ -6,6 +6,7 @@ import * as ConfigActions from "../../actions/actioncreators/config";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import I18n from "../../services/i18n";
+import {open as openUrl} from "../../util/url";
 
 class Setting extends React.Component {
     constructor(props) {
@@ -71,6 +72,9 @@ class Setting extends React.Component {
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_instance")} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.text} title={I18n.t("setting_instance_uri")} titleInfo={typeof this.props.CurrentUserReducer.instance.uri !== undefined ? this.props.CurrentUserReducer.instance.uri : "Unknown"} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.text} title={I18n.t("setting_instance_version")} titleInfo={typeof this.props.CurrentUserReducer.instance.version !== undefined ? this.props.CurrentUserReducer.instance.version : "Unknown"} />
+                    { typeof this.props.CurrentUserReducer.instance.uri !== undefined &&
+                    <SettingsList.Item titleStyle={styles.button} title={I18n.t("setting_instance_editlink")} onPress={() => openUrl(`https://${this.props.CurrentUserReducer.instance.uri}/settings/profile`)} />
+                    }
                     <SettingsList.Header headerStyle={styles.header} headerText={I18n.t("setting_header_accounts")} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("account_change")} onPress={() => this.props.LoginActions.accountChange()} />
                     <SettingsList.Item hasNavArrow={false} titleStyle={styles.button} title={I18n.t("logout")} onPress={() => this.props.LoginActions.logout()} />

@@ -7,6 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import * as MainActions from "../actions/actioncreators/main";
 import styles from "../stylesheets/default/mastomedia";
+import {open as openUrl} from "../util/url";
 
 class MastoMedia extends React.Component {
     static propTypes = {
@@ -58,22 +59,10 @@ class MastoMedia extends React.Component {
     }
     onPress(media_attachments, index) {
         if (media_attachments[index].type === "unknown") {
-            this.openUrl(media_attachments[index].url);
+            openUrl(media_attachments[index].url);
             return;
         }
         this.props.MastorowActions.mediaOpen(media_attachments, index);
-    }
-    async openUrl(url) {
-        try {
-            let supported = await Linking.canOpenURL(url);
-            if (supported) {
-                await Linking.openURL(url);
-            } else {
-                console.log("not supported url");
-            }
-        } catch (e) {
-            console.error("Linking error", e);
-        }
     }
     typeIcon(type) {
         switch (type) {

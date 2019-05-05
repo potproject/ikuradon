@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, Image, View, TouchableOpacity, Linking } from "react-native";
+import { Text, Image, View, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import styles from "../stylesheets/default/mastocard";
+import {open as openUrl} from "../util/url";
 
 export default class MastoCard extends React.Component {
     static propTypes = {
@@ -15,7 +16,7 @@ export default class MastoCard extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress={() => this.openUrl(this.props.card.url)}>
+                <TouchableOpacity onPress={() => openUrl(this.props.card.url)}>
                     <View style={[styles.mediaview, { width: this.props.width, height: this.props.height }]}>
                         {this.props.card.image && (
                             <Image source={{ uri: this.props.card.image }} style={[styles.media, { width: this.props.width, height: this.props.height }]} blurRadius={this.props.sensitive ? 100 : 0} />
@@ -37,17 +38,5 @@ export default class MastoCard extends React.Component {
             title = "";
         }
         return title;
-    }
-    async openUrl(url) {
-        try {
-            let supported = await Linking.canOpenURL(url);
-            if (supported) {
-                await Linking.openURL(url);
-            } else {
-                console.log("not supported url");
-            }
-        } catch (e) {
-            console.error("Linking error", e);
-        }
     }
 }

@@ -16,6 +16,7 @@ export default {
 
     setting_instance_uri: "URL",
     setting_instance_version: "バージョン",
+    setting_instance_editlink: "プロフィールを編集",
 
     //設定ヘッダ
     setting_header_personal: "個人",

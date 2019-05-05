@@ -1,8 +1,9 @@
 import React from "react";
-import { TouchableOpacity, Linking, Clipboard, View, StyleSheet } from "react-native";
+import { TouchableOpacity, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ActionSheet from "react-native-actionsheet";
 import I18n from "../../services/i18n";
+import {open as openUrl} from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 
@@ -64,25 +65,13 @@ export default class Action extends React.Component {
         );
     }
 
-    async openUrl(url) {
-        try {
-            let supported = await Linking.canOpenURL(url);
-            if (supported) {
-                await Linking.openURL(url);
-            } else {
-                console.log("not supported url");
-            }
-        } catch (e) {
-            console.error("Linking error", e);
-        }
-    }
     handlePress(i) {
         switch (i) {
             case 0: //Open in Browser
-                this.openUrl(this.props.url);
+                openUrl(this.props.url);
                 return;
             case 1: //Open in Browser Profile
-                this.openUrl(this.props.account_url);
+                openUrl(this.props.account_url);
                 return;
             case 2: //Copy
                 Clipboard.setString(bodyFormat(this.props.body));

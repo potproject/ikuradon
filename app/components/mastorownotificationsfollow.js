@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, Linking } from "react-native";
+import { View, Text, Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import styles from "../stylesheets/default/mastorownotificationsfollow";
@@ -33,17 +33,5 @@ export default class MastoRowNotificationfollow extends Component {
                 </View>
             </View>
         );
-    }
-    async openUrl(url) {
-        try {
-            let supported = await Linking.canOpenURL(url);
-            if (supported) {
-                await Linking.openURL(url);
-            } else {
-                console.log("not supported url");
-            }
-        } catch (e) {
-            console.error("Linking error", e);
-        }
     }
 }

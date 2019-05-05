@@ -14,6 +14,7 @@ import CustomEmoji from "react-native-customemoji";
 import VisibilityIcon from "./visibilityicon";
 import PropTypes from "prop-types";
 import styles from "../stylesheets/default/mastorow";
+import {open as openUrl} from "../util/url";
 
 export default class MastoRow extends Component {
     static propTypes = {
@@ -150,18 +151,6 @@ export default class MastoRow extends Component {
             </View>
         );
     }
-    async openUrl(url) {
-        try {
-            let supported = await Linking.canOpenURL(url);
-            if (supported) {
-                await Linking.openURL(url);
-            } else {
-                console.log("not supported url");
-            }
-        } catch (e) {
-            console.error("Linking error", e);
-        }
-    }
     mastorowBodyFormat(body, emojis) {
         let newbody = bodyFormat(body);
         let existsURL = bodySearchUrl(newbody);
@@ -170,7 +159,7 @@ export default class MastoRow extends Component {
         }
         if (emojis.length > 0 && existsURL) {
             return (
-                <Hyperlink linkStyle={styles.link} onPress={url => this.openUrl(url)}>
+                <Hyperlink linkStyle={styles.link} onPress={url => openUrl(url)}>
                     {this.mastorowSetCustomEmoji(newbody, emojis, styles.body)}
                 </Hyperlink>
             );
@@ -180,7 +169,7 @@ export default class MastoRow extends Component {
         }
         if (existsURL) {
             return (
-                <Hyperlink linkStyle={styles.link} onPress={url => this.openUrl(url)}>
+                <Hyperlink linkStyle={styles.link} onPress={url => openUrl(url)}>
                     <Text style={styles.body}>{newbody}</Text>
                 </Hyperlink>
             );

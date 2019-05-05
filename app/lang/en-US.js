@@ -16,6 +16,7 @@ export default {
 
     setting_instance_uri: "URL",
     setting_instance_version: "Mastodon Version",
+    setting_instance_editlink: "Edit profile",
 
     //Settings Header
     setting_header_personal: "Personal",
