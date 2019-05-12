@@ -48,7 +48,7 @@
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-message-bar": "^2.0.10",
     "react-native-modal": "^9.0.0",
-    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-modal-datetime-picker": "^7.4.0",
     "react-native-settings-list": "^1.8.0",
     "react-navigation": "^3.9.1",
     "react-redux": "^6.0.1",
