@@ -3,10 +3,10 @@ jobs:
   build:
     working_directory: ~/ikuradon
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10.4.1
     branches:
-        only:
-          - master
+      only:
+        - master
     steps:
       - checkout
       - restore_cache:

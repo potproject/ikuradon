@@ -21,7 +21,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "jest",
-    "ci-publish": "expo login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && expo publish",
+    "ci-publish": "expo login -u \"$EXPO_ACCOUNT\" -p \"$EXPO_PASSWORD\" && expo publish --non-interactive",
     "android-build": "expo build:android"
   },
   "jest": {
