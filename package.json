@@ -51,7 +51,7 @@
     "react-native-modal-datetime-picker": "^7.4.0",
     "react-native-settings-list": "^1.8.0",
     "react-navigation": "^3.11.0",
-    "react-redux": "^6.0.1",
+    "react-redux": "^7.1.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
