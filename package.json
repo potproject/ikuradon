@@ -11,7 +11,7 @@
     "eslint-plugin-react": "^7.12.4",
     "jest-expo": "32.0.0",
     "prettier": "^1.16.4",
-    "prettier-eslint-cli": "^4.7.1",
+    "prettier-eslint-cli": "^5.0.0",
     "react-test-renderer": "16.5.0"
   },
   "main": "node_modules/expo/AppEntry.js",
