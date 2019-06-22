@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "babel-preset-expo": "^5.1.1",
-    "eslint": "^5.15.3",
+    "eslint": "^6.0.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-prettier": "^3.0.1",
