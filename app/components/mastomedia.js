@@ -7,7 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import * as MainActions from "../actions/actioncreators/main";
 import styles from "../stylesheets/default/mastomedia";
-import {open as openUrl} from "../util/url";
+import { open as openUrl } from "../util/url";
 
 class MastoMedia extends React.Component {
     static propTypes = {
@@ -34,7 +34,7 @@ class MastoMedia extends React.Component {
     mapView() {
         if (this.props.media_attachments) {
             return this.props.media_attachments.map((media, index) => {
-                if (media.type === "image" || media.type === "video" || media.type === "gifv" || media.type === "unknown") {
+                if (media.type === "image" || media.type === "video" || media.type === "gifv" || media.type === "audio" || media.type === "unknown") {
                     return (
                         <TouchableOpacity key={media.id} onPress={() => this.onPress(this.props.media_attachments, index)}>
                             <View style={[styles.mediaview, { width: this.props.width, height: this.props.height }]}>
@@ -58,7 +58,7 @@ class MastoMedia extends React.Component {
         return description;
     }
     onPress(media_attachments, index) {
-        if (media_attachments[index].type === "unknown") {
+        if (media_attachments[index].type === "unknown" || media_attachments[index].type === "audio") {
             openUrl(media_attachments[index].url);
             return;
         }
@@ -71,6 +71,8 @@ class MastoMedia extends React.Component {
             case "video":
             case "gifv":
                 return "file-video-o";
+            case "audio":
+                return "file-audio-o";
             case "unknown":
                 return "link";
             default:
