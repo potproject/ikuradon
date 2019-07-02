@@ -37,7 +37,7 @@
     "i18next": "^12.1.0",
     "moment": "^2.24.0",
     "react": "16.5.0",
-    "react-i18next": "^9.0.10",
+    "react-i18next": "^10.11.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.3.tar.gz",
     "react-native-actionsheet": "^2.4.2",
     "react-native-customemoji": "1.0.0",
