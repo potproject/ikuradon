@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
-    "babel-preset-expo": "^5.1.1",
+    "babel-preset-expo": "^6.0.0",
     "eslint": "^5.15.3",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.16.0",
