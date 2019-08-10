@@ -92,6 +92,7 @@ export default class MastoRow extends Component {
                         {this.mastorowCardFormat(this.props.card, this.props.sensitive)}
                     </View>
                 </View>
+                {!this.props.smartMode && (
                 <View style={styles.container}>
                     <Text style={styles.dateFlex}>
                         {dateFormat(this.props.date) + " "}
@@ -99,7 +100,8 @@ export default class MastoRow extends Component {
                         {this.props.application_name ? " via " + this.props.application_name : ""}
                     </Text>
                 </View>
-                {this.notificationFormat(this.props.notification_type, this.props.notification_name)}
+                )}
+                { this.notificationFormat(this.props.notification_type, this.props.notification_name)}
                 {!this.props.smartMode && (
                     <View style={styles.container}>
                         <View style={styles.item}>
