@@ -11073,13 +11073,12 @@ react-native-message-bar@^2.0.10:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/react-native-message-bar/-/react-native-message-bar-2.0.10.tgz#34632bdf2cbfe0f51ae4f1e9a91c42b4394a11c2"
 
-react-native-modal-datetime-picker@^7.4.0:
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-7.4.0.tgz#29c8a51cf4ca79c71c723551e3bbc788d11df3db"
-  integrity sha512-lq39cVE2MYktv0usF0k/EwW0gyIvERiYFT9yDXmHIhJFihnR0ZV1kK1Pni4pfLNuqWIWbkb5Y3kzpSKcMzdXSA==
+react-native-modal-datetime-picker@^8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-8.0.7.tgz#cb726b6a10577354f20b2b9b0e591682ceba4f9f"
+  integrity sha512-bDSFsZ3escLjGJpZlw19cWpJo4FrH3IHDo7reImOdhsNG7k2oqdNlZ1bYx9oc6Rd44Og0nJaJlQb3EFEzoA4Ew==
   dependencies:
     prop-types "^15.7.2"
-    react-native-modal "^9.0.0"
 
 react-native-modal@^9.0.0:
   version "9.0.0"
