@@ -12,26 +12,26 @@ const initialState = {
         data: [],
         refreshing: false,
         minId: null,
-        maxId: null
+        maxId: null,
     },
     local: {
         data: [],
         refreshing: false,
         minId: null,
-        maxId: null
+        maxId: null,
     },
     federal: {
         data: [],
         refreshing: false,
         minId: null,
-        maxId: null
+        maxId: null,
     },
     notifications: {
         data: [],
         refreshing: false,
         minId: null,
-        maxId: null
-    }
+        maxId: null,
+    },
 };
 
 export default function Main(state = initialState, action = {}) {
@@ -56,8 +56,8 @@ export default function Main(state = initialState, action = {}) {
                     data,
                     refreshing: false,
                     minId,
-                    maxId
-                }
+                    maxId,
+                },
             });
             //String化しないとExpoが落ちる模様(バグ?)
             AsyncStorage.setItem("last_update", String(new Date().getTime()));
@@ -71,8 +71,8 @@ export default function Main(state = initialState, action = {}) {
                     data: state[action.reducerType].data,
                     refreshing: true,
                     minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId
-                }
+                    maxId: state[action.reducerType].maxId,
+                },
             });
         case MainActionTypes.STOP_REFRESHING_MASTOLIST:
             return Object.assign({}, state, {
@@ -80,8 +80,8 @@ export default function Main(state = initialState, action = {}) {
                     data: state[action.reducerType].data,
                     refreshing: false,
                     minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId
-                }
+                    maxId: state[action.reducerType].maxId,
+                },
             });
         case MainActionTypes.HIDE_MASTOLIST:
             for (let viewType of viewTypeArray) {

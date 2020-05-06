@@ -9,11 +9,11 @@ const initialState = {
         home: false,
         local: false,
         federal: false,
-        notifications: false
+        notifications: false,
     },
 
     smartMode: false,
-    timelinePerform: false
+    timelinePerform: false,
     //textsize,textcolor,etc...
 };
 
@@ -22,13 +22,13 @@ export default function Config(state = initialState, action = {}) {
     switch (action.type) {
         case ConfigActionTypes.SET_BACKGROUNDIMAGE:
             newstate = Object.assign({}, state, {
-                backgroundImage: action.backgroundImage
+                backgroundImage: action.backgroundImage,
             });
             break;
 
         case ConfigActionTypes.DELETE_BACKGROUNDIMAGE:
             newstate = Object.assign({}, state, {
-                backgroundImage: null
+                backgroundImage: null,
             });
             break;
 
@@ -39,13 +39,13 @@ export default function Config(state = initialState, action = {}) {
 
         case ConfigActionTypes.SMART_MODE:
             newstate = Object.assign({}, state, {
-                smartMode: action.smartMode
+                smartMode: action.smartMode,
             });
             break;
 
         case ConfigActionTypes.TIMELINE_PERFORM:
             newstate = Object.assign({}, state, {
-                timelinePerform: action.timelinePerform
+                timelinePerform: action.timelinePerform,
             });
             break;
 

@@ -1,5 +1,5 @@
 import He from "he";
-import Moment from "moment/min/moment-with-locales";
+import Moment from "./moment/min/moment-with-locales";
 
 export function bodyFormat(body) {
     //改行 <br />

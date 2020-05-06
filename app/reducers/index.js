@@ -15,6 +15,6 @@ export default combineReducers({
     streamingReducer,
     currentUserReducer,
     configReducer,
-    tootReducer
+    tootReducer,
     // ... other reducers
 });
