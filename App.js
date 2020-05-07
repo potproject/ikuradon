@@ -14,8 +14,15 @@ import { useLinking } from "@react-navigation/native";
 
 import reducers from "./app/reducers";
 import { createMiddleware } from "./app/middleware";
-import AppInitScreen from "./app/screens/AppInitScreen";
 
+import * as RouterName from "./app/constants/RouterName";
+
+import AppInitScreen from "./app/screens/AppInitScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+
+import theme from "./app/themes/default";
+import AuthorizeScreen from "./app/screens/AuthorizeScreen";
+import NavigationService from "./app/services/NavigationService";
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -55,13 +62,17 @@ export default function App(props) {
     } else {
         return (
             <View style={styles.container}>
-                <ThemeProvider>
+                <ThemeProvider theme={theme}>
                     <Provider store={store}>
                         {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-                        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+                        <NavigationContainer ref={navigatorRef => {
+                            NavigationService.setTopLevelNavigator(navigatorRef);
+                        }} initialState={initialNavigationState}>
                             <Stack.Navigator>
-                                <Stack.Screen name="AppInit" component={AppInitScreen} />
-                                <Stack.Screen name="Home" component={HomeNavigator} />
+                                <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} />
+                                <Stack.Screen name={RouterName.Login} component={LoginScreen} />
+                                <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} />
+                                <Stack.Screen name={RouterName.Main} component={HomeNavigator} />
                             </Stack.Navigator>
                         </NavigationContainer>
                     </Provider>

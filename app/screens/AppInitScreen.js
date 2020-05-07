@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Button } from "react-native-elements";
+import * as RouterName from "../constants/RouterName";
 
 function AppInitScreen({ navigation }) {
     return (
@@ -8,7 +9,7 @@ function AppInitScreen({ navigation }) {
             <Image style={styles.logo} source={require("../../assets/image/icon250.png")} />
             <Button
                 title="Go to Details"
-                onPress={() => {navigation.navigate("Home")}}
+                onPress={() => {navigation.navigate(RouterName.Login)}}
             />
         </View>
     );

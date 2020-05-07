@@ -4,8 +4,8 @@ import { ImagePicker } from "expo";
 import { MessageBarManager } from "react-native-message-bar";
 import I18n from "../../services/i18n";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function allClear() {

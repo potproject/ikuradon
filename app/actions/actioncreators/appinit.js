@@ -10,8 +10,8 @@ import * as CONST_API from "../../constants/api";
 import Networking from "../../services/networking";
 import * as CurrentUser from "../actiontypes/currentuser";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 const AUTO_LOGIN = true; // Auto Login

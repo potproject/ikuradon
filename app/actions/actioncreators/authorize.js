@@ -5,8 +5,8 @@ import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {

@@ -6,8 +6,8 @@ import I18n from "../../services/i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 const reducerTypeArray = {
@@ -23,12 +23,12 @@ export function back() {
 }
 
 export function toot() {
-    NavigationService.navigate({ routeName: RouterName.Toot });
+    NavigationService.navigate({ name: RouterName.Toot });
     return { type: Nav.NAV_TOOT };
 }
 
 export function reply(id, tootid, user, acct, image, body) {
-    NavigationService.navigate({ routeName: RouterName.Toot, params: { id, tootid, user, acct, image, body } });
+    NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } });
     return { type: Nav.NAV_TOOT_REPLY };
 }
 
@@ -57,7 +57,7 @@ export function deleting(id) {
 }
 
 export function detail(id) {
-    NavigationService.navigate({ routeName: RouterName.Detail, params: { id } });
+    NavigationService.navigate({ name: RouterName.Detail, params: { id } });
     return { type: Nav.NAV_DETAIL, id };
 }
 

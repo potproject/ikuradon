@@ -5,8 +5,8 @@ import I18n from "../../services/i18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function boost(id, tootid, boosted) {
@@ -49,6 +49,6 @@ export function favourite(id, tootid, favourited) {
 }
 
 export function mediaOpen(media_attachments, index) {
-    NavigationService.navigate({ routeName: RouterName.MediaViewer, params: { media_attachments, index } });
+    NavigationService.navigate({ name: RouterName.MediaViewer, params: { media_attachments, index } });
     return { type: Nav.NAV_MEDIAVIEWER };
 }

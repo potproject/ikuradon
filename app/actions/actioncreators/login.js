@@ -1,15 +1,13 @@
 import { AsyncStorage } from "react-native";
 import * as CONST_API from "../../constants/api";
-import Networking from "../../services/networking";
+import Networking from "../../services/Networking";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
-import I18n from "../../services/i18n";
-import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function login(domain) {
@@ -21,14 +19,10 @@ export function login(domain) {
             client_id = data.client_id;
             client_secret = data.client_secret;
             //この時点ではまだログインしていません
-            NavigationService.navigate({ routeName: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
+            NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
             dispatch({ type: Nav.NAV_AUTHORIZE });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.login_failed"),
-                message: e.message,
-                alertType: "error"
-            });
+            console.log(e);
         }
     };
 }
@@ -50,7 +44,7 @@ export function loginSelectAccounts(index) {
                 await Session.setDefault();
             }
         }
-        NavigationService.resetAndNavigate({ routeName: RouterName.login });
+        NavigationService.resetAndNavigate({ routeName: RouterName.Login });
         dispatch({ type: Nav.NAV_LOGIN });
     };
 }
@@ -64,19 +58,12 @@ export function loginWithAccessToken(domain, access_token) {
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.login_success"),
-                alertType: "success"
-            });
+            console.log("suucess");
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ routeName: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            console.log(e);
         }
     };
 }
