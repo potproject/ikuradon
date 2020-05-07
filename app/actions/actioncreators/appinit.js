@@ -54,7 +54,7 @@ export function appInit() {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-                NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+                NavigationService.resetAndNavigate({ name: RouterName.Main });
                 dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
@@ -62,7 +62,7 @@ export function appInit() {
                 await Session.setDefault();
             }
         }
-        NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
         dispatch({ type: Nav.NAV_LOGIN });
     };
 }

@@ -9,6 +9,7 @@ import * as CurrentUser from "../actiontypes/currentuser";
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
+import DropDownHolder from "../../services/DropDownHolder";
 
 export function login(domain) {
     return async dispatch => {
@@ -22,7 +23,7 @@ export function login(domain) {
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
             dispatch({ type: Nav.NAV_AUTHORIZE });
         } catch (e) {
-            console.log(e);
+            DropDownHolder.error("Error", e.message);
         }
     };
 }
@@ -36,7 +37,7 @@ export function loginSelectAccounts(index) {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-                NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+                NavigationService.resetAndNavigate({ name: RouterName.Main });
                 dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
@@ -44,7 +45,7 @@ export function loginSelectAccounts(index) {
                 await Session.setDefault();
             }
         }
-        NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
         dispatch({ type: Nav.NAV_LOGIN });
     };
 }
@@ -58,12 +59,12 @@ export function loginWithAccessToken(domain, access_token) {
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
-            console.log("suucess");
+            DropDownHolder.success("Success", "Login Success");
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+            NavigationService.resetAndNavigate({ name: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
-            console.log(e);
+            DropDownHolder.error("Error", e.message);
         }
     };
 }
@@ -76,16 +77,10 @@ export function logout() {
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_success"),
-                alertType: "success"
-            });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+            DropDownHolder.success("Success", "Logout Success");
+            NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.error("Error", e.message);
         }
     };
 }
@@ -98,16 +93,10 @@ export function accountChange() {
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_success"),
-                alertType: "success"
-            });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+            DropDownHolder.success("Success", "Logout Success");
+            NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.success("Error", e.message);
         }
     };
 }

@@ -15,6 +15,9 @@ import { useLinking } from "@react-navigation/native";
 import reducers from "./app/reducers";
 import { createMiddleware } from "./app/middleware";
 
+import DropdownAlert from "react-native-dropdownalert";
+import DropDownHolder from "./app/services/DropDownHolder";
+
 import * as RouterName from "./app/constants/RouterName";
 
 import AppInitScreen from "./app/screens/AppInitScreen";
@@ -77,6 +80,7 @@ export default function App(props) {
                         </NavigationContainer>
                     </Provider>
                 </ThemeProvider>
+                <DropdownAlert ref={ref => DropDownHolder.setDropDown(ref)} closeInterval={3000}/>
             </View>
         );
     }

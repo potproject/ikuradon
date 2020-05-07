@@ -1,5 +1,5 @@
 //React Navigation without Redux integration
-import { CommonActions, StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 
 let _navigator;
 
@@ -36,11 +36,11 @@ function navigate({ name, key, params }) {
 }
 
 // All Reset And Navigation
-function resetAndNavigate({ routeName }) {
+function resetAndNavigate({ name }) {
     _navigator.dispatch(
-        StackActions.reset({
+        CommonActions.reset({
             index: 0,
-            actions: [CommonActions.navigate({ routeName })]
+            routes: [{ name }]
         })
     );
 }

@@ -11,7 +11,7 @@ import * as Nav from "../actiontypes/nav";
 export function allClear() {
     return async dispatch => {
         dispatch({ type: Config.CONFIG_RESET });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
@@ -25,7 +25,7 @@ export function setBackground() {
                 return;
             }
             dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage: fileData.uri });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+            NavigationService.resetAndNavigate({ name: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             MessageBarManager.showAlert({
@@ -42,7 +42,7 @@ export function setInvisibleTimeline(type, value) {
         let invisible = {};
         invisible[type] = value;
         dispatch({ type: Config.INVISIBLE_SETTING, invisible });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
@@ -50,7 +50,7 @@ export function setInvisibleTimeline(type, value) {
 export function setSmartMode(value) {
     return async dispatch => {
         dispatch({ type: Config.SMART_MODE, smartMode: value });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
@@ -58,7 +58,7 @@ export function setSmartMode(value) {
 export function setTimelinePerform(value) {
     return async dispatch => {
         dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
         dispatch({ type: Nav.NAV_MAIN });
     };
 }
