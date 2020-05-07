@@ -2,7 +2,7 @@ import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
 import { MessageBarManager } from "react-native-message-bar";
-import I18n from "../../services/i18n";
+import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
@@ -29,7 +29,7 @@ export function setBackground() {
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });

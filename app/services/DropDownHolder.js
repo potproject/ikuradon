@@ -7,11 +7,11 @@ export default class DropDownHolder {
         return this.dropDownAlertRef;
     }
 
-    static success(title, message){
+    static success(title, message = ""){
         this.dropDownAlertRef.alertWithType("success", title, message);
     }
 
-    static error(title, message){
+    static error(title, message = ""){
         this.dropDownAlertRef.alertWithType("error", title, message);
     }
 }

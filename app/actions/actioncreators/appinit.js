@@ -2,7 +2,6 @@ import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
-import I18n from "../../services/i18n";
 import * as Session from "../../util/session";
 //import Font from "../../services/font";
 
@@ -39,9 +38,6 @@ export function appInit() {
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
         }
-
-        //i18n init
-        await I18n.init();
         //Session init
         await Session.init();
         //fontload init

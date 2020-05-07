@@ -5,6 +5,7 @@ import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
+import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
@@ -23,7 +24,7 @@ export function login(domain) {
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
             dispatch({ type: Nav.NAV_AUTHORIZE });
         } catch (e) {
-            DropDownHolder.error("Error", e.message);
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -59,12 +60,12 @@ export function loginWithAccessToken(domain, access_token) {
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
-            DropDownHolder.success("Success", "Login Success");
+            DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
-            DropDownHolder.error("Error", e.message);
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -77,10 +78,10 @@ export function logout() {
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            DropDownHolder.success("Success", "Logout Success");
+            DropDownHolder.success(t("logout_success"));
             NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            DropDownHolder.error("Error", e.message);
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -93,10 +94,10 @@ export function accountChange() {
             await dispatch({ type: Streaming.STREAM_STOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
-            DropDownHolder.success("Success", "Logout Success");
+            DropDownHolder.success(t("login_success"));
             NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            DropDownHolder.success("Error", e.message);
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }

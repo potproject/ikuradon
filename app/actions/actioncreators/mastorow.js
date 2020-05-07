@@ -1,7 +1,7 @@
 import * as Mastorow from "../actiontypes/mastorow";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/networking";
-import I18n from "../../services/i18n";
+import t from "../../services/I18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
@@ -18,7 +18,7 @@ export function boost(id, tootid, boosted) {
             await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });
@@ -37,7 +37,7 @@ export function favourite(id, tootid, favourited) {
             await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });

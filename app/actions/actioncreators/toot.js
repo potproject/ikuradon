@@ -1,6 +1,6 @@
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/networking";
-import I18n from "../../services/i18n";
+import t from "../../services/I18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
@@ -33,7 +33,7 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
                 access_token
             );
             MessageBarManager.showAlert({
-                title: I18n.t("messages.toot_success"),
+                title: t("messages.toot_success"),
                 alertType: "success"
             });
             NavigationService.back();
@@ -41,7 +41,7 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             dispatch({ type: Nav.NAV_GO_BACK });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.toot_failed"),
+                title: t("messages.toot_failed"),
                 alertType: "error"
             });
             dispatch({ type: Toot.TOOT_FAILURE });

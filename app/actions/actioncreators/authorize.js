@@ -2,6 +2,7 @@ import * as CONST_API from "../../constants/api";
 import Networking from "../../services/Networking";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
+import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
@@ -23,12 +24,12 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
-            DropDownHolder.success("Success", "Success sita");
+            DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
-            DropDownHolder.error("Error", e.message);
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }

@@ -2,7 +2,7 @@ import * as Main from "../actiontypes/main";
 import * as CurrentUser from "../actiontypes/currentuser";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/networking";
-import I18n from "../../services/i18n";
+import t from "../../services/t";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 
@@ -43,12 +43,12 @@ export function deleting(id) {
             await Networking.fetch(domain, CONST_API.DELETE_STATUS, id, {}, access_token);
             dispatch({ type: Main.HIDE_MASTOLIST, id: id });
             MessageBarManager.showAlert({
-                title: I18n.t("messages.toot_deleted_success"),
+                title: t("messages.toot_deleted_success"),
                 alertType: "success"
             });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.toot_deleted_failed"),
+                title: t("messages.toot_deleted_failed"),
                 message: e.message,
                 alertType: "error"
             });
@@ -71,7 +71,7 @@ export function newLoadingTimeline(reducerType, since_id, limit = 40) {
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });
@@ -90,7 +90,7 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });
@@ -108,7 +108,7 @@ export function getCurrentUser() {
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
+                title: t("messages.network_error"),
                 message: e.message,
                 alertType: "error"
             });

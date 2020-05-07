@@ -2,7 +2,7 @@ import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
 import * as CONST_API from "../../constants/api";
 import Stream from "../../services/stream";
-import I18n from "../../services/i18n";
+import t from "../../services/I18n";
 import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import { bodyFormat } from "../../util/parser";
@@ -14,7 +14,7 @@ export function start(reducerType) {
             Stream.init(domain, CONST_API.STREAMING, access_token, reducerType);
             await Stream.open(reducerType);
             MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_enabled"),
+                title: t("messages.streaming_enabled"),
                 alertType: "info"
             });
             dispatch({ type: Streaming.STREAM_START, reducerType });
@@ -28,19 +28,19 @@ export function start(reducerType) {
                     let message = "";
                     switch (data.type) {
                         case "follow":
-                            title = name + I18n.t("notifications.followed");
+                            title = name + t("notifications.followed");
                             message = null;
                             break;
                         case "favourite":
-                            title = name + I18n.t("notifications.favourited");
+                            title = name + t("notifications.favourited");
                             message = bodyFormat(data.status.content);
                             break;
                         case "reblog":
-                            title = name + I18n.t("notifications.boosted");
+                            title = name + t("notifications.boosted");
                             message = bodyFormat(data.status.content);
                             break;
                         case "mention":
-                            title = name + I18n.t("notifications.mentioned");
+                            title = name + t("notifications.mentioned");
                             message = bodyFormat(data.status.content);
                             break;
                         default:
@@ -58,7 +58,7 @@ export function start(reducerType) {
             }, reducerType);
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_failed"),
+                title: t("messages.streaming_failed"),
                 alertType: "error"
             });
             dispatch({ type: Streaming.STREAM_STOP, reducerType });
@@ -76,12 +76,12 @@ export function stop(reducerType) {
                 return;
             }
             MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_disabled"),
+                title: t("messages.streaming_disabled"),
                 alertType: "info"
             });
         } catch (e) {
             MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_failed"),
+                title: t("messages.streaming_failed"),
                 alertType: "error"
             });
             return;
