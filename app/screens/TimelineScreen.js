@@ -4,7 +4,7 @@ import MastoList from "../components/MastoList";
 
 import * as RouterName from "../constants/RouterName";
 
-function MainScreen({route}) {
+function TimelineScreen({route}) {
     const type = dataSelector(route.name);
     return (
         <View style={styles.container}>
@@ -15,13 +15,13 @@ function MainScreen({route}) {
 
 function dataSelector(name){
     switch (name) {
-        case RouterName.Main_Home:
+        case RouterName.Timeline_Home:
             return "home";
-        case RouterName.Main_Local:
+        case RouterName.Timeline_Local:
             return "local";
-        case RouterName.Main_Federal:
+        case RouterName.Timeline_Federal:
             return "federal";
-        case RouterName.Main_Notifications:
+        case RouterName.Timeline_Notifications:
             return "notifications";
         default:
             return "home";
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default MainScreen;
+export default TimelineScreen;

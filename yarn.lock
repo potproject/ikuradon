@@ -1321,6 +1321,14 @@
     react-is "^16.13.0"
     use-subscription "^1.4.0"
 
+"@react-navigation/drawer@^5.0.0":
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.7.0.tgz#aa65b1342df0b978f88b3dd2bad11f476c3118c8"
+  integrity sha512-TSIgW+CEq2PZzVw2de5C7mhRHyv4oZSn+Iwb5c1aTUxbuFDNBulYYZEMpUg5POE8DU7/f9nG2CqbCDc1h2d/nA==
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 "@react-navigation/native@^5.0.0":
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.2.4.tgz#e175a50541e8157a595e265209215f02ad5bd181"
@@ -6560,6 +6568,13 @@ react-native-ratings@^6.5.0:
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
+
+react-native-reanimated@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.8.0.tgz#0b5719b20c1fed9aaf8afd9a12e21c9bd46ee428"
+  integrity sha512-vGTt94lE5fsZmfMwERWFIsCr5LHsyllOESeNvlKryLgAg7h4cnJ5XSmVSy4L3qogdgFYCL6HEgY+s7tQmKXiiQ==
+  dependencies:
+    fbjs "^1.0.0"
 
 react-native-safe-area-context@0.7.3:
   version "0.7.3"

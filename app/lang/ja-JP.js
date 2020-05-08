@@ -34,6 +34,9 @@ export default {
     //ナビゲーションボタン
     navigation_button_toot: "トゥート",
 
+    // タイムライン
+    timeline_title: "タイムライン",
+
     //AppInit
     appinit_title: "初期化中...",
 

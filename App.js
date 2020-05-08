@@ -77,7 +77,7 @@ export default function App(props) {
                                 <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
                                 <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
                                 <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
-                                <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("navigation_home") }} />
+                                <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ headerShown: false }} />
                             </Stack.Navigator>
                         </NavigationContainer>
                     </Provider>

@@ -34,6 +34,9 @@ export default {
     //Navigation Button
     navigation_button_toot: "Toot",
 
+    // Timeline
+    timeline_title: "Timeline",
+    
     //AppInit
     appinit_title: "initialize...",
 
