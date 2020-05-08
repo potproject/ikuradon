@@ -29,10 +29,6 @@ function LoginScreen() {
     );
 }
 
-LoginScreen.navigationOptions = {
-    header: null
-};
-
 const styles = StyleSheet.create({
     container: {
         paddingLeft: 20,

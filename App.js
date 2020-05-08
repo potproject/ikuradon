@@ -23,6 +23,8 @@ import * as RouterName from "./app/constants/RouterName";
 import AppInitScreen from "./app/screens/AppInitScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 
+import t from "./app/services/I18n";
+
 import theme from "./app/themes/default";
 import AuthorizeScreen from "./app/screens/AuthorizeScreen";
 import NavigationService from "./app/services/NavigationService";
@@ -72,10 +74,10 @@ export default function App(props) {
                             NavigationService.setTopLevelNavigator(navigatorRef);
                         }} initialState={initialNavigationState}>
                             <Stack.Navigator>
-                                <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} />
-                                <Stack.Screen name={RouterName.Login} component={LoginScreen} />
-                                <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} />
-                                <Stack.Screen name={RouterName.Main} component={MainNavigator} />
+                                <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
+                                <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
+                                <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
+                                <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("navigation_home") }} />
                             </Stack.Navigator>
                         </NavigationContainer>
                     </Provider>
