@@ -3,7 +3,9 @@ import { Image, StyleSheet, View } from "react-native";
 
 import { useDispatch } from "react-redux";
 
-function MainScreen() {
+function MainScreen({route}) {
+    let name = route.name;
+    console.log(name);
     return (
         <View style={styles.container}>
         </View>
