@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
+import { useDispatch } from "react-redux";
 
 function MainScreen() {
     return (
@@ -30,4 +28,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect()(MainScreen);
+export default MainScreen;

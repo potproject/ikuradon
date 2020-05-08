@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import { useDispatch } from "react-redux";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as AuthorizeActions from "../actions/actioncreators/authorize";
+import { getAccessTokenWithHomeAction } from "../actions/actioncreators/authorize";
 
-function AuthorizeScreen({ route, AuthorizeActions }) {
+function AuthorizeScreen({ route }) {
+    const dispatch = useDispatch();
+
     const { url, domain, client_id, client_secret } = route.params;
     const [call, useCall] = useState(false);
     const onWebViewRequest = (navState, domain, client_id, client_secret) => {
@@ -21,7 +22,7 @@ function AuthorizeScreen({ route, AuthorizeActions }) {
             if (authorizeCode.substr(0, 12) === "native?code=") {
                 authorizeCode = authorizeCode.substr(12);
             }
-            AuthorizeActions.getAccessTokenWithHomeAction(domain, client_id, client_secret, authorizeCode);
+            dispatch(getAccessTokenWithHomeAction(domain, client_id, client_secret, authorizeCode));
         }
         return true;
     };
@@ -41,9 +42,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(
-    state => state,
-    dispatch => ({
-        AuthorizeActions: bindActionCreators(AuthorizeActions, dispatch)
-    })
-)(AuthorizeScreen);
+export default AuthorizeScreen;

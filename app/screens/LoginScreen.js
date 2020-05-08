@@ -3,11 +3,12 @@ import { StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as LoginActions from "../actions/actioncreators/login";
+import { useDispatch } from "react-redux";
 
-function LoginScreen({ LoginActions }) {
+import { login } from "../actions/actioncreators/login";
+
+function LoginScreen() {
+    const dispatch = useDispatch();
     const [domain, setDomain] = useState("mastodon.potproject.net");
     return (
         <View style={styles.container}>
@@ -23,8 +24,7 @@ function LoginScreen({ LoginActions }) {
                     
                 }
             />
-            <Button onPress={() => LoginActions.login(domain)} title={"Login"} />
-
+            <Button onPress={() => dispatch(login(domain))} title={"Login"} />
         </View>
     );
 }
@@ -43,9 +43,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(
-    state => state,
-    dispatch => ({
-        LoginActions: bindActionCreators(LoginActions, dispatch)
-    })
-)(LoginScreen);
+export default LoginScreen;
