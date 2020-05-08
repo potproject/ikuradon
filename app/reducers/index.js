@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import appInitReducer from "./appinit";
 import navReducer from "./nav";
 import mainReducer from "./main";
 import navigationReducer from "./navigation";
@@ -9,6 +10,7 @@ import tootReducer from "./toot";
 // ... other reducers
 
 export default combineReducers({
+    appInitReducer,
     navReducer,
     mainReducer,
     navigationReducer,

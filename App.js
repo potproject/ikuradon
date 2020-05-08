@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import HomeNavigator from "./app/navigation/HomeNavigator";
+import MainNavigator from "./app/navigation/MainNavigator";
 import { useLinking } from "@react-navigation/native";
 
 import reducers from "./app/reducers";
@@ -75,7 +75,7 @@ export default function App(props) {
                                 <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} />
                                 <Stack.Screen name={RouterName.Login} component={LoginScreen} />
                                 <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} />
-                                <Stack.Screen name={RouterName.Main} component={HomeNavigator} />
+                                <Stack.Screen name={RouterName.Main} component={MainNavigator} />
                             </Stack.Navigator>
                         </NavigationContainer>
                     </Provider>

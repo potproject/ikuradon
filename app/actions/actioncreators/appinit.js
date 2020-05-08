@@ -6,12 +6,13 @@ import * as Session from "../../util/session";
 //import Font from "../../services/font";
 
 import * as CONST_API from "../../constants/api";
-import Networking from "../../services/networking";
+import Networking from "../../services/Networking";
 import * as CurrentUser from "../actiontypes/currentuser";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
+import * as AppInit from "../actiontypes/appinit";
 
 const AUTO_LOGIN = true; // Auto Login
 const TIMELINE_LOCAL_AUTOLOAD = true; // Timeline Local Auto Load (Experimental)
@@ -50,6 +51,7 @@ export function appInit() {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 dispatch({ type: Nav.NAV_MAIN });
                 return;
@@ -58,6 +60,7 @@ export function appInit() {
                 await Session.setDefault();
             }
         }
+        await dispatch({ type:AppInit.APPINIT_COMPLETE });
         NavigationService.resetAndNavigate({ name: RouterName.Login });
         dispatch({ type: Nav.NAV_LOGIN });
     };

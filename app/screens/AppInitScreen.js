@@ -1,16 +1,18 @@
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Button } from "react-native-elements";
-import * as RouterName from "../constants/RouterName";
 
-function AppInitScreen({ navigation }) {
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import * as AppInitActions from "../actions/actioncreators/appinit";
+
+function AppInitScreen({ AppInitActions, AppInitReducer }) {
+    if(!AppInitReducer.init){
+        AppInitActions.appInit();
+    }
     return (
         <View style={styles.container}>
             <Image style={styles.logo} source={require("../../assets/image/icon250.png")} />
-            <Button
-                title="Go to Details"
-                onPress={() => {navigation.navigate(RouterName.Login)}}
-            />
         </View>
     );
 }
@@ -32,4 +34,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AppInitScreen;
+
+export default connect(
+    state => ({ AppInitReducer: state.appInitReducer }),
+    dispatch => ({
+        AppInitActions: bindActionCreators(AppInitActions, dispatch)
+    })
+)(AppInitScreen);
