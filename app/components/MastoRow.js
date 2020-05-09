@@ -11,7 +11,14 @@ import Boost from "./item/Boost";
 import Favourite from "./item/Favourite";
 import Action from "./item/Action";
 
-const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility}) => {
+const MastoRow = (
+    // Toot data
+    { navigation, id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility},
+    // current
+    { user_credentials, domain, access_token, notification_count, instance },
+    // Actions
+    { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction },
+) => {
     let rebloggedName = "";
     let tootID = id;
     if(reblog){
@@ -20,6 +27,7 @@ const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblog
         content = reblog.content;
         account = reblog.account;
     }
+    let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={styles.container}>
             { reblog &&
@@ -59,7 +67,7 @@ const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblog
                             image={account.avatar}
                             body={content}
                             style={styles.itemFlex}
-                            onReply={null}
+                            onReply={ReplyAction}
                         />
                         <Boost
                             id={id}
@@ -67,7 +75,7 @@ const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblog
                             reblogged={reblogged}
                             count={reblogs_count}
                             style={styles.itemFlex}
-                            onBoost={null}
+                            onBoost={BoostAction}
                             disabled={visibility === "private" || visibility === "direct"}
                         />
                         <Favourite
@@ -76,7 +84,7 @@ const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblog
                             favourited={favourited}
                             count={favourites_count}
                             style={styles.itemFlex}
-                            onFavourite={null}
+                            onFavourite={FavouriteAction}
                         />
                         <Action
                             id={id}
@@ -88,9 +96,10 @@ const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblog
                             acct={account.acct}
                             image={account.avatar}
                             body={content}
-                            onReply={null}
-                            onHide={null}
-                            onDeleting={null}
+                            myself={myself}
+                            onReply={ReplyAction}
+                            onHide={HideAction}
+                            onDeleting={DeleteAction}
                         />
                     </View>
                 </View>
@@ -140,7 +149,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderWidth: 0,
         height: 20,
-        marginTop: 5
+        marginTop: 2
     },
     innerContainer: {
         flex: 1,
@@ -203,6 +212,7 @@ const styles = StyleSheet.create({
     },
     item: {
         flex: 1,
+        paddingRight:60,
         paddingTop: 5,
         paddingBottom: 5,
         flexDirection: "row"

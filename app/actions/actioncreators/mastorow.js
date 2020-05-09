@@ -1,8 +1,8 @@
 import * as Mastorow from "../actiontypes/mastorow";
 import * as CONST_API from "../../constants/api";
-import Networking from "../../services/networking";
+import Networking from "../../services/Networking";
 import t from "../../services/I18n";
-import { MessageBarManager } from "react-native-message-bar";
+import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 
 import * as RouterName from "../../constants/RouterName";
@@ -17,11 +17,7 @@ export function boost(id, tootid, boosted) {
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
             await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted: !boosted });
         }
         return;
@@ -36,11 +32,7 @@ export function favourite(id, tootid, favourited) {
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
             await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited: !favourited });
             return;
         }

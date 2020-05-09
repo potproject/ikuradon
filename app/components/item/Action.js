@@ -18,7 +18,7 @@ export default class Action extends React.Component {
         acct: PropTypes.string,
         image: PropTypes.string,
         body: PropTypes.string,
-        my: PropTypes.bool,
+        myself: PropTypes.bool,
 
         onReply: PropTypes.func,
         onHide: PropTypes.func,
@@ -47,8 +47,8 @@ export default class Action extends React.Component {
         let cancelButtonIndex = 6;
         let destructiveButtonIndex = 5;
         let options = [t("action_openinbrowser"), t("action_openinbrowserprofile"), t("action_copy"), t("action_copyurl"), t("action_reply"), t("action_hide")];
-        //自分のtootなら削除可能に
-        if (this.props.my) {
+        // 自分のtootなら削除可能に
+        if (this.props.myself) {
             options.push(t("action_delete"));
             cancelButtonIndex++;
             destructiveButtonIndex++;
@@ -86,7 +86,7 @@ export default class Action extends React.Component {
                 this.props.onHide(this.props.id);
                 return;
             case 6: //Delete
-                if (this.props.my) {
+                if (this.props.myself) {
                     this.props.onDeleting(this.props.id);
                 }
                 return;

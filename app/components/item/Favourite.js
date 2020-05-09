@@ -32,7 +32,7 @@ export default class Favourite extends React.Component {
         );
     }
     setColor(favourited) {
-        return favourited ? "#ca8f04" : "#8899a6";
+        return favourited ? "#ffd27d" : "#8899a6";
     }
 }
 
