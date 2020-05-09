@@ -10,11 +10,14 @@ import { boost as BoostAction, favourite as FavouriteAction } from "../actions/a
 import { newLoadingTimeline } from "../actions/actioncreators/main";
 const MainReducerSelector = state => state.mainReducer;
 const CurrentUserReducerSelector = state => state.currentUserReducer;
+const StreamingReducerSelector = state => state.streamingReducer;
 
 function MastoList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
     const listdata = useSelector(MainReducerSelector)[type];
+    const streaming = useSelector(StreamingReducerSelector)[type];
+    console.log(type, streaming);
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
         dispatch(newLoadingTimeline(type, listdata.maxId));
@@ -33,7 +36,7 @@ function MastoList({ type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
-                refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
+                refreshControl={<RefreshControl enabled={!streaming} refreshing={listdata.refreshing} onRefresh={() => !streaming && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={data => MastoRow(data.item, current, actions)}
                 ItemSeparatorComponent={() => <Divider />}
             />

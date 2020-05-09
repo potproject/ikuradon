@@ -1,16 +1,16 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import MastoList from "../components/MastoList";
+import TootButton from "../components/TootButton";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
+import TimelineStreamingButton from "../components/TimelineStreamingButton";
 
-import { Header, Icon, withTheme } from "react-native-elements";
+import { Header, withTheme } from "react-native-elements";
 
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
-
 import * as RouterName from "../constants/RouterName";
-import TootButton from "../components/TootButton";
 
 function TimelineScreen({ route, navigation }) {
     const type = dataSelector(route.name);
@@ -20,6 +20,7 @@ function TimelineScreen({ route, navigation }) {
             <Header
                 leftComponent={{ icon: "menu", color: "#fff", onPress: navigation.openDrawer }}
                 centerComponent={<TimelineCenterHeader onPress={navigation.openDrawer} current={current}/>}
+                rightComponent={<TimelineStreamingButton type={type}/>}
             />
             <MastoList type={type}/>
             <View style={styles.tootButton}>

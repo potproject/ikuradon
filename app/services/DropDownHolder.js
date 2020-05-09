@@ -11,6 +11,10 @@ export default class DropDownHolder {
         this.dropDownAlertRef.alertWithType("success", title, message);
     }
 
+    static info(title, message = ""){
+        this.dropDownAlertRef.alertWithType("info", title, message);
+    }
+
     static error(title, message = ""){
         this.dropDownAlertRef.alertWithType("error", title, message);
     }
