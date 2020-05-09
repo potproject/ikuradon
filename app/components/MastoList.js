@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { Divider } from "react-native-elements";
 import MastoRow from "../components/MastoRow";
 
 import { newLoadingTimeline } from "../actions/actioncreators/main";
@@ -20,6 +21,7 @@ function MastoList({ type }) {
                 keyExtractor={data => data.id}
                 data={listdata.data}
                 renderItem={data => MastoRow(data.item)}
+                ItemSeparatorComponent={() => <Divider />}
             />
         </View>
     );

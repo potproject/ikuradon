@@ -6,10 +6,17 @@ import { bodyFormat, dateFormat, bodySearchUrl } from "../util/parser";
 import {open as openUrl} from "../util/url";
 import Hyperlink from "react-native-hyperlink";
 
-const MastoRow = ({ navigation, id, reblog, account, content }) => {
+import Reply from "./item/Reply";
+import Boost from "./item/Boost";
+import Favourite from "./item/Favourite";
+import Action from "./item/Action";
+
+const MastoRow = ({ navigation, id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility}) => {
     let rebloggedName = "";
+    let tootID = id;
     if(reblog){
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
+        tootID = reblog.id;
         content = reblog.content;
         account = reblog.account;
     }
@@ -17,10 +24,10 @@ const MastoRow = ({ navigation, id, reblog, account, content }) => {
         <View key={id} style={styles.container}>
             { reblog &&
                 <View style={styles.isReplyContainer}>
-                    <View style={{flex:0.23, borderWidth:0, alignItems:"flex-end"}}>
+                    <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={16} color={"#2b90d9"} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.77, color:"#8899a6"}}>{rebloggedName} Reblogged</Text>
+                    <Text style={{flex:0.82, color:"#8899a6"}}>{rebloggedName} Reblogged</Text>
                 </View>
             }
             <View style={styles.innerContainer}>
@@ -40,9 +47,51 @@ const MastoRow = ({ navigation, id, reblog, account, content }) => {
                             <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
                         </Text>
                     </View>
-                    <View style={styles.tweetTextContainer}>
-                        <Text style={styles.tweetText}>{bodyFormat(content)}</Text>
-
+                    <View style={styles.tootTextContainer}>
+                        <Text style={styles.tootText}>{bodyFormat(content)}</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Reply
+                            id={id}
+                            tootid={tootID}
+                            user={account.display_name !== "" ? account.display_name : account.username}
+                            acct={account.acct}
+                            image={account.avatar}
+                            body={content}
+                            style={styles.itemFlex}
+                            onReply={null}
+                        />
+                        <Boost
+                            id={id}
+                            tootid={tootID}
+                            reblogged={reblogged}
+                            count={reblogs_count}
+                            style={styles.itemFlex}
+                            onBoost={null}
+                            disabled={visibility === "private" || visibility === "direct"}
+                        />
+                        <Favourite
+                            id={id}
+                            tootid={tootID}
+                            favourited={favourited}
+                            count={favourites_count}
+                            style={styles.itemFlex}
+                            onFavourite={null}
+                        />
+                        <Action
+                            id={id}
+                            tootid={tootID}
+                            style={styles.itemFlex}
+                            url={url}
+                            account_url={account.url}
+                            user={account.display_name !== "" ? account.display_name : account.username}
+                            acct={account.acct}
+                            image={account.avatar}
+                            body={content}
+                            onReply={null}
+                            onHide={null}
+                            onDeleting={null}
+                        />
                     </View>
                 </View>
             </View>
@@ -83,6 +132,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FFFFFF",
+        paddingTop: 8,
+        paddingBottom: 5
     },
     isReplyContainer: {
         flex: 1,
@@ -99,19 +150,21 @@ const styles = StyleSheet.create({
         height: "auto"
     },
     photoContainer: {
-        flex: 0.23,
+        flex: 0.18,
         borderColor: "yellow",
         flexDirection: "column",
         borderWidth: 0
     },
-    innerPhotoContainer: { height: 90, alignItems: "center" },
+    innerPhotoContainer: { 
+        height: 50, alignItems: "center"
+    },
     photo: {
         width: 50,
         height: 50,
         borderRadius: 5
     },
     info: {
-        flex: 0.77,
+        flex: 0.82,
         borderColor: "yellow",
         flexDirection: "column",
         borderWidth: 0
@@ -119,20 +172,44 @@ const styles = StyleSheet.create({
     userDetails: {
         borderWidth: 0
     },
-    userName: { color: "black", fontWeight: "bold" },
+    userName: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 16,
+    },
     userHandleAndTime: {
         color: "#8899a6",
-        fontWeight: "normal"
+        fontWeight: "normal",
+        fontSize: 15,
     },
-    tweetTextContainer: { flex: 1, borderColor: "blue", borderWidth: 0 },
-    tweetText: { color: "black", paddingRight: 10 },
-    tweetActionsContainer: {
+    tootTextContainer: { 
+        flex: 1, 
+        borderWidth: 0,
+        marginTop:2,
+    },
+    tootText: {
+        color: "black",
+        paddingTop: 2,
+        paddingRight: 10,
+        fontSize: 16,
+    },
+    tootActionsContainer: {
         flex: 1,
         borderColor: "blue",
         borderWidth: 0,
         marginTop: 5,
         flexDirection: "row",
         paddingBottom: 5
+    },
+    item: {
+        flex: 1,
+        paddingTop: 5,
+        paddingBottom: 5,
+        flexDirection: "row"
+    },
+    itemFlex: {
+        flex: 1,
+        paddingRight: 10,
     },
 });
 
