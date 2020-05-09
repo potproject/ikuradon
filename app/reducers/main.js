@@ -13,24 +13,28 @@ const initialState = {
         refreshing: false,
         minId: null,
         maxId: null,
+        newArrival: 0,
     },
     local: {
         data: [],
         refreshing: false,
         minId: null,
         maxId: null,
+        newArrival: 0,
     },
     federal: {
         data: [],
         refreshing: false,
         minId: null,
         maxId: null,
+        newArrival: 0,
     },
     notifications: {
         data: [],
         refreshing: false,
         minId: null,
         maxId: null,
+        newArrival: 0,
     },
 };
 
@@ -46,9 +50,11 @@ export default function Main(state = initialState, action = {}) {
             let reducerType = action.reducerType;
             let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
             let data;
+            let newArrival = 0;
             if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                 data = state[reducerType].data.concat(action.data);
             } else {
+                newArrival = action.data.length;
                 data = action.data.concat(state[reducerType].data);
             }
             let newstate = Object.assign({}, state, {
@@ -57,6 +63,7 @@ export default function Main(state = initialState, action = {}) {
                     refreshing: false,
                     minId,
                     maxId,
+                    newArrival
                 },
             });
             //String化しないとExpoが落ちる模様(バグ?)
@@ -72,6 +79,7 @@ export default function Main(state = initialState, action = {}) {
                     refreshing: true,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
                 },
             });
         case MainActionTypes.STOP_REFRESHING_MASTOLIST:
@@ -81,6 +89,7 @@ export default function Main(state = initialState, action = {}) {
                     refreshing: false,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
                 },
             });
         case MainActionTypes.HIDE_MASTOLIST:

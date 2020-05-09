@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function ItemTabBar({ name, badgeCount, color, size }) {
+export default function ItemTabBar({ type, name, badgeCount, color, size }) {
     return (
         <View style={{ width: 24, height: 24, margin: 5 }}>
             <FontAwesome name={name} size={size} color={color} />
