@@ -6,6 +6,8 @@ import { bodyFormat, dateFormat, bodySearchUrl } from "../util/parser";
 import {open as openUrl} from "../util/url";
 import Hyperlink from "react-native-hyperlink";
 
+import t from "../services/I18n";
+
 import Reply from "./item/Reply";
 import Boost from "./item/Boost";
 import Favourite from "./item/Favourite";
@@ -35,7 +37,7 @@ const MastoRow = (
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={16} color={"#2b90d9"} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color:"#8899a6"}}>{rebloggedName} Reblogged</Text>
+                    <Text style={{flex:0.82, color:"#8899a6"}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
                 </View>
             }
             <View style={styles.innerContainer}>
@@ -51,7 +53,7 @@ const MastoRow = (
                 </View>
                 <View style={styles.info}>
                     <View style={styles.userDetails}>
-                        <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1} >{account.display_name !== "" ? account.display_name : account.username}
+                        <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
                             <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
                         </Text>
                     </View>

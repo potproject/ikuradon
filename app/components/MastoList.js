@@ -17,7 +17,6 @@ function MastoList({ type }) {
     const [init, setInit] = useState(false);
     const listdata = useSelector(MainReducerSelector)[type];
     const streaming = useSelector(StreamingReducerSelector)[type];
-    console.log(type, streaming);
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
         dispatch(newLoadingTimeline(type, listdata.maxId));
