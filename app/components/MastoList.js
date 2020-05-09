@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import MastoRow from "../components/MastoRow";
@@ -33,6 +33,7 @@ function MastoList({ type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
+                refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={data => MastoRow(data.item, current, actions)}
                 ItemSeparatorComponent={() => <Divider />}
             />
