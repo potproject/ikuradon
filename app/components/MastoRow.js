@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
-import { bodyFormat, dateFormat, bodySearchUrl } from "../util/parser";
-import {open as openUrl} from "../util/url";
-import Hyperlink from "react-native-hyperlink";
+import { bodyFormat, dateFormat, bodySearchUrl, emojisArrayToObject } from "../util/parser";
+import CustomEmoji from "react-native-customemoji";
 
 import t from "../services/I18n";
 
@@ -14,17 +13,18 @@ import Favourite from "./item/Favourite";
 import Action from "./item/Action";
 
 import { ThemeContext } from "react-native-elements";
+import MastoRowBody from "./MastoRowBody";
+import Detail from "./item/Detail";
 
 const MastoRow = ({ navigation, item, current, actions }) => {
     // Toot data
-    let { id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility} = item;
+    let { id, created_at, sensitive, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
     let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
-
     let rebloggedName = "";
     let tootID = id;
     if(reblog){
@@ -35,7 +35,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
-        <View key={id} style={[styles.container,{backgroundColor: theme.colors.backgroundColor}]}>
+        <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
             { reblog &&
                 <View style={styles.isReplyContainer}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
@@ -57,12 +57,14 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                 </View>
                 <View style={styles.info}>
                     <View style={styles.userDetails}>
-                        <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
-                            <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
-                        </Text>
+                        <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
+                            <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
+                                <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
+                            </Text>
+                        </CustomEmoji>
                     </View>
                     <View style={styles.tootTextContainer}>
-                        <Text style={styles.tootText}>{bodyFormat(content)}</Text>
+                        <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} emojis={emojis} sensitive={sensitive} />
                     </View>
                     <View style={styles.item}>
                         <Reply
@@ -107,6 +109,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                             onHide={HideAction}
                             onDeleting={DeleteAction}
                         />
+                        <Detail date={created_at} style={[styles.itemFlex,{fontWeight: "bold", fontSize: 15, color: theme.customColors.item.none}]} />
                     </View>
                 </View>
             </View>
@@ -231,7 +234,7 @@ const styles = StyleSheet.create({
     },
     item: {
         flex: 1,
-        paddingRight:60,
+        paddingRight:10,
         paddingTop: 5,
         paddingBottom: 5,
         flexDirection: "row"
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
     itemFlex: {
         flex: 1,
         paddingRight: 10,
-    },
+    }
 });
 
 export default MastoRow;

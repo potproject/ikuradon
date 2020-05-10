@@ -27,5 +27,13 @@ export function bodySearchUrl(body) {
 }
 
 export function dateFormat(date) {
-    return Moment(date).format("YYYY/MM/DD HH:mm:ss") + " - " + Moment(date).fromNow();
+    return Moment(date).fromNow(true);
+}
+
+export function emojisArrayToObject(emojis){
+    let emojiObject = {};
+    for (const emoji of emojis) {
+        emojiObject[emoji.shortcode] = { uri: emoji.url };
+    }
+    return emojiObject;
 }

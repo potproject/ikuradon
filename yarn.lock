@@ -6552,6 +6552,11 @@ react-native-actionsheet@^2.4.2:
   resolved "https://registry.yarnpkg.com/react-native-actionsheet/-/react-native-actionsheet-2.4.2.tgz#6a00dd51a75ef2c8974312130e405af73191500f"
   integrity sha512-DBoWIvVwuWXuptF4t46pBqkFxaUxS+rsIdHiA05t0n4BdTIDV2R4s9bLEUVOGzb94D7VxIamsXZPA/3mmw+SXg==
 
+react-native-customemoji@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-customemoji/-/react-native-customemoji-1.0.0.tgz#197559c0af92eca85cfaa2edffcfdb056bd1f6ad"
+  integrity sha512-28WR/u/PrHfzbVe1G4177RoSDNpX7/gevuJSYcUMW7i9CqICvYbQYgM36CudwjTY2DnEgph3ebmULeIfumYkqg==
+
 react-native-dropdownalert@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-4.2.1.tgz#e49ca7b37fde4582aaecc6d241828e907c18a520"

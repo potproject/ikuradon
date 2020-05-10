@@ -9,7 +9,8 @@ export default {
             boost: "#2b90d9",
             favourite: "#ffd27d",
             none: "#8899a6"
-        }
+        },
+        link: "#1b95e0",
     },
     colors: {
         primary: "#FF3300",
