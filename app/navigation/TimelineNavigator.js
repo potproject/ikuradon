@@ -1,5 +1,7 @@
 import * as React from "react";
 import TimelineScreen from "../screens/TimelineScreen";
+import NotificationsScreen from "../screens/NotificationsScreen";
+
 import ItemTabBar from "../components/ItemTabBar";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSelector } from "react-redux";
@@ -37,10 +39,10 @@ export default function TimelineNavigator() {
                     tabBarIcon: ({ color }) => (<ItemTabBar type={"federal"} name={"globe"} badgeCount={federal.newArrival} streamBadge={streaming.federal} color={color} size={26} />),
                 }} 
             />
-            <Tab.Screen name={RouterName.Timeline_Notifications} component={TimelineScreen} 
+            <Tab.Screen name={RouterName.Timeline_Notifications} component={NotificationsScreen} 
                 options={{
                     tabBarLabel: t("navigation_notifications"),
-                    tabBarIcon: ({ color }) => (<ItemTabBar name={"cogs"} badgeCount={notifications.newArrival} color={color} size={22} />),
+                    tabBarIcon: ({ color }) => (<ItemTabBar name={"bell"} badgeCount={notifications.newArrival} color={color} size={24} />),
                 }} 
             />
         </Tab.Navigator>

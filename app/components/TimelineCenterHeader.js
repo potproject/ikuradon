@@ -24,7 +24,9 @@ export default function TimelineCenterHeader({fixedTitle, onPress, current}){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "row"
+        flexDirection: "row",
+        paddingTop: 4,
+        paddingBottom: 4,
     },
     image:{
         width: 30,
