@@ -17,6 +17,7 @@ function MastoList({ type }) {
     const [init, setInit] = useState(false);
     const listdata = useSelector(MainReducerSelector)[type];
     const streaming = useSelector(StreamingReducerSelector)[type];
+    const current = useSelector(CurrentUserReducerSelector);
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
         dispatch(newLoadingTimeline(type, listdata.maxId));
@@ -29,7 +30,6 @@ function MastoList({ type }) {
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
         DetailAction: (id) => {dispatch(DetailAction(id))}
     };
-    const current = useSelector(CurrentUserReducerSelector);
     return (
         <View style={styles.container}>
             <FlatList
