@@ -36,6 +36,20 @@ const initialState = {
         maxId: null,
         newArrival: 0,
     },
+    favourites: {
+        data: [],
+        refreshing: false,
+        minId: null,
+        maxId: null,
+        newArrival: 0,
+    },
+    bookmarks: {
+        data: [],
+        refreshing: false,
+        minId: null,
+        maxId: null,
+        newArrival: 0,
+    },
 };
 
 export default function Main(state = initialState, action = {}) {

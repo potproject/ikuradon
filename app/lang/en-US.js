@@ -37,6 +37,12 @@ export default {
     // Timeline
     timeline_title: "Timeline",
     
+    // favourited
+    favourited_title: "Favourited",
+
+    // bookmarks
+    bookmarks_title: "Bookmarks",
+
     //AppInit
     appinit_title: "initialize...",
 

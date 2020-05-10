@@ -15,6 +15,9 @@ import { ThemeContext } from "react-native-elements";
 import { Divider } from "react-native-elements";
 
 import { FontAwesome } from "@expo/vector-icons";
+import t from "../services/I18n";
+
+import * as RouterName from "../constants/RouterName";
 
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
@@ -28,16 +31,16 @@ export default function DrawerContainer({navigation}){
                     onPress={() => navigation.navigate("Profile")}
                     source={{uri: user_credentials && user_credentials.avatar}}
                     style={styles.photo}/>
-                <CustomEmoji emojis={emojisArrayToObject(user_credentials.emojis)}>
+                <CustomEmoji emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
                     <Text style={[styles.userName, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
                 </CustomEmoji>
                 <Text style={[styles.userHandle, { color: theme.colors.grey0 }]}>{user_credentials && "@"+user_credentials.username}</Text>
                 <Text style={[styles.domain, { color: theme.colors.grey0 }]}>{domain}</Text>
                 <View>
-                    <Text style={[styles.followingCount, { color: theme.customColors.char }]}>{user_credentials.following_count}
+                    <Text style={[styles.followingCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.following_count}
                         <Text style={[styles.followingText, { color: theme.colors.grey0 }]}> Following</Text>
                     </Text>
-                    <Text style={[styles.followersCount, { color: theme.customColors.char }]}>{user_credentials.followers_count}
+                    <Text style={[styles.followersCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.followers_count}
                         <Text style={[styles.followersText, { color: theme.colors.grey0 }]}> Followers</Text>
                     </Text>
                 </View>
@@ -50,16 +53,22 @@ export default function DrawerContainer({navigation}){
                         <Text style={styles.text}> Direct Message </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.fixedList}>
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
+                    navigation.navigate(RouterName.Bookmarks);
+                }} >
                     <View>
                         <FontAwesome style={styles.icon} name='bookmark' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> Bookmarks </Text>
+                        <Text style={styles.text}> {t("bookmarks_title")} </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.fixedList}>
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
+                    navigation.navigate(RouterName.Favourites);
+                }} >
                     <View>
                         <FontAwesome style={styles.icon} name='star' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> Favourited </Text>
+                        <Text style={styles.text}> {t("favourited_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList}>

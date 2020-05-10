@@ -1,7 +1,10 @@
 import * as React from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 
-export default function TimelineCenterHeader({onPress, current}){
+export default function TimelineCenterHeader({fixedTitle, onPress, current}){
+    if(fixedTitle){
+        return <Text style={styles.fixedTitle}>{fixedTitle}</Text>;
+    }
     return(
         <TouchableOpacity
             onPress={onPress}>
@@ -35,5 +38,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#FFFFFF",
         alignSelf: "center"
+    },
+    fixedTitle:{
+        fontWeight: "bold",
+        color: "#FFFFFF",
+        alignSelf: "center",
+        fontSize: 18,
     }
 });

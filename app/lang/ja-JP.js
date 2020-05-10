@@ -37,6 +37,12 @@ export default {
     // タイムライン
     timeline_title: "タイムライン",
 
+    // お気に入り
+    favourited_title: "お気に入り",
+
+    // ブックマーク
+    bookmarks_title: "ブックマーク",
+
     //AppInit
     appinit_title: "初期化中...",
 

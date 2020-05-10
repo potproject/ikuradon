@@ -13,3 +13,6 @@ export const Timeline_Local = "Timeline_Local";
 export const Timeline_Federal = "Timeline_Federal";
 export const Timeline_Notifications = "Timeline_Notifications";
 export const Timeline_Setting = "Timeline_Setting";
+
+export const Favourites = "Favourites";
+export const Bookmarks = "Bookmarks";

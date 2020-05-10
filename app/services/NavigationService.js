@@ -21,7 +21,7 @@ function getDispatch() {
 
 // Back
 function back() {
-    _navigator.dispatch(CommonActions.back());
+    _navigator.dispatch(CommonActions.goBack());
 }
 
 // Navigate

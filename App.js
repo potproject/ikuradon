@@ -22,7 +22,7 @@ import * as RouterName from "./app/constants/RouterName";
 
 import AppInitScreen from "./app/screens/AppInitScreen";
 import LoginScreen from "./app/screens/LoginScreen";
-
+import TimelineScreen from "./app/screens/TimelineScreen";
 import t from "./app/services/I18n";
 
 import theme from "./app/themes/default";
@@ -78,6 +78,9 @@ export default function App(props) {
                                 <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
                                 <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
                                 <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ headerShown: false }} />
+                                <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
+                                <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
+
                             </Stack.Navigator>
                         </NavigationContainer>
                     </Provider>
