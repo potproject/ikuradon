@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function ItemTabBar({ name, badgeCount, streamBadge, color, size }) {
+import { ThemeContext } from "react-native-elements";
+
+function ItemTabBar({ name, badgeCount, streamBadge, color, size }) {
+    const { theme } = useContext(ThemeContext);
     return (
         <View style={{ width: 24, height: 24, margin: 5 }}>
             <FontAwesome name={name} size={size} color={color} />
@@ -13,7 +16,7 @@ export default function ItemTabBar({ name, badgeCount, streamBadge, color, size 
                         position: "absolute",
                         right: -6,
                         top: -3,
-                        backgroundColor: !streamBadge ? "red" : "#00CCFF",
+                        backgroundColor: !streamBadge ? theme.colors.primary : theme.customColors.primaryComplementary,
                         borderRadius: 6,
                         width: 12,
                         height: 12,
@@ -29,3 +32,5 @@ export default function ItemTabBar({ name, badgeCount, streamBadge, color, size 
         </View>
     );
 }
+
+export default ItemTabBar;

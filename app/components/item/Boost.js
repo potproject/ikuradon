@@ -1,41 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
-export default class Boost extends React.Component {
-    static propTypes = {
-        id: PropTypes.string,
-        tootid: PropTypes.string,
-        style: PropTypes.object,
-        reblogged: PropTypes.bool,
-        count: PropTypes.number,
-        disabled: PropTypes.bool,
+import { ThemeContext } from "react-native-elements";
 
-        onBoost: PropTypes.func
-    };
-    componentWillReceiveProps(nextProps) {
-        if (this.props.reblogged !== nextProps.reblogged) {
-            this.props.reblogged = nextProps.reblogged;
-        }
-        if (this.props.count !== nextProps.count) {
-            this.props.count = nextProps.count;
-        }
-    }
-    render() {
-        return (
-            <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={this.props.style} onPress={() => this.props.onBoost(this.props.id, this.props.tootid, !this.props.reblogged)} disabled={this.props.disabled}>
-                    <FontAwesome name={this.props.disabled ? "lock" : "retweet"} size={20} color={this.setColor(this.props.reblogged)} />
-                </TouchableOpacity>
-                <Text style={styles.text}>{this.props.count !== 0 ? this.props.count : ""}</Text>
-            </View>
-        );
-    }
-    setColor(reblogged) {
-        return reblogged === true ? "#2b90d9" : "#8899a6";
-    }
+export default function Boost({ id, tootid, style, reblogged, count, disabled, onBoost}){
+    const { theme } = useContext(ThemeContext);
+    return (
+        <View style={[style, styles.container]}>
+            <TouchableOpacity style={style} onPress={() => onBoost(id, tootid, !reblogged)} disabled={disabled}>
+                <FontAwesome name={disabled ? "lock" : "retweet"} size={20} color={reblogged === true ? theme.customColors.item.boost : theme.customColors.item.none} />
+            </TouchableOpacity>
+            <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
+        </View>
+    );
 }
+
+Boost.propTypes = {
+    id: PropTypes.string,
+    tootid: PropTypes.string,
+    style: PropTypes.object,
+    reblogged: PropTypes.bool,
+    count: PropTypes.number,
+    disabled: PropTypes.bool,
+    onBoost: PropTypes.func
+};
 
 const styles = StyleSheet.create({
     container: {

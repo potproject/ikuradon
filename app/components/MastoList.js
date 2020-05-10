@@ -36,7 +36,7 @@ function MastoList({ type }) {
                 keyExtractor={data => data.id}
                 data={listdata.data}
                 refreshControl={<RefreshControl enabled={!streaming} refreshing={listdata.refreshing} onRefresh={() => !streaming && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
-                renderItem={data => MastoRow(data.item, current, actions)}
+                renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
             />
         </View>

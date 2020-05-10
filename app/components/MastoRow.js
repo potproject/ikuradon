@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
@@ -13,14 +13,18 @@ import Boost from "./item/Boost";
 import Favourite from "./item/Favourite";
 import Action from "./item/Action";
 
-const MastoRow = (
+import { ThemeContext } from "react-native-elements";
+
+const MastoRow = ({ navigation, item, current, actions }) => {
     // Toot data
-    { navigation, id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility},
+    let { id, created_at, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility} = item;
     // current
-    { user_credentials, domain, access_token, notification_count, instance },
+    let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction },
-) => {
+    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction } = actions;
+    // Theme
+    const { theme } = useContext(ThemeContext);
+
     let rebloggedName = "";
     let tootID = id;
     if(reblog){
@@ -31,13 +35,13 @@ const MastoRow = (
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
-        <View key={id} style={styles.container}>
+        <View key={id} style={[styles.container,{backgroundColor: theme.colors.backgroundColor}]}>
             { reblog &&
                 <View style={styles.isReplyContainer}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
-                        <FontAwesome name={"retweet"} size={16} color={"#2b90d9"} style={{marginRight:5}}/>
+                        <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color:"#8899a6"}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
+                    <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
                 </View>
             }
             <View style={styles.innerContainer}>
@@ -109,40 +113,53 @@ const MastoRow = (
         </View>
     );
 };
-
 MastoRow.propTypes = {
-    id: PropTypes.number.isRequired,
-    created_at: PropTypes.number,
-    in_reply_to_id: PropTypes.number,
-    in_reply_to_account_id: PropTypes.number,
-    sensitive: PropTypes.bool,
-    spoiler_text: PropTypes.string,
-    visibility: PropTypes.string,
-    uri: PropTypes.string,
-    url: PropTypes.string,
-    replies_count: PropTypes.number,
-    reblogs_count: PropTypes.number,
-    favourites_count: PropTypes.number,
-    favourited: PropTypes.bool,
-    reblogged: PropTypes.bool,
-    muted: PropTypes.bool,
-    bookmarked: PropTypes.bool,
-    content: PropTypes.string,
-    reblog: PropTypes.any,
-    application: PropTypes.object,
-    account: PropTypes.object,
-    media_attachments: PropTypes.array,
-    mentions: PropTypes.array,
-    tags: PropTypes.array,
-    emojis: PropTypes.array,
-    card: PropTypes.object,
-    poll: PropTypes.any,
+    navigation: PropTypes.any,
+    item: PropTypes.shape(
+        {
+            id: PropTypes.string.isRequired,
+            created_at: PropTypes.string,
+            in_reply_to_id: PropTypes.string,
+            in_reply_to_account_id: PropTypes.string,
+            sensitive: PropTypes.bool,
+            spoiler_text: PropTypes.string,
+            visibility: PropTypes.string,
+            uri: PropTypes.string,
+            url: PropTypes.string,
+            replies_count: PropTypes.number,
+            reblogs_count: PropTypes.number,
+            favourites_count: PropTypes.number,
+            favourited: PropTypes.bool,
+            reblogged: PropTypes.bool,
+            muted: PropTypes.bool,
+            bookmarked: PropTypes.bool,
+            content: PropTypes.string,
+            reblog: PropTypes.any,
+            application: PropTypes.object,
+            account: PropTypes.object,
+            media_attachments: PropTypes.array,
+            mentions: PropTypes.array,
+            tags: PropTypes.array,
+            emojis: PropTypes.array,
+            card: PropTypes.object,
+            poll: PropTypes.any,
+        }
+    ),
+    current: PropTypes.shape(
+        {
+            user_credentials: PropTypes.object,
+            domain: PropTypes.string,
+            access_token: PropTypes.string,
+            notification_count: PropTypes.number,
+            instance: PropTypes.object
+        }
+    ),
+    actions: PropTypes.object
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFFFFF",
         paddingTop: 8,
         paddingBottom: 5
     },

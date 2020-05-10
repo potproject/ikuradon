@@ -1,40 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
-export default class Favourite extends React.Component {
-    static propTypes = {
-        id: PropTypes.string,
-        tootid: PropTypes.string,
-        style: PropTypes.object,
-        favourited: PropTypes.bool,
-        count: PropTypes.number,
+import { ThemeContext } from "react-native-elements";
 
-        onFavourite: PropTypes.func
-    };
-    componentWillReceiveProps(nextProps) {
-        if (this.props.favourited !== nextProps.favourited) {
-            this.props.favourited = nextProps.favourited;
-        }
-        if (this.props.count !== nextProps.count) {
-            this.props.count = nextProps.count;
-        }
-    }
-    render() {
-        return (
-            <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={[this.props.style, { flex: 1 }]} onPress={() => this.props.onFavourite(this.props.id, this.props.tootid, !this.props.favourited)}>
-                    <FontAwesome name="star" size={20} color={this.setColor(this.props.favourited)} />
-                </TouchableOpacity>
-                <Text style={styles.text}>{this.props.count !== 0 ? this.props.count : ""}</Text>
-            </View>
-        );
-    }
-    setColor(favourited) {
-        return favourited ? "#ffd27d" : "#8899a6";
-    }
+export default function Favourite({id, tootid, style, favourited, count, onFavourite}){
+    const { theme } = useContext(ThemeContext);
+    return (
+        <View style={[style, styles.container]}>
+            <TouchableOpacity style={[style, { flex: 1 }]} onPress={() => onFavourite(id, tootid, !favourited)}>
+                <FontAwesome name="star" size={20} color={favourited ? theme.customColors.item.favourite : theme.customColors.item.none} />
+            </TouchableOpacity>
+            <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
+        </View>
+    );
 }
+
+Favourite.propTypes = {
+    id: PropTypes.string,
+    tootid: PropTypes.string,
+    style: PropTypes.object,
+    favourited: PropTypes.bool,
+    count: PropTypes.number,
+    onFavourite: PropTypes.func
+};
 
 const styles = StyleSheet.create({
     container: {
