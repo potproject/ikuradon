@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { useContext, useMemo } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
@@ -36,33 +36,38 @@ const MastoRow = ({ navigation, item, current, actions }) => {
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
-            { reblog &&
+            { reblog && useMemo(() =>
                 <View style={styles.isReplyContainer}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{marginRight:5}}/>
                     </View>
                     <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
                 </View>
-            }
+            , [rebloggedName])}
             <View style={styles.innerContainer}>
                 <View style={styles.photoContainer}>
-                    <View style={styles.innerPhotoContainer}>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate("Profile")}>
-                            <Image
-                                source={{uri: account.avatar}}
-                                style={styles.photo}/>
-                        </TouchableOpacity>
-                    </View>
+                    { useMemo(() =>
+                        <View style={styles.innerPhotoContainer}>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate("Profile")}>
+                                <Image
+                                    source={{uri: account.avatar}}
+                                    style={styles.photo}/>
+                            </TouchableOpacity>
+                        </View>
+                    , [account])}
                 </View>
                 <View style={styles.info}>
-                    <View style={styles.userDetails}>
-                        <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
-                            <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
-                                <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
-                            </Text>
-                        </CustomEmoji>
-                    </View>
+                    { useMemo(() =>
+                        <View style={styles.userDetails}>
+                            <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
+                                <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
+                                    <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
+                                </Text>
+                            </CustomEmoji>
+                        </View>
+                    , [account])
+                    }
                     <View style={styles.tootTextContainer}>
                         <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} emojis={emojis} sensitive={sensitive} />
                     </View>
