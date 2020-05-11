@@ -25,6 +25,7 @@ export default {
     setting_header_instance: "サーバ情報",
 
     //Drawer
+    drawer_posts: "投稿",
     drawer_following: "フォロー",
     drawer_follower: "フォロワー",
 
@@ -41,14 +42,17 @@ export default {
     // タイムライン
     timeline_title: "タイムライン",
 
+    // DM
+    directmessage_title: "ダイレクトメッセージ",
+        
     // お気に入り
     favourited_title: "お気に入り",
 
-    // DM
-    directmessage_title: "ダイレクトメッセージ",
-
     // ブックマーク
     bookmarks_title: "ブックマーク",
+
+    // 設定
+    settings_title: "設定",
 
     //AppInit
     appinit_title: "初期化中...",

@@ -37,10 +37,13 @@ export default function DrawerContainer({navigation}){
                 <Text style={[styles.userHandle, { color: theme.colors.grey0 }]}>{user_credentials && "@"+user_credentials.username}</Text>
                 <Text style={[styles.domain, { color: theme.colors.grey0 }]}>{domain}</Text>
                 <View>
-                    <Text style={[styles.followingCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.following_count}
+                    <Text style={[styles.postsCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.statuses_count.toLocaleString()}
+                        <Text style={[styles.postsText, { color: theme.colors.grey0 }]}> {t("drawer_posts")}</Text>
+                    </Text>
+                    <Text style={[styles.followingCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.following_count.toLocaleString()}
                         <Text style={[styles.followingText, { color: theme.colors.grey0 }]}> {t("drawer_following")}</Text>
                     </Text>
-                    <Text style={[styles.followersCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.followers_count}
+                    <Text style={[styles.followersCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.followers_count.toLocaleString()}
                         <Text style={[styles.followersText, { color: theme.colors.grey0 }]}> {t("drawer_follower")}</Text>
                     </Text>
                 </View>
@@ -78,7 +81,7 @@ export default function DrawerContainer({navigation}){
                 <TouchableOpacity style={styles.fixedList}>
                     <View>
                         <FontAwesome style={styles.icon} name='cog' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> Setting </Text>
+                        <Text style={styles.text}> {t("settings_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList}>
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
     profile:{
         paddingBottom: 30,
         paddingLeft: 30,
-        marginBottom: 20
+        marginBottom: 40
     },
     photo: {
         width: 50,
@@ -142,10 +145,19 @@ const styles = StyleSheet.create({
         marginTop: 2,
         fontWeight: "300"
     },
-    followingCount:{
+    postsCount:{
         position: "absolute",
         left: 0,
         top: 10,
+        fontWeight: "bold"
+    },
+    postsText:{
+        fontWeight: "300"
+    },
+    followingCount:{
+        position: "absolute",
+        left: 0,
+        top: 40,
         fontWeight: "bold"
     },
     followingText:{
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
     followersCount:{
         position: "absolute",
         right: 40,
-        top: 10,
+        top: 40,
         fontWeight: "bold"
     },
     followersText:{

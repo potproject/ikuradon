@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Image } from "react-native-elements";
 import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
 import { bodyFormat, dateFormat, bodySearchUrl, emojisArrayToObject } from "../util/parser";

@@ -25,6 +25,7 @@ export default {
     setting_header_instance: "Server Information",
 
     //Drawer
+    drawer_posts: "Post",
     drawer_following: "Following",
     drawer_follower: "Followers",
 
@@ -41,14 +42,17 @@ export default {
     // Timeline
     timeline_title: "Timeline",
     
+    // DM
+    directmessage_title: "Direct Message",
+
     // favourited
     favourited_title: "Favourited",
 
     // bookmarks
     bookmarks_title: "Bookmarks",
 
-    // DM
-    directmessage_title: "Direct Message",
+    // Settings
+    settings_title: "Settings",
 
     //AppInit
     appinit_title: "initialize...",
