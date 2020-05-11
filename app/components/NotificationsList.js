@@ -33,7 +33,8 @@ function NotificationsList({ type }) {
     return (
         <View style={styles.container}>
             <FlatList
-                keyExtractor={data => data.id}
+                keyExtractor={data => data.type + data.id}
+                removeClippedSubviews={true}
                 data={favouriteAndBoost}
                 refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} />}

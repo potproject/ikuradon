@@ -30,8 +30,8 @@ const NotificationsRow = ({ navigation, item, current, actions }) => {
                         {boostAccounts.map((account, i) => {
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
-                                <View style={styles.photoMargin}>
-                                    <Image key={i} style={styles.photo} source={{uri: account.avatar}} />
+                                <View key={i} style={styles.photoMargin}>
+                                    <Image style={styles.photo} source={{uri: account.avatar}} />
                                 </View>
                             );
                         })
@@ -48,8 +48,8 @@ const NotificationsRow = ({ navigation, item, current, actions }) => {
                         {favouriteAccounts.map((account, i) => {
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
-                                <View style={styles.photoMargin}>
-                                    <Image key={i} style={styles.photo} source={{uri: account.avatar}} />
+                                <View key={i} style={styles.photoMargin}>
+                                    <Image style={styles.photo} source={{uri: account.avatar}} />
                                 </View>
                             );
                         })

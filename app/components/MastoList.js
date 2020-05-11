@@ -34,6 +34,7 @@ function MastoList({ type }) {
         <View style={styles.container}>
             <FlatList
                 keyExtractor={data => data.id}
+                removeClippedSubviews={true}
                 data={listdata.data}
                 refreshControl={<RefreshControl enabled={!streaming} refreshing={listdata.refreshing} onRefresh={() => !streaming && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
