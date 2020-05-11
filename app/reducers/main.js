@@ -11,6 +11,7 @@ const initialState = {
     home: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
@@ -18,6 +19,7 @@ const initialState = {
     local: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
@@ -25,6 +27,7 @@ const initialState = {
     federal: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
@@ -32,6 +35,7 @@ const initialState = {
     notifications: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
@@ -39,6 +43,7 @@ const initialState = {
     favourites: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
@@ -75,6 +80,7 @@ export default function Main(state = initialState, action = {}) {
                 [reducerType]: {
                     data,
                     refreshing: false,
+                    loading: false,
                     minId,
                     maxId,
                     newArrival
@@ -91,6 +97,7 @@ export default function Main(state = initialState, action = {}) {
                 [action.reducerType]: {
                     data: state[action.reducerType].data,
                     refreshing: true,
+                    loading: true,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
                     newArrival: state[action.reducerType].newArrival
@@ -101,6 +108,29 @@ export default function Main(state = initialState, action = {}) {
                 [action.reducerType]: {
                     data: state[action.reducerType].data,
                     refreshing: false,
+                    loading: false,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
+            });
+        case MainActionTypes.LOADING_MASTOLIST:
+            return Object.assign({}, state, {
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: false,
+                    loading: true,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
+            });
+        case MainActionTypes.STOP_LOADING_MASTOLIST:
+            return Object.assign({}, state, {
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: false,
+                    loading: false,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
                     newArrival: state[action.reducerType].newArrival

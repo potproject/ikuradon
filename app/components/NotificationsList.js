@@ -7,8 +7,9 @@ import { reply as ReplyAction, hide as HideAction, deleting as DeleteAction, det
 import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
 
 import NotificationsRow from "./NotificationsRow";
-import { newLoadingTimeline } from "../actions/actioncreators/main";
+import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
+
 const MainReducerSelector = state => state.mainReducer;
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
@@ -29,15 +30,21 @@ function NotificationsList({ type }) {
         setInit(true);
         dispatch(newLoadingTimeline(type, listdata.maxId));
     }
-    const { favouriteAndBoost } = notificationParse(listdata.data);
+    const newNotifications = notificationParse(listdata.data);
     return (
         <View style={styles.container}>
             <FlatList
                 keyExtractor={data => data.type + data.id}
-                data={favouriteAndBoost}
+                data={newNotifications}
                 refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
+                onEndReachedThreshold={1.5}
+                onEndReached={() => {
+                    if(!init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                        dispatch(oldLoadingTimeline(type, listdata.minId));
+                    }
+                }}
             />
         </View>
     );

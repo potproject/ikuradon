@@ -27,9 +27,11 @@ const MastoRow = ({ navigation, item, current, actions }) => {
     // Theme
     const { theme } = useContext(ThemeContext);
     let rebloggedName = "";
+    let reblogEmojis = [];
     let tootID = id;
     if(reblog){
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
+        reblogEmojis = account.emojis;
         tootID = reblog.id;
         content = reblog.content;
         account = reblog.account;
@@ -42,7 +44,9 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
+                    <CustomEmoji style={{flex:0.82}} emojis={emojisArrayToObject(reblogEmojis)}>
+                        <Text style={{color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
+                    </CustomEmoji>
                 </View>
             , [rebloggedName])}
             <View style={styles.innerContainer}>

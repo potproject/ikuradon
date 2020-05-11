@@ -73,7 +73,7 @@ export function newLoadingTimeline(reducerType, since_id, limit = 40) {
 
 export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
     return async dispatch => {
-        dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
+        dispatch({ type: Main.LOADING_MASTOLIST, reducerType });
         let data;
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
@@ -81,6 +81,7 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"),e.message);
+            dispatch({ type: Main.STOP_LOADING_MASTOLIST, reducerType });
         }
     };
 }
