@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
 import { ThemeContext } from "react-native-elements";
 
-export default function Favourite({id, tootid, style, favourited, count, onFavourite}){
+function Favourite({id, tootid, style, favourited, count, onFavourite}){
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
@@ -37,3 +37,5 @@ const styles = StyleSheet.create({
         color: "gray"
     }
 });
+
+export default memo(Favourite, (p, n) => p.id === n.id && p.favourited === n.favourited);

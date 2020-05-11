@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
@@ -244,5 +244,4 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     }
 });
-
 export default MastoRow;

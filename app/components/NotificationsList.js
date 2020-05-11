@@ -34,7 +34,6 @@ function NotificationsList({ type }) {
         <View style={styles.container}>
             <FlatList
                 keyExtractor={data => data.type + data.id}
-                removeClippedSubviews={true}
                 data={favouriteAndBoost}
                 refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} />}

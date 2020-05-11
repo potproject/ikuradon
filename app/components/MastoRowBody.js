@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { bodyFormat, bodySearchUrl, emojisArrayToObject } from "../util/parser";
 import {open as openUrl} from "../util/url";
 import { Text } from "react-native";
 import Hyperlink from "react-native-hyperlink";
 import CustomEmoji from "react-native-customemoji";
 
-export default function MastoRowBody({content, style, linkStyle, emojis, sensitive}){
+function MastoRowBody({content, style, linkStyle, emojis, sensitive}){
     let newContent = bodyFormat(content);
     let existsURL = bodySearchUrl(newContent);
     let emojiObject = emojisArrayToObject(emojis);
@@ -36,3 +36,5 @@ export default function MastoRowBody({content, style, linkStyle, emojis, sensiti
         <Text style={style}>{newContent}</Text>
     );
 }
+
+export default memo(MastoRowBody, (p, n) => p.content === n.content);

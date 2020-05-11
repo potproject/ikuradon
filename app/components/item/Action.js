@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { TouchableOpacity, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ActionSheet from "react-native-actionsheet";
@@ -7,7 +7,7 @@ import {open as openUrl} from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 
-export default class Action extends React.Component {
+class Action extends React.Component {
     static propTypes = {
         id: PropTypes.string,
         tootid: PropTypes.string,
@@ -100,3 +100,5 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     }
 });
+
+export default memo(Action, (p, n) => p.id === n.id);

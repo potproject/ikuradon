@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
 import { ThemeContext } from "react-native-elements";
 
-export default function Boost({ id, tootid, style, reblogged, count, disabled, onBoost}){
+function Boost(props){
+    const { id, tootid, style, reblogged, count, disabled, onBoost} = props;
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
@@ -38,3 +39,5 @@ const styles = StyleSheet.create({
         color: "gray"
     }
 });
+
+export default memo(Boost, (p, n) => p.id === n.id && p.reblogged === n.reblogged);

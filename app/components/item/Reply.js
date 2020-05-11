@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
 import { ThemeContext } from "react-native-elements";
 
-export default function Reply({ id, tootid, user, acct, image, body, style, onReply }){
+function Reply({ id, tootid, user, acct, image, body, style, onReply }){
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
@@ -34,3 +34,5 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     }
 });
+
+export default memo(Reply, (p, n) => p.id === n.id);
