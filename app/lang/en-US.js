@@ -24,6 +24,10 @@ export default {
     setting_header_visible: "Visible",
     setting_header_instance: "Server Information",
 
+    //Drawer
+    drawer_following: "Following",
+    drawer_follower: "Followers",
+
     //Navigations
     navigation_home: "Home",
     navigation_local: "Local",
@@ -42,6 +46,9 @@ export default {
 
     // bookmarks
     bookmarks_title: "Bookmarks",
+
+    // DM
+    directmessage_title: "Direct Message",
 
     //AppInit
     appinit_title: "initialize...",

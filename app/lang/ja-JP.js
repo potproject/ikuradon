@@ -24,6 +24,10 @@ export default {
     setting_header_visible: "表示",
     setting_header_instance: "サーバ情報",
 
+    //Drawer
+    drawer_following: "フォロー",
+    drawer_follower: "フォロワー",
+
     //ナビゲーション
     navigation_home: "ホーム",
     navigation_local: "ローカル",
@@ -39,6 +43,9 @@ export default {
 
     // お気に入り
     favourited_title: "お気に入り",
+
+    // DM
+    directmessage_title: "ダイレクトメッセージ",
 
     // ブックマーク
     bookmarks_title: "ブックマーク",

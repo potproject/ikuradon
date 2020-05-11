@@ -38,21 +38,25 @@ export default function DrawerContainer({navigation}){
                 <Text style={[styles.domain, { color: theme.colors.grey0 }]}>{domain}</Text>
                 <View>
                     <Text style={[styles.followingCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.following_count}
-                        <Text style={[styles.followingText, { color: theme.colors.grey0 }]}> Following</Text>
+                        <Text style={[styles.followingText, { color: theme.colors.grey0 }]}> {t("drawer_following")}</Text>
                     </Text>
                     <Text style={[styles.followersCount, { color: theme.customColors.char }]}>{user_credentials && user_credentials.followers_count}
-                        <Text style={[styles.followersText, { color: theme.colors.grey0 }]}> Followers</Text>
+                        <Text style={[styles.followersText, { color: theme.colors.grey0 }]}> {t("drawer_follower")}</Text>
                     </Text>
                 </View>
             </View>
             <Divider />
             <View style={styles.fixedListContainer}>
-                <TouchableOpacity style={styles.fixedList}>
+                { /*
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
+                }} >
                     <View>
                         <FontAwesome style={styles.icon} name='envelope' size={18} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> Direct Message </Text>
+                        <Text style={styles.text}> {t("directmessage_title")} </Text>
                     </View>
                 </TouchableOpacity>
+                */ }
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();
                     navigation.navigate(RouterName.Bookmarks);
