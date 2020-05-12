@@ -15,10 +15,11 @@ import Action from "./item/Action";
 
 import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
+import MastoRowImage from "./MastoRowImage";
 
 const MastoRow = ({ navigation, item, current, actions }) => {
     // Toot data
-    let { id, created_at, sensitive, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = item;
+    let { id, created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
@@ -74,9 +75,14 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                         </View>
                     , [account])
                     }
-                    <View style={styles.tootTextContainer}>
+                    <View style={styles.tootContainer}>
                         <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} emojis={emojis} sensitive={sensitive} />
                     </View>
+                    { media_attachments && media_attachments.length > 0 &&
+                    <View style={styles.tootContainer}>
+                        <MastoRowImage mediaAttachments={media_attachments} />
+                    </View>
+                    }
                     <View style={styles.item}>
                         <Reply
                             id={id}
@@ -200,7 +206,8 @@ const styles = StyleSheet.create({
         borderWidth: 0
     },
     innerPhotoContainer: { 
-        height: 50, alignItems: "center"
+        height: 50,
+        alignItems: "center"
     },
     photo: {
         width: 50,
@@ -225,7 +232,7 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         fontSize: 15,
     },
-    tootTextContainer: { 
+    tootContainer: { 
         flex: 1, 
         borderWidth: 0,
         marginTop:2,
