@@ -25,20 +25,21 @@ const MastoRow = ({ navigation, item, current, actions }) => {
     let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
+    let reblogFlag = false;
     let rebloggedName = "";
     let reblogEmojis = [];
     let tootID = id;
     if(reblog){
+        reblogFlag = true;
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
-        content = reblog.content;
-        account = reblog.account;
+        ({ created_at, sensitive, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = reblog);
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
-            { reblog && useMemo(() =>
+            { reblogFlag && useMemo(() =>
                 <View style={styles.isReplyContainer}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{marginRight:5}}/>
@@ -256,9 +257,11 @@ const styles = StyleSheet.create({
     }
 });
 export default memo(MastoRow, (p, n) => {
+    // TODO: boostもmemoしたい
     return p.item.id === n.item.id &&
     p.item.reblogged === n.item.reblogged &&
     p.item.reblogs_count === n.item.reblogs_count &&
     p.item.favourited === n.item.favourited &&
-    p.item.favourites_count === n.item.favourited;
+    p.item.favourites_count === n.item.favourites_count &&
+    p.item.reblog === null;
 });
