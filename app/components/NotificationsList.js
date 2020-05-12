@@ -10,14 +10,16 @@ import NotificationsRow from "./NotificationsRow";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
 
-const MainReducerSelector = state => state.mainReducer;
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+const CurrentUserReducerSelector = state => ({
+    current: state.currentUserReducer,
+    main: state.mainReducer
+});
 
 function NotificationsList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const listdata = useSelector(MainReducerSelector)[type];
-    const current = useSelector(CurrentUserReducerSelector);
+    const { current, main } = useSelector(CurrentUserReducerSelector);
+    const listdata = main[type];
     const actions = {
         ReplyAction: (id, tootid, user, acct, image, body) => {dispatch(ReplyAction(id, tootid, user, acct, image, body))},
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},

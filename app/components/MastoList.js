@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Modal } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
+import ImageViewer from "react-native-image-zoom-viewer";
 import MastoRow from "../components/MastoRow";
-
 import { reply as ReplyAction, hide as HideAction, deleting as DeleteAction, detail as DetailAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
 
 import { newLoadingTimeline } from "../actions/actioncreators/main";
-const MainReducerSelector = state => state.mainReducer;
-const CurrentUserReducerSelector = state => state.currentUserReducer;
-const StreamingReducerSelector = state => state.streamingReducer;
+const reducerSelector = state => ({
+    current: state.currentUserReducer,
+    main: state.mainReducer,
+    streaming: state.streamingReducer,
+});
 
 function MastoList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const listdata = useSelector(MainReducerSelector)[type];
-    const streaming = useSelector(StreamingReducerSelector)[type];
-    const current = useSelector(CurrentUserReducerSelector);
+    const { current, main, streaming } = useSelector(reducerSelector);
+    const listdata = main[type];
+    const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
         dispatch(newLoadingTimeline(type, listdata.maxId));
@@ -35,7 +37,7 @@ function MastoList({ type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
-                refreshControl={<RefreshControl enabled={!streaming} refreshing={listdata.refreshing} onRefresh={() => !streaming && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
+                refreshControl={<RefreshControl enabled={!streamingType} refreshing={listdata.refreshing} onRefresh={() => !streamingType && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
             />
