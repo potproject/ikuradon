@@ -3,11 +3,15 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { Image } from "react-native-elements";
 
-function MastoRowImage({style, mediaAttachments}){
+function MastoRowImage({style, mediaAttachments, openImageViewer, closeImageViewerAction}){
     return (
         <View style={[styles.container,style]}>
             { mediaAttachments.map((media, i) => {
-                return <Image key={i} source={{uri: media.preview_url}} style={styles.photo}/>;
+                return (
+                    <TouchableOpacity key={i} onPress={() => openImageViewer(mediaAttachments, i)}>
+                        <Image source={{uri: media.preview_url}} style={styles.photo}/>
+                    </TouchableOpacity>
+                );
             })}
         </View>
     );

@@ -39,8 +39,3 @@ export function favourite(id, tootid, favourited) {
         return;
     };
 }
-
-export function mediaOpen(media_attachments, index) {
-    NavigationService.navigate({ name: RouterName.MediaViewer, params: { media_attachments, index } });
-    return { type: Nav.NAV_MEDIAVIEWER };
-}

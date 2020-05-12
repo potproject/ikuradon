@@ -23,7 +23,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction, openImageViewerAction, closeImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -80,7 +80,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                     </View>
                     { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>
-                        <MastoRowImage mediaAttachments={media_attachments} />
+                        <MastoRowImage mediaAttachments={media_attachments} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
                     </View>
                     }
                     <View style={styles.item}>

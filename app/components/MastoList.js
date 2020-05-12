@@ -6,18 +6,20 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import MastoRow from "../components/MastoRow";
 import { reply as ReplyAction, hide as HideAction, deleting as DeleteAction, detail as DetailAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
+import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
 
 import { newLoadingTimeline } from "../actions/actioncreators/main";
 const reducerSelector = state => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
     streaming: state.streamingReducer,
+    imageviewer: state.imageViewerReducer,
 });
 
 function MastoList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main, streaming } = useSelector(reducerSelector);
+    const { current, main, streaming, imageviewer } = useSelector(reducerSelector);
     const listdata = main[type];
     const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
@@ -30,7 +32,9 @@ function MastoList({ type }) {
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
-        DetailAction: (id) => {dispatch(DetailAction(id))}
+        DetailAction: (id) => {dispatch(DetailAction(id))},
+        openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
+        closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
     };
     return (
         <View style={styles.container}>
@@ -41,6 +45,11 @@ function MastoList({ type }) {
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
             />
+            <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
+                <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
+                    enableSwipeDown={true}
+                    onSwipeDown={() => { actions.closeImageViewerAction()}} />
+            </Modal>
         </View>
     );
 }

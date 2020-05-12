@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import { Text, StyleSheet, View, FlatList, RefreshControl, Modal } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 import { reply as ReplyAction, hide as HideAction, deleting as DeleteAction, detail as DetailAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
@@ -9,16 +10,18 @@ import { boost as BoostAction, favourite as FavouriteAction } from "../actions/a
 import NotificationsRow from "./NotificationsRow";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
+import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
 
 const CurrentUserReducerSelector = state => ({
     current: state.currentUserReducer,
-    main: state.mainReducer
+    main: state.mainReducer,
+    imageviewer: state.imageViewerReducer,
 });
 
 function NotificationsList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main } = useSelector(CurrentUserReducerSelector);
+    const { current, main, imageviewer } = useSelector(CurrentUserReducerSelector);
     const listdata = main[type];
     const actions = {
         ReplyAction: (id, tootid, user, acct, image, body) => {dispatch(ReplyAction(id, tootid, user, acct, image, body))},
@@ -26,7 +29,9 @@ function NotificationsList({ type }) {
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
-        DetailAction: (id) => {dispatch(DetailAction(id))}
+        DetailAction: (id) => {dispatch(DetailAction(id))},
+        openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
+        closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
     };
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
@@ -48,6 +53,11 @@ function NotificationsList({ type }) {
                     }
                 }}
             />
+            <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
+                <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
+                    enableSwipeDown={true}
+                    onSwipeDown={() => { actions.closeImageViewerAction()}} />
+            </Modal>
         </View>
     );
 }

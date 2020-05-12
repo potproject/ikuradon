@@ -7,6 +7,7 @@ import streamingReducer from "./streaming";
 import currentUserReducer from "./currentuser";
 import configReducer from "./config";
 import tootReducer from "./toot";
+import imageViewerReducer from "./imageviewer";
 // ... other reducers
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
     currentUserReducer,
     configReducer,
     tootReducer,
+    imageViewerReducer
     // ... other reducers
 });
