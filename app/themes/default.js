@@ -17,7 +17,7 @@ export default {
         //secondary;
         grey0: "#657786",
         grey1: "#2b90d9",
-        //grey2;
+        grey2: "#8899a6",
         //grey3;
         //grey4;
         //grey5;

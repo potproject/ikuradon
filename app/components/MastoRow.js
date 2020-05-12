@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, memo } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from "react-native-elements";
 import PropTypes from "prop-types";
@@ -15,7 +15,6 @@ import Action from "./item/Action";
 
 import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
-import Detail from "./item/Detail";
 
 const MastoRow = ({ navigation, item, current, actions }) => {
     // Toot data
@@ -49,6 +48,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                     </CustomEmoji>
                 </View>
             , [rebloggedName])}
+            <View style={styles.date}><Text style={{fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>{dateFormat(created_at)}</Text></View>
             <View style={styles.innerContainer}>
                 <View style={styles.photoContainer}>
                     { useMemo(() =>
@@ -67,7 +67,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                         <View style={styles.userDetails}>
                             <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
                                 <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
-                                    <Text style={styles.userHandleAndTime}>{" @"+account.acct}</Text>
+                                    <Text style={[styles.userHandleAndTime,{color: theme.colors.grey2}]}>{" @"+account.acct}</Text>
                                 </Text>
                             </CustomEmoji>
                         </View>
@@ -119,7 +119,6 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                             onHide={HideAction}
                             onDeleting={DeleteAction}
                         />
-                        <Detail date={created_at} style={[styles.itemFlex,{fontWeight: "bold", fontSize: 15, color: theme.customColors.item.none}]} />
                     </View>
                 </View>
             </View>
@@ -183,6 +182,9 @@ const styles = StyleSheet.create({
         height: 20,
         marginTop: 2
     },
+    date: {
+        marginRight: 10,
+    },
     innerContainer: {
         flex: 1,
         borderColor: "green",
@@ -219,7 +221,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     userHandleAndTime: {
-        color: "#8899a6",
         fontWeight: "normal",
         fontSize: 15,
     },
@@ -254,4 +255,10 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     }
 });
-export default MastoRow;
+export default memo(MastoRow, (p, n) => {
+    return p.item.id === n.item.id &&
+    p.item.reblogged === n.item.reblogged &&
+    p.item.reblogs_count === n.item.reblogs_count &&
+    p.item.favourited === n.item.favourited &&
+    p.item.favourites_count === n.item.favourited;
+});

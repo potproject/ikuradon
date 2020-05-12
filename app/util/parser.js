@@ -27,7 +27,7 @@ export function bodySearchUrl(body) {
 }
 
 export function dateFormat(date) {
-    return Moment(date).fromNow(true);
+    return Moment(date).format("YYYY/MM/DD HH:mm:ss");
 }
 
 export function emojisArrayToObject(emojis){

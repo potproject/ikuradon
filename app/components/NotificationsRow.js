@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import MastoRow from "../components/MastoRow";
 import { emojisArrayToObject } from "../util/parser";
 
@@ -9,7 +9,7 @@ import CustomEmoji from "react-native-customemoji";
 import { NEW_NOTIFICATION_TYPE } from "../util/notification";
 
 import { FontAwesome } from "@expo/vector-icons";
-import { ThemeContext } from "react-native-elements";
+import { ThemeContext, Image } from "react-native-elements";
 
 const NotificationsRow = ({ item, current, actions }) => {
     const {id, type } = item;
