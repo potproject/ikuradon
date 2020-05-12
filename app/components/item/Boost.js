@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { useContext, useState, memo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -7,11 +7,15 @@ import { ThemeContext } from "react-native-elements";
 
 function Boost(props){
     const { id, tootid, style, reblogged, count, disabled, onBoost} = props;
+    const [stateReblogged, useStateReblogged] = useState(reblogged);
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
-            <TouchableOpacity style={style} onPress={() => onBoost(id, tootid, !reblogged)} disabled={disabled}>
-                <FontAwesome name={disabled ? "lock" : "retweet"} size={20} color={reblogged === true ? theme.customColors.item.boost : theme.customColors.item.none} />
+            <TouchableOpacity style={style} disabled={disabled} onPress={() => {
+                useStateReblogged(!stateReblogged);
+                onBoost(id, tootid, !stateReblogged);
+            }}>
+                <FontAwesome name={disabled ? "lock" : "retweet"} size={20} color={stateReblogged === true ? theme.customColors.item.boost : theme.customColors.item.none} />
             </TouchableOpacity>
             <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
         </View>

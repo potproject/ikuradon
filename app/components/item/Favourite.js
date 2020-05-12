@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { useContext, useState, memo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -6,11 +6,15 @@ import PropTypes from "prop-types";
 import { ThemeContext } from "react-native-elements";
 
 function Favourite({id, tootid, style, favourited, count, onFavourite}){
+    const [stateFavourited, useStateFavourited] = useState(favourited);
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
-            <TouchableOpacity style={[style, { flex: 1 }]} onPress={() => onFavourite(id, tootid, !favourited)}>
-                <FontAwesome name="star" size={20} color={favourited ? theme.customColors.item.favourite : theme.customColors.item.none} />
+            <TouchableOpacity style={[style, { flex: 1 }]} onPress={() => {
+                useStateFavourited(!stateFavourited);
+                onFavourite(id, tootid, !stateFavourited);
+            }}>
+                <FontAwesome name="star" size={20} color={stateFavourited ? theme.customColors.item.favourite : theme.customColors.item.none} />
             </TouchableOpacity>
             <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
         </View>

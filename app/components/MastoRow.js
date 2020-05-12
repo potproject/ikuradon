@@ -35,7 +35,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
-        ({ created_at, sensitive, reblog, account, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = reblog);
+        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = reblog);
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
