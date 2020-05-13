@@ -60,6 +60,7 @@ export default {
     //Login
     login_title: "Login",
     login_message: "Please enter Mastodon Server domain.",
+    login_domain_label: "Domain",
     login_button: "Login",
     login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",
