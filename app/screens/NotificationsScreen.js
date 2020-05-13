@@ -10,6 +10,8 @@ import { Header, ThemeContext } from "react-native-elements";
 
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
+import * as RouterName from "../constants/RouterName";
+
 function NotificationsScreen({ navigation }) {
     const type = "notifications";
     const current = useSelector(CurrentUserReducerSelector);
@@ -23,7 +25,7 @@ function NotificationsScreen({ navigation }) {
             />
             <NotificationsList type={type}/>
             <View style={styles.tootButton}>
-                <TootButton />
+                <TootButton onPress={() => navigation.navigate(RouterName.Toot)}/>
             </View>
         </View>
     );

@@ -29,7 +29,7 @@ function TimelineScreen({ route, navigation }) {
             />
             <MastoList type={type}/>
             <View style={styles.tootButton}>
-                <TootButton />
+                <TootButton onPress={() => navigation.navigate(RouterName.Toot)}/>
             </View>
         </View>
     );
