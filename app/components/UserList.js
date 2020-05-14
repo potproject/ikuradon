@@ -5,9 +5,10 @@ import { ListItem, ThemeContext } from "react-native-elements";
 import * as Session from "../util/session";
   
 export default function UserList({current, onSelect}){
-    const { theme }= useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     const [ list, useList ] = useState([]);
     const [ index, useIndex ] = useState(-1);
+    const { domain, access_token } = current;
     if(list.length === 0){
         Session.getAll().then(({accounts,login_index}) => {
             useList(accounts);
@@ -23,6 +24,8 @@ export default function UserList({current, onSelect}){
                         leftAvatar={{ source: { uri: l.avatar } }}
                         title={l.username}
                         subtitle={l.domain}
+                        titleStyle={l.domain === domain && l.access_token === access_token ? {color:theme.colors.grey1} : {color:theme.customColors.char}}
+                        subtitleStyle={l.domain === domain && l.access_token === access_token ? {color:theme.colors.grey1} : {color:theme.customColors.char}}
                         bottomDivider
                         chevron
                         onPress={() => onSelect(i)}
