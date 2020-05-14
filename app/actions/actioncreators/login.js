@@ -35,9 +35,12 @@ export function loginSelectAccounts(index) {
         let { domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
+                await AsyncStorage.removeItem("timeline_cache");
+                await dispatch({ type: Streaming.STREAM_STOP });
+                await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
-                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 dispatch({ type: Nav.NAV_MAIN });
                 return;

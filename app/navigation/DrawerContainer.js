@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CustomEmoji from "react-native-customemoji";
 import { emojisArrayToObject } from "../util/parser";
 
@@ -18,12 +18,16 @@ import { FontAwesome } from "@expo/vector-icons";
 import t from "../services/I18n";
 
 import * as RouterName from "../constants/RouterName";
+import UserList from "../components/UserList";
 
+import { loginSelectAccounts } from "../actions/actioncreators/login";
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
 export default function DrawerContainer({navigation}){
+    const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
-    const { user_credentials, domain } = useSelector(CurrentUserReducerSelector);
+    const current = useSelector(CurrentUserReducerSelector);
+    const { user_credentials, domain } = current;
     return (
         <View style={[styles.container, {backgroundColor:theme.customColors.charBackground}]}>
             <View style={styles.profile}>
@@ -93,11 +97,11 @@ export default function DrawerContainer({navigation}){
             </View>
             <Divider />
             <ScrollView>
+                <UserList current={current} onSelect={(index) => dispatch(loginSelectAccounts(index))} />
             </ScrollView>
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
