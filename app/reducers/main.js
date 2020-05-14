@@ -144,7 +144,7 @@ export default function Main(state = initialState, action = {}) {
             }
             return Object.assign({}, state);
         case MainActionTypes.ALLCLEAR_MASTOLIST:
-            return initialState;
+            return Object.assign({}, initialState);
 
         case MastorowActionTypes.BOOST_MASTOROW:
             if (action.id === null) {

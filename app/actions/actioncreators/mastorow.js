@@ -10,6 +10,7 @@ import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function boost(id, tootid, boosted) {
+    console.log("boost:", tootid, boosted);
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
@@ -25,6 +26,7 @@ export function boost(id, tootid, boosted) {
 }
 
 export function favourite(id, tootid, favourited) {
+    console.log("favourite:", tootid, favourited);
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
