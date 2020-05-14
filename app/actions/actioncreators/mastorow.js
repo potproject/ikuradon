@@ -10,13 +10,13 @@ import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
 
 export function boost(id, tootid, boosted) {
-    console.log("boost:", tootid, boosted);
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
-            await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let { reblogged: reblogedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            console.log("boost:", tootid, boosted, "result:", reblogedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted: !boosted });
@@ -26,13 +26,13 @@ export function boost(id, tootid, boosted) {
 }
 
 export function favourite(id, tootid, favourited) {
-    console.log("favourite:", tootid, favourited);
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
-            await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let { favourited: favouritedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            console.log("favourite:", tootid, favourited, "result:", favouritedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited: !favourited });
