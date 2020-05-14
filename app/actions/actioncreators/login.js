@@ -16,6 +16,9 @@ export function login(domain) {
     return async dispatch => {
         let url, client_id, client_secret;
         try {
+            await AsyncStorage.removeItem("timeline_cache");
+            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
             url = createUrl(domain, data);
             client_id = data.client_id;

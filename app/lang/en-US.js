@@ -28,6 +28,7 @@ export default {
     drawer_posts: "Post",
     drawer_following: "Following",
     drawer_follower: "Followers",
+    drawer_addaccount: "Add Account",
 
     //Navigations
     navigation_home: "Home",

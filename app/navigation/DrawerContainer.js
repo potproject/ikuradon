@@ -70,7 +70,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='bookmark' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> {t("bookmarks_title")} </Text>
+                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("bookmarks_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -79,19 +79,22 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='star' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> {t("favourited_title")} </Text>
+                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("favourited_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList}>
                     <View>
                         <FontAwesome style={styles.icon} name='cog' size={20} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> {t("settings_title")} </Text>
+                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("settings_title")} </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.fixedList}>
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
+                    navigation.navigate(RouterName.Login);
+                }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='file' size={18} color={theme.colors.grey0}/>
-                        <Text style={styles.text}> License </Text>
+                        <FontAwesome style={styles.icon} name='user' size={18} color={theme.colors.grey1}/>
+                        <Text style={[{color: theme.colors.grey1} ,styles.text]}> {t("drawer_addaccount")} </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -120,7 +123,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         left: "20%",
         top: 10,
-        color: "black",
         fontSize: 16
     },
     profile:{

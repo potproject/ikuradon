@@ -28,6 +28,7 @@ export default {
     drawer_posts: "投稿",
     drawer_following: "フォロー",
     drawer_follower: "フォロワー",
+    drawer_addaccount: "アカウント追加",
 
     //ナビゲーション
     navigation_home: "ホーム",
