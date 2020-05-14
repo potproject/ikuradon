@@ -35,7 +35,7 @@ function NotificationsList({ type }) {
     };
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
-        dispatch(newLoadingTimeline(type, listdata.maxId));
+        dispatch(newLoadingTimeline(type, listdata.maxId, true));
     }
     const newNotifications = notificationParse(listdata.data);
     return (

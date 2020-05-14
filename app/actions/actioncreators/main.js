@@ -56,14 +56,14 @@ export function detail(id) {
     return { type: Nav.NAV_DETAIL, id };
 }
 
-export function newLoadingTimeline(reducerType, since_id, limit = 40) {
+export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
         let data;
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id, max_id: null }, access_token);
-            dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, streaming: false });
+            dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"),e.message);
             dispatch({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType });

@@ -70,7 +70,9 @@ export default function Main(state = initialState, action = {}) {
             let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
             let data;
             let newArrival = 0;
-            if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
+            if(action.clear){
+                data = action.data;
+            } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                 data = state[reducerType].data.concat(action.data);
             } else {
                 newArrival = action.data.length;

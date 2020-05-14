@@ -24,7 +24,7 @@ function MastoList({ type }) {
     const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
-        dispatch(newLoadingTimeline(type, listdata.maxId));
+        dispatch(newLoadingTimeline(type, listdata.maxId, true));
     }
     const actions = {
         ReplyAction: (id, tootid, user, acct, image, body) => {dispatch(ReplyAction(id, tootid, user, acct, image, body))},
