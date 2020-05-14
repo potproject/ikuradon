@@ -19,6 +19,7 @@ const reducerSelector = state => ({
 
 import * as RouterName from "../constants/RouterName";
 import VisibilityModal from "../components/VisibilityModal";
+import EmojisModal from "../components/EmojisModal";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -36,12 +37,14 @@ function TootScreen({ navigation }) {
     const dispatch = useDispatch();
     const type = RouterName.Toot;
     const { current, toot } = useSelector(reducerSelector);
-    const { theme }= useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     const [tootText, onChangeTootText] = useState("");
+    const [tootCursor, useTootCursor] = useState(0);
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
     const [visibilityModal, useVisibilityModal] = useState(false);
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
+    const [emojisModal, useEmojisModal] = useState(false);
     return (
         <View style={styles.container}>
             <Header
@@ -74,6 +77,7 @@ function TootScreen({ navigation }) {
                         autoFocus={true}
                         maxLength={MAX_TOOT_LENGTH}
                         multiline={true}
+                        onSelectionChange={(event) => event.nativeEvent.selection && useTootCursor(event.nativeEvent.selection.start)}
                         placeholder={t("toot_placeholder")}
                     />
                 </View>
@@ -82,6 +86,11 @@ function TootScreen({ navigation }) {
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
                         <FontAwesome name={VISIBILITY_CONST[visibility]} size={26} color={theme.colors.grey1} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.icon}
+                        onPress={() => useEmojisModal(true)}>
+                        <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
                     <Button
                         style={styles.icon}
@@ -97,6 +106,13 @@ function TootScreen({ navigation }) {
                     <VisibilityModal onSelect={(selected)=>{
                         useVisibilityModal(false);
                         useVisibility(selected);
+                    }} />
+                </Overlay>
+                <Overlay isVisible={emojisModal} onBackdropPress={() => useEmojisModal(false)}>
+                    <EmojisModal current={current} onSelect={(selected)=>{
+                        const emojisSuffix = " :" + selected + ": ";
+                        useEmojisModal(false);
+                        onChangeTootText(tootText.slice(0, tootCursor) + emojisSuffix + tootText.slice(tootCursor));
                     }} />
                 </Overlay>
             </View>
