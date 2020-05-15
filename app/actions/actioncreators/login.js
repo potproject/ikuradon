@@ -17,7 +17,7 @@ export function login(domain) {
         let url, client_id, client_secret;
         try {
             await AsyncStorage.removeItem("timeline_cache");
-            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
             url = createUrl(domain, data);
@@ -39,7 +39,7 @@ export function loginSelectAccounts(index) {
         if (access_token && domain) {
             try {
                 await AsyncStorage.removeItem("timeline_cache");
-                await dispatch({ type: Streaming.STREAM_STOP });
+                await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
@@ -81,10 +81,10 @@ export function logout() {
         try {
             await Session.deleteCurrentItems();
             await AsyncStorage.removeItem("timeline_cache");
-            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            DropDownHolder.success(t("logout_success"));
+            DropDownHolder.success(t("messages.logout_success"));
             NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
@@ -97,7 +97,7 @@ export function accountChange() {
         try {
             await Session.setDefault();
             await AsyncStorage.removeItem("timeline_cache");
-            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             DropDownHolder.success(t("login_success"));

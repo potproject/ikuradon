@@ -31,10 +31,12 @@ export default function DrawerContainer({navigation}){
     return (
         <View style={[styles.container, {backgroundColor:theme.customColors.charBackground}]}>
             <View style={styles.profile}>
+                { user_credentials &&
                 <Image
                     onPress={() => navigation.navigate("Profile")}
-                    source={{uri: user_credentials && user_credentials.avatar}}
+                    source={{uri: user_credentials.avatar}}
                     style={styles.photo}/>
+                }
                 <CustomEmoji emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
                     <Text style={[styles.userName, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
                 </CustomEmoji>
@@ -82,7 +84,10 @@ export default function DrawerContainer({navigation}){
                         <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("favourited_title")} </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.fixedList}>
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
+                    navigation.navigate(RouterName.Settings);
+                }} >
                     <View>
                         <FontAwesome style={styles.icon} name='cog' size={20} color={theme.colors.grey0}/>
                         <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("settings_title")} </Text>

@@ -1,4 +1,4 @@
-import { Permissions } from "expo";
+import * as Permissions from "expo-permissions";
 
 export const CAMERA = Permissions.CAMERA;
 export const CAMERA_ROLL = Permissions.CAMERA_ROLL;

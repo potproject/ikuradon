@@ -6,7 +6,7 @@
 
 <img width="100" heigth="100" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true">
 
-Mastodon client app for React Native  
+Mastodon client App for React Native  
 Used Libraies: [React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)  
 This project was created at [Create React Native App](https://github.com/react-community/create-react-native-app).
 

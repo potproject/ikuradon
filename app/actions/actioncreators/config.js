@@ -1,18 +1,26 @@
 import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
-import { MessageBarManager } from "react-native-message-bar";
+import { AsyncStorage } from "react-native";
+import * as Session from "../../util/session";
+import DropDownHolder from "../../services/DropDownHolder";
 import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as Nav from "../actiontypes/nav";
+import * as Main from "../actiontypes/main";
+import * as Streaming from "../actiontypes/streaming";
 
 export function allClear() {
     return async dispatch => {
-        dispatch({ type: Config.CONFIG_RESET });
-        NavigationService.resetAndNavigate({ name: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
+        await dispatch({ type: Config.CONFIG_RESET });
+        await AsyncStorage.removeItem("timeline_cache");
+        await dispatch({ type: Streaming.STREAM_ALLSTOP });
+        await Session.deleteAll();
+        await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
+        dispatch({ type: Nav.NAV_LOGIN });
     };
 }
 
@@ -28,11 +36,7 @@ export function setBackground() {
             NavigationService.resetAndNavigate({ name: RouterName.Main });
             dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.network_error"), e.message);
         }
     };
 }

@@ -9,10 +9,12 @@ export default function TimelineCenterHeader({fixedTitle, onPress, current}){
         <TouchableOpacity
             onPress={onPress}>
             <View style={styles.container}>
+                { current.user_credentials &&
                 <Image
-                    source={{uri: current.user_credentials && current.user_credentials.avatar}}
+                    source={{uri: current.user_credentials.avatar}}
                     style={styles.image}
                 />
+                }
                 <Text ellipsizeMode="tail" numberOfLines={1} style={styles.text}>
                     {current.user_credentials && current.user_credentials.username}@{current.domain}
                 </Text>
