@@ -11,6 +11,8 @@ import { NEW_NOTIFICATION_TYPE } from "../util/notification";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext, Image } from "react-native-elements";
 
+const MAX_DISPLAY_IMAGE = 8;
+
 const NotificationsRow = ({ item, current, actions }) => {
     const {id, type } = item;
     const { theme } = useContext(ThemeContext);
@@ -26,8 +28,11 @@ const NotificationsRow = ({ item, current, actions }) => {
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"retweet"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>
+                    <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
                         {boostAccounts.map((account, i) => {
+                            if(i+1 > MAX_DISPLAY_IMAGE){
+                                return null;
+                            }
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
                                 <View key={i} style={styles.photoMargin}>
@@ -36,7 +41,10 @@ const NotificationsRow = ({ item, current, actions }) => {
                             );
                         })
                         }
-                    </Text>
+                        { boostAccounts.length > MAX_DISPLAY_IMAGE &&
+                            <Text style={{color: theme.colors.grey0}}>...</Text>
+                        }
+                    </View>
                 </View>
                 }
                 { favouriteAccounts.length > 0 &&
@@ -44,8 +52,11 @@ const NotificationsRow = ({ item, current, actions }) => {
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"star"} size={22} color={theme.customColors.item.favourite} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>
+                    <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
                         {favouriteAccounts.map((account, i) => {
+                            if(i+1 > MAX_DISPLAY_IMAGE){
+                                return null;
+                            }
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
                                 <View key={i} style={styles.photoMargin}>
@@ -54,7 +65,10 @@ const NotificationsRow = ({ item, current, actions }) => {
                             );
                         })
                         }
-                    </Text>
+                        { favouriteAccounts.length > MAX_DISPLAY_IMAGE &&
+                            <Text style={{color: theme.colors.grey0}}>...</Text>
+                        }
+                    </View>
                 </View>
                 }
                 <View style={styles.favAndBoostMessage}>
@@ -76,11 +90,11 @@ const NotificationsRow = ({ item, current, actions }) => {
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
                     </View>
-                    <Text style={{flex:0.82, color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>
+                    <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
                         <View style={styles.photoMargin}>
                             <Image style={styles.photo} source={{uri: account.avatar}} />
                         </View>
-                    </Text>
+                    </View>
                 </View>
                 <View style={styles.followMessage}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}></View>
