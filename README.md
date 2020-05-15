@@ -46,17 +46,12 @@ This project was created at [Create React Native App](https://github.com/react-c
 
 Open it in the [Expo app](https://expo.io) on your phone to view it.
 
-## Installation
+## Development
 
 ```
-yarn
+yarn # or npm install
+yarn start # or npm run start
 ```
-
-requires yarn(npm is not recommended).
-
-## Apps Run
-
-`yarn start`
 
 ## LICENSE
 
