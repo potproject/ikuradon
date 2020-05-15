@@ -16,20 +16,20 @@ This project was created at [Create React Native App](https://github.com/react-c
 
 ## TODO
 
-- □ View User Data
-- □ View Toot TimeLine Tree
-- ☑ Emoji & Custom Emoji Toot
-- ☑ Media Toot(Experimental,image only)
-- ☑ Multi Account Support
-- ☑ Reply/Mention
-- ☑ View NFSW Timeline
-- ☑ Streaming API Support
-- ☑ i18n (EN/JP)
-- ☑ Media Viewer (Video/Image/gifv)
-- ☑ NFSW Toot
-- ☑ TimeLine Local Auto Save
-- ☑ Custom Emoji Support (2.0+)
-- ☑ Scheduled statuses Support (2.7+)
+-   □ View User Data
+-   □ View Toot TimeLine Tree
+-   ☑ Emoji & Custom Emoji Toot
+-   ☑ Media Toot(Experimental,image only)
+-   ☑ Multi Account Support
+-   ☑ Reply/Mention
+-   ☑ View NFSW Timeline
+-   ☑ Streaming API Support
+-   ☑ i18n (EN/JP)
+-   ☑ Media Viewer (Video/Image/gifv)
+-   ☑ NFSW Toot
+-   ☑ TimeLine Local Auto Save
+-   ☑ Custom Emoji Support (2.0+)
+-   ☑ Scheduled statuses Support (2.7+)
 
 ## ScreenShots
 
@@ -58,10 +58,8 @@ requires yarn(npm is not recommended).
 
 `yarn start`
 
-## Production Apps
-
-[Google Play](https://play.google.com/store/apps/details?id=net.potproject.ikuradon)
-
 ## LICENSE
 
-MIT
+AGPL v3
+
+Copyright (C) 2020 potproject
