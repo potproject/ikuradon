@@ -28,7 +28,7 @@ function AuthorizeScreen({ route }) {
     };
     return (
         <WebView
-            source={{ url }}
+            source={{ uri: url }}
             onShouldStartLoadWithRequest={navState => onWebViewRequest(navState, domain, client_id, client_secret)}
             onNavigationStateChange={navState => onWebViewRequest(navState, domain, client_id, client_secret)}
             style={styles.container}
