@@ -36,7 +36,6 @@ const VISIBILITY_CONST = {
 function TootScreen({ navigation, route }) {
     const dispatch = useDispatch();
     const reply = typeof route.params !== "undefined" ? route.params : null;
-    console.log(reply);
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
     const [tootText, onChangeTootText] = useState(reply ? "@" + reply.acct + " " : "");

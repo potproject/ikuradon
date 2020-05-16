@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { ThemeContext } from "react-native-elements";
 import { getEmojis } from "../util/emojis";
 import { Image } from "react-native-elements";
@@ -11,41 +11,42 @@ export default function EmojisModal({current, onSelect}){
     if(!load && emojis.length === 0){
         useLoad(true);
         getEmojis(current.domain).then(({emojis, error}) => {
-            useEmojis(emojis);
+            if(error === null){
+                useEmojis(emojis);
+            }else{
+                useLoad(false);
+            }
         }
         );
     }
     return(
         <View style={styles.container}>
-            <ScrollView>
-                <View style={styles.wrapList}>
-                    {
-                        emojis.map((emoji, i) => (
-                            <TouchableOpacity key={i} style={styles.emojiList} onPress={() => onSelect(emoji.shortcode)}>
-                                <Image source={{uri: emoji.url}} style={styles.emoji}/>
-                            </TouchableOpacity>
-                        ))
-                    }
-                </View>
-            </ScrollView>
+            <FlatList
+                keyExtractor={data => data.shortcode}
+                style={styles.wrapList}
+                data={emojis}
+                numColumns={8}
+                renderItem={({ item }) =>(
+                    <TouchableOpacity style={styles.emojiList} onPress={() => onSelect(item.shortcode)}>
+                        <Image source={{uri: item.url}} style={styles.emoji}/>
+                    </TouchableOpacity>
+                )}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container:{
-        width: 300,
-        height: 300,
+        width: 320,
+        height: 320,
     },
     wrapList: {
-        justifyContent: "flex-start",
-        flexDirection: "row",
-        flexWrap: "wrap",
+        flexDirection: "column",
     },
     emojiList: {
         width: 40,
         height: 40,
-        padding: 4
     },
     emoji: {
         width:32,
