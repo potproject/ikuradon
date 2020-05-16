@@ -3,8 +3,9 @@
         "name": "ikuradon",
         "description": "ikuradon - Mastodon Client App",
         "slug": "potproject-ikuradon",
-        "version": "2.0.0",
-        "platforms": ["android", "ios", "web"],
+        "sdkVersion": "37.0.0",
+        "version": "2.0.0.beta1",
+        "platforms": ["android", "ios"],
         "githubUrl": "https://github.com/potproject/ikuradon",
         "icon": "assets/image/icon512.png",
         "splash": {
@@ -19,7 +20,7 @@
         },
         "android": {
             "package": "net.potproject.ikuradon",
-            "versionCode": 2,
+            "versionCode": 3,
             "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"]
         }
     }
