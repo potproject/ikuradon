@@ -24,6 +24,12 @@ export default {
     setting_header_visible: "表示",
     setting_header_instance: "サーバ情報",
 
+    //Drawer
+    drawer_posts: "投稿",
+    drawer_following: "フォロー",
+    drawer_follower: "フォロワー",
+    drawer_addaccount: "アカウント追加",
+
     //ナビゲーション
     navigation_home: "ホーム",
     navigation_local: "ローカル",
@@ -34,12 +40,28 @@ export default {
     //ナビゲーションボタン
     navigation_button_toot: "トゥート",
 
+    // タイムライン
+    timeline_title: "タイムライン",
+
+    // DM
+    directmessage_title: "ダイレクトメッセージ",
+        
+    // お気に入り
+    favourited_title: "お気に入り",
+
+    // ブックマーク
+    bookmarks_title: "ブックマーク",
+
+    // 設定
+    settings_title: "設定",
+
     //AppInit
     appinit_title: "初期化中...",
 
     //ログイン
     login_title: "ログイン",
     login_message: "Mastodon サーバ ドメインを入力してください",
+    login_domain_label: "ドメイン",
     login_button: "ログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",

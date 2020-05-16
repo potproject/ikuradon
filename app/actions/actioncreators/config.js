@@ -1,18 +1,22 @@
 import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
-import { MessageBarManager } from "react-native-message-bar";
-import I18n from "../../services/i18n";
+import * as Session from "../../util/session";
+import DropDownHolder from "../../services/DropDownHolder";
+import t from "../../services/I18n";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
-import * as Nav from "../actiontypes/nav";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
+import * as Main from "../actiontypes/main";
+import * as Streaming from "../actiontypes/streaming";
 
 export function allClear() {
     return async dispatch => {
-        dispatch({ type: Config.CONFIG_RESET });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
+        await dispatch({ type: Config.CONFIG_RESET });
+        await dispatch({ type: Streaming.STREAM_ALLSTOP });
+        await Session.deleteAll();
+        await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
     };
 }
 
@@ -25,14 +29,9 @@ export function setBackground() {
                 return;
             }
             dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage: fileData.uri });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-            dispatch({ type: Nav.NAV_MAIN });
+            NavigationService.resetAndNavigate({ name: RouterName.Main });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.network_error"), e.message);
         }
     };
 }
@@ -42,23 +41,19 @@ export function setInvisibleTimeline(type, value) {
         let invisible = {};
         invisible[type] = value;
         dispatch({ type: Config.INVISIBLE_SETTING, invisible });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
     };
 }
 
 export function setSmartMode(value) {
     return async dispatch => {
         dispatch({ type: Config.SMART_MODE, smartMode: value });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
     };
 }
 
 export function setTimelinePerform(value) {
     return async dispatch => {
         dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
-        NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
     };
 }

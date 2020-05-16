@@ -11,27 +11,50 @@ const initialState = {
     home: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
-        maxId: null
+        maxId: null,
+        newArrival: 0,
     },
     local: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
-        maxId: null
+        maxId: null,
+        newArrival: 0,
     },
     federal: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
-        maxId: null
+        maxId: null,
+        newArrival: 0,
     },
     notifications: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
-        maxId: null
-    }
+        maxId: null,
+        newArrival: 0,
+    },
+    favourites: {
+        data: [],
+        refreshing: false,
+        loading: false,
+        minId: null,
+        maxId: null,
+        newArrival: 0,
+    },
+    bookmarks: {
+        data: [],
+        refreshing: false,
+        minId: null,
+        maxId: null,
+        newArrival: 0,
+    },
 };
 
 export default function Main(state = initialState, action = {}) {
@@ -46,42 +69,69 @@ export default function Main(state = initialState, action = {}) {
             let reducerType = action.reducerType;
             let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
             let data;
-            if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
+            let newArrival = 0;
+            if(action.clear){
+                data = action.data;
+            } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                 data = state[reducerType].data.concat(action.data);
             } else {
+                newArrival = action.data.length;
                 data = action.data.concat(state[reducerType].data);
             }
             let newstate = Object.assign({}, state, {
                 [reducerType]: {
                     data,
                     refreshing: false,
+                    loading: false,
                     minId,
-                    maxId
-                }
+                    maxId,
+                    newArrival
+                },
             });
-            //String化しないとExpoが落ちる模様(バグ?)
-            AsyncStorage.setItem("last_update", String(new Date().getTime()));
-            if (TIMELINE_LOCAL_AUTOSAVE) {
-                AsyncStorage.setItem("timeline_cache", autoSave(Object.assign({}, newstate)));
-            }
             return newstate;
         case MainActionTypes.REFRESHING_MASTOLIST:
             return Object.assign({}, state, {
                 [action.reducerType]: {
                     data: state[action.reducerType].data,
                     refreshing: true,
+                    loading: true,
                     minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId
-                }
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
             });
         case MainActionTypes.STOP_REFRESHING_MASTOLIST:
             return Object.assign({}, state, {
                 [action.reducerType]: {
                     data: state[action.reducerType].data,
                     refreshing: false,
+                    loading: false,
                     minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId
-                }
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
+            });
+        case MainActionTypes.LOADING_MASTOLIST:
+            return Object.assign({}, state, {
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: false,
+                    loading: true,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
+            });
+        case MainActionTypes.STOP_LOADING_MASTOLIST:
+            return Object.assign({}, state, {
+                [action.reducerType]: {
+                    data: state[action.reducerType].data,
+                    refreshing: false,
+                    loading: false,
+                    minId: state[action.reducerType].minId,
+                    maxId: state[action.reducerType].maxId,
+                    newArrival: state[action.reducerType].newArrival
+                },
             });
         case MainActionTypes.HIDE_MASTOLIST:
             for (let viewType of viewTypeArray) {
@@ -91,7 +141,7 @@ export default function Main(state = initialState, action = {}) {
             }
             return Object.assign({}, state);
         case MainActionTypes.ALLCLEAR_MASTOLIST:
-            return initialState;
+            return Object.assign({}, initialState);
 
         case MastorowActionTypes.BOOST_MASTOROW:
             if (action.id === null) {

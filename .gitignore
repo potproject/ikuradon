@@ -1,5 +1,15 @@
-node_modules/
-.expo/
-.vscode/
-.DS_Store
+node_modules/**/*
+.expo/*
 npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+web-report/
+.vscode/
+
+# macOS
+.DS_Store

@@ -1,9 +1,9 @@
 import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
 import * as CONST_API from "../../constants/api";
-import Stream from "../../services/stream";
-import I18n from "../../services/i18n";
-import { MessageBarManager } from "react-native-message-bar";
+import Stream from "../../services/Stream";
+import t from "../../services/I18n";
+import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 import { bodyFormat } from "../../util/parser";
 
@@ -13,14 +13,11 @@ export function start(reducerType) {
             let { domain, access_token } = await Session.getDomainAndToken();
             Stream.init(domain, CONST_API.STREAMING, access_token, reducerType);
             await Stream.open(reducerType);
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_enabled"),
-                alertType: "info"
-            });
+            DropDownHolder.success(t("messages.streaming_enabled"));
             dispatch({ type: Streaming.STREAM_START, reducerType });
             Stream.receive(streamMessage => {
                 if (streamMessage.event === "update" && streamMessage.payload) {
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(streamMessage.payload)], reducerType });
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(streamMessage.payload)], reducerType, streaming: true });
                 } else if (streamMessage.event === "notification" && streamMessage.payload) {
                     let data = JSON.parse(streamMessage.payload);
                     let name = data.account.display_name !== "" ? data.account.display_name : data.account.username;
@@ -28,39 +25,32 @@ export function start(reducerType) {
                     let message = "";
                     switch (data.type) {
                         case "follow":
-                            title = name + I18n.t("notifications.followed");
+                            title = name + t("notifications.followed");
                             message = null;
                             break;
                         case "favourite":
-                            title = name + I18n.t("notifications.favourited");
+                            title = name + t("notifications.favourited");
                             message = bodyFormat(data.status.content);
                             break;
                         case "reblog":
-                            title = name + I18n.t("notifications.boosted");
+                            title = name + t("notifications.boosted");
                             message = bodyFormat(data.status.content);
                             break;
                         case "mention":
-                            title = name + I18n.t("notifications.mentioned");
+                            title = name + t("notifications.mentioned");
                             message = bodyFormat(data.status.content);
                             break;
                         default:
                             return;
                     }
-                    MessageBarManager.showAlert({
-                        title,
-                        message,
-                        alertType: "info"
-                    });
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications" });
+                    DropDownHolder.info(title, message);
+                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications", streaming: true });
                 } else if (streamMessage.event === "delete" && streamMessage.payload) {
                     //いつか実装します
                 }
             }, reducerType);
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.streaming_failed"), e.message);
             dispatch({ type: Streaming.STREAM_STOP, reducerType });
             return;
         }
@@ -75,15 +65,9 @@ export function stop(reducerType) {
                 //不明な切断
                 return;
             }
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_disabled"),
-                alertType: "info"
-            });
+            DropDownHolder.info(t("messages.streaming_disabled"));
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.streaming_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.error(t("messages.streaming_failed"));
             return;
         }
         dispatch({ type: Streaming.STREAM_STOP, reducerType });

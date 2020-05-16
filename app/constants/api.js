@@ -75,6 +75,26 @@ export const GET_NOTIFICATIONS = {
     }
 };
 
+export const GET_FAVOURITES = {
+    method: "get",
+    url: "/api/v1/favourites",
+    form: {
+        limit: "40", //optional
+        min_id: null, //new timeline
+        max_id: null //old timeline
+    }
+};
+
+export const GET_BOOKMARKS = {
+    method: "get",
+    url: "/api/v1/bookmarks",
+    form: {
+        limit: "40", //optional
+        since_id: null, //new timeline
+        max_id: null //old timeline
+    }
+};
+
 export const POST_STATUS = {
     method: "post",
     url: "/api/v1/statuses",

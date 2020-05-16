@@ -1,34 +1,30 @@
 import { AsyncStorage } from "react-native";
 import * as CONST_API from "../../constants/api";
-import Networking from "../../services/networking";
+import Networking from "../../services/Networking";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
-import I18n from "../../services/i18n";
-import { MessageBarManager } from "react-native-message-bar";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
+import t from "../../services/I18n";
 
-import * as RouterName from "../../constants/routername";
-import NavigationService from "../../services/navigationservice";
-import * as Nav from "../actiontypes/nav";
+import * as RouterName from "../../constants/RouterName";
+import NavigationService from "../../services/NavigationService";
+import DropDownHolder from "../../services/DropDownHolder";
 
 export function login(domain) {
     return async dispatch => {
         let url, client_id, client_secret;
         try {
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
             url = createUrl(domain, data);
             client_id = data.client_id;
             client_secret = data.client_secret;
             //この時点ではまだログインしていません
-            NavigationService.navigate({ routeName: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
-            dispatch({ type: Nav.NAV_AUTHORIZE });
+            NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.login_failed"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -39,19 +35,19 @@ export function loginSelectAccounts(index) {
         let { domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
+                await dispatch({ type: Streaming.STREAM_ALLSTOP });
+                await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
-                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-                NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-                dispatch({ type: Nav.NAV_MAIN });
+                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
             } catch (e) {
                 //LOGIN ERROR!
                 await Session.setDefault();
             }
         }
-        NavigationService.resetAndNavigate({ routeName: RouterName.login });
-        dispatch({ type: Nav.NAV_LOGIN });
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
     };
 }
 
@@ -59,24 +55,18 @@ export function loginWithAccessToken(domain, access_token) {
     return async dispatch => {
         try {
             //アクセストークンでログイン
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
             let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.login_success"),
-                alertType: "success"
-            });
+            DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Main });
-            dispatch({ type: Nav.NAV_MAIN });
+            NavigationService.resetAndNavigate({ name: RouterName.Main });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.network_error"),
-                message: e.message,
-                alertType: "error"
-            });
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -85,20 +75,13 @@ export function logout() {
     return async dispatch => {
         try {
             await Session.deleteCurrentItems();
-            await AsyncStorage.removeItem("timeline_cache");
-            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_success"),
-                alertType: "success"
-            });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+            DropDownHolder.success(t("messages.logout_success"));
+            NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
@@ -107,20 +90,13 @@ export function accountChange() {
     return async dispatch => {
         try {
             await Session.setDefault();
-            await AsyncStorage.removeItem("timeline_cache");
-            await dispatch({ type: Streaming.STREAM_STOP });
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_success"),
-                alertType: "success"
-            });
-            NavigationService.resetAndNavigate({ routeName: RouterName.Login });
+            DropDownHolder.success(t("login_success"));
+            NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {
-            MessageBarManager.showAlert({
-                title: I18n.t("messages.logout_failed"),
-                alertType: "error"
-            });
+            DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }

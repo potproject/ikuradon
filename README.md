@@ -1,42 +1,38 @@
-# ikuradon
-
-[![CircleCI](https://circleci.com/gh/potproject/ikuradon/tree/master.svg?style=svg)](https://circleci.com/gh/potproject/ikuradon/tree/master)
+# ikuradon 2
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/potproject/ikuradon.svg)](https://greenkeeper.io/)
 
 <img width="100" heigth="100" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true">
 
-Mastodon client app for React Native  
-Used Libraies: [React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)  
-This project was created at [Create React Native App](https://github.com/react-community/create-react-native-app).
+Mastodon client App for React Native (Expo)
 
-マストドン用クライアントの React Native アプリです。  
-ライブラリに[React Redux](https://github.com/reactjs/react-redux),[React Navigation](https://github.com/react-community/react-navigation)を使用しています。  
-まだ開発中です。一部未実装の機能があります。
+マストドン用クライアントの React Native アプリです。
 
-## TODO
+## Feature
 
-- □ View User Data
-- □ View Toot TimeLine Tree
-- ☑ Emoji & Custom Emoji Toot
-- ☑ Media Toot(Experimental,image only)
-- ☑ Multi Account Support
-- ☑ Reply/Mention
-- ☑ View NFSW Timeline
-- ☑ Streaming API Support
-- ☑ i18n (EN/JP)
-- ☑ Media Viewer (Video/Image/gifv)
-- ☑ NFSW Toot
-- ☑ TimeLine Local Auto Save
-- ☑ Custom Emoji Support (2.0+)
-- ☑ Scheduled statuses Support (2.7+)
+-   iOS / Android Device Support
+-   Modern UI
+-   Multi Account Support
+-   Streaming API Support
+-   i18n (EN/JP)
+-   Custom Emoji Support
+
+## Future
+
+未実装
+
+-   React Native Web Support
+-   Misskey Support
+-   Movie Support
+-   Media upload Support
+-   Multi Theme (Dark Mode And more...)
 
 ## ScreenShots
 
-| Android                                                                                           | iOS                                                                                           |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview.png?raw=true)  | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview.png?raw=true)  |
-| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/android_preview2.png?raw=true) | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_preview2.png?raw=true) |
+|                                                                                               |                                                                                                    |
+| --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_timeline.jpg?raw=true) | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_notifications.jpg?raw=true) |
+| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_toot.jpg?raw=true)     | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_drawer.jpg?raw=true)        |
 
 ## Getting Starter
 
@@ -46,18 +42,15 @@ This project was created at [Create React Native App](https://github.com/react-c
 
 Open it in the [Expo app](https://expo.io) on your phone to view it.
 
-## Installation
+## Development
 
 ```
-yarn
+yarn # or npm install
+yarn start # or npm run start
 ```
-
-requires yarn(npm is not recommended).
-
-## Apps Run
-
-`yarn start`
 
 ## LICENSE
 
-MIT
+AGPL v3
+
+Copyright (C) 2020 potproject

@@ -24,6 +24,12 @@ export default {
     setting_header_visible: "Visible",
     setting_header_instance: "Server Information",
 
+    //Drawer
+    drawer_posts: "Post",
+    drawer_following: "Following",
+    drawer_follower: "Followers",
+    drawer_addaccount: "Add Account",
+
     //Navigations
     navigation_home: "Home",
     navigation_local: "Local",
@@ -34,12 +40,28 @@ export default {
     //Navigation Button
     navigation_button_toot: "Toot",
 
+    // Timeline
+    timeline_title: "Timeline",
+    
+    // DM
+    directmessage_title: "Direct Message",
+
+    // favourited
+    favourited_title: "Favourited",
+
+    // bookmarks
+    bookmarks_title: "Bookmarks",
+
+    // Settings
+    settings_title: "Settings",
+
     //AppInit
     appinit_title: "initialize...",
 
     //Login
     login_title: "Login",
     login_message: "Please enter Mastodon Server domain.",
+    login_domain_label: "Domain",
     login_button: "Login",
     login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",

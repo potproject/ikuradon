@@ -1,30 +1,94 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import * as React from "react";
+import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { ThemeProvider } from "react-native-elements";
+import { SplashScreen } from "expo";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import { createMiddleware } from "./app/middleware";
-import AppContainer from "./app/navigators/appnavigator";
-import MessageBarNavigator from "./app/navigators/messagebarnavigator";
-import NavigationService from "./app/services/navigationservice";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import MainNavigator from "./app/navigation/MainNavigator";
+import { useLinking } from "@react-navigation/native";
 
 import reducers from "./app/reducers";
-// other imports...
+import { createMiddleware } from "./app/middleware";
 
-// create store...
-const store = createStore(reducers, applyMiddleware(...createMiddleware()));
+import DropdownAlert from "react-native-dropdownalert";
+import DropDownHolder from "./app/services/DropDownHolder";
 
-export default class App extends React.Component {
-    render() {
+import * as RouterName from "./app/constants/RouterName";
+
+import AppInitScreen from "./app/screens/AppInitScreen";
+import LoginScreen from "./app/screens/LoginScreen";
+import TimelineScreen from "./app/screens/TimelineScreen";
+import TootScreen from "./app/screens/TootScreen";
+import t from "./app/services/I18n";
+
+import theme from "./app/themes/default";
+import AuthorizeScreen from "./app/screens/AuthorizeScreen";
+import NavigationService from "./app/services/NavigationService";
+import SettingsScreen from "./app/screens/SettingsScreen";
+const Stack = createStackNavigator();
+
+export default function App(props) {
+    const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+    const [initialNavigationState, setInitialNavigationState] = React.useState();
+    const containerRef = React.useRef();
+    const { getInitialState } = useLinking(containerRef, {});
+    const store = createStore(reducers, applyMiddleware(...createMiddleware()));
+    // Load any resources or data that we need prior to rendering the app
+    React.useEffect(() => {
+        async function loadResourcesAndDataAsync() {
+            try {
+                SplashScreen.preventAutoHide();
+
+                // Load our initial navigation state
+                setInitialNavigationState(await getInitialState());
+
+                // Load fonts
+                await Font.loadAsync({
+                    ...Ionicons.font,
+                    "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
+                });
+            } catch (e) {
+                // We might want to provide this error information to an error reporting service
+                console.warn(e);
+            } finally {
+                setLoadingComplete(true);
+                SplashScreen.hide();
+            }
+        }
+
+        loadResourcesAndDataAsync();
+    }, []);
+
+    if (!isLoadingComplete && !props.skipLoadingScreen) {
+        return null;
+    } else {
         return (
             <View style={styles.container}>
-                <Provider store={store}>
-                    <AppContainer
-                        ref={navigatorRef => {
+                <ThemeProvider theme={theme}>
+                    <Provider store={store}>
+                        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                        <NavigationContainer ref={navigatorRef => {
                             NavigationService.setTopLevelNavigator(navigatorRef);
-                        }}
-                    />
-                </Provider>
-                <MessageBarNavigator refName="alert" />
+                        }} initialState={initialNavigationState}>
+                            <Stack.Navigator>
+                                <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
+                                <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
+                                <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
+                                <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("timeline_title"), headerShown: false }} />
+                                <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
+                                <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
+                                <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title")}} />
+                                <Stack.Screen name={RouterName.Toot} component={TootScreen} options={{ headerShown: false }} />
+                            </Stack.Navigator>
+                        </NavigationContainer>
+                    </Provider>
+                </ThemeProvider>
+                <DropdownAlert ref={ref => DropDownHolder.setDropDown(ref)} closeInterval={3000}/>
             </View>
         );
     }
@@ -32,6 +96,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-    }
+        flex: 1,
+        backgroundColor: "#FFFFFF",
+    },
 });

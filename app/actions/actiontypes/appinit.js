@@ -1,0 +1,1 @@
+export const APPINIT_COMPLETE = "APPINIT_COMPLETE";
