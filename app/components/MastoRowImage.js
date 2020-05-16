@@ -1,7 +1,6 @@
 import React, { memo } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import { Image } from "react-native-elements";
 
 function MastoRowImage({style, mediaAttachments, openImageViewer, closeImageViewerAction}){
     return (

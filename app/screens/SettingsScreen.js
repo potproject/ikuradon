@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Text, StyleSheet, View, Switch } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { ListItem, ThemeContext } from "react-native-elements";
+import Constants from "expo-constants";
 import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear } from "../actions/actioncreators/config";
@@ -63,6 +63,11 @@ function SettingsScreen() {
                 switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
+            <ListItem
+                title={t("setting_appversion")}
+                subtitle={ Constants.manifest.version }
+                bottomDivider
+            />
             <ListItem
                 title={t("setting_allclear")}
                 bottomDivider

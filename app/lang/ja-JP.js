@@ -4,6 +4,7 @@ export default {
     logout: "ログアウト",
     account_change: "アカウント変更",
     setting_background: "背景画像を設定",
+    setting_appversion: "アプリバージョン",
     setting_allclear: "初期状態に戻す",
 
     setting_visible_home: "ホームタイムラインを非表示",
