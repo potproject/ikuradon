@@ -18,18 +18,6 @@ const reducerTypeArray = {
     bookmarks: CONST_API.GET_BOOKMARKS
 };
 
-export function back() {
-    NavigationService.back();
-}
-
-export function toot() {
-    NavigationService.navigate({ name: RouterName.Toot });
-}
-
-export function reply(id, tootid, user, acct, image, body) {
-    NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } });
-}
-
 export function hide(id) {
     return { type: Main.HIDE_MASTOLIST, id: id };
 }
@@ -45,10 +33,6 @@ export function deleting(id) {
             DropDownHolder.error(t("messages.toot_deleted_failed"),e.message);
         }
     };
-}
-
-export function detail(id) {
-    NavigationService.navigate({ name: RouterName.Detail, params: { id } });
 }
 
 export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40) {

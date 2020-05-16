@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
 import MastoRow from "../components/MastoRow";
-import { reply as ReplyAction, hide as HideAction, deleting as DeleteAction, detail as DetailAction } from "../actions/actioncreators/main";
+import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
 import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
+import * as RouterName from "../constants/RouterName";
 
+import NavigationService from "../services/NavigationService";
 import { newLoadingTimeline } from "../actions/actioncreators/main";
 const reducerSelector = state => ({
     current: state.currentUserReducer,
@@ -16,7 +18,7 @@ const reducerSelector = state => ({
     imageviewer: state.imageViewerReducer,
 });
 
-function MastoList({ type }) {
+function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
     const { current, main, streaming, imageviewer } = useSelector(reducerSelector);
@@ -27,12 +29,13 @@ function MastoList({ type }) {
         dispatch(newLoadingTimeline(type, listdata.maxId, true));
     }
     const actions = {
-        ReplyAction: (id, tootid, user, acct, image, body) => {dispatch(ReplyAction(id, tootid, user, acct, image, body))},
+        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body }}),
+
+
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
-        DetailAction: (id) => {dispatch(DetailAction(id))},
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
     };

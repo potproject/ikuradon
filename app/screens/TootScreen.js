@@ -33,12 +33,13 @@ const VISIBILITY_CONST = {
     direct: "envelope"
 };
 
-function TootScreen({ navigation }) {
+function TootScreen({ navigation, route }) {
     const dispatch = useDispatch();
-    const type = RouterName.Toot;
+    const reply = typeof route.params !== "undefined" ? route.params : null;
+    console.log(reply);
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
-    const [tootText, onChangeTootText] = useState("");
+    const [tootText, onChangeTootText] = useState(reply ? "@" + reply.acct + " " : "");
     const [tootCursor, useTootCursor] = useState(0);
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
@@ -52,7 +53,7 @@ function TootScreen({ navigation }) {
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
-                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText,[], null, null))}
+                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText,[], reply, null))}
                         enabled={MAX_TOOT_LENGTH - tootText.length - cwTootText.length >= 0}
                         loading={toot.tootWaiting}
                     />

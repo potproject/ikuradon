@@ -17,13 +17,13 @@ import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
 import MastoRowImage from "./MastoRowImage";
 
-const MastoRow = ({ navigation, item, current, actions }) => {
+const MastoRow = ({ item, current, actions }) => {
     // Toot data
     let { id, created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, DetailAction, openImageViewerAction, closeImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -56,7 +56,7 @@ const MastoRow = ({ navigation, item, current, actions }) => {
                     { useMemo(() =>
                         <View style={styles.innerPhotoContainer}>
                             <TouchableOpacity
-                                onPress={() => navigation.navigate("Profile")}>
+                                onPress={() => null}>
                                 <Image
                                     source={{uri: account.avatar}}
                                     style={styles.photo}/>
