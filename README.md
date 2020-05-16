@@ -1,21 +1,21 @@
-# ikuradon 2
+# <img width="30" heigth="30" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true"> ikuradon 2
 
+![Expo Publish](https://github.com/potproject/ikuradon/workflows/Expo%20Publish/badge.svg?branch=master)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Greenkeeper badge](https://badges.greenkeeper.io/potproject/ikuradon.svg)](https://greenkeeper.io/)
-
-<img width="100" heigth="100" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true">
 
 Mastodon client App for React Native (Expo)
 
 マストドン用クライアントの React Native アプリです。
 
-## インストール方法(expo)
+## インストール方法(iOS/Android)
+
+App Store、Google Play を通さない Expo アプリとして配布されています。
 
 1. Expo アプリをインストールします。
    [iOS](https://apps.apple.com/app/apple-store/id982107779) / [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
-2. [https://expo.io/@potpro/potproject-ikuradon](https://expo.io/@potpro/potproject-ikuradon)
-
-    ここより QR コードを読み取るか、Open project using Expo を押すことにより起動します。
+2. [ここ](https://expo.io/@potpro/potproject-ikuradon)より QR コードを読み取るか、`Open project using Expo` を押すことにより起動します。
 
 ## Feature
 
