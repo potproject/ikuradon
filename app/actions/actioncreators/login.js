@@ -24,7 +24,6 @@ export function login(domain) {
             client_secret = data.client_secret;
             //この時点ではまだログインしていません
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
-            dispatch({ type: Nav.NAV_AUTHORIZE });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
         }
@@ -43,7 +42,6 @@ export function loginSelectAccounts(index) {
                 let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
-                dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
                 //LOGIN ERROR!
@@ -51,7 +49,6 @@ export function loginSelectAccounts(index) {
             }
         }
         NavigationService.resetAndNavigate({ name: RouterName.Login });
-        dispatch({ type: Nav.NAV_LOGIN });
     };
 }
 
@@ -69,7 +66,6 @@ export function loginWithAccessToken(domain, access_token) {
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
-            dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
         }

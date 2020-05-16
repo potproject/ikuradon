@@ -27,7 +27,6 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
-            dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
         }

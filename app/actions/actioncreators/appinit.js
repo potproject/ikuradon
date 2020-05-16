@@ -39,7 +39,6 @@ export function appInit() {
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
-                dispatch({ type: Nav.NAV_MAIN });
                 return;
             } catch (e) {
                 //LOGIN ERROR!
@@ -48,6 +47,5 @@ export function appInit() {
         }
         await dispatch({ type:AppInit.APPINIT_COMPLETE });
         NavigationService.resetAndNavigate({ name: RouterName.Login });
-        dispatch({ type: Nav.NAV_LOGIN });
     };
 }

@@ -21,17 +21,14 @@ const reducerTypeArray = {
 
 export function back() {
     NavigationService.back();
-    return { type: Nav.NAV_GO_BACK };
 }
 
 export function toot() {
     NavigationService.navigate({ name: RouterName.Toot });
-    return { type: Nav.NAV_TOOT };
 }
 
 export function reply(id, tootid, user, acct, image, body) {
     NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } });
-    return { type: Nav.NAV_TOOT_REPLY };
 }
 
 export function hide(id) {
@@ -53,7 +50,6 @@ export function deleting(id) {
 
 export function detail(id) {
     NavigationService.navigate({ name: RouterName.Detail, params: { id } });
-    return { type: Nav.NAV_DETAIL, id };
 }
 
 export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40) {

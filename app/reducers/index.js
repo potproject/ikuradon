@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import appInitReducer from "./appinit";
-import navReducer from "./nav";
 import mainReducer from "./main";
 import navigationReducer from "./navigation";
 import streamingReducer from "./streaming";
@@ -12,7 +11,6 @@ import imageViewerReducer from "./imageviewer";
 
 export default combineReducers({
     appInitReducer,
-    navReducer,
     mainReducer,
     navigationReducer,
     streamingReducer,

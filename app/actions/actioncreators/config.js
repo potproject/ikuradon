@@ -1,7 +1,6 @@
 import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
 import { ImagePicker } from "expo";
-import { AsyncStorage } from "react-native";
 import * as Session from "../../util/session";
 import DropDownHolder from "../../services/DropDownHolder";
 import t from "../../services/I18n";
@@ -19,7 +18,6 @@ export function allClear() {
         await Session.deleteAll();
         await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
         NavigationService.resetAndNavigate({ name: RouterName.Login });
-        dispatch({ type: Nav.NAV_LOGIN });
     };
 }
 
@@ -33,7 +31,6 @@ export function setBackground() {
             }
             dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage: fileData.uri });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
-            dispatch({ type: Nav.NAV_MAIN });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
         }
@@ -52,7 +49,6 @@ export function setSmartMode(value) {
     return async dispatch => {
         dispatch({ type: Config.SMART_MODE, smartMode: value });
         NavigationService.resetAndNavigate({ name: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
     };
 }
 
@@ -60,6 +56,5 @@ export function setTimelinePerform(value) {
     return async dispatch => {
         dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
         NavigationService.resetAndNavigate({ name: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
     };
 }

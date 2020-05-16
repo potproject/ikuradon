@@ -35,7 +35,6 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             DropDownHolder.success(t("messages.toot_success"));
             NavigationService.back();
             dispatch({ type: Toot.TOOT_OK });
-            dispatch({ type: Nav.NAV_GO_BACK });
         } catch (e) {
             DropDownHolder.error(t("messages.toot_failed"), e.message);
             dispatch({ type: Toot.TOOT_FAILURE });
