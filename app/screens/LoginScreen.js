@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Platform, Text, StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import t from "../services/I18n";
@@ -28,7 +28,7 @@ function LoginScreen() {
                 }
             />
             <Button onPress={() => dispatch(login(domain))} title={t("login_button")} />
-            <KeyboardSpacer/>
+            { Platform.OS === "ios" && <KeyboardSpacer /> }
         </View>
     );
 }

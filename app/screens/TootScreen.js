@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, View, Button, TextInput, TouchableOpacity } from "react-native";
+import { Platform, Text, StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
@@ -92,12 +92,11 @@ function TootScreen({ navigation }) {
                         onPress={() => useEmojisModal(true)}>
                         <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
-                    <Button
+                    <TouchableOpacity
                         style={styles.icon}
-                        color={cw ? theme.colors.primary : theme.colors.grey0}
-                        onPress={() => onChangeCwTootText("") || useCw(!cw)}
-                        title="CW"
-                    />
+                        onPress={() => onChangeCwTootText("") || useCw(!cw)}>
+                        <Text style={[styles.cwText,{color:cw ? theme.colors.primary : theme.colors.grey0}]}>CW</Text>
+                    </TouchableOpacity>
                     <Text style={[{color: theme.colors.primary}, styles.countText]}>
                         {MAX_TOOT_LENGTH - tootText.length - cwTootText.length}
                     </Text>
@@ -116,7 +115,7 @@ function TootScreen({ navigation }) {
                     }} />
                 </Overlay>
             </View>
-            <KeyboardSpacer/>
+            { Platform.OS === "ios" && <KeyboardSpacer /> }
         </View>
     );
 }
@@ -139,6 +138,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 9,
+        textAlignVertical: "top",
         marginLeft: 10,
         marginRight: 10,
         fontSize: 20
@@ -155,10 +155,13 @@ const styles = StyleSheet.create({
     },
     icon: {
         paddingTop: 5,
-        paddingLeft: 15,
+        paddingLeft: 10,
         paddingRight: 15,
         paddingBottom: 5, 
-        
+    },
+    cwText: {
+        fontWeight: "bold",
+        fontSize: 20,
     },
     countText: {
         fontSize: 20,

@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { View, StyleSheet } from "react-native";
+import { Platform, View, StyleSheet } from "react-native";
 import { ListItem, ThemeContext } from "react-native-elements";
 import { FontAwesome } from "@expo/vector-icons";
 import t from "../services/I18n";
@@ -35,7 +35,7 @@ const list = [
 export default function VisibilityModal({onSelect}){
     const { theme }= useContext(ThemeContext);
     return(
-        <View style={styles.container}>
+        <View style={Platform.OS === "android" ? styles.containerAndroid : styles.containerIos}>
             {
                 list.map((l, i) => (
                     <ListItem
@@ -53,9 +53,13 @@ export default function VisibilityModal({onSelect}){
 }
 
 const styles = StyleSheet.create({
-    container:{
+    containerIos:{
         width: 300,
         height: 260
+    },
+    containerAndroid:{
+        width: 320,
+        height: 290
     },
     icon: {
         width:30,
