@@ -11,7 +11,7 @@ import { login } from "../actions/actioncreators/login";
 
 function LoginScreen() {
     const dispatch = useDispatch();
-    const [domain, setDomain] = useState("mastodon.potproject.net");
+    const [domain, setDomain] = useState("mastodon.social");
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{t("login_message")}</Text>

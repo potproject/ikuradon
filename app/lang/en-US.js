@@ -4,7 +4,7 @@ export default {
     logout: "Logout",
     account_change: "Account Change",
     setting_background: "Setting up Background Image",
-    setting_allclear: "Setting Reset",
+    setting_allclear: "ALL Reset",
 
     setting_visible_home: "Do not show Home Timeline",
     setting_visible_local: "Do not show Local Timeline",

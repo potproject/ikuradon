@@ -11,7 +11,6 @@ function AuthorizeScreen({ route }) {
     const { url, domain, client_id, client_secret } = route.params;
     const [call, useCall] = useState(false);
     const onWebViewRequest = (navState, domain, client_id, client_secret) => {
-        //mastodon.potproject.net
         const complateUrl = `https://${domain}/oauth/authorize/`;
         const index = navState.url.indexOf(complateUrl);
         if (!call && index !== -1) {
