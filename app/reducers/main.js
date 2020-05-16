@@ -88,11 +88,6 @@ export default function Main(state = initialState, action = {}) {
                     newArrival
                 },
             });
-            //String化しないとExpoが落ちる模様(バグ?)
-            AsyncStorage.setItem("last_update", String(new Date().getTime()));
-            if (TIMELINE_LOCAL_AUTOSAVE) {
-                AsyncStorage.setItem("timeline_cache", autoSave(Object.assign({}, newstate)));
-            }
             return newstate;
         case MainActionTypes.REFRESHING_MASTOLIST:
             return Object.assign({}, state, {

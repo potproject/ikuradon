@@ -15,7 +15,6 @@ import * as Streaming from "../actiontypes/streaming";
 export function allClear() {
     return async dispatch => {
         await dispatch({ type: Config.CONFIG_RESET });
-        await AsyncStorage.removeItem("timeline_cache");
         await dispatch({ type: Streaming.STREAM_ALLSTOP });
         await Session.deleteAll();
         await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
@@ -46,8 +45,6 @@ export function setInvisibleTimeline(type, value) {
         let invisible = {};
         invisible[type] = value;
         dispatch({ type: Config.INVISIBLE_SETTING, invisible });
-        NavigationService.resetAndNavigate({ name: RouterName.Main });
-        dispatch({ type: Nav.NAV_MAIN });
     };
 }
 

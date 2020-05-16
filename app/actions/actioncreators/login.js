@@ -16,7 +16,6 @@ export function login(domain) {
     return async dispatch => {
         let url, client_id, client_secret;
         try {
-            await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
@@ -38,7 +37,6 @@ export function loginSelectAccounts(index) {
         let { domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
-                await AsyncStorage.removeItem("timeline_cache");
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
@@ -61,6 +59,8 @@ export function loginWithAccessToken(domain, access_token) {
     return async dispatch => {
         try {
             //アクセストークンでログイン
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
             let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
             let username = user_credentials.acct;
@@ -80,7 +80,6 @@ export function logout() {
     return async dispatch => {
         try {
             await Session.deleteCurrentItems();
-            await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
@@ -96,7 +95,6 @@ export function accountChange() {
     return async dispatch => {
         try {
             await Session.setDefault();
-            await AsyncStorage.removeItem("timeline_cache");
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
