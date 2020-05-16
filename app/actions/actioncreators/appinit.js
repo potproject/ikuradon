@@ -11,7 +11,6 @@ import * as CurrentUser from "../actiontypes/currentuser";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
-import * as Nav from "../actiontypes/nav";
 import * as AppInit from "../actiontypes/appinit";
 
 const AUTO_LOGIN = true; // Auto Login

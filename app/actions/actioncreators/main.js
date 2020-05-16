@@ -8,7 +8,6 @@ import * as Session from "../../util/session";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
-import * as Nav from "../actiontypes/nav";
 
 const reducerTypeArray = {
     home: CONST_API.GET_TIMELINES_HOME,

@@ -9,7 +9,6 @@ import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
-import * as Nav from "../actiontypes/nav";
 import DropDownHolder from "../../services/DropDownHolder";
 
 export function login(domain) {

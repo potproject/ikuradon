@@ -5,7 +5,6 @@ import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 
 import NavigationService from "../../services/NavigationService";
-import * as Nav from "../actiontypes/nav";
 import * as Toot from "../actiontypes/toot";
 
 export function toot(status, visibility, sensitive, spoiler_text, media_ids = [], reply = null, scheduled_at = null) {

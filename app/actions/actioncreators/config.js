@@ -7,7 +7,6 @@ import t from "../../services/I18n";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
-import * as Nav from "../actiontypes/nav";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
 
