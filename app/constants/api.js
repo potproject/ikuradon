@@ -139,6 +139,18 @@ export const POST_UNFAVOURITED = {
     form: {}
 };
 
+export const POST_BOOKMARKED = {
+    method: "post",
+    url: "/api/v1/statuses/:param:/bookmark",
+    form: {}
+};
+
+export const POST_UNBOOKMARKED = {
+    method: "post",
+    url: "/api/v1/statuses/:param:/unbookmark",
+    form: {}
+};
+
 export const UPLOAD_POST_MEDIA = {
     method: "post",
     url: "/api/v1/media"

@@ -155,13 +155,14 @@ export default function Main(state = initialState, action = {}) {
                 return state;
             }
             return changeItem(action.type, state, action.id, action.favourited);
+        case MastorowActionTypes.BOOKMARK_MASTOROW:
+            if (action.id === null) {
+                return state;
+            }
+            return changeItem(action.type, state, action.id, action.bookmarked);
         default:
             return state;
     }
-}
-
-function autoSave(state) {
-    return JSON.stringify(state);
 }
 
 function changeItem(type, state, id, bool) {
@@ -172,6 +173,9 @@ function changeItem(type, state, id, bool) {
             break;
         case MastorowActionTypes.FAVOURITE_MASTOROW:
             item = "favourited";
+            break;
+        case MastorowActionTypes.BOOKMARK_MASTOROW:
+            item = "bookmarked";
             break;
         default:
             return state;

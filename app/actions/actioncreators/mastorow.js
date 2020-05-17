@@ -40,3 +40,20 @@ export function favourite(id, tootid, favourited) {
         return;
     };
 }
+
+export function bookmark(id, tootid, bookmarked) {
+    return async dispatch => {
+        try {
+            dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked });
+            let { domain, access_token } = await Session.getDomainAndToken();
+            let POST_URL = bookmarked ? CONST_API.POST_BOOKMARKED : CONST_API.POST_UNBOOKMARKED;
+            let { bookmarked: bookmarkedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            console.log("bookmark:", tootid, bookmarked, "result:", bookmarkedResult);
+        } catch (e) {
+            DropDownHolder.error(t("messages.network_error"), e.message);
+            dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked: !bookmarked });
+            return;
+        }
+        return;
+    };
+}

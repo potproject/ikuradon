@@ -5,7 +5,7 @@ import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
 
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
 
 import NavigationService from "../services/NavigationService";
 import * as RouterName from "../constants/RouterName";
@@ -31,6 +31,7 @@ function NotificationsList({ type }) {
 
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
+        BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},

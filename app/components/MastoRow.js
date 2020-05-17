@@ -11,6 +11,7 @@ import t from "../services/I18n";
 import Reply from "./item/Reply";
 import Boost from "./item/Boost";
 import Favourite from "./item/Favourite";
+import Bookmark from "./item/Bookmark";
 import Action from "./item/Action";
 
 import { ThemeContext } from "react-native-elements";
@@ -19,11 +20,11 @@ import MastoRowImage from "./MastoRowImage";
 
 const MastoRow = ({ item, current, actions }) => {
     // Toot data
-    let { id, created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = item;
+    let { id, created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -35,7 +36,7 @@ const MastoRow = ({ item, current, actions }) => {
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
-        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, uri, url, favourites_count, visibility, emojis} = reblog);
+        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = reblog);
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
@@ -110,6 +111,13 @@ const MastoRow = ({ item, current, actions }) => {
                             count={favourites_count}
                             style={styles.itemFlex}
                             onFavourite={FavouriteAction}
+                        />
+                        <Bookmark
+                            id={id}
+                            tootid={tootID}
+                            bookmarked={bookmarked}
+                            style={styles.itemFlex}
+                            onBookmark={BookmarkAction}
                         />
                         <Action
                             id={id}
