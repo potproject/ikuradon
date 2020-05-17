@@ -51,7 +51,7 @@ function NotificationsList({ type }) {
                 ItemSeparatorComponent={() => <Divider />}
                 onEndReachedThreshold={1.5}
                 onEndReached={() => {
-                    if(!init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                    if(init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
                         dispatch(oldLoadingTimeline(type, listdata.minId));
                     }
                 }}

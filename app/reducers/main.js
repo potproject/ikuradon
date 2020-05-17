@@ -51,6 +51,7 @@ const initialState = {
     bookmarks: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,

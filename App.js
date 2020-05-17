@@ -4,10 +4,11 @@ import { ThemeProvider } from "react-native-elements";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 import MainNavigator from "./app/navigation/MainNavigator";
 import { useLinking } from "@react-navigation/native";
@@ -70,23 +71,25 @@ export default function App(props) {
         return (
             <View style={styles.container}>
                 <ThemeProvider theme={theme}>
-                    <Provider store={store}>
-                        {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-                        <NavigationContainer ref={navigatorRef => {
-                            NavigationService.setTopLevelNavigator(navigatorRef);
-                        }} initialState={initialNavigationState}>
-                            <Stack.Navigator>
-                                <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
-                                <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
-                                <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
-                                <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("timeline_title"), headerShown: false }} />
-                                <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
-                                <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
-                                <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title")}} />
-                                <Stack.Screen name={RouterName.Toot} component={TootScreen} options={{ headerShown: false }} />
-                            </Stack.Navigator>
-                        </NavigationContainer>
-                    </Provider>
+                    <ActionSheetProvider>
+                        <ReduxProvider store={store}>
+                            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+                            <NavigationContainer ref={navigatorRef => {
+                                NavigationService.setTopLevelNavigator(navigatorRef);
+                            }} initialState={initialNavigationState}>
+                                <Stack.Navigator>
+                                    <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
+                                    <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />
+                                    <Stack.Screen name={RouterName.Authorize} component={AuthorizeScreen} options={{ title: t("authorize_title") }} />
+                                    <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("timeline_title"), headerShown: false }} />
+                                    <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
+                                    <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
+                                    <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title")}} />
+                                    <Stack.Screen name={RouterName.Toot} component={TootScreen} options={{ headerShown: false }} />
+                                </Stack.Navigator>
+                            </NavigationContainer>
+                        </ReduxProvider>
+                    </ActionSheetProvider>
                 </ThemeProvider>
                 <DropdownAlert ref={ref => DropDownHolder.setDropDown(ref)} closeInterval={3000}/>
             </View>

@@ -10,7 +10,7 @@ import { open as openImageViewerAction, close as closeImageViewerAction } from "
 import * as RouterName from "../constants/RouterName";
 
 import NavigationService from "../services/NavigationService";
-import { newLoadingTimeline } from "../actions/actioncreators/main";
+import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 const reducerSelector = state => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
@@ -47,6 +47,12 @@ function MastoList({ navigation, type }) {
                 refreshControl={<RefreshControl enabled={!streamingType} refreshing={listdata.refreshing} onRefresh={() => !streamingType && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
+                onEndReachedThreshold={1.5}
+                onEndReached={() => {
+                    if(init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                        dispatch(oldLoadingTimeline(type, listdata.minId));
+                    }
+                }}
             />
             <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
                 <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 

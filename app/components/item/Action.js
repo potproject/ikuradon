@@ -1,98 +1,85 @@
 import React, { memo } from "react";
 import { TouchableOpacity, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import ActionSheet from "react-native-actionsheet";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import t from "../../services/I18n";
 import {open as openUrl} from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
-
-class Action extends React.Component {
-    static propTypes = {
-        id: PropTypes.string,
-        tootid: PropTypes.string,
-        style: PropTypes.object,
-        url: PropTypes.string,
-        account_url: PropTypes.string,
-        user: PropTypes.string,
-        acct: PropTypes.string,
-        image: PropTypes.string,
-        body: PropTypes.string,
-        myself: PropTypes.bool,
-
-        onReply: PropTypes.func,
-        onHide: PropTypes.func,
-        onDeleting: PropTypes.func
-    };
-    constructor(props) {
-        super(props);
-        this.handlePress = this.handlePress.bind(this);
-    }
-    render() {
-        return (
-            <View style={[this.props.style, styles.container]}>
-                <TouchableOpacity style={this.props.style} onPress={this.onPress.bind(this)}>
-                    <FontAwesome name="ellipsis-h" size={20} color="#8899a6" />
-                    {this.createAction()}
-                </TouchableOpacity>
-                <View style={styles.container} />
-            </View>
-        );
-    }
-    onPress() {
-        this.ActionSheet.show();
-    }
-
-    createAction() {
+function Action({id, tootid, style, url, account_url, user, acct,image, body, myself, onReply, onHide, onDeleting}){
+    const { showActionSheetWithOptions } = useActionSheet();
+    const onOpenActionSheet = () => {
         let cancelButtonIndex = 6;
         let destructiveButtonIndex = 5;
         let options = [t("action_openinbrowser"), t("action_openinbrowserprofile"), t("action_copy"), t("action_copyurl"), t("action_reply"), t("action_hide")];
         // 自分のtootなら削除可能に
-        if (this.props.myself) {
+        if (myself) {
             options.push(t("action_delete"));
             cancelButtonIndex++;
             destructiveButtonIndex++;
         }
         options.push(t("global_cancel"));
-        return (
-            <ActionSheet
-                ref={component => (this.ActionSheet = component)}
-                options={options}
-                cancelButtonIndex={cancelButtonIndex}
-                destructiveButtonIndex={destructiveButtonIndex}
-                onPress={this.handlePress}
-            />
-        );
-    }
-
-    handlePress(i) {
-        switch (i) {
-            case 0: //Open in Browser
-                openUrl(this.props.url);
-                return;
-            case 1: //Open in Browser Profile
-                openUrl(this.props.account_url);
-                return;
-            case 2: //Copy
-                Clipboard.setString(bodyFormat(this.props.body));
-                return;
-            case 3: //URL Copy
-                Clipboard.setString(bodyExtractionUrl(this.props.body));
-                return;
-            case 4: //reply
-                this.props.onReply(this.props.id, this.props.tootid, this.props.user, this.props.acct, this.props.image, this.props.body);
-                return;
-            case 5: //Hide
-                this.props.onHide(this.props.id);
-                return;
-            case 6: //Delete
-                if (this.props.myself) {
-                    this.props.onDeleting(this.props.id);
+        showActionSheetWithOptions(
+            {
+                options,
+                cancelButtonIndex,
+                destructiveButtonIndex,
+            },
+            buttonIndex => {
+                switch (buttonIndex) {
+                    case 0: //Open in Browser
+                        openUrl(url);
+                        return;
+                    case 1: //Open in Browser Profile
+                        openUrl(account_url);
+                        return;
+                    case 2: //Copy
+                        Clipboard.setString(bodyFormat(body));
+                        return;
+                    case 3: //URL Copy
+                        Clipboard.setString(bodyExtractionUrl(body));
+                        return;
+                    case 4: //reply
+                        onReply(id, tootid, user, acct, image, body);
+                        return;
+                    case 5: //Hide
+                        onHide(id);
+                        return;
+                    case 6: //Delete
+                        if (myself) {
+                            onDeleting(id);
+                        }
+                        return;
                 }
-                return;
-        }
-    }
+            },
+        );
+    };
+    return (
+        <View style={[style, styles.container]}>
+            <TouchableOpacity style={style} onPress={() => onOpenActionSheet()}>
+                <FontAwesome name="ellipsis-h" size={20} color="#8899a6" />
+            </TouchableOpacity>
+            <View style={styles.container} />
+        </View>
+    );
 }
+
+Action.propTypes = {
+    id: PropTypes.string,
+    tootid: PropTypes.string,
+    style: PropTypes.object,
+    url: PropTypes.string,
+    account_url: PropTypes.string,
+    user: PropTypes.string,
+    acct: PropTypes.string,
+    image: PropTypes.string,
+    body: PropTypes.string,
+    myself: PropTypes.bool,
+
+    onReply: PropTypes.func,
+    onHide: PropTypes.func,
+    onDeleting: PropTypes.func
+};
 
 const styles = StyleSheet.create({
     container: {
