@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, View, FlatList, RefreshControl, Modal } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Modal } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";

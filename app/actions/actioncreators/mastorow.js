@@ -5,9 +5,6 @@ import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 
-import * as RouterName from "../../constants/RouterName";
-import NavigationService from "../../services/NavigationService";
-
 export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
