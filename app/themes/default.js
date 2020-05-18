@@ -8,6 +8,7 @@ export default {
         item: {
             boost: "#2b90d9",
             favourite: "#ffd27d",
+            bookmark: "#4c6ef5",
             none: "#8899a6"
         },
         link: "#1b95e0",

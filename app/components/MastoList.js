@@ -5,18 +5,20 @@ import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
 import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction } from "../actions/actioncreators/mastorow";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
 import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
 import * as RouterName from "../constants/RouterName";
 
 import NavigationService from "../services/NavigationService";
-import { newLoadingTimeline } from "../actions/actioncreators/main";
+import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 const reducerSelector = state => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
     streaming: state.streamingReducer,
     imageviewer: state.imageViewerReducer,
 });
+
+const REFRESH_TIME = 300;
 
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
@@ -34,6 +36,7 @@ function MastoList({ navigation, type }) {
 
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
+        BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
@@ -44,9 +47,30 @@ function MastoList({ navigation, type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
-                refreshControl={<RefreshControl enabled={!streamingType} refreshing={listdata.refreshing} onRefresh={() => !streamingType && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
+                refreshControl={
+                    <RefreshControl 
+                        enabled={!streamingType} 
+                        refreshing={listdata.refreshing} 
+                        onRefresh={() => {
+                            if(streamingType){
+                                return;
+                            }
+                            const time = Math.floor(new Date().getTime() / 1000);
+                            if(time - listdata.lastUpdate >= REFRESH_TIME){
+                                dispatch(newLoadingTimeline(type, listdata.maxId, true));
+                            }else{
+                                dispatch(newLoadingTimeline(type, listdata.maxId));
+                            }
+                        }}
+                    />}
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
+                onEndReachedThreshold={1.5}
+                onEndReached={() => {
+                    if(init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                        dispatch(oldLoadingTimeline(type, listdata.minId));
+                    }
+                }}
             />
             <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
                 <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 

@@ -5,9 +5,6 @@ import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 
-import * as RouterName from "../../constants/RouterName";
-import NavigationService from "../../services/NavigationService";
-
 export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
@@ -35,6 +32,23 @@ export function favourite(id, tootid, favourited) {
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited: !favourited });
+            return;
+        }
+        return;
+    };
+}
+
+export function bookmark(id, tootid, bookmarked) {
+    return async dispatch => {
+        try {
+            dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked });
+            let { domain, access_token } = await Session.getDomainAndToken();
+            let POST_URL = bookmarked ? CONST_API.POST_BOOKMARKED : CONST_API.POST_UNBOOKMARKED;
+            let { bookmarked: bookmarkedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            console.log("bookmark:", tootid, bookmarked, "result:", bookmarkedResult);
+        } catch (e) {
+            DropDownHolder.error(t("messages.network_error"), e.message);
+            dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked: !bookmarked });
             return;
         }
         return;

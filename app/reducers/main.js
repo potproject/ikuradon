@@ -1,9 +1,6 @@
 import * as MainActionTypes from "../actions/actiontypes/main";
 import * as MastorowActionTypes from "../actions/actiontypes/mastorow";
 import { getMinMaxId } from "../util/manageid";
-import { AsyncStorage } from "react-native";
-
-const TIMELINE_LOCAL_AUTOSAVE = true; // Timeline Local Auto Load (Experimental)
 
 const viewTypeArray = ["home", "local", "federal"];
 
@@ -15,6 +12,7 @@ const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
     local: {
         data: [],
@@ -23,6 +21,7 @@ const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
     federal: {
         data: [],
@@ -31,6 +30,7 @@ const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
     notifications: {
         data: [],
@@ -39,6 +39,7 @@ const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
     favourites: {
         data: [],
@@ -47,13 +48,16 @@ const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
     bookmarks: {
         data: [],
         refreshing: false,
+        loading: false,
         minId: null,
         maxId: null,
         newArrival: 0,
+        lastUpdate: 0
     },
 };
 
@@ -70,6 +74,7 @@ export default function Main(state = initialState, action = {}) {
             let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
             let data;
             let newArrival = 0;
+            let lastUpdate = Math.floor(new Date().getTime() / 1000);
             if(action.clear){
                 data = action.data;
             } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
@@ -85,7 +90,8 @@ export default function Main(state = initialState, action = {}) {
                     loading: false,
                     minId,
                     maxId,
-                    newArrival
+                    newArrival,
+                    lastUpdate
                 },
             });
             return newstate;
@@ -97,7 +103,8 @@ export default function Main(state = initialState, action = {}) {
                     loading: true,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival
+                    newArrival: state[action.reducerType].newArrival,
+                    lastUpdate: state[action.reducerType].lastUpdate
                 },
             });
         case MainActionTypes.STOP_REFRESHING_MASTOLIST:
@@ -108,7 +115,8 @@ export default function Main(state = initialState, action = {}) {
                     loading: false,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival
+                    newArrival: state[action.reducerType].newArrival,
+                    lastUpdate: state[action.reducerType].lastUpdate,
                 },
             });
         case MainActionTypes.LOADING_MASTOLIST:
@@ -119,7 +127,8 @@ export default function Main(state = initialState, action = {}) {
                     loading: true,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival
+                    newArrival: state[action.reducerType].newArrival,
+                    lastUpdate: state[action.reducerType].lastUpdate
                 },
             });
         case MainActionTypes.STOP_LOADING_MASTOLIST:
@@ -130,7 +139,8 @@ export default function Main(state = initialState, action = {}) {
                     loading: false,
                     minId: state[action.reducerType].minId,
                     maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival
+                    newArrival: state[action.reducerType].newArrival,
+                    lastUpdate: state[action.reducerType].lastUpdate
                 },
             });
         case MainActionTypes.HIDE_MASTOLIST:
@@ -154,13 +164,14 @@ export default function Main(state = initialState, action = {}) {
                 return state;
             }
             return changeItem(action.type, state, action.id, action.favourited);
+        case MastorowActionTypes.BOOKMARK_MASTOROW:
+            if (action.id === null) {
+                return state;
+            }
+            return changeItem(action.type, state, action.id, action.bookmarked);
         default:
             return state;
     }
-}
-
-function autoSave(state) {
-    return JSON.stringify(state);
 }
 
 function changeItem(type, state, id, bool) {
@@ -171,6 +182,9 @@ function changeItem(type, state, id, bool) {
             break;
         case MastorowActionTypes.FAVOURITE_MASTOROW:
             item = "favourited";
+            break;
+        case MastorowActionTypes.BOOKMARK_MASTOROW:
+            item = "bookmarked";
             break;
         default:
             return state;
