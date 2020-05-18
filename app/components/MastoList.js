@@ -18,6 +18,8 @@ const reducerSelector = state => ({
     imageviewer: state.imageViewerReducer,
 });
 
+const REFRESH_TIME = 300;
+
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
@@ -45,7 +47,23 @@ function MastoList({ navigation, type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
-                refreshControl={<RefreshControl enabled={!streamingType} refreshing={listdata.refreshing} onRefresh={() => !streamingType && dispatch(newLoadingTimeline(type, listdata.maxId))} />}
+                refreshControl={
+                    <RefreshControl 
+                        enabled={!streamingType} 
+                        refreshing={listdata.refreshing} 
+                        onRefresh={() => {
+                            if(streamingType){
+                                return;
+                            }
+                            const time = Math.floor(new Date().getTime() / 1000);
+                            console.log(time - listdata.lastUpdate);
+                            if(time - listdata.lastUpdate >= REFRESH_TIME){
+                                dispatch(newLoadingTimeline(type, listdata.maxId, true));
+                            }else{
+                                dispatch(newLoadingTimeline(type, listdata.maxId));
+                            }
+                        }}
+                    />}
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
                 onEndReachedThreshold={1.5}
