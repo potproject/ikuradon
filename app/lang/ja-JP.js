@@ -46,7 +46,10 @@ export default {
 
     // DM
     directmessage_title: "ダイレクトメッセージ",
-        
+
+    // 検索
+    search_title: "検索",
+
     // お気に入り
     favourited_title: "お気に入り",
 

@@ -47,6 +47,9 @@ export default {
     // DM
     directmessage_title: "Direct Message",
 
+    // Search
+    search_title: "Search",
+    
     // favourited
     favourited_title: "Favourited",
 
