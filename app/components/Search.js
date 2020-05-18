@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { SearchBar, ButtonGroup } from "react-native-elements";
+import React, { useState, useContext } from "react";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { SearchBar, ButtonGroup, ThemeContext } from "react-native-elements";
 import {search as SearchApi} from "../util/search";
 import t from "../services/I18n";
 import SearchList from "./SearchList";
@@ -13,10 +13,12 @@ const initSearchData = {
 };
 
 export default function Search(){
+    const { theme }= useContext(ThemeContext);
     const [searchValue, onChangeSearchValue] = useState("");
     const searchTypesArray = [t("search_accounts"), t("search_statuses"), t("search_hashtags")];
     const [searchTypeIndex, onChangeSearchTypeIndex] = useState(0);
     const [searchData, useSearchData] = useState(initSearchData);
+    const [loading, useLoading] = useState(false);
     return(
         <View style={styles.container}>
             <SearchBar
@@ -24,7 +26,13 @@ export default function Search(){
                 placeholder={t("search_title")}
                 onChangeText={onChangeSearchValue}
                 value={searchValue}
-                onSubmitEditing={() => SearchApi(searchValue).then(({data, error}) => useSearchData(data))}
+                onSubmitEditing={() => {
+                    useSearchData(initSearchData);
+                    useLoading(true);
+                    SearchApi(searchValue)
+                        .then(({data, error}) => useSearchData(data))
+                        .finally(() => useLoading(false));
+                }}
                 onClear={() => useSearchData(initSearchData)}
             />
             <ButtonGroup
@@ -32,6 +40,11 @@ export default function Search(){
                 selectedIndex={searchTypeIndex}
                 buttons={searchTypesArray}
             />
+            { loading &&
+                <View style={styles.loading}>
+                    <ActivityIndicator size="large" color={theme.colors.primary} />
+                </View>
+            }
             {searchTypeIndex === 0 && searchValue !== "" &&
             <SearchList type={searchConst.TYPE_ACCOUNTS} data={searchData[searchConst.TYPE_ACCOUNTS]} />
             }
@@ -48,5 +61,9 @@ export default function Search(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    loading: {
+        paddingTop: 10,
+        paddingBottom: 10
     }
 });

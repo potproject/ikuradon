@@ -24,7 +24,12 @@ export default function SearchList({type, data}){
                         case searchConst.TYPE_STATUSES:
                             return null;
                         case searchConst.TYPE_HASHTAGS:
-                            return null;
+                            return <ListItem
+                                title={"#" + item.name}
+                                subtitle={item.history[0] && item.history[0].accounts}
+                                bottomDivider
+                                onPress={() => null}
+                            />;
                     }
                 }}
             />
