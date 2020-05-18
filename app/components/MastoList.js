@@ -56,7 +56,6 @@ function MastoList({ navigation, type }) {
                                 return;
                             }
                             const time = Math.floor(new Date().getTime() / 1000);
-                            console.log(time - listdata.lastUpdate);
                             if(time - listdata.lastUpdate >= REFRESH_TIME){
                                 dispatch(newLoadingTimeline(type, listdata.maxId, true));
                             }else{
