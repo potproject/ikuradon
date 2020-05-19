@@ -1,5 +1,5 @@
 import He from "he";
-import Moment from "moment/min/moment-with-locales";
+import DayJS from "dayjs";
 
 export function bodyFormat(body) {
     //改行 <br />
@@ -27,7 +27,7 @@ export function bodySearchUrl(body) {
 }
 
 export function dateFormat(date) {
-    return Moment(date).format("YYYY/MM/DD HH:mm:ss");
+    return DayJS(date).format("YYYY/MM/DD HH:mm:ss");
 }
 
 export function emojisArrayToObject(emojis){
