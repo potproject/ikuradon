@@ -40,7 +40,7 @@
         "react-native-elements": "^2.0.0",
         "react-native-gesture-handler": "~1.6.0",
         "react-native-hyperlink": "^0.0.19",
-        "react-native-image-zoom-viewer": "^3.0.0",
+        "react-native-image-zoom-viewer": "^3.0.1",
         "react-native-keyboard-spacer": "^0.4.1",
         "react-native-reanimated": "^1.8.0",
         "react-native-safe-area-context": "0.7.3",
