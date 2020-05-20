@@ -43,6 +43,7 @@ export default {
 
     // タイムライン
     timeline_title: "タイムライン",
+    timeline_cwtext: "もっと見る",
 
     // DM
     directmessage_title: "ダイレクトメッセージ",

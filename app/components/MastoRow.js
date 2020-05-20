@@ -20,7 +20,7 @@ import MastoRowImage from "./MastoRowImage";
 
 const MastoRow = ({ item, current, actions }) => {
     // Toot data
-    let { id, created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = item;
+    let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
@@ -77,7 +77,7 @@ const MastoRow = ({ item, current, actions }) => {
                     , [account])
                     }
                     <View style={styles.tootContainer}>
-                        <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} emojis={emojis} sensitive={sensitive} />
+                        <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} sensitiveButtonColor={theme.colors.primary} emojis={emojis} sensitive={sensitive} spoilerText={spoiler_text} />
                     </View>
                     { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>

@@ -43,7 +43,8 @@ export default {
 
     // Timeline
     timeline_title: "Timeline",
-    
+    timeline_cwtext: "show more",
+
     // DM
     directmessage_title: "Direct Message",
 
