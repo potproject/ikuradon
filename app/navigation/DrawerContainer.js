@@ -68,6 +68,15 @@ export default function DrawerContainer({navigation}){
                 */ }
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();
+                    navigation.navigate(RouterName.Search);
+                }} >
+                    <View>
+                        <FontAwesome style={styles.icon} name='search' size={20} color={theme.colors.grey0}/>
+                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("search_title")} </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.fixedList} onPress={()=>{
+                    navigation.closeDrawer();
                     navigation.navigate(RouterName.Bookmarks);
                 }} >
                     <View>

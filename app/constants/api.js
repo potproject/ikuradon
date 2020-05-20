@@ -162,6 +162,14 @@ export const GET_CUSTOMEMOJIS = {
     form: {}
 };
 
+export const GET_SEARCH_V2 = {
+    method: "get",
+    url: "/api/v2/search",
+    form: {
+        q: ""
+    }
+};
+
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
     method: "get",

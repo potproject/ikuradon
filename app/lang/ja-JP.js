@@ -46,7 +46,13 @@ export default {
 
     // DM
     directmessage_title: "ダイレクトメッセージ",
-        
+
+    // 検索
+    search_title: "検索",
+    search_accounts: "アカウント",
+    search_statuses: "トゥート",
+    search_hashtags: "ハッシュタグ",
+
     // お気に入り
     favourited_title: "お気に入り",
 

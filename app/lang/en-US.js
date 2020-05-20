@@ -47,6 +47,12 @@ export default {
     // DM
     directmessage_title: "Direct Message",
 
+    // Search
+    search_title: "Search",
+    search_accounts: "Accounts",
+    search_statuses: "Toots",
+    search_hashtags: "HashTags",
+    
     // favourited
     favourited_title: "Favourited",
 

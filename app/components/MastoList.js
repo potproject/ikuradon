@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Modal } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
@@ -66,6 +66,12 @@ function MastoList({ navigation, type }) {
                 renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
                 ItemSeparatorComponent={() => <Divider />}
                 onEndReachedThreshold={1.5}
+                ListFooterComponent={() => 
+                    !listdata.refreshing && listdata.loading && 
+                    <View style={styles.loading}>
+                        <ActivityIndicator size="large" />
+                    </View>
+                }
                 onEndReached={() => {
                     if(init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
                         dispatch(oldLoadingTimeline(type, listdata.minId));
@@ -75,6 +81,7 @@ function MastoList({ navigation, type }) {
             <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
                 <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
                     enableSwipeDown={true}
+                    loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
                     onSwipeDown={() => { actions.closeImageViewerAction()}} />
             </Modal>
         </View>
@@ -84,6 +91,10 @@ function MastoList({ navigation, type }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    loading: {
+        paddingTop: 10,
+        paddingBottom: 10
     }
 });
 
