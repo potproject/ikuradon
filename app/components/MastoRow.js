@@ -81,7 +81,7 @@ const MastoRow = ({ item, current, actions }) => {
                     </View>
                     { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>
-                        <MastoRowImage mediaAttachments={media_attachments} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
+                        <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
                     </View>
                     }
                     <View style={styles.item}>
