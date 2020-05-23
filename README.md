@@ -62,14 +62,6 @@ expo publish
 | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_timeline.jpg?raw=true) | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_notifications.jpg?raw=true) |
 | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_toot.jpg?raw=true)     | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_drawer.jpg?raw=true)        |
 
-## Getting Starter
-
-`Expo CDN`:
-
-[https://expo.io/@potpro/potproject-ikuradon](https://expo.io/@potpro/potproject-ikuradon)
-
-Open it in the [Expo app](https://expo.io) on your phone to view it.
-
 ## Development
 
 ```
