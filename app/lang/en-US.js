@@ -84,6 +84,8 @@ export default {
     toot_title: "Toot",
     toot_cw_placeholder: "Write your warning here",
     toot_placeholder: "What is on your mind?",
+    toot_draft_delete:  "Delete",
+    toot_draft_save: "Save Draft",
 
     //Toot Visibility
     toot_visibility_public: "public",

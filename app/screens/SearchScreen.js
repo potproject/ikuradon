@@ -16,7 +16,7 @@ function SearchScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Header
-                leftComponent={<TimelineLeftHeader isBack={true} goBack={navigation.goBack} openDrawer={navigation.openDrawer} />}
+                leftComponent={<TimelineLeftHeader isBack={true} onPress={navigation.goBack} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={t("search_title")} onPress={navigation.openDrawer} current={current}/>}
             />
             <Search />

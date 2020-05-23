@@ -4,11 +4,11 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { ThemeContext } from "react-native-elements";
 
-export default function TimelineLeftHeader({ isBack, openDrawer, goBack }){
+export default function TimelineLeftHeader({ isBack, onPress }){
     const { theme } = useContext(ThemeContext);
     return (
         <View>
-            <TouchableOpacity onPress={isBack ? goBack : openDrawer} style={styles.view}>
+            <TouchableOpacity onPress={() => onPress()} style={styles.view}>
                 {isBack ?
                     <FontAwesome name="chevron-left" size={20} color={theme.customColors.primaryBackground} />
                     :

@@ -5,7 +5,7 @@ import { getEmojis } from "../util/emojis";
 import { Image } from "react-native-elements";
   
 export default function EmojisModal({current, onSelect}){
-    const { theme }= useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     let [emojis, useEmojis] = useState([]);
     const [load, useLoad] = useState(false);
     if(!load && emojis.length === 0){
