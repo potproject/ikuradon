@@ -8,18 +8,33 @@ Mastodon client App for React Native (Expo)
 
 マストドン用クライアントの React Native アプリです。
 
-## インストール方法(Android)
+## インストール方法
 
 App Store、Google Play を通さない Expo アプリとして配布されています。
+
+### Android
 
 1. Expo アプリをインストールします。
    [iOS](https://apps.apple.com/app/apple-store/id982107779) / [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
 2. [ここ](https://expo.io/@potpro/potproject-ikuradon)より QR コードを読み取るか、`Open project using Expo` を押すことにより起動します。
 
-※ 昔はこれで iOS でも動いていたようですが、Apple 様の制約により動かなくされました
+### iOS
 
-※ Expo のアカウントを取って、`expo publish` を行えば iOS でも動作させることはできます
+__昔はAndroidと同じ方法でも動いていたようですが、Apple 様の制約により動かなくされました__
+
+現在、iOSは自分のアカウント上にあるExpoアプリしか動作させることができません。詳しくは[こちら(英語)](https://blog.expo.io/upcoming-limitations-to-ios-expo-client-8076d01aee1a)
+
+Expo のアカウントを取得し、アプリでログイン後、ソースコードをダウンロードし、
+
+```
+yarn global add expo-cli # or npm install -g expo-cli
+yarn # or npm install
+expo login
+expo publish
+```
+
+等のコマンドで自アカウント上にリリースすることで、制限なく iOS でも動作させることが可能です
 
 ## Feature
 
@@ -58,6 +73,7 @@ Open it in the [Expo app](https://expo.io) on your phone to view it.
 ## Development
 
 ```
+yarn global add expo-cli # or npm install -g expo-cli
 yarn # or npm install
 yarn start # or npm run start
 ```
