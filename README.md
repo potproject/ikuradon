@@ -17,8 +17,9 @@ App Store、Google Play を通さない Expo アプリとして配布されて�
 
 2. [ここ](https://expo.io/@potpro/potproject-ikuradon)より QR コードを読み取るか、`Open project using Expo` を押すことにより起動します。
 
-※ 昔はこれで iOS でも動いていたようですが、Apple の制約により動かなくされました
-※ Expo のアカウントを取って、`development`を行えば iOS でも動作します
+※ 昔はこれで iOS でも動いていたようですが、Apple 様の制約により動かなくされました
+
+※ Expo のアカウントを取って、`expo publish` を行えば iOS でも動作させることはできます
 
 ## Feature
 
