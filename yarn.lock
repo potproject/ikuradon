@@ -1329,10 +1329,10 @@
     react-is "^16.13.0"
     use-subscription "^1.4.0"
 
-"@react-navigation/drawer@^5.0.0":
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.7.0.tgz#aa65b1342df0b978f88b3dd2bad11f476c3118c8"
-  integrity sha512-TSIgW+CEq2PZzVw2de5C7mhRHyv4oZSn+Iwb5c1aTUxbuFDNBulYYZEMpUg5POE8DU7/f9nG2CqbCDc1h2d/nA==
+"@react-navigation/drawer@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.8.0.tgz#b94bd98cf27ed05d8d943a48f6d1952d0cb32a6f"
+  integrity sha512-JaVPfpNYiYVzw3vn6K7U38VCPUEKGpmlM4tcqeAEt8ShumwLQCPFWdcm8JfZaKnWJg6zFeexGf/5eU9CYaY0hQ==
   dependencies:
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
