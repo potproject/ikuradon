@@ -77,6 +77,7 @@ export default function Main(state = initialState, action = {}) {
             let lastUpdate = Math.floor(new Date().getTime() / 1000);
             if(action.clear){
                 data = [...action.data];
+                ({ minId, maxId } = getMinMaxId(null, null, action.data));
             } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                 data = state[reducerType].data.concat(action.data);
             } else {
