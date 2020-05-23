@@ -19,7 +19,7 @@ function NotificationsScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <Header
-                leftComponent={<TimelineLeftHeader isBack={false} goBack={null} openDrawer={navigation.openDrawer} />}
+                leftComponent={<TimelineLeftHeader isBack={false} onPress={navigation.openDrawer} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={""} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={null}
             />

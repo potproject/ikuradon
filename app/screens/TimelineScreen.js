@@ -23,7 +23,7 @@ function TimelineScreen({ route, navigation }) {
     return (
         <View style={styles.container}>
             <Header
-                leftComponent={<TimelineLeftHeader isBack={isBack} goBack={navigation.goBack} openDrawer={navigation.openDrawer} />}
+                leftComponent={<TimelineLeftHeader isBack={isBack} onPress={isBack ? navigation.goBack : navigation.openDrawer} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={getFixedTitle(route.name)} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={isStream ? <TimelineStreamingButton type={type}/>: null}
             />

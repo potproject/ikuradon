@@ -6,6 +6,7 @@ import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import TimelineTootButton from "../components/TimelineTootButton";
 import { FontAwesome } from "@expo/vector-icons";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import t from "../services/I18n";
 
@@ -20,6 +21,8 @@ const reducerSelector = state => ({
 import * as RouterName from "../constants/RouterName";
 import VisibilityModal from "../components/VisibilityModal";
 import EmojisModal from "../components/EmojisModal";
+import DraftModal from "../components/DraftModal";
+import { addDraft, deleteDraft } from "../util/draft";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -35,6 +38,7 @@ const VISIBILITY_CONST = {
 
 function TootScreen({ navigation, route }) {
     const dispatch = useDispatch();
+    const { showActionSheetWithOptions } = useActionSheet();
     const reply = typeof route.params !== "undefined" ? route.params : null;
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
@@ -45,10 +49,35 @@ function TootScreen({ navigation, route }) {
     const [visibilityModal, useVisibilityModal] = useState(false);
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
     const [emojisModal, useEmojisModal] = useState(false);
+    const [draftModal, useDraftModal] = useState(false);
+    const onOpenActionSheet = () => {
+        showActionSheetWithOptions(
+            {
+                options: [t("toot_draft_delete"), t("toot_draft_save"), t("global_cancel")],
+                cancelButtonIndex: 2,
+                destructiveButtonIndex: 0,
+            },
+            buttonIndex => {
+                switch (buttonIndex) {
+                    case 0:
+                        navigation.goBack();
+                        return;
+                    case 1:
+                        addDraft(tootText).finally(() => navigation.goBack());
+                        return;
+                    case 2:
+                        return;
+                }
+            },
+        );
+    };
     return (
         <View style={styles.container}>
             <Header
-                leftComponent={<TimelineLeftHeader isBack={true} goBack={navigation.goBack} openDrawer={navigation.openDrawer} />}
+                leftComponent={<TimelineLeftHeader
+                    isBack={true}
+                    onPress={tootText !== "" ? onOpenActionSheet : navigation.goBack}
+                />}
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
@@ -94,6 +123,11 @@ function TootScreen({ navigation, route }) {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.icon}
+                        onPress={() => useDraftModal(true)}>
+                        <FontAwesome name={"sticky-note"} size={26} color={theme.colors.grey1} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.icon}
                         onPress={() => onChangeCwTootText("") || useCw(!cw)}>
                         <Text style={[styles.cwText,{color:cw ? theme.colors.primary : theme.colors.grey0}]}>CW</Text>
                     </TouchableOpacity>
@@ -112,6 +146,12 @@ function TootScreen({ navigation, route }) {
                         const emojisSuffix = " :" + selected + ": ";
                         useEmojisModal(false);
                         onChangeTootText(tootText.slice(0, tootCursor) + emojisSuffix + tootText.slice(tootCursor));
+                    }} />
+                </Overlay>
+                <Overlay isVisible={draftModal} onBackdropPress={() => useDraftModal(false)}>
+                    <DraftModal onSelect={(index, text)=>{
+                        useDraftModal(false);
+                        deleteDraft(index).finally(() => onChangeTootText(text));
                     }} />
                 </Overlay>
             </View>

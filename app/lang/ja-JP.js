@@ -83,6 +83,8 @@ export default {
     toot_title: "トゥート",
     toot_placeholder: "今何してる？",
     toot_cw_placeholder: "ここに警告を書いてください",
+    toot_draft_delete:  "削除",
+    toot_draft_save: "下書きを保存",
 
     //トゥート公開範囲
     toot_visibility_public: "公開",

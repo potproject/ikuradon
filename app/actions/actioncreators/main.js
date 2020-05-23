@@ -57,7 +57,7 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id: null, max_id }, access_token);
-            dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType });
+            dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false});
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"),e.message);
             dispatch({ type: Main.STOP_LOADING_MASTOLIST, reducerType });
