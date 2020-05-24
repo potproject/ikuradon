@@ -12,6 +12,7 @@ export default class Stream {
                 break;
             case "local":
                 stream = "public:local";
+                break;
             case "home":
             default:
                 stream = "user";
