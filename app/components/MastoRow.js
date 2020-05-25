@@ -17,6 +17,7 @@ import Action from "./item/Action";
 import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
 import MastoRowImage from "./MastoRowImage";
+import { icon } from "../constants/visibility";
 
 const MastoRow = ({ item, current, actions }) => {
     // Toot data
@@ -51,7 +52,16 @@ const MastoRow = ({ item, current, actions }) => {
                     </CustomEmoji>
                 </View>
             , [rebloggedName])}
-            <View style={styles.date}><Text style={{fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>{dateFormat(created_at)}</Text></View>
+            <View style={styles.date}>
+                <Text style={{fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
+                    {sensitive &&
+                    <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    }
+                    {" "}
+                    <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    {" " +dateFormat(created_at)}
+                </Text>
+            </View>
             <View style={styles.innerContainer}>
                 <View style={styles.photoContainer}>
                     { useMemo(() =>

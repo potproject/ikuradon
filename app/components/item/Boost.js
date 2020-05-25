@@ -17,7 +17,7 @@ function Boost(props){
             }}>
                 <FontAwesome name={disabled ? "lock" : "retweet"} size={20} color={stateReblogged === true ? theme.customColors.item.boost : theme.customColors.item.none} />
             </TouchableOpacity>
-            <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
+            <Text style={[{color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16},styles.text]}>{count !== 0 ? count : ""}</Text>
         </View>
     );
 }
@@ -38,9 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     text: {
-        flex: 1,
-        fontSize: 16,
-        color: "gray"
+        flex: 1
     }
 });
 

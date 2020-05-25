@@ -16,7 +16,7 @@ function Favourite({id, tootid, style, favourited, count, onFavourite}){
             }}>
                 <FontAwesome name="star" size={20} color={stateFavourited ? theme.customColors.item.favourite : theme.customColors.item.none} />
             </TouchableOpacity>
-            <Text style={styles.text}>{count !== 0 ? count : ""}</Text>
+            <Text style={[{color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16},styles.text]}>{count !== 0 ? count : ""}</Text>
         </View>
     );
 }
@@ -36,9 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     text: {
-        flex: 1,
-        fontSize: 16,
-        color: "gray"
+        flex: 1
     }
 });
 
