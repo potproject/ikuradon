@@ -1,75 +1,52 @@
-import * as Streaming from "../actiontypes/streaming";
 import * as Main from "../actiontypes/main";
-import * as CONST_API from "../../constants/api";
-import Stream from "../../services/Stream";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
-import * as Session from "../../util/session";
 import { bodyFormat } from "../../util/parser";
+import * as Streaming from "../../actions/actiontypes/streaming"
 
-export function start(reducerType) {
+export function receive(reducerType, event, data){
     return async dispatch => {
-        try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            Stream.init(domain, CONST_API.STREAMING, access_token, reducerType);
-            await Stream.open(reducerType);
-            DropDownHolder.success(t("messages.streaming_enabled"));
-            dispatch({ type: Streaming.STREAM_START, reducerType });
-            Stream.receive(streamMessage => {
-                if (streamMessage.event === "update" && streamMessage.payload) {
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [JSON.parse(streamMessage.payload)], reducerType, streaming: true });
-                } else if (streamMessage.event === "notification" && streamMessage.payload) {
-                    let data = JSON.parse(streamMessage.payload);
-                    let name = data.account.display_name !== "" ? data.account.display_name : data.account.username;
-                    let title = "";
-                    let message = "";
-                    switch (data.type) {
-                        case "follow":
-                            title = name + t("notifications.followed");
-                            message = null;
-                            break;
-                        case "favourite":
-                            title = name + t("notifications.favourited");
-                            message = bodyFormat(data.status.content);
-                            break;
-                        case "reblog":
-                            title = name + t("notifications.boosted");
-                            message = bodyFormat(data.status.content);
-                            break;
-                        case "mention":
-                            title = name + t("notifications.mentioned");
-                            message = bodyFormat(data.status.content);
-                            break;
-                        default:
-                            return;
-                    }
-                    DropDownHolder.info(title, message);
-                    dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications", streaming: true });
-                } else if (streamMessage.event === "delete" && streamMessage.payload) {
-                    //いつか実装します
+        switch(event){
+            case "update":
+                dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType, streaming: true });
+                break;
+            case "notification":
+                let name = data.account.display_name !== "" ? data.account.display_name : data.account.username;
+                let title = "";
+                let message = "";
+                switch (data.type) {
+                    case "follow":
+                        title = name + t("notifications.followed");
+                        message = null;
+                        break;
+                    case "favourite":
+                        title = name + t("notifications.favourited");
+                        message = bodyFormat(data.status.content);
+                        break;
+                    case "reblog":
+                        title = name + t("notifications.boosted");
+                        message = bodyFormat(data.status.content);
+                        break;
+                    case "mention":
+                        title = name + t("notifications.mentioned");
+                        message = bodyFormat(data.status.content);
+                        break;
+                    default:
+                        return;
                 }
-            }, reducerType);
-        } catch (e) {
-            DropDownHolder.error(t("messages.streaming_failed"), e.message);
-            dispatch({ type: Streaming.STREAM_STOP, reducerType });
-            return;
+                DropDownHolder.info(title, message);
+                dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType: "notifications", streaming: true });    
+                break;
+            case "delete":
+                break;
         }
-    };
+    }
 }
 
-export function stop(reducerType) {
-    return async dispatch => {
-        try {
-            let closeCode = await Stream.close(reducerType);
-            if (closeCode < 1000 && closeCode > 1015) {
-                //不明な切断
-                return;
-            }
-            DropDownHolder.info(t("messages.streaming_disabled"));
-        } catch (e) {
-            DropDownHolder.error(t("messages.streaming_failed"));
-            return;
-        }
-        dispatch({ type: Streaming.STREAM_STOP, reducerType });
-    };
+export function stop(reducerType){
+    return { type: Streaming.STREAM_STOP, reducerType };
+}
+
+export function start(reducerType){
+    return { type: Streaming.STREAM_START, reducerType };
 }
