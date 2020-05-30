@@ -37,7 +37,7 @@
         "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
         "react-native-customemoji": "^1.0.0",
         "react-native-dropdownalert": "^4.2.1",
-        "react-native-elements": "^2.0.0",
+        "react-native-elements": "^2.0.1",
         "react-native-gesture-handler": "~1.6.0",
         "react-native-hyperlink": "^0.0.19",
         "react-native-image-zoom-viewer": "^3.0.0",
