@@ -25,8 +25,9 @@ const NotificationsRow = ({ item, current, actions }) => {
             <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
                 { boostAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
-                        <FontAwesome name={"retweet"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
+                    <View style={{flex:0.18, flexDirection: "row-reverse"}}>
+                        <FontAwesome name={"retweet"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
+                        <Text style={[{color: theme.colors.grey0},styles.count]}>{boostAccounts.length}</Text>
                     </View>
                     <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
                         {boostAccounts.map((account, i) => {
@@ -49,8 +50,9 @@ const NotificationsRow = ({ item, current, actions }) => {
                 }
                 { favouriteAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
-                        <FontAwesome name={"star"} size={22} color={theme.customColors.item.favourite} style={{marginRight:5}}/>
+                    <View style={{flex:0.18, flexDirection: "row-reverse"}}>
+                        <FontAwesome name={"star"} size={22} color={theme.customColors.item.favourite} style={styles.icon}/>
+                        <Text style={[{color: theme.colors.grey0},styles.count]}>{favouriteAccounts.length}</Text>
                     </View>
                     <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
                         {favouriteAccounts.map((account, i) => {
@@ -152,6 +154,19 @@ const styles = StyleSheet.create({
     photoMargin: {
         marginLeft: 2,
         marginRight: 2
+    },
+    count: {
+      fontSize: 16,
+      fontWeight: "bold",
+      marginRight: 5,
+      alignSelf: "center",
+
+    },
+    icon:{
+        width:25,
+        height:25,
+        marginRight: 5,
+        alignSelf: "center"
     },
     followMessage: {
         flex: 1,
