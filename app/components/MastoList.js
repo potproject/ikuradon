@@ -47,6 +47,7 @@ function MastoList({ navigation, type }) {
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
+                extraData={listdata.data}
                 refreshControl={
                     <RefreshControl 
                         enabled={!streamingType} 
