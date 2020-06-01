@@ -19,6 +19,9 @@ export default {
     setting_instance_version: "バージョン",
     setting_instance_editlink: "プロフィールを編集",
 
+    setting_experimentals: "実験的機能",
+    setting_notifications: "プッシュ通知を使う",
+
     //設定ヘッダ
     setting_header_personal: "個人",
     setting_header_accounts: "アカウント",

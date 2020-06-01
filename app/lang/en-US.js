@@ -19,6 +19,9 @@ export default {
     setting_instance_version: "Mastodon Version",
     setting_instance_editlink: "Edit profile",
 
+    setting_experimentals: "Experimentails",
+    setting_notifications: "Using Push Notification",
+
     //Settings Header
     setting_header_personal: "Personal",
     setting_header_accounts: "Accounts",

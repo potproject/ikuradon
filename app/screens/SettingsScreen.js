@@ -7,6 +7,7 @@ import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
+import { setup } from "../util/notifications";
 
 const reducerSelector =  state => ({
     current: state.currentUserReducer,
@@ -61,6 +62,13 @@ function SettingsScreen() {
                 title={t("setting_visible_notifications")}
                 bottomDivider
                 switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
+            />
+            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_experimentals")}</Text>
+            <ListItem
+                title={t("setting_notifications")}
+                chevron
+                bottomDivider
+                onPress={setup}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
             <ListItem
