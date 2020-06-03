@@ -7,6 +7,9 @@ import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
+import NavigationService from "../services/NavigationService";
+
+import * as RouterName from "../constants/RouterName";
 
 const reducerSelector =  state => ({
     current: state.currentUserReducer,
@@ -61,6 +64,13 @@ function SettingsScreen() {
                 title={t("setting_visible_notifications")}
                 bottomDivider
                 switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
+            />
+            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
+            <ListItem
+                title={t("setting_themes")}
+                bottomDivider
+                chevron
+                onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
             <ListItem

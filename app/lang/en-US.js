@@ -7,6 +7,16 @@ export default {
     setting_appversion: "App Version",
     setting_allclear: "ALL Reset",
 
+    setting_themes: "Themes",
+    setting_themes_light: "Light",
+    setting_themes_dark: "Dark",
+    themes: {
+        // Light
+        default: "Default(IkuraOrange)",
+        mikugreen: "MikuGreen",
+        // Dark
+    },
+
     setting_visible_home: "Do not show Home Timeline",
     setting_visible_local: "Do not show Local Timeline",
     setting_visible_federal: "Do not show Federal Timeline",

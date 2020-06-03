@@ -3,7 +3,6 @@ import * as Config from "../actiontypes/config";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
-//import Font from "../../services/font";
 
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/Networking";
@@ -12,22 +11,24 @@ import * as CurrentUser from "../actiontypes/currentuser";
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as AppInit from "../actiontypes/appinit";
+import { settingTheme } from "../../util/theme";
 
 const AUTO_LOGIN = true; // Auto Login
 
-export function appInit() {
+export function appInit(updateTheme) {
     return async dispatch => {
-
         //config init load
         let configstr = await AsyncStorage.getItem("config");
         let config = JSON.parse(configstr);
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
         }
+        //Theme init
+        if(config.theme){
+            settingTheme(updateTheme, config.theme)
+        }
         //Session init
         await Session.init();
-        //fontload init
-        //await Font.init();
 
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();

@@ -7,6 +7,16 @@ export default {
     setting_appversion: "アプリバージョン",
     setting_allclear: "初期状態に戻す",
 
+    setting_themes: "テーマ",
+    setting_themes_light: "ライト",
+    setting_themes_dark: "ダーク",
+    themes: {
+        // ライト
+        default: "デフォルト(イクラオレンジ)",
+        mikugreen: "ミクグリーン",
+        // ダーク
+    },
+
     setting_visible_home: "ホームタイムラインを非表示",
     setting_visible_local: "ローカルタイムラインを非表示",
     setting_visible_federal: "連合タイムラインを非表示",

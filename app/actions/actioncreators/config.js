@@ -57,3 +57,7 @@ export function setTimelinePerform(value) {
         NavigationService.resetAndNavigate({ name: RouterName.Main });
     };
 }
+
+export function setTheme(value){
+    return { type: Config.CHANGE_THEME, theme: value }; 
+}

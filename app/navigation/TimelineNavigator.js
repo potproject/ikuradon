@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import TimelineScreen from "../screens/TimelineScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 
 import ItemTabBar from "../components/ItemTabBar";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ThemeContext } from "react-native-elements";
 import { useSelector } from "react-redux";
 
 const MainReducerSelector = state => state.mainReducer;
@@ -19,11 +20,13 @@ const Tab = createBottomTabNavigator();
 
 export default function TimelineNavigator() {
     const { home, local, federal, notifications } = useSelector(MainReducerSelector);
+    const { theme } = useContext(ThemeContext);
     const { streaming, config } = useSelector(reducerSelector);
     const { invisible } = config;
     return (
         <Tab.Navigator tabBarOptions={{
-            activeTintColor: "#FF3300",
+            activeTintColor: theme.colors.primary,
+            inactiveTintColor: theme.colors.grey2,
         }}>
             { !invisible.home &&
             <Tab.Screen name={RouterName.Timeline_Home} component={TimelineScreen} 
