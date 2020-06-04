@@ -97,7 +97,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                         <View style={styles.photoMargin}>
                             <Image style={styles.photo} source={{uri: account.avatar}} />
                         </View>
-                        <Follow id={account.id} style={styles.followIcon} />
+                        <Follow id={account.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
                     </View>
                 </View>
                 <View style={styles.followMessage}>

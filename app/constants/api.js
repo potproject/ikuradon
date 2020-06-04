@@ -163,6 +163,14 @@ export const POST_UNFOLLOWED = {
     form: {}
 };
 
+export const GET_RELATIONSHIPS = {
+    method: "get",
+    url: "/api/v1/accounts/relationships",
+    form: {
+        id: [], //Required (array)
+    }
+};
+
 export const UPLOAD_POST_MEDIA = {
     method: "post",
     url: "/api/v1/media"
