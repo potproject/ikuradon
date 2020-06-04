@@ -14,6 +14,7 @@ export default {
         // ライト
         default: "デフォルト(イクラオレンジ)",
         mikugreen: "ミクグリーン",
+        tootblue: "トゥートブルー",
         // ダーク
     },
 

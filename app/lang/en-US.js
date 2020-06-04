@@ -14,6 +14,7 @@ export default {
         // Light
         default: "Default(IkuraOrange)",
         mikugreen: "MikuGreen",
+        tootblue: "TootBlue",
         // Dark
     },
 

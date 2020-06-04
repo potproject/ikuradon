@@ -35,6 +35,15 @@ function SettingsThemesScreen({updateTheme}) {
                     dispatch(setTheme("mikugreen"));
                 }}
             />
+            <ListItem
+                title={t("themes.tootblue")}
+                rightIcon={{ name: "check", color: config.theme === "tootblue" ? theme.colors.primary : "#FFFFFF" }}
+                bottomDivider
+                onPress={()=>{
+                    settingTheme(updateTheme, "tootblue");
+                    dispatch(setTheme("tootblue"));
+                }}
+            />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes_dark")}</Text>
         </View>
     );
