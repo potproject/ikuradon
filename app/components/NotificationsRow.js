@@ -10,6 +10,7 @@ import { NEW_NOTIFICATION_TYPE } from "../util/notification";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext, Image } from "react-native-elements";
+import Follow from "./item/Follow";
 
 const MAX_DISPLAY_IMAGE = 8;
 
@@ -96,6 +97,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                         <View style={styles.photoMargin}>
                             <Image style={styles.photo} source={{uri: account.avatar}} />
                         </View>
+                        <Follow id={account.id} style={styles.followIcon} />
                     </View>
                 </View>
                 <View style={styles.followMessage}>
@@ -194,6 +196,10 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         fontSize: 16
     },
+    followIcon: {
+        flex: 1,
+        paddingLeft: 5,
+    }
 });
 
 export default NotificationsRow;

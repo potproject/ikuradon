@@ -165,6 +165,8 @@ export default {
         followed: " があなたをフォローしました",
         mentioned: " があなたに返信しました",
         boosted: " がブーストしました",
-        favourited: " がお気に入りに登録しました"
+        favourited: " がお気に入りに登録しました",
+        follow: "フォローする",
+        unfollow: "フォローを解除する",
     }
 };

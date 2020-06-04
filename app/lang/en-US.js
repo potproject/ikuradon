@@ -166,6 +166,8 @@ export default {
         followed: " followed you.",
         mentioned: " mentioned you.",
         boosted: " boosted you.",
-        favourited: " favourited you."
+        favourited: " favourited you.",
+        follow: "Follow",
+        unfollow: "Unfollow",
     }
 };

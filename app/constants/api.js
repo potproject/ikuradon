@@ -151,6 +151,18 @@ export const POST_UNBOOKMARKED = {
     form: {}
 };
 
+export const POST_FOLLOWED = {
+    method: "post",
+    url: "/api/v1/accounts/:param:/follow",
+    form: {}
+};
+
+export const POST_UNFOLLOWED = {
+    method: "post",
+    url: "/api/v1/accounts/:param:/unfollow",
+    form: {}
+};
+
 export const UPLOAD_POST_MEDIA = {
     method: "post",
     url: "/api/v1/media"
