@@ -81,6 +81,7 @@ export default {
     login_title: "ログイン",
     login_message: "Mastodon サーバ ドメインを入力してください",
     login_domain_label: "ドメイン",
+    login_token_label: "アクセストークン",
     login_button: "ログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",
