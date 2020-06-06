@@ -12,6 +12,8 @@ const initialState = {
         notifications: false,
     },
 
+    theme: "default",
+
     smartMode: false,
     timelinePerform: false,
     //textsize,textcolor,etc...
@@ -49,6 +51,11 @@ export default function Config(state = initialState, action = {}) {
             });
             break;
 
+        case ConfigActionTypes.CHANGE_THEME:
+            newstate = Object.assign({}, state, {
+                theme: action.theme,
+            });
+            break;
         case ConfigActionTypes.CONFIG_LOAD:
             newstate = Object.assign({}, action.config);
             break;

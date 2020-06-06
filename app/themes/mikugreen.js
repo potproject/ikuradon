@@ -1,25 +1,25 @@
 export default {
     customColors:{
         charBackground:"#FFFFFF",
-        char: "#000000",
+        char: "#373b3e",
         charReverse: "#FFFFFF",
-        primaryComplementary: "#00CCFF",
+        primaryComplementary: "#7f1813",
         primaryBackground: "#FFFFFF",
         item: {
             boost: "#2b90d9",
             favourite: "#ffd27d",
             bookmark: "#4c6ef5",
-            none: "#8899a6"
+            none: "#6ba4a2"
         },
-        tootButton: "#FF5500",
+        tootButton: "#116d72",
         link: "#1b95e0",
     },
     colors: {
-        primary: "#FF3300",
+        primary: "#137a7f",
         //secondary;
-        grey0: "#657786",
-        grey1: "#2b90d9",
-        grey2: "#8899a6",
+        grey0: "#6ba4a2",
+        grey1: "#e12885",
+        grey2: "#86cecb",
         //grey3;
         //grey4;
         //grey5;

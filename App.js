@@ -32,6 +32,7 @@ import theme from "./app/themes/default";
 import AuthorizeScreen from "./app/screens/AuthorizeScreen";
 import NavigationService from "./app/services/NavigationService";
 import SettingsScreen from "./app/screens/SettingsScreen";
+import SettingsThemesScreen from "./app/screens/SettingsThemesScreen";
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -86,6 +87,7 @@ export default function App(props) {
                                     <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
                                     <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
                                     <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title")}} />
+                                    <Stack.Screen name={RouterName.Settings_Themes} component={SettingsThemesScreen} options={{ title: t("setting_themes")}} />
                                     <Stack.Screen name={RouterName.Toot} component={TootScreen} options={{ headerShown: false }} />
                                     <Stack.Screen name={RouterName.Search} component={SearchScreen} options={{ headerShown: false }} />
                                 </Stack.Navigator>

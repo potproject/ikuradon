@@ -54,3 +54,20 @@ export function bookmark(id, tootid, bookmarked) {
         return;
     };
 }
+
+export function follow(id, followed) {
+    return async dispatch => {
+        try {
+            dispatch({ type: Mastorow.FOLLOW_MASTOROW, id, followed });
+            let { domain, access_token } = await Session.getDomainAndToken();
+            let POST_URL = followed ? CONST_API.POST_FOLLOWED : CONST_API.POST_UNFOLLOWED;
+            let { following: followedResult } = await Networking.fetch(domain, POST_URL, id, {}, access_token);
+            console.log("follow:", id, followed, "result:", followedResult);
+        } catch (e) {
+            DropDownHolder.error(t("messages.network_error"), e.message);
+            dispatch({ type: Mastorow.FOLLOW_MASTOROW, id, followed: !followed });
+            return;
+        }
+        return;
+    };
+}

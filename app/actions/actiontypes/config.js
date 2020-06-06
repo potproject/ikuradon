@@ -6,6 +6,8 @@ export const INVISIBLE_SETTING = "INVISIBLE_SETTING";
 export const SMART_MODE = "SMART_MODE";
 export const TIMELINE_PERFORM = "TIMELINE_PERFORM";
 
+export const CHANGE_THEME = "CHANGE_THEME";
+
 export const CONFIG_LOAD = "CONFIG_LOAD";
 
 export const CONFIG_RESET = "CONFIG_RESET";

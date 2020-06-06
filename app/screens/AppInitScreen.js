@@ -1,18 +1,16 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { Text, Image, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Constants from "expo-constants";
+import { withTheme } from "react-native-elements";
 
 import { appInit } from "../actions/actioncreators/appinit";
-const AppInitReducerSelector = state => state.appInitReducer;
 
-function AppInitScreen({ navigation }) {
+function AppInitScreen({ updateTheme, navigation }) {
     const dispatch = useDispatch();
-    const appInitReducer = useSelector(AppInitReducerSelector);
-
-    if(!appInitReducer.init){
-        dispatch(appInit());
-    }
+    useEffect(() => {
+        dispatch(appInit(updateTheme));
+    }, []);
     return (
         <View style={styles.container}>
             <Image style={styles.logo} source={require("../../assets/image/icon250.png")} />
@@ -41,4 +39,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default AppInitScreen;
+export default withTheme(AppInitScreen);

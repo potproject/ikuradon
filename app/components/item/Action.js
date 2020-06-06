@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import { TouchableOpacity, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useActionSheet } from "@expo/react-native-action-sheet";
@@ -6,7 +6,10 @@ import t from "../../services/I18n";
 import {open as openUrl} from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
+import { ThemeContext } from "react-native-elements";
+
 function Action({id, tootid, style, url, account_url, user, acct,image, body, myself, onReply, onHide, onDeleting}){
+    const { theme } = useContext(ThemeContext);
     const { showActionSheetWithOptions } = useActionSheet();
     const onOpenActionSheet = () => {
         let cancelButtonIndex = 6;
@@ -57,7 +60,7 @@ function Action({id, tootid, style, url, account_url, user, acct,image, body, my
     return (
         <View style={[style, styles.container]}>
             <TouchableOpacity style={style} onPress={() => onOpenActionSheet()}>
-                <FontAwesome name="ellipsis-h" size={20} color="#8899a6" />
+                <FontAwesome name="ellipsis-h" size={20} color={theme.customColors.item.none} />
             </TouchableOpacity>
             <View style={styles.container} />
         </View>
