@@ -44,7 +44,7 @@
         "react-native-keyboard-spacer": "^0.4.1",
         "react-native-reanimated": "^1.8.0",
         "react-native-safe-area-context": "0.7.3",
-        "react-native-screens": "~2.2.0",
+        "react-native-screens": "~2.8.0",
         "react-native-web": "~0.11.7",
         "react-native-webview": "^10.0.0",
         "react-redux": "^7.2.0",
