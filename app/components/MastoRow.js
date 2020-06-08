@@ -30,11 +30,13 @@ const MastoRow = ({ item, current, actions }) => {
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
     let rebloggedName = "";
+    let reblogedImage = null;
     let reblogEmojis = [];
     let tootID = id;
     if(reblog){
         reblogFlag = true;
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
+        reblogedImage = account.avatar;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
         ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = reblog);
@@ -71,6 +73,11 @@ const MastoRow = ({ item, current, actions }) => {
                                 <Image
                                     source={{uri: account.avatar}}
                                     style={styles.photo}/>
+                                { reblogedImage &&
+                                <Image
+                                    source={{uri: reblogedImage}}
+                                    style={styles.photoByReblogged}/>
+                                }
                             </TouchableOpacity>
                         </View>
                     , [account])}
@@ -230,7 +237,14 @@ const styles = StyleSheet.create({
     photo: {
         width: 50,
         height: 50,
-        borderRadius: 5
+        borderRadius: 5,
+    },
+    photoByReblogged: {        
+        marginTop: 2,
+        marginLeft: 22,
+        width: 28,
+        height: 28,
+        borderRadius: 2
     },
     info: {
         flex: 0.82,
