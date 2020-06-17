@@ -241,9 +241,9 @@ const styles = StyleSheet.create({
     },
     photoByReblogged: {        
         marginTop: 2,
-        marginLeft: 22,
-        width: 28,
-        height: 28,
+        marginLeft: 24,
+        width: 26,
+        height: 26,
         borderRadius: 2
     },
     info: {
@@ -285,9 +285,8 @@ const styles = StyleSheet.create({
     },
     item: {
         flex: 1,
-        paddingRight:10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        marginTop: 10,
+        marginBottom: 5,
         flexDirection: "row"
     },
     itemFlex: {
