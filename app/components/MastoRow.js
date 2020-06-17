@@ -17,11 +17,12 @@ import Action from "./item/Action";
 import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
 import MastoRowImage from "./MastoRowImage";
+import MastoRowPoll from "./MastoRowPoll";
 import { icon } from "../constants/visibility";
 
 const MastoRow = ({ item, current, actions }) => {
     // Toot data
-    let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = item;
+    let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll} = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
@@ -39,7 +40,7 @@ const MastoRow = ({ item, current, actions }) => {
         reblogedImage = account.avatar;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
-        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis} = reblog);
+        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll} = reblog);
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
@@ -56,6 +57,9 @@ const MastoRow = ({ item, current, actions }) => {
             , [rebloggedName])}
             <View style={styles.date}>
                 <Text style={{fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
+                    {poll &&
+                    <FontAwesome name={"comments"} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    }
                     {sensitive &&
                     <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
                     }
@@ -96,6 +100,11 @@ const MastoRow = ({ item, current, actions }) => {
                     <View style={styles.tootContainer}>
                         <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} sensitiveButtonColor={theme.colors.primary} emojis={emojis} sensitive={sensitive} spoilerText={spoiler_text} />
                     </View>
+                    { poll &&
+                    <View style={styles.tootContainer}>
+                        <MastoRowPoll poll={poll} />
+                    </View>
+                    }
                     { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>
                         <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
