@@ -137,6 +137,11 @@ export default {
     global_cancel: "キャンセル",
     global_back: "戻る",
 
+    //投票
+    polls:{
+        votes: " 票",
+    },
+
     //メッセージ
     messages: {
         login_success: "ログインしました",

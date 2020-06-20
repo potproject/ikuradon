@@ -138,6 +138,11 @@ export default {
     global_cancel: "Cancel",
     global_back: "Back",
 
+    //poll
+    polls:{
+        votes: " votes",
+    },
+
     //Messages
     messages: {
         login_success: "Login Successfully.",
