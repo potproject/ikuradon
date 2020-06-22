@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
@@ -16,6 +16,7 @@ const reducerSelector = state => ({
     main: state.mainReducer,
     streaming: state.streamingReducer,
     imageviewer: state.imageViewerReducer,
+    config: state.configReducer,
 });
 
 const REFRESH_TIME = 300;
@@ -23,7 +24,7 @@ const REFRESH_TIME = 300;
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main, streaming, imageviewer } = useSelector(reducerSelector);
+    const { current, main, streaming, imageviewer, config } = useSelector(reducerSelector);
     const listdata = main[type];
     const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
@@ -46,6 +47,7 @@ function MastoList({ navigation, type }) {
     };
     return (
         <View style={styles.container}>
+            <ImageBackground imageStyle={{opacity:0.3}} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
             <FlatList
                 keyExtractor={data => data.id}
                 data={listdata.data}
@@ -66,7 +68,7 @@ function MastoList({ navigation, type }) {
                             }
                         }}
                     />}
-                renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} />}
+                renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
                 ItemSeparatorComponent={() => <Divider />}
                 onEndReachedThreshold={1.5}
                 ListFooterComponent={() => 
@@ -87,6 +89,7 @@ function MastoList({ navigation, type }) {
                     loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
                     onSwipeDown={() => { actions.closeImageViewerAction()}} />
             </Modal>
+            </ImageBackground>
         </View>
     );
 }
@@ -94,6 +97,11 @@ function MastoList({ navigation, type }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    background: {
+        backgroundColor: "#ffffff",
+        width: "100%",
+        height: "100%"
     },
     loading: {
         paddingTop: 10,

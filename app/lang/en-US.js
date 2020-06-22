@@ -4,6 +4,7 @@ export default {
     logout: "Logout",
     account_change: "Account Change",
     setting_background: "Setting up Background Image",
+    setting_background_clear: "Delete Background Image",
     setting_appversion: "App Version",
     setting_allclear: "ALL Reset",
 

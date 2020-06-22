@@ -20,7 +20,7 @@ import MastoRowImage from "./MastoRowImage";
 import MastoRowPoll from "./MastoRowPoll";
 import { icon } from "../constants/visibility";
 
-const MastoRow = ({ item, current, actions }) => {
+const MastoRow = ({ item, current, actions, background }) => {
     // Toot data
     let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll} = item;
     // current
@@ -44,7 +44,7 @@ const MastoRow = ({ item, current, actions }) => {
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
-        <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+        <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
             { reblogFlag && useMemo(() =>
                 <View style={styles.isReplyContainer}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
@@ -207,7 +207,8 @@ MastoRow.propTypes = {
             instance: PropTypes.object
         }
     ),
-    actions: PropTypes.object
+    actions: PropTypes.object,
+    background: PropTypes.bool
 };
 
 const styles = StyleSheet.create({

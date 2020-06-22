@@ -14,7 +14,7 @@ import Follow from "./item/Follow";
 
 const MAX_DISPLAY_IMAGE = 8;
 
-const NotificationsRow = ({ item, current, actions }) => {
+const NotificationsRow = ({ item, current, actions, background }) => {
     const {id, type } = item;
     const { theme } = useContext(ThemeContext);
     if(type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST){
@@ -23,7 +23,7 @@ const NotificationsRow = ({ item, current, actions }) => {
         const favouriteAccountNames = favouriteAccounts.map((account) => account.display_name !== "" ? account.display_name : account.username);
         let emojis = {};
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 { boostAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
                     <View style={{flex:0.18, flexDirection: "row-reverse"}}>
@@ -78,13 +78,13 @@ const NotificationsRow = ({ item, current, actions }) => {
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} />
+                <MastoRow item={status} current={current} actions={actions} background={background} />
             </View>
         );
     }else if(type === NEW_NOTIFICATION_TYPE.FOLLOW){
         const { account } = item;
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 <View style={styles.favAndBoostContainer}>
                     <View style={{flex:0.18, flexDirection:"row-reverse"}}>
                         <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
@@ -108,7 +108,7 @@ const NotificationsRow = ({ item, current, actions }) => {
     }else if(type === NEW_NOTIFICATION_TYPE.MENTION){
         const { status, account } = item;
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 <View style={styles.mention}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"reply"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
@@ -120,7 +120,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} />
+                <MastoRow item={status} current={current} actions={actions} background={background} />
             </View>
         );
     }
