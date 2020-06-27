@@ -4,6 +4,7 @@ export default {
     logout: "ログアウト",
     account_change: "アカウント変更",
     setting_background: "背景画像を設定",
+    setting_background_clear: "背景画像を削除",
     setting_appversion: "アプリバージョン",
     setting_allclear: "初期状態に戻す",
 
@@ -136,6 +137,11 @@ export default {
     global_ok: "OK",
     global_cancel: "キャンセル",
     global_back: "戻る",
+
+    //投票
+    polls:{
+        votes: " 票",
+    },
 
     //メッセージ
     messages: {

@@ -5,7 +5,7 @@ import { ListItem, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
 import t from "../services/I18n";
 
-import { setInvisibleTimeline, allClear } from "../actions/actioncreators/config";
+import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
 import NavigationService from "../services/NavigationService";
 
@@ -66,6 +66,18 @@ function SettingsScreen() {
                 switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
+            <ListItem
+                title={t("setting_background")}
+                bottomDivider
+                chevron
+                onPress={()=>dispatch(setBackground())}
+            />
+            <ListItem
+                title={t("setting_background_clear")}
+                bottomDivider
+                chevron
+                onPress={()=>dispatch(setBackgroundClear())}
+            />
             <ListItem
                 title={t("setting_themes")}
                 bottomDivider

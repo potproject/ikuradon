@@ -1,6 +1,6 @@
 import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
-import { ImagePicker } from "expo";
+import * as ImagePicker from "expo-image-picker";
 import * as Session from "../../util/session";
 import DropDownHolder from "../../services/DropDownHolder";
 import t from "../../services/I18n";
@@ -34,6 +34,11 @@ export function setBackground() {
             DropDownHolder.error(t("messages.network_error"), e.message);
         }
     };
+}
+
+export function setBackgroundClear() {
+    NavigationService.resetAndNavigate({ name: RouterName.Main });
+    return { type: Config.DELETE_BACKGROUNDIMAGE };
 }
 
 export function setInvisibleTimeline(type, value) {

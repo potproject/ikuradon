@@ -32,7 +32,6 @@ export function appInit(updateTheme) {
 
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();
-        console.log(access_token);
         if (AUTO_LOGIN && access_token && domain) {
             try {
                 let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
