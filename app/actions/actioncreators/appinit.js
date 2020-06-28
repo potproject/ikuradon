@@ -12,6 +12,7 @@ import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as AppInit from "../actiontypes/appinit";
 import { settingTheme } from "../../util/theme";
+import { pull } from "../../util/push";
 
 const AUTO_LOGIN = true; // Auto Login
 
@@ -30,6 +31,9 @@ export function appInit(updateTheme) {
         //Session init
         await Session.init();
 
+        // Push Notification
+        pull();
+        
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {

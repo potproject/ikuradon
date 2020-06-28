@@ -21,7 +21,7 @@ export async function setup(domain, accessToken) {
         }
         let expoToken = await Notifications.getExpoPushTokenAsync();
         try{
-            const res = await Networking.pushSubscribe(DefaultPushServerSubscribeEndpoints, domain, expoToken, accessToken);
+            await Networking.pushSubscribe(DefaultPushServerSubscribeEndpoints, domain, expoToken, accessToken);
             DropDownHolder.success('Notification Setting Success!', "Subscribed to " + DefaultPushServerSubscribeEndpoints); 
         }catch(e){
             DropDownHolder.error('Notification Setting Error!', e.message); 
@@ -44,9 +44,9 @@ export async function setup(domain, accessToken) {
 
 export function pull() {
     Notifications.addListener(notification => {
-        if(typeof notification.title === "string" && typeof notification.body === "string"){
+        if(notification && notification.data && typeof notification.data.title === "string" && typeof notification.data.body === "string"){
             Vibration.vibrate();
-            DropDownHolder.success(notification.title, notification.body);
+            DropDownHolder.success(notification.data.title, notification.data.body);
         }
     });
 }
