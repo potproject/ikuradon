@@ -7,7 +7,7 @@ import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
-import { setup } from "../util/notifications";
+import { setup } from "../util/push";
 import NavigationService from "../services/NavigationService";
 
 import * as RouterName from "../constants/RouterName";
@@ -21,7 +21,7 @@ function SettingsScreen() {
     const dispatch = useDispatch();
     const { current, config } = useSelector(reducerSelector);
     const { invisible } = config;
-    const { user_credentials, domain } = current;
+    const { user_credentials, domain, access_token } = current;
     const { theme } = useContext(ThemeContext);
     const invisibleCheck = (value) => {
         let count = 0;
@@ -71,7 +71,7 @@ function SettingsScreen() {
                 title={t("setting_notifications")}
                 chevron
                 bottomDivider
-                onPress={setup}
+                onPress={() => setup(domain, access_token)}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
             <ListItem

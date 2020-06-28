@@ -56,4 +56,20 @@ export default class Networking {
             }
         });
     }
+
+    //Push Server
+    static pushSubscribe(endpoint, domain, exponent_push_token, access_token){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let params = new URLSearchParams();
+                params.append('domain', domain);
+                params.append('exponent_push_token', exponent_push_token);
+                params.append('access_token', access_token);
+                let response = await axios.post(endpoint,params);
+                resolve(response.data);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
 }
