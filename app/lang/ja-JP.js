@@ -4,8 +4,20 @@ export default {
     logout: "ログアウト",
     account_change: "アカウント変更",
     setting_background: "背景画像を設定",
+    setting_background_clear: "背景画像を削除",
     setting_appversion: "アプリバージョン",
     setting_allclear: "初期状態に戻す",
+
+    setting_themes: "テーマ",
+    setting_themes_light: "ライト",
+    setting_themes_dark: "ダーク",
+    themes: {
+        // ライト
+        default: "デフォルト(イクラオレンジ)",
+        mikugreen: "ミクグリーン",
+        tootblue: "トゥートブルー",
+        // ダーク
+    },
 
     setting_visible_home: "ホームタイムラインを非表示",
     setting_visible_local: "ローカルタイムラインを非表示",
@@ -73,6 +85,7 @@ export default {
     login_title: "ログイン",
     login_message: "Mastodon サーバ ドメインを入力してください",
     login_domain_label: "ドメイン",
+    login_token_label: "アクセストークン",
     login_button: "ログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",
@@ -128,6 +141,11 @@ export default {
     global_cancel: "キャンセル",
     global_back: "戻る",
 
+    //投票
+    polls:{
+        votes: " 票",
+    },
+
     //メッセージ
     messages: {
         login_success: "ログインしました",
@@ -158,6 +176,8 @@ export default {
         followed: " があなたをフォローしました",
         mentioned: " があなたに返信しました",
         boosted: " がブーストしました",
-        favourited: " がお気に入りに登録しました"
+        favourited: " がお気に入りに登録しました",
+        follow: "フォローする",
+        unfollow: "フォローを解除する",
     }
 };

@@ -44,6 +44,7 @@ expo publish
 -   Streaming API Support
 -   i18n (EN/JP)
 -   Custom Emoji Support
+-   Multi Theme (Dark Mode And more...)
 
 ## Future
 
@@ -53,7 +54,7 @@ expo publish
 -   Misskey Support
 -   Movie Support
 -   Media upload Support
--   Multi Theme (Dark Mode And more...)
+-   Expo Push Notification
 
 ## ScreenShots
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
 
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
 
 import NavigationService from "../services/NavigationService";
 import * as RouterName from "../constants/RouterName";
@@ -19,12 +19,13 @@ const CurrentUserReducerSelector = state => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
     imageviewer: state.imageViewerReducer,
+    config: state.configReducer,
 });
 
 function NotificationsList({ type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main, imageviewer } = useSelector(CurrentUserReducerSelector);
+    const { current, main, imageviewer, config } = useSelector(CurrentUserReducerSelector);
     const listdata = main[type];
     const actions = {
         ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body }}),
@@ -34,6 +35,9 @@ function NotificationsList({ type }) {
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
+
+        FollowAction: (id, followed) => {dispatch(FollowAction(id,followed))},
+
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
     };
@@ -44,11 +48,12 @@ function NotificationsList({ type }) {
     const newNotifications = notificationParse(listdata.data);
     return (
         <View style={styles.container}>
+            <ImageBackground imageStyle={{opacity:0.3}} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
             <FlatList
                 keyExtractor={data => data.type + data.id}
                 data={newNotifications}
                 refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
-                renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} />}
+                renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
                 ItemSeparatorComponent={() => <Divider />}
                 onEndReachedThreshold={1.5}
                 ListFooterComponent={() => 
@@ -69,6 +74,7 @@ function NotificationsList({ type }) {
                     loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
                     onSwipeDown={() => { actions.closeImageViewerAction()}} />
             </Modal>
+            </ImageBackground>
         </View>
     );
 }
@@ -76,6 +82,11 @@ function NotificationsList({ type }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    background: {
+        backgroundColor: "#ffffff",
+        width: "100%",
+        height: "100%"
     },
     loading: {
         paddingTop: 10,

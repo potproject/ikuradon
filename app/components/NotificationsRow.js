@@ -10,10 +10,11 @@ import { NEW_NOTIFICATION_TYPE } from "../util/notification";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext, Image } from "react-native-elements";
+import Follow from "./item/Follow";
 
 const MAX_DISPLAY_IMAGE = 8;
 
-const NotificationsRow = ({ item, current, actions }) => {
+const NotificationsRow = ({ item, current, actions, background }) => {
     const {id, type } = item;
     const { theme } = useContext(ThemeContext);
     if(type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST){
@@ -22,7 +23,7 @@ const NotificationsRow = ({ item, current, actions }) => {
         const favouriteAccountNames = favouriteAccounts.map((account) => account.display_name !== "" ? account.display_name : account.username);
         let emojis = {};
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 { boostAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
                     <View style={{flex:0.18, flexDirection: "row-reverse"}}>
@@ -36,9 +37,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                             }
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
-                                <View key={i} style={styles.photoMargin}>
-                                    <Image style={styles.photo} source={{uri: account.avatar}} />
-                                </View>
+                                <Image key={i} style={styles.photo} source={{uri: account.avatar}} />
                             );
                         })
                         }
@@ -61,9 +60,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                             }
                             emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
                             return (
-                                <View key={i} style={styles.photoMargin}>
-                                    <Image style={styles.photo} source={{uri: account.avatar}} />
-                                </View>
+                                <Image key={i} style={styles.photo} source={{uri: account.avatar}} />
                             );
                         })
                         }
@@ -81,21 +78,20 @@ const NotificationsRow = ({ item, current, actions }) => {
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} />
+                <MastoRow item={status} current={current} actions={actions} background={background} />
             </View>
         );
     }else if(type === NEW_NOTIFICATION_TYPE.FOLLOW){
         const { account } = item;
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
-                        <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
+                    <View style={{flex:0.18, flexDirection:"row-reverse"}}>
+                        <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
                     </View>
                     <View style={{flex:0.82, flexDirection: "row", color: theme.colors.grey0}}>
-                        <View style={styles.photoMargin}>
-                            <Image style={styles.photo} source={{uri: account.avatar}} />
-                        </View>
+                        <Image style={styles.photo} source={{uri: account.avatar}} />
+                        <Follow id={account.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
                     </View>
                 </View>
                 <View style={styles.followMessage}>
@@ -112,7 +108,7 @@ const NotificationsRow = ({ item, current, actions }) => {
     }else if(type === NEW_NOTIFICATION_TYPE.MENTION){
         const { status, account } = item;
         return (
-            <View key={id} style={[styles.container,{backgroundColor: theme.customColors.charBackground}]}>
+            <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
                 <View style={styles.mention}>
                     <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
                         <FontAwesome name={"reply"} size={22} color={theme.customColors.item.boost} style={{marginRight:5}}/>
@@ -124,7 +120,7 @@ const NotificationsRow = ({ item, current, actions }) => {
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} />
+                <MastoRow item={status} current={current} actions={actions} background={background} />
             </View>
         );
     }
@@ -147,13 +143,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     photo: {
+        marginLeft: 2,
+        marginRight: 2,
         width: 30,
         height: 30,
         borderRadius: 4,
-    },
-    photoMargin: {
-        marginLeft: 2,
-        marginRight: 2
     },
     count: {
       fontSize: 16,
@@ -194,6 +188,10 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         fontSize: 16
     },
+    followIcon: {
+        flex: 1,
+        paddingLeft: 5,
+    }
 });
 
 export default NotificationsRow;

@@ -1,8 +1,9 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon, ThemeContext } from "react-native-elements";
 
 export default function TootButton({onPress}){
+    const { theme } = useContext(ThemeContext);
     return(
         <View style={styles.shadow}>
             <Icon
@@ -11,7 +12,7 @@ export default function TootButton({onPress}){
                 size={28}
                 name='pencil'
                 type='font-awesome'
-                color='#f50'
+                color={theme.customColors.tootButton}
                 onPress={onPress}
             />
         </View>

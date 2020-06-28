@@ -4,7 +4,7 @@ export const REGISTERING_AN_APPLICATION = {
     form: {
         client_name: "ikuradon",
         redirect_uris: "urn:ietf:wg:oauth:2.0:oob",
-        scopes: "read write follow"
+        scopes: "read write follow push"
     }
 };
 
@@ -17,7 +17,7 @@ export const GET_OAUTH_ACCESSTOKEN = {
         code: "", //required
         grant_type: "authorization_code",
         redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-        scope: "read write follow"
+        scope: "read write follow push"
     }
 };
 
@@ -149,6 +149,26 @@ export const POST_UNBOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unbookmark",
     form: {}
+};
+
+export const POST_FOLLOWED = {
+    method: "post",
+    url: "/api/v1/accounts/:param:/follow",
+    form: {}
+};
+
+export const POST_UNFOLLOWED = {
+    method: "post",
+    url: "/api/v1/accounts/:param:/unfollow",
+    form: {}
+};
+
+export const GET_RELATIONSHIPS = {
+    method: "get",
+    url: "/api/v1/accounts/relationships",
+    form: {
+        id: [], //Required (array)
+    }
 };
 
 export const UPLOAD_POST_MEDIA = {

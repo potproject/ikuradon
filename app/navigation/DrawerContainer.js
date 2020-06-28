@@ -35,7 +35,7 @@ export default function DrawerContainer({navigation}){
                 <Image
                     onPress={() => navigation.navigate("Profile")}
                     source={{uri: user_credentials.avatar}}
-                    style={styles.photo}/>
+                    style={[{borderColor: theme.colors.primary}, styles.photo]}/>
                 }
                 <CustomEmoji emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
                     <Text style={[styles.userName, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         marginTop: 20,
         borderWidth: 2,
-        borderColor: "#FF3300",
     },
     userName:{
         marginTop: 10,

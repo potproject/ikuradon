@@ -9,16 +9,16 @@ export default {
             boost: "#2b90d9",
             favourite: "#ffd27d",
             bookmark: "#4c6ef5",
-            none: "#8899a6"
+            none: "#00b4bb"
         },
-        tootButton: "#FF5500",
+        tootButton: "#00b0b7",
         link: "#1b95e0",
     },
     colors: {
-        primary: "#FF3300",
+        primary: "#00b0b7",
         //secondary;
         grey0: "#657786",
-        grey1: "#2b90d9",
+        grey1: "#007f84",
         grey2: "#8899a6",
         //grey3;
         //grey4;

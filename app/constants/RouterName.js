@@ -18,3 +18,4 @@ export const Search = "Search";
 export const Favourites = "Favourites";
 export const Bookmarks = "Bookmarks";
 export const Settings = "Settings";
+export const Settings_Themes = "Settings_Themes";

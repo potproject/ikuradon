@@ -4,8 +4,20 @@ export default {
     logout: "Logout",
     account_change: "Account Change",
     setting_background: "Setting up Background Image",
+    setting_background_clear: "Delete Background Image",
     setting_appversion: "App Version",
     setting_allclear: "ALL Reset",
+
+    setting_themes: "Themes",
+    setting_themes_light: "Light",
+    setting_themes_dark: "Dark",
+    themes: {
+        // Light
+        default: "Default(IkuraOrange)",
+        mikugreen: "MikuGreen",
+        tootblue: "TootBlue",
+        // Dark
+    },
 
     setting_visible_home: "Do not show Home Timeline",
     setting_visible_local: "Do not show Local Timeline",
@@ -73,6 +85,7 @@ export default {
     login_title: "Login",
     login_message: "Please enter Mastodon Server domain.",
     login_domain_label: "Domain",
+    login_token_label: "Access Token",
     login_button: "Login",
     login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",
@@ -129,6 +142,11 @@ export default {
     global_cancel: "Cancel",
     global_back: "Back",
 
+    //poll
+    polls:{
+        votes: " votes",
+    },
+
     //Messages
     messages: {
         login_success: "Login Successfully.",
@@ -159,6 +177,8 @@ export default {
         followed: " followed you.",
         mentioned: " mentioned you.",
         boosted: " boosted you.",
-        favourited: " favourited you."
+        favourited: " favourited you.",
+        follow: "Follow",
+        unfollow: "Unfollow",
     }
 };

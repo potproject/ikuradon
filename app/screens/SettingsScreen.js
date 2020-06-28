@@ -5,9 +5,12 @@ import { ListItem, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
 import t from "../services/I18n";
 
-import { setInvisibleTimeline, allClear } from "../actions/actioncreators/config";
+import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
 import { setup } from "../util/notifications";
+import NavigationService from "../services/NavigationService";
+
+import * as RouterName from "../constants/RouterName";
 
 const reducerSelector =  state => ({
     current: state.currentUserReducer,
@@ -69,6 +72,25 @@ function SettingsScreen() {
                 chevron
                 bottomDivider
                 onPress={setup}
+            />
+            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
+            <ListItem
+                title={t("setting_background")}
+                bottomDivider
+                chevron
+                onPress={()=>dispatch(setBackground())}
+            />
+            <ListItem
+                title={t("setting_background_clear")}
+                bottomDivider
+                chevron
+                onPress={()=>dispatch(setBackgroundClear())}
+            />
+            <ListItem
+                title={t("setting_themes")}
+                bottomDivider
+                chevron
+                onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
             />
             <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
             <ListItem

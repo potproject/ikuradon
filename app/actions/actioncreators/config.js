@@ -1,6 +1,6 @@
 import * as Config from "../actiontypes/config";
 import * as Permission from "../../util/permission";
-import { ImagePicker } from "expo";
+import * as ImagePicker from "expo-image-picker";
 import * as Session from "../../util/session";
 import DropDownHolder from "../../services/DropDownHolder";
 import t from "../../services/I18n";
@@ -36,6 +36,11 @@ export function setBackground() {
     };
 }
 
+export function setBackgroundClear() {
+    NavigationService.resetAndNavigate({ name: RouterName.Main });
+    return { type: Config.DELETE_BACKGROUNDIMAGE };
+}
+
 export function setInvisibleTimeline(type, value) {
     return async dispatch => {
         let invisible = {};
@@ -56,4 +61,8 @@ export function setTimelinePerform(value) {
         dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
         NavigationService.resetAndNavigate({ name: RouterName.Main });
     };
+}
+
+export function setTheme(value){
+    return { type: Config.CHANGE_THEME, theme: value }; 
 }
