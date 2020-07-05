@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, View, Switch } from "react-native";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ListItem, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
@@ -7,7 +7,7 @@ import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
-import { setup } from "../util/push";
+import { subscribe, unsubscribe } from "../util/push";
 import NavigationService from "../services/NavigationService";
 
 import * as RouterName from "../constants/RouterName";
@@ -37,80 +37,90 @@ function SettingsScreen() {
         return true;
     };
     return (
-        <View style={styles.container}>
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{user_credentials ? user_credentials.username + "@" + domain : ""}</Text>
-            <ListItem
-                title={t("logout")}
-                bottomDivider
-                chevron
-                onPress={()=>dispatch(logout())}
-            />
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_header_visible")}</Text>
-            <ListItem
-                title={t("setting_visible_home")}
-                bottomDivider
-                switch={{value: invisible.home, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value))}}
-            />
-            <ListItem
-                title={t("setting_visible_local")}
-                bottomDivider
-                switch={{value: invisible.local, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value))}}
-            />
-            <ListItem
-                title={t("setting_visible_federal")}
-                bottomDivider
-                switch={{value: invisible.federal, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value))}}
-            />
-            <ListItem
-                title={t("setting_visible_notifications")}
-                bottomDivider
-                switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
-            />
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_experimentals")}</Text>
-            <ListItem
-                title={t("setting_notifications")}
-                chevron
-                bottomDivider
-                onPress={() => setup(domain, access_token)}
-            />
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
-            <ListItem
-                title={t("setting_background")}
-                bottomDivider
-                chevron
-                onPress={()=>dispatch(setBackground())}
-            />
-            <ListItem
-                title={t("setting_background_clear")}
-                bottomDivider
-                chevron
-                onPress={()=>dispatch(setBackgroundClear())}
-            />
-            <ListItem
-                title={t("setting_themes")}
-                bottomDivider
-                chevron
-                onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
-            />
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
-            <ListItem
-                title={t("setting_appversion")}
-                subtitle={ Constants.manifest.version }
-                bottomDivider
-            />
-            <ListItem
-                title={t("setting_allclear")}
-                bottomDivider
-                chevron
-                onPress={()=>dispatch(allClear())}
-            />
-        </View>
+        <ScrollView>
+            <View style={styles.container}>
+                <Text style={[{color: theme.colors.grey0},styles.label]}>{user_credentials ? user_credentials.username + "@" + domain : ""}</Text>
+                <ListItem
+                    title={t("logout")}
+                    bottomDivider
+                    chevron
+                    onPress={()=>dispatch(logout())}
+                />
+                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_header_visible")}</Text>
+                <ListItem
+                    title={t("setting_visible_home")}
+                    bottomDivider
+                    switch={{value: invisible.home, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value))}}
+                />
+                <ListItem
+                    title={t("setting_visible_local")}
+                    bottomDivider
+                    switch={{value: invisible.local, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value))}}
+                />
+                <ListItem
+                    title={t("setting_visible_federal")}
+                    bottomDivider
+                    switch={{value: invisible.federal, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value))}}
+                />
+                <ListItem
+                    title={t("setting_visible_notifications")}
+                    bottomDivider
+                    switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
+                />
+                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_experimentals")}</Text>
+                <ListItem
+                    title={t("setting_notifications_start")}
+                    chevron
+                    bottomDivider
+                    onPress={() => subscribe(domain, access_token)}
+                />
+                <ListItem
+                    title={t("setting_notifications_stop")}
+                    chevron
+                    bottomDivider
+                    onPress={() => unsubscribe(domain, access_token)}
+                />
+                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
+                <ListItem
+                    title={t("setting_background")}
+                    bottomDivider
+                    chevron
+                    onPress={()=>dispatch(setBackground())}
+                />
+                <ListItem
+                    title={t("setting_background_clear")}
+                    bottomDivider
+                    chevron
+                    onPress={()=>dispatch(setBackgroundClear())}
+                />
+                <ListItem
+                    title={t("setting_themes")}
+                    bottomDivider
+                    chevron
+                    onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
+                />
+                <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
+                <ListItem
+                    title={t("setting_appversion")}
+                    subtitle={ Constants.manifest.version }
+                    bottomDivider
+                />
+                <ListItem
+                    title={t("setting_allclear")}
+                    bottomDivider
+                    chevron
+                    onPress={()=>dispatch(allClear())}
+                />
+            </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingBottom: 80
+
     },
     label: {
         fontWeight: "bold",

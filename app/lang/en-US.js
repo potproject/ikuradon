@@ -32,7 +32,8 @@ export default {
     setting_instance_editlink: "Edit profile",
 
     setting_experimentals: "Experimentails",
-    setting_notifications: "Using Push Notification",
+    setting_notifications_start: "Using Push Notification",
+    setting_notifications_stop: "Stopping Push Notification",
 
     //Settings Header
     setting_header_personal: "Personal",

@@ -32,7 +32,8 @@ export default {
     setting_instance_editlink: "プロフィールを編集",
 
     setting_experimentals: "実験的機能",
-    setting_notifications: "プッシュ通知を使う",
+    setting_notifications_start: "プッシュ通知を使用する",
+    setting_notifications_stop: "プッシュ通知を停止する",
 
     //設定ヘッダ
     setting_header_personal: "個人",
