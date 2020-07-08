@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { ThemeContext } from "react-native-elements";
 
 function Boost(props){
-    const { id, tootid, style, reblogged, count, disabled, onBoost} = props;
+    const { id, tootid, style, reblogged, count, disabled, onBoost } = props;
     const [stateReblogged, useStateReblogged] = useState(reblogged);
     const { theme } = useContext(ThemeContext);
     return (
@@ -17,7 +17,7 @@ function Boost(props){
             }}>
                 <FontAwesome name={disabled ? "lock" : "retweet"} size={20} color={stateReblogged === true ? theme.customColors.item.boost : theme.customColors.item.none} />
             </TouchableOpacity>
-            <Text style={[{color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16},styles.text]}>{count !== 0 ? count : ""}</Text>
+            <Text style={[{ color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16 }, styles.text]}>{count !== 0 ? count : ""}</Text>
         </View>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import { SearchBar, ButtonGroup, ThemeContext } from "react-native-elements";
-import {search as SearchApi} from "../util/search";
+import { search as SearchApi } from "../util/search";
 import t from "../services/I18n";
 import SearchList from "./SearchList";
 import * as searchConst from "../constants/search";
@@ -19,7 +19,7 @@ export default function Search(){
     const [searchTypeIndex, onChangeSearchTypeIndex] = useState(0);
     const [searchData, useSearchData] = useState(initSearchData);
     const [loading, useLoading] = useState(false);
-    return(
+    return (
         <View style={styles.container}>
             <SearchBar
                 lightTheme
@@ -30,7 +30,7 @@ export default function Search(){
                     useSearchData(initSearchData);
                     useLoading(true);
                     SearchApi(searchValue)
-                        .then(({data, error}) => useSearchData(data))
+                        .then(({ data, error }) => useSearchData(data))
                         .finally(() => useLoading(false));
                 }}
                 onClear={() => useSearchData(initSearchData)}

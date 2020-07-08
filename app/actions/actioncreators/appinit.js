@@ -23,8 +23,8 @@ export function appInit(updateTheme) {
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
             // Theme init
-            if(typeof config.theme !== "undefined"){
-                settingTheme(updateTheme, config.theme)
+            if (typeof config.theme !== "undefined"){
+                settingTheme(updateTheme, config.theme);
             }
         }
         //Session init

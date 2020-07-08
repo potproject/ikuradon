@@ -15,17 +15,17 @@ export function notificationParse(notifications){
     //お気に入りまたはブースト
     // [ {id, status, favouriteAccounts:[account...]}, boostAccounts:[account...]},]
     let newNotifications = [];
-    for(let notification of notifications){
+    for (let notification of notifications){
         const { type } = notification;
-        switch(type){
+        switch (type){
             case NOTIFICATION_TYPE.FAVOURITE:
             case NOTIFICATION_TYPE.BOOST:
                 const { account, status } = notification;
                 const findIndex = newNotifications.findIndex(item => item.type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST && item.id === status.id);
-                if(findIndex !== -1){
+                if (findIndex !== -1){
                     type === NOTIFICATION_TYPE.FAVOURITE && newNotifications[findIndex].favouriteAccounts.push(account);
                     type === NOTIFICATION_TYPE.BOOST && newNotifications[findIndex].boostAccounts.push(account);
-                }else{
+                } else {
                     newNotifications.push(
                         {
                             id: status.id,

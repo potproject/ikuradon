@@ -10,13 +10,13 @@ const reducerSelector =  state => ({
     config: state.configReducer
 });
 
-function SettingsThemesScreen({updateTheme}) {
+function SettingsThemesScreen({ updateTheme }) {
     const dispatch = useDispatch();
     const { config } = useSelector(reducerSelector);
     const { theme }  = useContext(ThemeContext);
     return (
         <View style={styles.container}>
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes_light")}</Text>
+            <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes_light")}</Text>
             <ListItem
                 title={t("themes.default")}
                 rightIcon={{ name: "check", color: config.theme === "default" ? theme.colors.primary : "#FFFFFF" }}
@@ -44,7 +44,7 @@ function SettingsThemesScreen({updateTheme}) {
                     dispatch(setTheme("tootblue"));
                 }}
             />
-            <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes_dark")}</Text>
+            <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes_dark")}</Text>
         </View>
     );
 }

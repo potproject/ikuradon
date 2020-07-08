@@ -32,7 +32,7 @@ function MastoList({ navigation, type }) {
         dispatch(newLoadingTimeline(type, listdata.maxId, true));
     }
     const actions = {
-        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body }}),
+        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
 
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
@@ -40,55 +40,55 @@ function MastoList({ navigation, type }) {
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
 
-        followAction: (id, followed) => {dispatch(FollowAction(id,followed))},
+        followAction: (id, followed) => {dispatch(FollowAction(id, followed))},
 
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
     };
     return (
         <View style={styles.container}>
-            <ImageBackground imageStyle={{opacity:0.3}} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
-            <FlatList
-                keyExtractor={data => data.id}
-                data={listdata.data}
-                extraData={listdata.data}
-                refreshControl={
-                    <RefreshControl 
-                        enabled={!streamingType} 
-                        refreshing={listdata.refreshing} 
-                        onRefresh={() => {
-                            if(streamingType){
-                                return;
-                            }
-                            const time = Math.floor(new Date().getTime() / 1000);
-                            if(time - listdata.lastUpdate >= REFRESH_TIME){
-                                dispatch(newLoadingTimeline(type, null, true));
-                            }else{
-                                dispatch(newLoadingTimeline(type, listdata.maxId));
-                            }
-                        }}
-                    />}
-                renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
-                ItemSeparatorComponent={() => <Divider />}
-                onEndReachedThreshold={1.5}
-                ListFooterComponent={() => 
-                    !listdata.refreshing && listdata.loading && 
+            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
+                <FlatList
+                    keyExtractor={data => data.id}
+                    data={listdata.data}
+                    extraData={listdata.data}
+                    refreshControl={
+                        <RefreshControl 
+                            enabled={!streamingType} 
+                            refreshing={listdata.refreshing} 
+                            onRefresh={() => {
+                                if (streamingType){
+                                    return;
+                                }
+                                const time = Math.floor(new Date().getTime() / 1000);
+                                if (time - listdata.lastUpdate >= REFRESH_TIME){
+                                    dispatch(newLoadingTimeline(type, null, true));
+                                } else {
+                                    dispatch(newLoadingTimeline(type, listdata.maxId));
+                                }
+                            }}
+                        />}
+                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
+                    ItemSeparatorComponent={() => <Divider />}
+                    onEndReachedThreshold={1.5}
+                    ListFooterComponent={() => 
+                        !listdata.refreshing && listdata.loading && 
                     <View style={styles.loading}>
                         <ActivityIndicator size="large" />
                     </View>
-                }
-                onEndReached={() => {
-                    if(init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
-                        dispatch(oldLoadingTimeline(type, listdata.minId));
                     }
-                }}
-            />
-            <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
-                <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
-                    enableSwipeDown={true}
-                    loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
-                    onSwipeDown={() => { actions.closeImageViewerAction()}} />
-            </Modal>
+                    onEndReached={() => {
+                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                            dispatch(oldLoadingTimeline(type, listdata.minId));
+                        }
+                    }}
+                />
+                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
+                    <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
+                        enableSwipeDown={true}
+                        loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
+                        onSwipeDown={() => { actions.closeImageViewerAction()}} />
+                </Modal>
             </ImageBackground>
         </View>
     );

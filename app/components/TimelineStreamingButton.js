@@ -11,7 +11,7 @@ const CurrentUserReducerSelector = state => state.currentUserReducer;
 
 export default function TimelineStreamingButton({ type }){
     const dispatch = useDispatch();
-    const {instance, access_token} = useSelector(CurrentUserReducerSelector);
+    const { instance, access_token } = useSelector(CurrentUserReducerSelector);
     const { theme } = useContext(ThemeContext);
     const [enabled, useEnabled] = useState(false);
     const webSocket = useRef(null);
@@ -19,7 +19,7 @@ export default function TimelineStreamingButton({ type }){
         useEnabled(!enabled);
     };
     useEffect(() => {
-        if(enabled && instance){
+        if (enabled && instance){
             // ON
             let stream;
             switch (type) {
@@ -39,11 +39,11 @@ export default function TimelineStreamingButton({ type }){
             webSocket.current.onopen = () => {
                 // connection opened
                 console.log("[WS] OPEN:" + type);
-              };
+            };
             webSocket.current.onmessage = (message) => {
                 let data = JSON.parse(message.data);
-                if(data !== null){
-                    let {event, payload} = data;
+                if (data !== null){
+                    let { event, payload } = data;
                     dispatch(receive(type, event, JSON.parse(payload)));
                 }
             };
@@ -56,24 +56,24 @@ export default function TimelineStreamingButton({ type }){
                 useEnabled(false);
             };
             dispatch(start(type));
-        }else{
+        } else {
             dispatch(stop(type));
-            if(webSocket.current !== null && webSocket.current.readyState === WebSocket.OPEN){
+            if (webSocket.current !== null && webSocket.current.readyState === WebSocket.OPEN){
                 webSocket.current.close();
             }
         }
-        return
-    },[enabled]);
+        return;
+    }, [enabled]);
     useEffect(() => {
         return () => {
             // unmount
             dispatch(stop(type));
-            if(webSocket.current !== null && webSocket.current.readyState === WebSocket.OPEN){
+            if (webSocket.current !== null && webSocket.current.readyState === WebSocket.OPEN){
                 webSocket.current.close();
                 console.log("[WS] UNMOUNTCLOSE:" + type);
             }
         };
-      }, []);
+    }, []);
     return (
         <View>
             <TouchableOpacity onPress={() => streamSwitch()} style={styles.view}>

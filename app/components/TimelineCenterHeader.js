@@ -1,17 +1,17 @@
 import * as React from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 
-export default function TimelineCenterHeader({fixedTitle, onPress, current}){
-    if(fixedTitle){
+export default function TimelineCenterHeader({ fixedTitle, onPress, current }){
+    if (fixedTitle){
         return <Text style={styles.fixedTitle}>{fixedTitle}</Text>;
     }
-    return(
+    return (
         <TouchableOpacity
             onPress={onPress}>
             <View style={styles.container}>
                 { current.user_credentials &&
                 <Image
-                    source={{uri: current.user_credentials.avatar}}
+                    source={{ uri: current.user_credentials.avatar }}
                     style={styles.image}
                 />
                 }

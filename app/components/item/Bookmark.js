@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { ThemeContext } from "react-native-elements";
 
-function Bookmark({id, tootid, style, bookmarked, onBookmark}){
+function Bookmark({ id, tootid, style, bookmarked, onBookmark }){
     const [stateBookmarked, useStateBookmarked] = useState(bookmarked);
     const { theme } = useContext(ThemeContext);
     return (

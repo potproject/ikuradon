@@ -2,11 +2,11 @@ import * as Main from "../actiontypes/main";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import { bodyFormat } from "../../util/parser";
-import * as Streaming from "../../actions/actiontypes/streaming"
+import * as Streaming from "../../actions/actiontypes/streaming";
 
 export function receive(reducerType, event, data){
     return async dispatch => {
-        switch(event){
+        switch (event){
             case "update":
                 dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: [data], reducerType, streaming: true });
                 break;
@@ -40,7 +40,7 @@ export function receive(reducerType, event, data){
             case "delete":
                 break;
         }
-    }
+    };
 }
 
 export function stop(reducerType){

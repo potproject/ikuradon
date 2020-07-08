@@ -30,7 +30,7 @@ export function deleting(id) {
             dispatch({ type: Main.HIDE_MASTOLIST, id: id });
             DropDownHolder.success(t("messages.toot_deleted_success"));
         } catch (e) {
-            DropDownHolder.error(t("messages.toot_deleted_failed"),e.message);
+            DropDownHolder.error(t("messages.toot_deleted_failed"), e.message);
         }
     };
 }
@@ -44,7 +44,7 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
             data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id, max_id: null }, access_token);
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
-            DropDownHolder.error(t("messages.network_error"),e.message);
+            DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType });
         }
     };
@@ -57,9 +57,9 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id: null, max_id }, access_token);
-            dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false});
+            dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false });
         } catch (e) {
-            DropDownHolder.error(t("messages.network_error"),e.message);
+            DropDownHolder.error(t("messages.network_error"), e.message);
             dispatch({ type: Main.STOP_LOADING_MASTOLIST, reducerType });
         }
     };
@@ -74,7 +74,7 @@ export function getCurrentUser() {
             let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
         } catch (e) {
-            DropDownHolder.error(t("messages.network_error"),e.message);
+            DropDownHolder.error(t("messages.network_error"), e.message);
         }
     };
 }

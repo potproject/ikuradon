@@ -81,14 +81,14 @@ function TootScreen({ navigation, route }) {
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
-                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText,[], reply, null))}
+                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, [], reply, null))}
                         enabled={MAX_TOOT_LENGTH - tootText.length - cwTootText.length >= 0}
                         loading={toot.tootWaiting}
                     />
                 )}
             />
-            <View style={[{backgroundColor: theme.customColors.charBackground},styles.container]}>
-                <View style={[{backgroundColor: theme.customColors.charBackground},styles.inputContainer]}>
+            <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.container]}>
+                <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.inputContainer]}>
                     {cw &&
                     <TextInput
                         placeholder={t("toot_cw_placeholder")}
@@ -110,7 +110,7 @@ function TootScreen({ navigation, route }) {
                         placeholder={t("toot_placeholder")}
                     />
                 </View>
-                <View style={[{backgroundColor: theme.colors.charBackground},styles.itemForm]}>
+                <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
@@ -129,9 +129,9 @@ function TootScreen({ navigation, route }) {
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => onChangeCwTootText("") || useCw(!cw)}>
-                        <Text style={[styles.cwText,{color:cw ? theme.colors.primary : theme.colors.grey0}]}>CW</Text>
+                        <Text style={[styles.cwText, { color:cw ? theme.colors.primary : theme.colors.grey0 }]}>CW</Text>
                     </TouchableOpacity>
-                    <Text style={[{color: theme.colors.primary}, styles.countText]}>
+                    <Text style={[{ color: theme.colors.primary }, styles.countText]}>
                         {MAX_TOOT_LENGTH - tootText.length - cwTootText.length}
                     </Text>
                 </View>
