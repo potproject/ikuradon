@@ -30,7 +30,7 @@ function SettingsScreen() {
         invisible.federal && count++;
         invisible.notifications && count++;
         // 全部非表示は無理やで
-        if(count >= 3 && value === true){
+        if (count >= 3 && value === true){
             console.log("invisible validate fail");
             return false;
         }
@@ -39,35 +39,35 @@ function SettingsScreen() {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Text style={[{color: theme.colors.grey0},styles.label]}>{user_credentials ? user_credentials.username + "@" + domain : ""}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{user_credentials ? user_credentials.username + "@" + domain : ""}</Text>
                 <ListItem
                     title={t("logout")}
                     bottomDivider
                     chevron
                     onPress={()=>dispatch(logout())}
                 />
-                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_header_visible")}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_header_visible")}</Text>
                 <ListItem
                     title={t("setting_visible_home")}
                     bottomDivider
-                    switch={{value: invisible.home, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value))}}
+                    switch={{ value: invisible.home, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value)) }}
                 />
                 <ListItem
                     title={t("setting_visible_local")}
                     bottomDivider
-                    switch={{value: invisible.local, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value))}}
+                    switch={{ value: invisible.local, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value)) }}
                 />
                 <ListItem
                     title={t("setting_visible_federal")}
                     bottomDivider
-                    switch={{value: invisible.federal, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value))}}
+                    switch={{ value: invisible.federal, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value)) }}
                 />
                 <ListItem
                     title={t("setting_visible_notifications")}
                     bottomDivider
-                    switch={{value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}}
+                    switch={{ value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value)) }}
                 />
-                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_experimentals")}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_experimentals")}</Text>
                 <ListItem
                     title={t("setting_notifications_start")}
                     chevron
@@ -80,7 +80,7 @@ function SettingsScreen() {
                     bottomDivider
                     onPress={() => unsubscribe(domain, access_token)}
                 />
-                <Text style={[{color: theme.colors.grey0},styles.label]}>{t("setting_themes")}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes")}</Text>
                 <ListItem
                     title={t("setting_background")}
                     bottomDivider
@@ -99,7 +99,7 @@ function SettingsScreen() {
                     chevron
                     onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
                 />
-                <Text style={[{color: theme.colors.grey0},styles.label]}>{}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{}</Text>
                 <ListItem
                     title={t("setting_appversion")}
                     subtitle={ Constants.manifest.version }

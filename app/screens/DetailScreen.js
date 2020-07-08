@@ -23,7 +23,7 @@ function DetailScreen({ route, navigation }) {
             <Header
                 leftComponent={<TimelineLeftHeader isBack={true} onPress={navigation.goBack} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}   
-             />
+            />
         </View>
     );
 }

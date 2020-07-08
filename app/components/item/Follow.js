@@ -7,14 +7,14 @@ import { ThemeContext } from "react-native-elements";
 import t from "../../services/I18n";
 import { getRelationship } from "../../util/relationships";
 
-function Follow({id, style, onFollow}){
+function Follow({ id, style, onFollow }){
     const [stateFollowed, useStateFollowed] = useState(false);
     const { theme } = useContext(ThemeContext);
     const [load, useLoad] = useState(false);
-    if(!load){
+    if (!load){
         useLoad(true);
-        getRelationship(id).then(({data, error}) => {
-            if(error === null && data.following){
+        getRelationship(id).then(({ data, error }) => {
+            if (error === null && data.following){
                 useStateFollowed(true);
             }
         }
@@ -28,7 +28,7 @@ function Follow({id, style, onFollow}){
             }}>
                 <Text style={styles.text}>
                     <FontAwesome name={stateFollowed ? "user" : "user-plus"} size={26} color={stateFollowed ? theme.colors.primary : theme.customColors.item.none} />
-        <Text style={[{color: stateFollowed ? theme.colors.primary : theme.customColors.item.none}, styles.inlineText]}>{" "}{stateFollowed ? t("notifications.unfollow") : t("notifications.follow")}</Text>
+                    <Text style={[{ color: stateFollowed ? theme.colors.primary : theme.customColors.item.none }, styles.inlineText]}>{" "}{stateFollowed ? t("notifications.unfollow") : t("notifications.follow")}</Text>
                 </Text>
             </TouchableOpacity>
         </View>

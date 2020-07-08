@@ -1,23 +1,23 @@
 import React, { useState, memo } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { bodyFormat, bodySearchUrl, emojisArrayToObject } from "../util/parser";
-import {open as openUrl} from "../util/url";
+import { open as openUrl } from "../util/url";
 import Hyperlink from "react-native-hyperlink";
 import CustomEmoji from "react-native-customemoji";
 import t from "../services/I18n";
 
-function MastoRowBody({content, style, linkStyle, sensitiveButtonColor, emojis, sensitive, spoilerText}){
+function MastoRowBody({ content, style, linkStyle, sensitiveButtonColor, emojis, sensitive, spoilerText }){
     let newContent = bodyFormat(content);
     let existsURL = bodySearchUrl(newContent);
     let emojiObject = emojisArrayToObject(emojis);
     const [sensitiveDisplay, useSensitiveDisplay] = useState(false);
-    if(sensitive && spoilerText !== ""){
+    if (sensitive && spoilerText !== ""){
         return (
             <Hyperlink linkStyle={linkStyle} onPress={url => openUrl(url)}>
                 <Text style={style}>{spoilerText}</Text>
                 { !sensitiveDisplay &&
                 <TouchableOpacity onPress={() => useSensitiveDisplay(true)}>
-                    <Text style={[styles.cwButton, {color: sensitiveButtonColor}]}>{t("timeline_cwtext")}</Text>
+                    <Text style={[styles.cwButton, { color: sensitiveButtonColor }]}>{t("timeline_cwtext")}</Text>
                 </TouchableOpacity>
                 }
                 { sensitiveDisplay &&

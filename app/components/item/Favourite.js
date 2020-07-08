@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { ThemeContext } from "react-native-elements";
 
-function Favourite({id, tootid, style, favourited, count, onFavourite}){
+function Favourite({ id, tootid, style, favourited, count, onFavourite }){
     const [stateFavourited, useStateFavourited] = useState(favourited);
     const { theme } = useContext(ThemeContext);
     return (
@@ -16,7 +16,7 @@ function Favourite({id, tootid, style, favourited, count, onFavourite}){
             }}>
                 <FontAwesome name="star" size={20} color={stateFavourited ? theme.customColors.item.favourite : theme.customColors.item.none} />
             </TouchableOpacity>
-            <Text style={[{color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16},styles.text]}>{count !== 0 ? count : ""}</Text>
+            <Text style={[{ color: theme.colors.grey0, fontSize: count > 99 ? 10 : 16 }, styles.text]}>{count !== 0 ? count : ""}</Text>
         </View>
     );
 }

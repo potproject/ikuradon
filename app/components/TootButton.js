@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { View, StyleSheet } from "react-native";
 import { Icon, ThemeContext } from "react-native-elements";
 
-export default function TootButton({onPress}){
+export default function TootButton({ onPress }){
     const { theme } = useContext(ThemeContext);
-    return(
+    return (
         <View style={styles.shadow}>
             <Icon
                 reverse

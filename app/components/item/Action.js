@@ -3,12 +3,12 @@ import { TouchableOpacity, Clipboard, View, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import t from "../../services/I18n";
-import {open as openUrl} from "../../util/url";
+import { open as openUrl } from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 import { ThemeContext } from "react-native-elements";
 
-function Action({id, tootid, style, url, account_url, user, acct,image, body, myself, onReply, onHide, onDeleting}){
+function Action({ id, tootid, style, url, account_url, user, acct, image, body, myself, onReply, onHide, onDeleting }){
     const { theme } = useContext(ThemeContext);
     const { showActionSheetWithOptions } = useActionSheet();
     const onOpenActionSheet = () => {

@@ -1,11 +1,11 @@
 import React, { memo } from "react";
 import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import {open as openUrl} from "../util/url";
+import { open as openUrl } from "../util/url";
 
-function MastoRowImage({style, mediaAttachments, sensitive, openImageViewer, closeImageViewerAction}){
+function MastoRowImage({ style, mediaAttachments, sensitive, openImageViewer, closeImageViewerAction }){
     return (
-        <View style={[styles.container,style]}>
+        <View style={[styles.container, style]}>
             { mediaAttachments.map((media, i) => {
                 return (
                     <TouchableOpacity key={i} onPress={() => {
@@ -13,13 +13,13 @@ function MastoRowImage({style, mediaAttachments, sensitive, openImageViewer, clo
                             openUrl(media.url);
                             return;
                         }
-                        openImageViewer(mediaAttachments, i)
-                        }}>
+                        openImageViewer(mediaAttachments, i);
+                    }}>
                         { mediaAttachments.length <= 2 &&
-                        <Image source={{uri: media.preview_url}} style={styles.photo} blurRadius={sensitive ? 20 : 0}/>
+                        <Image source={{ uri: media.preview_url }} style={styles.photo} blurRadius={sensitive ? 20 : 0}/>
                         }
                         { mediaAttachments.length > 2 &&
-                        <Image source={{uri: media.preview_url}} style={styles.photo2Line} blurRadius={sensitive ? 20 : 0}/>
+                        <Image source={{ uri: media.preview_url }} style={styles.photo2Line} blurRadius={sensitive ? 20 : 0}/>
                         }
                     </TouchableOpacity>
                 );
