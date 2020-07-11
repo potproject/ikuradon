@@ -7,6 +7,7 @@ import currentUserReducer from "./currentuser";
 import configReducer from "./config";
 import tootReducer from "./toot";
 import imageViewerReducer from "./imageviewer";
+import pushNotificationReducer from "./pushnotification";
 // ... other reducers
 
 export default combineReducers({
@@ -17,6 +18,7 @@ export default combineReducers({
     currentUserReducer,
     configReducer,
     tootReducer,
-    imageViewerReducer
+    imageViewerReducer,
+    pushNotificationReducer
     // ... other reducers
 });

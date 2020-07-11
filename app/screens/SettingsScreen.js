@@ -7,7 +7,8 @@ import t from "../services/I18n";
 
 import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
-import { subscribe, unsubscribe } from "../util/push";
+import { subscribe as SubscribeAction, unsubscribe as UnsubscribeAction } from "../actions/actioncreators/pushnotification";
+
 import NavigationService from "../services/NavigationService";
 
 import * as RouterName from "../constants/RouterName";
@@ -72,13 +73,13 @@ function SettingsScreen() {
                     title={t("setting_notifications_start")}
                     chevron
                     bottomDivider
-                    onPress={() => subscribe(domain, access_token)}
+                    onPress={() => dispatch(SubscribeAction(domain, access_token))}
                 />
                 <ListItem
                     title={t("setting_notifications_stop")}
                     chevron
                     bottomDivider
-                    onPress={() => unsubscribe(domain, access_token)}
+                    onPress={() => dispatch(UnsubscribeAction(domain, access_token))}
                 />
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes")}</Text>
                 <ListItem
