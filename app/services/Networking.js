@@ -65,7 +65,7 @@ export default class Networking {
                 params.append("domain", domain);
                 params.append("exponent_push_token", exponent_push_token);
                 params.append("access_token", access_token);
-                let response = await axios.post(endpoint,params);
+                let response = await axios.post(endpoint, params);
                 resolve(response.data);
             } catch (e) {
                 reject(e);
