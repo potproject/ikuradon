@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { Text, StyleSheet, View, ScrollView, Alert  } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { ListItem, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
@@ -72,10 +72,10 @@ function SettingsScreen() {
                     bottomDivider
                     switch={{ value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value)) }}
                 />
-                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_notifications")}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_push_notifications")}</Text>
                 { typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem
-                    title={"プッシュサーバー"}
+                    title={t("setting_push_notifications_server")}
                     input={{ value:pushServer, onChangeText:onChangePushServer }}
                     bottomDivider
                 />
@@ -85,7 +85,20 @@ function SettingsScreen() {
                     title={t("setting_push_notifications_start")}
                     chevron
                     bottomDivider
-                    onPress={() => dispatch(SubscribeAction(domain, access_token, pushServer))}
+                    onPress={() => {
+                        Alert.alert(
+                            t("global_warning"),
+                            t("setting_push_notifications_alert_text"),
+                            [
+                                {
+                                    text: t("global_cancel"),
+                                    style: "cancel"
+                                },
+                                { text: t("global_ok"), onPress: () => dispatch(SubscribeAction(domain, access_token, pushServer)) }
+                            ],
+                            { cancelable: false }
+                        );
+                    }}
                 />
                 }
                 { typeof pushNotification[domain+":"+access_token] === "object" &&

@@ -31,7 +31,9 @@ export default {
     setting_instance_version: "Mastodon Version",
     setting_instance_editlink: "Edit profile",
 
-    setting_notifications: "Push Notification (Experimental)",
+    setting_push_notifications: "Push Notification (Experimental)",
+    setting_push_notifications_alert_text: "Sending the access token to an untrusted server is a security risk because it will send the access token to the Push server.",
+    setting_push_notifications_server: "Push Notification Server",
     setting_push_notifications_start: "Using Push Notification",
     setting_push_notifications_stop: "Stopping Push Notification",
 
@@ -142,6 +144,7 @@ export default {
     global_ok: "OK",
     global_cancel: "Cancel",
     global_back: "Back",
+    global_warning: "Warning!",
 
     //poll
     polls:{

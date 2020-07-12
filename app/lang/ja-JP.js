@@ -31,7 +31,9 @@ export default {
     setting_instance_version: "バージョン",
     setting_instance_editlink: "プロフィールを編集",
 
-    setting_notifications: "プッシュ通知 (実験的機能)",
+    setting_push_notifications: "プッシュ通知 (実験的機能)",
+    setting_push_notifications_alert_text: "アクセストークンをPushサーバに送信することになるため、信頼できないサーバにアクセストークンを送ることはセキュリティ上のリスクが伴います。",
+    setting_push_notifications_server: "プッシュサーバ",
     setting_push_notifications_start: "プッシュ通知を使用する",
     setting_push_notifications_stop: "プッシュ通知を停止する",
 
@@ -141,6 +143,7 @@ export default {
     global_ok: "OK",
     global_cancel: "キャンセル",
     global_back: "戻る",
+    global_warning: "警告",
 
     //投票
     polls:{
