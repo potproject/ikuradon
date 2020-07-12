@@ -1,5 +1,6 @@
 import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
+import * as PushNotification from "../actiontypes/pushnotification";
 import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
@@ -12,6 +13,7 @@ import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as AppInit from "../actiontypes/appinit";
 import { settingTheme } from "../../util/theme";
+import { pull } from "../../util/push";
 
 const AUTO_LOGIN = true; // Auto Login
 
@@ -27,9 +29,20 @@ export function appInit(updateTheme) {
                 settingTheme(updateTheme, config.theme);
             }
         }
+
+        // Push Notification load
+        let pushstr = await AsyncStorage.getItem("push");
+        let pushNotifications = JSON.parse(pushstr);
+        if (pushNotifications !== null) {
+            await dispatch({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications });
+        }
+        // Push Notification init Setting
+        pull();
+
         //Session init
         await Session.init();
 
+        
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
