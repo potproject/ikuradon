@@ -15,15 +15,19 @@ import * as RouterName from "../constants/RouterName";
 
 const reducerSelector =  state => ({
     current: state.currentUserReducer,
-    config: state.configReducer
+    config: state.configReducer,
+    pushNotification: state.pushNotificationReducer,
 });
 
 function SettingsScreen() {
     const dispatch = useDispatch();
-    const { current, config } = useSelector(reducerSelector);
+    const { current, config, pushNotification } = useSelector(reducerSelector);
     const { invisible } = config;
     const { user_credentials, domain, access_token } = current;
     const { theme } = useContext(ThemeContext);
+
+    const [pushServer, onChangePushServer] = useState("salmon.potproject.net");
+
     const invisibleCheck = (value) => {
         let count = 0;
         invisible.home && count++;
@@ -68,19 +72,32 @@ function SettingsScreen() {
                     bottomDivider
                     switch={{ value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value)) }}
                 />
-                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_experimentals")}</Text>
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_notifications")}</Text>
+                { typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem
-                    title={t("setting_notifications_start")}
+                    title={"プッシュサーバー"}
+                    input={{ value:pushServer, onChangeText:onChangePushServer }}
+                    bottomDivider
+                />
+                }
+                { typeof pushNotification[domain+":"+access_token] !== "object" &&
+                <ListItem
+                    title={t("setting_push_notifications_start")}
                     chevron
                     bottomDivider
-                    onPress={() => dispatch(SubscribeAction(domain, access_token))}
+                    onPress={() => dispatch(SubscribeAction(domain, access_token, pushServer))}
                 />
+                }
+                { typeof pushNotification[domain+":"+access_token] === "object" &&
                 <ListItem
-                    title={t("setting_notifications_stop")}
+                    title={t("setting_push_notifications_stop")}
+                    subtitle={ "プッシュ通知サーバ: " + pushNotification[domain+":"+access_token].server }
+                    rightIcon={{ name: "check", color: theme.colors.primary }}
                     chevron
                     bottomDivider
-                    onPress={() => dispatch(UnsubscribeAction(domain, access_token))}
+                    onPress={() => dispatch(UnsubscribeAction(domain, access_token, pushServer))}
                 />
+                }
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes")}</Text>
                 <ListItem
                     title={t("setting_background")}

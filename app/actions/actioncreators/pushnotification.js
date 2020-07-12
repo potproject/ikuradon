@@ -9,7 +9,7 @@ const PushServerSubscribeEndpoints = "/api/v1/subscribe";
 const PushServerUnSubscribeEndpoints = "/api/v1/unsubscribe"; 
 
 export function subscribe(domain, accessToken, server = DefaultPushServer){
-    const uniq = `${domain}:${accessToken}:${server}`;
+    const uniq = `${domain}:${accessToken}`;
     return async dispatch => {
         let granted = await grantNotifications();
         if (!granted){
@@ -39,7 +39,7 @@ export function subscribe(domain, accessToken, server = DefaultPushServer){
 };
 
 export function unsubscribe(domain, accessToken, server = DefaultPushServer){
-    const uniq = `${domain}:${accessToken}:${server}`;
+    const uniq = `${domain}:${accessToken}`;
     return async dispatch => {
         let granted = await grantNotifications();
         if (!granted){
