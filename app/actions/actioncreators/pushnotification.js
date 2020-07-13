@@ -1,4 +1,4 @@
-import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 import DropDownHolder from "../../services/DropDownHolder";
 import { grantNotifications } from "../../util/push";
 import Networking from "../../services/Networking";
@@ -15,7 +15,7 @@ export function subscribe(domain, accessToken, server = DefaultPushServer){
         if (!granted){
             return;
         }
-        let expoToken = await Notifications.getExpoPushTokenAsync();
+        let { data : expoToken } = await Notifications.getExpoPushTokenAsync();
         try {
             const endpoints = `https://${server}${PushServerSubscribeEndpoints}`;
             let data = await Networking.pushServer(endpoints, domain, expoToken, accessToken);
@@ -45,7 +45,7 @@ export function unsubscribe(domain, accessToken, server = DefaultPushServer){
         if (!granted){
             return;
         }
-        let expoToken = await Notifications.getExpoPushTokenAsync();
+        let { data : expoToken } = await Notifications.getExpoPushTokenAsync();
         try {
             const endpoints = `https://${server}${PushServerUnSubscribeEndpoints}`;
             await Networking.pushServer(endpoints, domain, expoToken, accessToken);

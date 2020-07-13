@@ -1,4 +1,4 @@
-import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 import { Platform, Vibration } from "react-native";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
@@ -25,17 +25,17 @@ export async function grantNotifications(){
 
 export function pull() {
     if (Platform.OS === "android") {
-        Notifications.createChannelAndroidAsync("default", {
+        Notifications.setNotificationChannelAsync("default", {
             name: "default",
-            sound: true,
-            priority: "max",
-            vibrate: [0, 250, 250, 250],
+            sound: "default",
+            importance: Notifications.AndroidImportance.DEFAULT,
+            vibrationPattern: [0, 250, 250, 250],
         });
     }
-    Notifications.addListener(notification => {
-        if (notification && notification.data && typeof notification.data.title === "string" && typeof notification.data.body === "string"){
+    Notifications.addNotificationReceivedListener(notification => {
+        if (notification && notification.request && notification.request.content && typeof notification.request.content.title === "string" && typeof notification.request.content.body === "string"){
             Vibration.vibrate();
-            DropDownHolder.success(notification.data.title, notification.data.body);
+            DropDownHolder.success(notification.request.content.title, notification.request.content.body);
         }
     });
 }

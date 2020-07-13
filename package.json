@@ -28,6 +28,7 @@
         "expo-font": "~8.2.1",
         "expo-image-picker": "~8.3.0",
         "expo-localization": "~8.2.1",
+        "expo-notifications": "~0.3.3",
         "expo-permissions": "~9.0.1",
         "expo-web-browser": "~8.3.1",
         "he": "^1.2.0",
