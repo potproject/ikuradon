@@ -45,6 +45,7 @@ expo publish
 -   i18n (EN/JP)
 -   Custom Emoji Support
 -   Multi Theme (Dark Mode And more...)
+-   Push Notification / Server-Side Source Code: [potproject/ikuradon-salmon](https://github.com/potproject/ikuradon-salmon)
 
 ## Future
 
@@ -54,7 +55,6 @@ expo publish
 -   Misskey Support
 -   Movie Support
 -   Media upload Support
--   Expo Push Notification
 
 ## ScreenShots
 
