@@ -3,4 +3,4 @@ export const icon = {
     unlisted: "unlock",
     private: "lock",
     direct: "envelope",
-}
+};

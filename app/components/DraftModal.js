@@ -3,20 +3,20 @@ import { View, FlatList, StyleSheet } from "react-native";
 import { ListItem, ThemeContext } from "react-native-elements";
 import { getDraftAll } from "../util/draft";
   
-export default function DraftModal({onSelect}){
+export default function DraftModal({ onSelect }){
     const { theme } = useContext(ThemeContext);
     let [drafts, useDrafts] = useState([]);
     const [load, useLoad] = useState(false);
-    if(!load && drafts.length === 0){
+    if (!load && drafts.length === 0){
         useLoad(true);
         getDraftAll().then((drafts) => useDrafts(drafts));
     }
-    return(
+    return (
         <View style={styles.container}>
             <FlatList
                 style={styles.wrapList}
                 data={drafts}
-                renderItem={({item}) =>(
+                renderItem={({ item }) =>(
                     <ListItem
                         key={item.id}
                         title={item.text}

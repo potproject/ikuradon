@@ -5,34 +5,54 @@ import PropTypes from "prop-types";
 import DayJS from "dayjs";
 import t from "../services/I18n";
 
-function MastoRowPoll({poll}){
+function MastoRowPoll({ poll }){
     const { theme } = useContext(ThemeContext);
-    let {id, expires_at, expired, multiple, votes_count, voters_count, voted, own_votes, options, emojis} = poll;
+    let { id, expires_at, expired, multiple, votes_count, voters_count, voted, own_votes, options, emojis } = poll;
+    console.log(poll);
     return (
         <View style={styles.container}>
             {
                 options.map((v, i)=>{
                     return (
-                    <Text style={styles.pollDetailsRow}key={i}>{v.title} - {v.votes_count}{t("polls.votes")} ({votePer(v.votes_count,votes_count)}%)</Text>
+                        <Text style={styles.pollDetailsRow}key={i}>{v.title} - {v.votes_count}{t("polls.votes")} ({votePer(v.votes_count, votes_count)})</Text>
                     );
                 })
             }
-            <Text style={[{color: theme.colors.grey0},styles.pollDetailsRow]}>{voters_count}人 - {timeStr(expires_at, expired)}</Text>
+            <Text style={[{ color: theme.colors.grey0 }, styles.pollDetailsRow]}>{voters(voters_count)}{votes(votes_count)} - {timeStr(expires_at, expired)}</Text>
         </View>
     );
 }
 
 function timeStr(expires_at, expired){
-    if(expired){
+    if (expired){
         return "終了";
+    }
+    if (!expired && expires_at === null){
+        return "投票中";
     }
     return DayJS(expires_at).diff(DayJS(), "h") + "時間";
 }
 function votePer(count, total){
-    if(count === 0 || total === 0){
-        return 0;
+    if (count === 0 || total === 0){
+        return "0%";
     }
-    return Math.floor(count / total * 100);
+    let p = Math.floor(count / total * 100);
+    
+    return p !== NaN ? p + "%" : "0%";
+}
+
+function voters(voters_count){
+    if (voters_count === null){
+        return "";
+    }
+    return voters_count + "人";
+}
+
+function votes(votes_count){
+    if (votes_count === null){
+        return "";
+    }
+    return "(" + votes_count + "票)";
 }
 
 const styles = StyleSheet.create({

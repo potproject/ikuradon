@@ -23,19 +23,19 @@ import UserList from "../components/UserList";
 import { loginSelectAccounts } from "../actions/actioncreators/login";
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
-export default function DrawerContainer({navigation}){
+export default function DrawerContainer({ navigation }){
     const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
     const current = useSelector(CurrentUserReducerSelector);
     const { user_credentials, domain } = current;
     return (
-        <View style={[styles.container, {backgroundColor:theme.customColors.charBackground}]}>
+        <View style={[styles.container, { backgroundColor:theme.customColors.charBackground }]}>
             <View style={styles.profile}>
                 { user_credentials &&
                 <Image
                     onPress={() => navigation.navigate("Profile")}
-                    source={{uri: user_credentials.avatar}}
-                    style={[{borderColor: theme.colors.primary}, styles.photo]}/>
+                    source={{ uri: user_credentials.avatar }}
+                    style={[{ borderColor: theme.colors.primary }, styles.photo]}/>
                 }
                 <CustomEmoji emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
                     <Text style={[styles.userName, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
@@ -72,7 +72,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='search' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("search_title")} </Text>
+                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("search_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -81,7 +81,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='bookmark' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("bookmarks_title")} </Text>
+                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("bookmarks_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -90,7 +90,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='star' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("favourited_title")} </Text>
+                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("favourited_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -99,7 +99,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='cog' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{color: theme.customColors.char} ,styles.text]}> {t("settings_title")} </Text>
+                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("settings_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -108,7 +108,7 @@ export default function DrawerContainer({navigation}){
                 }} >
                     <View>
                         <FontAwesome style={styles.icon} name='user' size={18} color={theme.colors.grey1}/>
-                        <Text style={[{color: theme.colors.grey1} ,styles.text]}> {t("drawer_addaccount")} </Text>
+                        <Text style={[{ color: theme.colors.grey1 }, styles.text]}> {t("drawer_addaccount")} </Text>
                     </View>
                 </TouchableOpacity>
             </View>

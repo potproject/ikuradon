@@ -22,7 +22,7 @@ import { icon } from "../constants/visibility";
 
 const MastoRow = ({ item, current, actions, background }) => {
     // Toot data
-    let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll} = item;
+    let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll } = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
@@ -34,37 +34,37 @@ const MastoRow = ({ item, current, actions, background }) => {
     let reblogedImage = null;
     let reblogEmojis = [];
     let tootID = id;
-    if(reblog){
+    if (reblog){
         reblogFlag = true;
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogedImage = account.avatar;
         reblogEmojis = account.emojis;
         tootID = reblog.id;
-        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll} = reblog);
+        ({ created_at, sensitive, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll } = reblog);
     }
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
-        <View key={id} style={[styles.container,{backgroundColor: !background ? theme.customColors.charBackground : null}]}>
+        <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
             { reblogFlag && useMemo(() =>
                 <View style={styles.isReplyContainer}>
-                    <View style={{flex:0.18, borderWidth:0, alignItems:"flex-end"}}>
-                        <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{marginRight:5}}/>
+                    <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}>
+                        <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
                     </View>
-                    <CustomEmoji style={{flex:0.82}} emojis={emojisArrayToObject(reblogEmojis)}>
-                        <Text style={{color: theme.colors.grey0}} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
+                    <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(reblogEmojis)}>
+                        <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
                     </CustomEmoji>
                 </View>
             , [rebloggedName])}
             <View style={styles.date}>
-                <Text style={{fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
+                <Text style={{ fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
                     {poll &&
-                    <FontAwesome name={"comments"} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    <FontAwesome name={"comments"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                     }
                     {sensitive &&
-                    <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                     }
                     {" "}
-                    <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{marginRight:5}}/>
+                    <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                     {" " +dateFormat(created_at)}
                 </Text>
             </View>
@@ -75,11 +75,11 @@ const MastoRow = ({ item, current, actions, background }) => {
                             <TouchableOpacity
                                 onPress={() => null}>
                                 <Image
-                                    source={{uri: account.avatar}}
+                                    source={{ uri: account.avatar }}
                                     style={styles.photo}/>
                                 { reblogedImage &&
                                 <Image
-                                    source={{uri: reblogedImage}}
+                                    source={{ uri: reblogedImage }}
                                     style={styles.photoByReblogged}/>
                                 }
                             </TouchableOpacity>
@@ -91,14 +91,14 @@ const MastoRow = ({ item, current, actions, background }) => {
                         <View style={styles.userDetails}>
                             <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
                                 <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
-                                    <Text style={[styles.userHandleAndTime,{color: theme.colors.grey2}]}>{" @"+account.acct}</Text>
+                                    <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]}>{" @"+account.acct}</Text>
                                 </Text>
                             </CustomEmoji>
                         </View>
                     , [account])
                     }
                     <View style={styles.tootContainer}>
-                        <MastoRowBody content={content} linkStyle={{color: theme.customColors.link}} style={styles.tootText} sensitiveButtonColor={theme.colors.primary} emojis={emojis} sensitive={sensitive} spoilerText={spoiler_text} />
+                        <MastoRowBody content={content} linkStyle={{ color: theme.customColors.link }} style={styles.tootText} sensitiveButtonColor={theme.colors.primary} emojis={emojis} sensitive={sensitive} spoilerText={spoiler_text} />
                     </View>
                     { poll &&
                     <View style={styles.tootContainer}>

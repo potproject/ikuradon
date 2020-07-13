@@ -3,13 +3,13 @@ import { AsyncStorage } from "react-native";
 export async function getDraft(index, deleting = true){
     const draftstr = await AsyncStorage.getItem("draft");
     const draft = JSON.parse(draftstr);
-    if(!draft === null){
+    if (!draft === null){
         return "";
     }
-    if(typeof draft[index].text !== "string"){
+    if (typeof draft[index].text !== "string"){
         return "";
     }
-    if(deleting){
+    if (deleting){
         await deleteDraft(index);
     }
     return draft[index].text;
@@ -24,7 +24,7 @@ export async function getDraftAll(){
 export async function addDraft(text){
     const draftstr = await AsyncStorage.getItem("draft");
     let draft = JSON.parse(draftstr);
-    if(draft === null){
+    if (draft === null){
         draft = [];
     }
     const length = draft.unshift({

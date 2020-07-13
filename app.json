@@ -1,27 +1,35 @@
 {
-    "expo": {
-        "name": "ikuradon",
-        "description": "ikuradon - Mastodon Client App",
-        "slug": "potproject-ikuradon",
-        "sdkVersion": "37.0.0",
-        "version": "2.0.0.beta9",
-        "platforms": ["android", "ios"],
-        "githubUrl": "https://github.com/potproject/ikuradon",
-        "icon": "assets/image/icon512.png",
-        "splash": {
-            "image": "assets/image/splash.png",
-            "backgroundColor": "#ff3300",
-            "resizeMode": "contain"
-        },
-        "privacy": "public",
-        "assetBundlePatterns": ["assets/image/*"],
-        "ios": {
-            "bundleIdentifier": "net.potproject.ikuradon"
-        },
-        "android": {
-            "package": "net.potproject.ikuradon",
-            "versionCode": 3,
-            "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"]
-        }
+  "expo": {
+    "name": "ikuradon",
+    "description": "ikuradon - Mastodon Client App",
+    "slug": "potproject-ikuradon",
+    "version": "2.0.0.beta10",
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "githubUrl": "https://github.com/potproject/ikuradon",
+    "icon": "assets/image/icon512.png",
+    "splash": {
+      "image": "assets/image/splash.png",
+      "backgroundColor": "#ff3300",
+      "resizeMode": "contain"
+    },
+    "privacy": "public",
+    "assetBundlePatterns": [
+      "assets/image/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "net.potproject.ikuradon"
+    },
+    "android": {
+      "package": "net.potproject.ikuradon",
+      "versionCode": 3,
+      "useNextNotificationsApi": true,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE"
+      ]
     }
+  }
 }

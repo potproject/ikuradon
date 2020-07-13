@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Platform, View, StyleSheet } from "react-native";
 import { ListItem, ThemeContext } from "react-native-elements";
 import { FontAwesome } from "@expo/vector-icons";
@@ -32,9 +32,9 @@ const list = [
 ];
 
   
-export default function VisibilityModal({onSelect}){
+export default function VisibilityModal({ onSelect }){
     const { theme }= useContext(ThemeContext);
-    return(
+    return (
         <View style={Platform.OS === "android" ? styles.containerAndroid : styles.containerIos}>
             {
                 list.map((l, i) => (

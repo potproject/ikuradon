@@ -4,15 +4,15 @@ import { ThemeContext } from "react-native-elements";
 import { ListItem } from "react-native-elements";
 import * as searchConst from "../constants/search";
 
-export default function SearchList({type, data}){
+export default function SearchList({ type, data }){
     const { theme }= useContext(ThemeContext);
-    return(
+    return (
         <View style={styles.container}>
             <FlatList
                 keyExtractor={data => type === searchConst.TYPE_HASHTAGS ? data.name : data.id}
                 data={data}
                 renderItem={({ item }) =>{
-                    switch(type){
+                    switch (type){
                         case searchConst.TYPE_ACCOUNTS:
                             return <ListItem
                                 leftAvatar={{ source: { uri: item.avatar } }}

@@ -22,6 +22,18 @@ module.exports = {
         //セミコロン必須(但しワンラインブロックのコードのみ例外で不要)
         semi: ["error", "always", { omitLastInOneLineBlock: true }],
 
+        // if等のスペース
+        "keyword-spacing": ["error", { before: true, after: true }],
+
+        // paramのスペース
+        "space-in-parens": ["error", "never"],
+
+        // objectのスペース
+        "object-curly-spacing": ["error", "always", { objectsInObjects: true }],
+
+        // カンマスペース
+        "comma-spacing": ["error"],
+
         //indentは4spaces
         indent: ["error", 4, { SwitchCase: 1 }],
 

@@ -8,11 +8,11 @@ export async function getRelationship(id){
         let data = await Networking.fetch(domain, CONST_API.GET_RELATIONSHIPS, null, { id:[
             id
         ] }, access_token);
-        if(data.length < 1){
-            return {data: {}, error: "Account ID: " +id+ " Not Found"};
+        if (data.length < 1){
+            return { data: {}, error: "Account ID: " +id+ " Not Found" };
         }
-        return {data: data[0], error: null};
-    }catch(e){
-        return {data: {}, error: e.message};
+        return { data: data[0], error: null };
+    } catch (e){
+        return { data: {}, error: e.message };
     }
 }
