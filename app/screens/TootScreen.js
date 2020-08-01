@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from "react";
-import { Platform, Text, StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
+import { Platform, Text, StyleSheet, View, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
@@ -47,6 +47,7 @@ function TootScreen({ navigation, route }) {
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
     const [visibilityModal, useVisibilityModal] = useState(false);
+    const [visibilityClip, useVisibilityClip] = useState(false);
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
     const [emojisModal, useEmojisModal] = useState(false);
     const [draftModal, useDraftModal] = useState(false);
@@ -110,7 +111,31 @@ function TootScreen({ navigation, route }) {
                         placeholder={t("toot_placeholder")}
                     />
                 </View>
+                { visibilityClip &&
+                <ScrollView horizontal={true}>
+                    <View style={[{ backgroundColor: theme.colors.charBackground }, styles.imageForm]}>
+                        <TouchableOpacity
+                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
+                            <FontAwesome name={"plus-circle"} size={26} color={theme.colors.grey1} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                }
                 <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
+                    <TouchableOpacity
+                        style={styles.icon}
+                        onPress={() => useVisibilityClip(!visibilityClip)}>
+                        <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
@@ -184,7 +209,18 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     imageForm: {
-        flex: 3
+        flex: 1,
+        flexDirection: "row",
+    },
+    imageRow:{
+        width: 70,
+        marginLeft: 5,
+        marginRight: 5,
+        borderRadius: 10,
+        borderWidth: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
     itemForm: {
         flex: 1,

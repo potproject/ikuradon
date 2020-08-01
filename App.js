@@ -86,8 +86,8 @@ export default function App(props) {
                                     <Stack.Screen name={RouterName.Main} component={MainNavigator} options={{ title: t("timeline_title"), headerShown: false }} />
                                     <Stack.Screen name={RouterName.Favourites} component={TimelineScreen} options={{ headerShown: false }} />
                                     <Stack.Screen name={RouterName.Bookmarks} component={TimelineScreen} options={{ headerShown: false }} />
-                                    <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title")}} />
-                                    <Stack.Screen name={RouterName.Settings_Themes} component={SettingsThemesScreen} options={{ title: t("setting_themes")}} />
+                                    <Stack.Screen name={RouterName.Settings} component={SettingsScreen} options={{ title: t("settings_title") }} />
+                                    <Stack.Screen name={RouterName.Settings_Themes} component={SettingsThemesScreen} options={{ title: t("setting_themes") }} />
                                     <Stack.Screen name={RouterName.Toot} component={TootScreen} options={{ headerShown: false }} />
                                     <Stack.Screen name={RouterName.Search} component={SearchScreen} options={{ headerShown: false }} />
                                 </Stack.Navigator>
