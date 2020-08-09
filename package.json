@@ -36,7 +36,7 @@
         "prop-types": "^15.7.2",
         "react": "16.11.0",
         "react-dom": "16.11.0",
-        "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
+        "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
         "react-native-customemoji": "^1.0.0",
         "react-native-dropdownalert": "^4.2.1",
         "react-native-elements": "^2.0.0",
