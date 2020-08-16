@@ -32,7 +32,7 @@ export default class Networking {
     }
 
     //MEDIA UPLOAD ONLY
-    static fileUpload(domain, access_token, file, type) {
+    static fileUpload(domain, access_token, file, type, timeout = 60000) {
         return new Promise(async (resolve, reject) => {
             try {
                 let baseurl = "https://" + domain + "";
@@ -48,7 +48,8 @@ export default class Networking {
                     url: baseurl + api.url,
                     method: api.method,
                     headers,
-                    data
+                    data,
+                    timeout  // ms
                 });
                 resolve(response.data);
             } catch (e) {

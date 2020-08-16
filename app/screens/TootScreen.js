@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from "react";
-import { Platform, Text, StyleSheet, View, TextInput, TouchableOpacity } from "react-native";
+import { Platform, Text, StyleSheet, View, ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
@@ -23,6 +23,7 @@ import VisibilityModal from "../components/VisibilityModal";
 import EmojisModal from "../components/EmojisModal";
 import DraftModal from "../components/DraftModal";
 import { addDraft, deleteDraft } from "../util/draft";
+import TootImageClip from "../components/TootImageClip";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -47,9 +48,12 @@ function TootScreen({ navigation, route }) {
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
     const [visibilityModal, useVisibilityModal] = useState(false);
+    const [visibilityClip, useVisibilityClip] = useState(false);
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
     const [emojisModal, useEmojisModal] = useState(false);
     const [draftModal, useDraftModal] = useState(false);
+    const [mediaIds, useMediaIds] = useState([]);
+    const callbackMediaAttachments = (MediaAttachments) => useMediaIds(MediaAttachments.map((media) => media.id));
     const onOpenActionSheet = () => {
         showActionSheetWithOptions(
             {
@@ -81,7 +85,7 @@ function TootScreen({ navigation, route }) {
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
-                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, [], reply, null))}
+                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, mediaIds, reply, null))}
                         enabled={MAX_TOOT_LENGTH - tootText.length - cwTootText.length >= 0}
                         loading={toot.tootWaiting}
                     />
@@ -110,7 +114,15 @@ function TootScreen({ navigation, route }) {
                         placeholder={t("toot_placeholder")}
                     />
                 </View>
+                { visibilityClip &&
+                <TootImageClip callbackMediaAttachments={callbackMediaAttachments} />
+                }
                 <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
+                    <TouchableOpacity
+                        style={styles.icon}
+                        onPress={() => mediaIds < 1 && useVisibilityClip(!visibilityClip)}>
+                        <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
@@ -182,9 +194,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 20
-    },
-    imageForm: {
-        flex: 3
     },
     itemForm: {
         flex: 1,
