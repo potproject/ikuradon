@@ -23,6 +23,7 @@ import VisibilityModal from "../components/VisibilityModal";
 import EmojisModal from "../components/EmojisModal";
 import DraftModal from "../components/DraftModal";
 import { addDraft, deleteDraft } from "../util/draft";
+import TootImageClip from "../components/TootImageClip";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -112,23 +113,7 @@ function TootScreen({ navigation, route }) {
                     />
                 </View>
                 { visibilityClip &&
-                <ScrollView horizontal={true}>
-                    <View style={[{ backgroundColor: theme.colors.charBackground }, styles.imageForm]}>
-                        <TouchableOpacity
-                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
-                            <FontAwesome name={"plus-circle"} size={26} color={theme.colors.grey1} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
+                <TootImageClip />
                 }
                 <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
                     <TouchableOpacity
@@ -207,20 +192,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         fontSize: 20
-    },
-    imageForm: {
-        flex: 1,
-        flexDirection: "row",
-    },
-    imageRow:{
-        width: 70,
-        marginLeft: 5,
-        marginRight: 5,
-        borderRadius: 10,
-        borderWidth: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
     },
     itemForm: {
         flex: 1,
