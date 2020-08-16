@@ -52,6 +52,8 @@ function TootScreen({ navigation, route }) {
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
     const [emojisModal, useEmojisModal] = useState(false);
     const [draftModal, useDraftModal] = useState(false);
+    const [mediaIds, useMediaIds] = useState([]);
+    const callbackMediaAttachments = (MediaAttachments) => useMediaIds(MediaAttachments.map((media) => media.id));
     const onOpenActionSheet = () => {
         showActionSheetWithOptions(
             {
@@ -83,7 +85,7 @@ function TootScreen({ navigation, route }) {
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
-                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, [], reply, null))}
+                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, mediaIds, reply, null))}
                         enabled={MAX_TOOT_LENGTH - tootText.length - cwTootText.length >= 0}
                         loading={toot.tootWaiting}
                     />
@@ -113,12 +115,12 @@ function TootScreen({ navigation, route }) {
                     />
                 </View>
                 { visibilityClip &&
-                <TootImageClip />
+                <TootImageClip callbackMediaAttachments={callbackMediaAttachments} />
                 }
                 <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
                     <TouchableOpacity
                         style={styles.icon}
-                        onPress={() => useVisibilityClip(!visibilityClip)}>
+                        onPress={() => mediaIds < 1 && useVisibilityClip(!visibilityClip)}>
                         <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
                     <TouchableOpacity

@@ -6,7 +6,7 @@ import { upload } from "../services/Media";
 
 const MAX_UPLOAD = 4;
 
-export default function TootImageClip() {
+export default function TootImageClip({ callbackMediaAttachments }) {
     const { theme } = useContext(ThemeContext);
     const [mediaAttachments, useMediaAttachments] = useState([]);
     const [isUploading, useUploading] = useState(false);
@@ -21,7 +21,7 @@ export default function TootImageClip() {
                             style={[{ borderColor: theme.colors.grey0 }, styles.backgroundRow]}
                             imageStyle={[{ borderColor: theme.colors.grey0 }, styles.imageRow]}
                         >
-                            <TouchableOpacity onPress={() => mediaRemove(isUploading, mediaAttachments, useMediaAttachments, media)}>
+                            <TouchableOpacity onPress={() => mediaRemove(isUploading, callbackMediaAttachments, mediaAttachments, useMediaAttachments, media)}>
                                 <FontAwesome name={"times-circle"} size={26} color={theme.colors.grey1} />
                             </TouchableOpacity>
                         </ImageBackground>
@@ -32,7 +32,7 @@ export default function TootImageClip() {
                     mediaAttachments.length < MAX_UPLOAD &&
                     <TouchableOpacity 
                         key={-1} 
-                        onPress={() => mediaUpload(isUploading, useUploading, mediaAttachments, useMediaAttachments)} 
+                        onPress={() => mediaUpload(isUploading, callbackMediaAttachments, useUploading, mediaAttachments, useMediaAttachments)} 
                         style={[{ borderColor: theme.colors.grey0 }, styles.backgroundRow, styles.imageRow]}
                     >
                         <FontAwesome name={isUploading ? "spinner" : "plus-circle"} size={26} color={theme.colors.grey1} />
@@ -44,7 +44,7 @@ export default function TootImageClip() {
     );
 }
 
-async function mediaUpload(isUploading, useUploading, mediaAttachments, useMediaAttachments){
+async function mediaUpload(isUploading, callbackMediaAttachments, useUploading, mediaAttachments, useMediaAttachments){
     if (isUploading){
         return;
     }
@@ -53,16 +53,18 @@ async function mediaUpload(isUploading, useUploading, mediaAttachments, useMedia
     if (res !== null){
         const newMedia = mediaAttachments.concat(res);
         useMediaAttachments(newMedia);
+        callbackMediaAttachments(newMedia);
     }
     useUploading(false);
 }
 
-function mediaRemove(isUploading, mediaAttachments, useMediaAttachments, media){
+function mediaRemove(isUploading, callbackMediaAttachments, mediaAttachments, useMediaAttachments, media){
     if (isUploading){
         return;
     }
     let removedMediaAttachments = mediaAttachments.filter(item => item !== media);
     useMediaAttachments(removedMediaAttachments);
+    callbackMediaAttachments(removedMediaAttachments);
 }
 
 const styles = StyleSheet.create({
