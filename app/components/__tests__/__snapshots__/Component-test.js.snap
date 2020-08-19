@@ -1,0 +1,662 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TimelineTootButton /> 1`] = `
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+        "paddingBottom": 4,
+        "paddingLeft": 12,
+        "paddingRight": 4,
+        "paddingTop": 4,
+      }
+    }
+  >
+    <FontAwesome
+      color="#FFFFFF"
+      name="pencil"
+      size={24}
+    />
+  </View>
+</View>
+`;
+
+exports[`<TootButton /> 1`] = `
+<View
+  style={
+    Object {
+      "elevation": 10,
+      "shadowColor": "#000",
+      "shadowOffset": Object {
+        "height": 5,
+        "width": 0,
+      },
+      "shadowOpacity": 0.34,
+      "shadowRadius": 6.27,
+    }
+  }
+>
+  <Icon
+    color="#FF5500"
+    name="pencil"
+    onPress={[Function]}
+    raised={true}
+    reverse={true}
+    size={28}
+    type="font-awesome"
+  />
+</View>
+`;
+
+exports[`<TootImageClip /> 1`] = `
+<RCTScrollView
+  horizontal={true}
+>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": undefined,
+          },
+          Object {
+            "flex": 1,
+            "flexDirection": "row",
+          },
+        ]
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "borderColor": "#657786",
+            "borderRadius": 10,
+            "borderWidth": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "marginLeft": 5,
+            "marginRight": 5,
+            "opacity": 1,
+            "width": 70,
+          }
+        }
+      >
+        <FontAwesome
+          color="#2b90d9"
+          name="plus-circle"
+          size={26}
+        />
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`<UserList /> 1`] = `
+<View
+  style={Object {}}
+/>
+`;
+
+exports[`<VisibilityModal /> 1`] = `
+<View
+  style={
+    Object {
+      "height": 260,
+      "width": 300,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "borderBottomWidth": 0.5,
+          "borderColor": undefined,
+          "flexDirection": "row",
+          "padding": 14,
+        }
+      }
+      testID="padView"
+    >
+      <FontAwesome
+        color="#2b90d9"
+        name="globe"
+        size={26}
+        style={
+          Object {
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingLeft": 16,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 17,
+            }
+          }
+          testID="listItemTitle"
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          public
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 15,
+            }
+          }
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          Post to public timelines
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "borderBottomWidth": 0.5,
+          "borderColor": undefined,
+          "flexDirection": "row",
+          "padding": 14,
+        }
+      }
+      testID="padView"
+    >
+      <FontAwesome
+        color="#2b90d9"
+        name="unlock"
+        size={26}
+        style={
+          Object {
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingLeft": 16,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 17,
+            }
+          }
+          testID="listItemTitle"
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          unlisted
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 15,
+            }
+          }
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          Do not post to public timelines
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "borderBottomWidth": 0.5,
+          "borderColor": undefined,
+          "flexDirection": "row",
+          "padding": 14,
+        }
+      }
+      testID="padView"
+    >
+      <FontAwesome
+        color="#2b90d9"
+        name="lock"
+        size={26}
+        style={
+          Object {
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingLeft": 16,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 17,
+            }
+          }
+          testID="listItemTitle"
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          private
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 15,
+            }
+          }
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          Post to followers only
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "white",
+          "borderColor": undefined,
+          "flexDirection": "row",
+          "padding": 14,
+        }
+      }
+      testID="padView"
+    >
+      <FontAwesome
+        color="#2b90d9"
+        name="envelope"
+        size={26}
+        style={
+          Object {
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "paddingLeft": 16,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flex": 1,
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 17,
+            }
+          }
+          testID="listItemTitle"
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          direct
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "fontSize": 15,
+            }
+          }
+          theme={
+            Object {
+              "colors": Object {
+                "grey0": "#657786",
+                "grey1": "#2b90d9",
+                "grey2": "#8899a6",
+                "platform": Object {
+                  "android": Object {},
+                  "ios": Object {},
+                },
+                "primary": "#FF3300",
+              },
+              "customColors": Object {
+                "char": "#000000",
+                "charBackground": "#FFFFFF",
+                "charReverse": "#FFFFFF",
+                "item": Object {
+                  "bookmark": "#4c6ef5",
+                  "boost": "#2b90d9",
+                  "favourite": "#ffd27d",
+                  "none": "#8899a6",
+                },
+                "link": "#1b95e0",
+                "primaryBackground": "#FFFFFF",
+                "primaryComplementary": "#00CCFF",
+                "tootButton": "#FF5500",
+              },
+            }
+          }
+        >
+          Post to mentioned users only
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
