@@ -4,6 +4,13 @@ import renderer from "react-test-renderer";
 import theme from "../../themes/default";
 import { ThemeContext } from "react-native-elements";
 
+import DraftModal from "../DraftModal";
+import EmojisModal from "../EmojisModal";
+import MastoRowBody from "../MastoRowBody";
+import MastoRow from "../MastoRow";
+import ItemTabBar from "../ItemTabBar";
+import MastoRowPoll from "../MastoRowPoll";
+import MastoRowImage from "../MastoRowImage";
 import NotificationsList from "../NotificationsList";
 import NotificationsRow from "../NotificationsRow";
 import TimelineTootButton from "../TimelineTootButton";
@@ -18,43 +25,101 @@ import Search from "../Search";
 import SearchList from "../SearchList";
 
 import * as searchConst from "../../constants/search";
-import MastoRowPoll from "../MastoRowPoll";
+import * as Example from "./example";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
 
-const mockCurrent = {
-    user_credentials: {
-        id: "1",
-        acct: "example",
-        display_name: "example",
-        avatar: "http://example.com/example.png",
-    },
-    domain: "example.com",
-    access_token: "ACCEESS_TOKEN",
-    notification_count: 0,
-    instance: {
-        contact_account:{},
-        description: "description"
-    }
-};
+//TODO: getDraftAll mock
+//it("<DraftModal />", () => {
+//    const result = renderer.create(
+//        <ThemeContext.Provider value={{ theme }}>
+//            <DraftModal onSelect={(s)=>null} />
+//        </ThemeContext.Provider>
+//    );
+//    expect(result).toMatchSnapshot();
+//});
 
-const mockPoll = {
-    id: "1",
-    expires_at: "",
-    expired: false,
-    multiple: false,
-    votes_count: 0,
-    voters_count: 0,
-    voted: false,
-    options: [],
-};
+//TODO: getEmojis mock
+//it("<EmojisModal />", () => {
+//    const result = renderer.create(
+//        <ThemeContext.Provider value={{ theme }}>
+//            <EmojisModal current={Example.current} onSelect={(s)=>null} />
+//        </ThemeContext.Provider>
+//    );
+//    expect(result).toMatchSnapshot();
+//});
 
+it("<ItemTabBar />", () => {
+    const result = renderer.create(
+        <ThemeContext.Provider value={{ theme }}>
+            <ItemTabBar name={"home"} badgeCount={1} streamBadge={false} color={"#000000"} size={26} />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
+
+//it("<MastoList />", () => {
+//    const result = renderer.create(
+//        <ThemeContext.Provider value={{ theme }}>
+//            <MastoList type={"home"} />
+//        </ThemeContext.Provider>
+//    );
+//    expect(result).toMatchSnapshot();
+//});
+
+it("<MastoRow />", () => {
+    const result = renderer.create(
+        <ThemeContext.Provider value={{ theme }}>
+            <MastoRow
+                item={Example.status}
+                current={Example.current} 
+                actions={{
+                    ReplyAction: () => null,
+                    BoostAction: () => null,
+                    FavouriteAction: () => null,
+                    BookmarkAction: () => null,
+                    HideAction: () => null,
+                    DeleteAction: () => null,
+                    openImageViewerAction: () => null,
+                    closeImageViewerAction: () => null
+                }}
+                background={false}
+            />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
+
+it("<MastoRowBody />", () => {
+    const result = renderer.create(
+        <ThemeContext.Provider value={{ theme }}>
+            <MastoRowBody
+                content={Example.status.content}
+                linkStyle={{ color: theme.customColors.link }} 
+                style={{}} 
+                sensitiveButtonColor={theme.colors.primary}
+                emojis={Example.status.emojis} 
+                sensitive={Example.status.sensitive}
+                spoilerText={Example.status.spoiler_text} />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
+
+it("<MastoRowImage />", () => {
+    const result = renderer.create(
+        <ThemeContext.Provider value={{ theme }}>
+            <MastoRowImage mediaAttachments={[Example.mediaAttachment]} sensitive={false} openImageViewer={(a, i)=> null} closeImageViewer={(a, i)=> null} />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
 
 it("<MastoRowPoll />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
-            <MastoRowPoll poll={mockPoll} />
+            <MastoRowPoll poll={Example.poll} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
@@ -99,7 +164,7 @@ it("<SearchList />", () => {
 it("<TimelineCenterHeader />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
-            <TimelineCenterHeader fixedTitle={false} onPress={() => null} current={mockCurrent}/>
+            <TimelineCenterHeader fixedTitle={false} onPress={() => null} current={Example.current}/>
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
@@ -114,6 +179,7 @@ it("<TimelineLeftHeader />", () => {
     expect(result).toMatchSnapshot();
 });
 
+// TODO: WebSOcket Mock
 //it("<TimelineStreamingButton />", () => {
 //    const result = renderer.create(
 //        <ThemeContext.Provider value={{ theme }}>
@@ -156,10 +222,11 @@ it("<TootImageClip />", () => {
     expect(result).toMatchSnapshot();
 });
 
+// TODO: Session mock
 //it("<UserList />", () => {
 //    const result = renderer.create(
 //        <ThemeContext.Provider value={{ theme }}>
-//            <UserList current={mockCurrent} onSelect={()=>null} />
+//            <UserList current={Example.current} onSelect={()=>null} />
 //        </ThemeContext.Provider>
 //    );
 //    expect(result).toMatchSnapshot();
