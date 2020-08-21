@@ -1,0 +1,294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Action /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#8899a6"
+      name="ellipsis-h"
+      size={20}
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  />
+</View>
+`;
+
+exports[`<Bookmark /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#4c6ef5"
+      name="bookmark"
+      size={20}
+    />
+  </View>
+</View>
+`;
+
+exports[`<Boost /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#2b90d9"
+      name="retweet"
+      size={20}
+    />
+  </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#657786",
+          "fontSize": 16,
+        },
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    1
+  </Text>
+</View>
+`;
+
+exports[`<Favourite /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#ffd27d"
+      name="star"
+      size={20}
+    />
+  </View>
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#657786",
+          "fontSize": 16,
+        },
+        Object {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    2
+  </Text>
+</View>
+`;
+
+exports[`<Follow /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 16,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      <FontAwesome
+        color="#8899a6"
+        name="user-plus"
+        size={26}
+      />
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#8899a6",
+            },
+            undefined,
+          ]
+        }
+      >
+         
+        Follow
+      </Text>
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`<Reply /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#8899a6"
+      name="reply"
+      size={20}
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  />
+</View>
+`;
