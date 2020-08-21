@@ -1,6 +1,6 @@
 import * as StreamingActionTypes from "../actions/actiontypes/streaming";
 
-const initialState = {
+export const initialState = {
     home: false,
     local: false,
     federal: false

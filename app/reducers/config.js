@@ -1,7 +1,7 @@
 import * as ConfigActionTypes from "../actions/actiontypes/config";
 import { AsyncStorage } from "react-native";
 
-const initialState = {
+export const initialState = {
     backgroundImage: null,
 
     invisible: {

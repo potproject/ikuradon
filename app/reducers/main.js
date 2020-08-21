@@ -4,7 +4,7 @@ import { getMinMaxId } from "../util/manageid";
 
 const viewTypeArray = ["home", "local", "federal"];
 
-const initialState = {
+export const initialState = {
     home: {
         data: [],
         refreshing: false,

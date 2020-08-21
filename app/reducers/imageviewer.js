@@ -1,6 +1,6 @@
 import * as ImageViewer from "../actions/actiontypes/imageviewer";
 
-const initialState = {
+export const initialState = {
     data: [],
     index: 0,
     visible: false,
