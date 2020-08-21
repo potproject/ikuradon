@@ -7,13 +7,15 @@
         "web": "expo start --web",
         "eject": "expo eject",
         "test": "jest",
-        "test-watch": "jest --watchAll"
+        "test-watch": "jest --watchAll",
+        "test-coverage": "jest --coverage"
     },
     "jest": {
         "preset": "jest-expo",
         "transformIgnorePatterns": [
             "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|native-base|react-native-elements)"
-        ]
+        ],
+        "coveragePathIgnorePatterns": ["node_modules", "app/lang", "app/themes"]
     },
     "dependencies": {
         "@expo/react-native-action-sheet": "^3.7.0",
