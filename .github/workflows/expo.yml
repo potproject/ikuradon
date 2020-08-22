@@ -3,6 +3,10 @@ on:
     push:
         branches:
             - master
+
+env:
+    TZ: 'Asia/Tokyo'
+
 jobs:
     publish:
         name: Install and publish
