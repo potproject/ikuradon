@@ -1,6 +1,7 @@
 import * as ConfigActionTypes from "../actions/actiontypes/config";
 
 import * as Storage from "../util/storage";
+import * as CONST_Storage from "../constants/storage";
 
 export const initialState = {
     backgroundImage: null,
@@ -70,7 +71,7 @@ export default function Config(state = initialState, action = {}) {
             break;
     }
     if (state !== newstate) {
-        Storage.setItem("config", newstate);
+        Storage.setItem(CONST_Storage.Config, newstate);
     }
     return newstate;
 }

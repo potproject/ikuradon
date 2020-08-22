@@ -1,5 +1,6 @@
 import * as PushNotificationActionTypes from "../actions/actiontypes/pushnotification";
 import * as Storage from "../util/storage";
+import * as CONST_Storage from "../constants/storage";
 
 export const initialState = {
     //      "mastodon.xxxx.net:xxxxxx:mastodon.push.net": {
@@ -34,7 +35,7 @@ export default function PushNotification(state = initialState, action = {}) {
             break;
     }
     if (state !== newstate) {
-        Storage.setItem("push", newstate);
+        Storage.setItem(CONST_Storage.Push, newstate);
     }
     return newstate;
 }

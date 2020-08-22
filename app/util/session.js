@@ -1,7 +1,9 @@
 import * as Storage from "../util/storage";
 
+import * as CONST_Storage from "../constants/storage";
+
 export async function getAll() {
-    let session = await Storage.getItem("session");
+    let session = await Storage.getItem(CONST_Storage.Session);
     if (session === null) {
         session = deleteAll();
     }
@@ -9,20 +11,20 @@ export async function getAll() {
 }
 
 export async function setDefault() {
-    let session = await Storage.getItem("session");
+    let session = await Storage.getItem(CONST_Storage.Session);
     session.login_index = -1;
-    await Storage.setItem("session", session);
+    await Storage.setItem(CONST_Storage.Session, session);
     return session;
 }
 export async function setIndex(index) {
-    let session = await Storage.getItem("session");
+    let session = await Storage.getItem(CONST_Storage.Session);
     session.login_index = index;
-    await Storage.setItem("session", session);
+    await Storage.setItem(CONST_Storage.Session, session);
     return session;
 }
 
 export async function getDomainAndToken() {
-    let session = await Storage.getItem("session");
+    let session = await Storage.getItem(CONST_Storage.Session);
     if (session && session.login_index > -1) {
         return session.accounts[session.login_index];
     }
@@ -35,7 +37,7 @@ export async function getDomainAndToken() {
 }
 
 export async function add(domain, access_token, username, avatar) {
-    let session = await Storage.getItem("session");
+    let session = await Storage.getItem(CONST_Storage.Session);
     let existsCheck = -1;
     if (!session || !session.accounts) {
         deleteAll();
@@ -58,12 +60,12 @@ export async function add(domain, access_token, username, avatar) {
     } else {
         session.login_index = existsCheck;
     }
-    await Storage.setItem("session", session);
+    await Storage.setItem(CONST_Storage.Session, session);
 }
 
 export async function init() {
     //存在してないければsessionを作る
-    let oldSession = await Storage.getItem("session");
+    let oldSession = await Storage.getItem(CONST_Storage.Session);
     if (!oldSession) {
         oldSession = deleteAll();
     }

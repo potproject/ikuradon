@@ -6,6 +6,7 @@ import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
 
 import * as CONST_API from "../../constants/api";
+import * as CONST_Storage from "../../constants/storage";
 import Networking from "../../services/Networking";
 import * as CurrentUser from "../actiontypes/currentuser";
 
@@ -20,7 +21,7 @@ const AUTO_LOGIN = true; // Auto Login
 export function appInit(updateTheme) {
     return async dispatch => {
         // config init load
-        let config = await Storage.getItem("config");
+        let config = await Storage.getItem(CONST_Storage.Config);
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
             // Theme init
@@ -30,7 +31,7 @@ export function appInit(updateTheme) {
         }
 
         // Push Notification load
-        let pushNotifications = await Storage.getItem("push");
+        let pushNotifications = await Storage.getItem(CONST_Storage.Push);
         if (pushNotifications !== null) {
             await dispatch({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications });
         }

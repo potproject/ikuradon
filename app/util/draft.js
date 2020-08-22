@@ -1,7 +1,8 @@
 import * as Storage from "../util/storage";
+import * as CONST_Storage from "../constants/storage";
 
 export async function getDraft(index, deleting = true){
-    const draft = await Storage.getItem("draft");
+    const draft = await Storage.getItem(CONST_Storage.Draft);
     if (draft === null){
         return "";
     }
@@ -15,11 +16,11 @@ export async function getDraft(index, deleting = true){
 }
 
 export async function getDraftAll(){
-    return await Storage.getItem("draft");
+    return await Storage.getItem(CONST_Storage.Draft);
 }
 
 export async function addDraft(text){
-    let draft = await Storage.getItem("draft");
+    let draft = await Storage.getItem(CONST_Storage.Draft);
     if (draft === null){
         draft = [];
     }
@@ -27,14 +28,14 @@ export async function addDraft(text){
         id: Math.random().toString(36).slice(-8),
         text,
     });
-    await Storage.setItem("draft", draft);
+    await Storage.setItem(CONST_Storage.Draft, draft);
     // indexを返す
     return length - 1;
 }
 
 export async function deleteDraft(index){
-    const draft = await Storage.getItem("draft");
+    const draft = await Storage.getItem(CONST_Storage.Draft);
     draft.splice(index, 1);
-    await Storage.setItem("draft", draft);
+    await Storage.setItem(CONST_Storage.Draft, draft);
     return;
 }
