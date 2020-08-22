@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+    TZ: 'Asia/Tokyo'
+
 jobs:
     CI:
         name: CI
