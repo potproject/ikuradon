@@ -1,6 +1,6 @@
 import * as Toot from "../actions/actiontypes/toot";
 
-const initialState = {
+export const initialState = {
     tootWaiting: false
 };
 

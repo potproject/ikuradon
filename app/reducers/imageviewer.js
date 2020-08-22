@@ -1,6 +1,6 @@
 import * as ImageViewer from "../actions/actiontypes/imageviewer";
 
-const initialState = {
+export const initialState = {
     data: [],
     index: 0,
     visible: false,
@@ -16,6 +16,7 @@ export default function reducer(state = initialState, action = {}) {
             });
         case ImageViewer.IMAGEVIEWER_CLOSE:
             return Object.assign({}, state, {
+                data: [],
                 index: 0,
                 visible: false
             });

@@ -1,7 +1,7 @@
 import * as PushNotificationActionTypes from "../actions/actiontypes/pushnotification";
 import { AsyncStorage } from "react-native";
 
-const initialState = {
+export const initialState = {
     //      "mastodon.xxxx.net:xxxxxx:mastodon.push.net": {
     //          subscribeID : "xxx",
     //          expoToken : "xxxx",

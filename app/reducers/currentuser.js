@@ -1,6 +1,6 @@
 import * as CurrentUserActionTypes from "../actions/actiontypes/currentuser";
 
-const initialState = {
+export const initialState = {
     user_credentials: null,
     domain: "",
     access_token: "",

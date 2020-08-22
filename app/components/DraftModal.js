@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { ListItem, ThemeContext } from "react-native-elements";
 import { getDraftAll } from "../util/draft";
-  
+
 export default function DraftModal({ onSelect }){
     const { theme } = useContext(ThemeContext);
     let [drafts, useDrafts] = useState([]);
