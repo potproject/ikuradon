@@ -18,12 +18,7 @@ jobs:
         - name: Run eslint
           run: yarn lint
         - name: Run Jest
-          run: yarn test
-        - name: Show coverage in comments
-          uses: ziishaned/jest-reporter-action@v0.0.1
-          with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            test-command: "yarn test-coverage"
+          run: yarn test-coverage
         - name: Upload test coverage artifact
           uses: actions/upload-artifact@v1
           with:
