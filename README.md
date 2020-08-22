@@ -2,8 +2,9 @@
 
 ![Test](https://github.com/potproject/ikuradon/workflows/Test/badge.svg?branch=master)
 ![Expo Publish](https://github.com/potproject/ikuradon/workflows/Expo%20Publish/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/potproject/ikuradon/badge.svg?branch=master)](https://coveralls.io/github/potproject/ikuradon?branch=master)
+
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Greenkeeper badge](https://badges.greenkeeper.io/potproject/ikuradon.svg)](https://greenkeeper.io/)
 
 Mastodon client App for React Native (Expo)
 
