@@ -18,10 +18,11 @@ jobs:
         - name: Run eslint
           run: yarn lint
         - name: jest report
-          uses: ziishaned/jest-reporter-action@v0.0.1
+          uses: mattallty/jest-github-action@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            test-command: yarn test-coverage
+            test-command: "yarn test-coverage"
         - name: Upload test coverage artifact
           uses: actions/upload-artifact@v1
           with:
