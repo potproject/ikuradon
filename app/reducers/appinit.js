@@ -1,6 +1,6 @@
 import * as AppInit from "../actions/actiontypes/appinit";
 
-const initialState = {
+export const initialState = {
     init: false
 };
 

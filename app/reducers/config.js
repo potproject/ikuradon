@@ -2,7 +2,7 @@ import * as ConfigActionTypes from "../actions/actiontypes/config";
 
 import * as Storage from "../util/storage";
 
-const initialState = {
+export const initialState = {
     backgroundImage: null,
 
     invisible: {

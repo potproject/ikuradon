@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { ThemeContext } from "react-native-elements";
+import { ThemeContext, Image } from "react-native-elements";
 import { getEmojis } from "../util/emojis";
-import { Image } from "react-native-elements";
   
 export default function EmojisModal({ current, onSelect }){
     const { theme } = useContext(ThemeContext);

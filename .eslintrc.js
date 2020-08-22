@@ -1,11 +1,12 @@
 module.exports = {
-    plugins: ["react", "prettier"],
+    plugins: ["react", "prettier", "jest"],
     extends: ["prettier"],
     env: {
         browser: true,
         commonjs: true,
         es6: true,
-        node: true
+        node: true,
+        "jest/globals": true
     },
     parserOptions: {
         ecmaVersion: 2017,
