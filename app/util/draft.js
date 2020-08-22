@@ -1,9 +1,8 @@
-import { AsyncStorage } from "react-native";
+import * as Storage from "../util/storage";
 
 export async function getDraft(index, deleting = true){
-    const draftstr = await AsyncStorage.getItem("draft");
-    const draft = JSON.parse(draftstr);
-    if (!draft === null){
+    const draft = await Storage.getItem("draft");
+    if (draft === null){
         return "";
     }
     if (typeof draft[index].text !== "string"){
@@ -16,14 +15,11 @@ export async function getDraft(index, deleting = true){
 }
 
 export async function getDraftAll(){
-    const draftstr = await AsyncStorage.getItem("draft");
-    const draft = JSON.parse(draftstr);
-    return draft;
+    return await Storage.getItem("draft");
 }
 
 export async function addDraft(text){
-    const draftstr = await AsyncStorage.getItem("draft");
-    let draft = JSON.parse(draftstr);
+    let draft = await Storage.getItem("draft");
     if (draft === null){
         draft = [];
     }
@@ -31,15 +27,14 @@ export async function addDraft(text){
         id: Math.random().toString(36).slice(-8),
         text,
     });
-    await AsyncStorage.setItem("draft", JSON.stringify(draft));
+    await Storage.setItem("draft", draft);
     // indexを返す
     return length - 1;
 }
 
 export async function deleteDraft(index){
-    const draftstr = await AsyncStorage.getItem("draft");
-    const draft = JSON.parse(draftstr);
+    const draft = await Storage.getItem("draft");
     draft.splice(index, 1);
-    await AsyncStorage.setItem("draft", JSON.stringify(draft));
+    await Storage.setItem("draft", draft);
     return;
 }

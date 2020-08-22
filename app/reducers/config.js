@@ -1,5 +1,6 @@
 import * as ConfigActionTypes from "../actions/actiontypes/config";
-import { AsyncStorage } from "react-native";
+
+import * as Storage from "../util/storage";
 
 const initialState = {
     backgroundImage: null,
@@ -69,7 +70,7 @@ export default function Config(state = initialState, action = {}) {
             break;
     }
     if (state !== newstate) {
-        AsyncStorage.setItem("config", JSON.stringify(newstate));
+        Storage.setItem("config", newstate);
     }
     return newstate;
 }

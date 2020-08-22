@@ -1,9 +1,9 @@
 import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
-import { AsyncStorage } from "react-native";
 import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
+import * as Storage from "../../util/storage";
 
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/Networking";
@@ -20,8 +20,7 @@ const AUTO_LOGIN = true; // Auto Login
 export function appInit(updateTheme) {
     return async dispatch => {
         // config init load
-        let configstr = await AsyncStorage.getItem("config");
-        let config = JSON.parse(configstr);
+        let config = await Storage.getItem("config");
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
             // Theme init
@@ -31,8 +30,7 @@ export function appInit(updateTheme) {
         }
 
         // Push Notification load
-        let pushstr = await AsyncStorage.getItem("push");
-        let pushNotifications = JSON.parse(pushstr);
+        let pushNotifications = await Storage.getItem("push");
         if (pushNotifications !== null) {
             await dispatch({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications });
         }
