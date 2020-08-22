@@ -25,7 +25,7 @@ jobs:
             github-token: ${{ secrets.GITHUB_TOKEN }}
             test-command: "yarn test-coverage"
         - name: Upload test coverage artifact
-            uses: actions/upload-artifact@v1
-            with:
-              name: coverage
-              path: coverage
+          uses: actions/upload-artifact@v1
+          with:
+            name: coverage
+            path: coverage
