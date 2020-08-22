@@ -1,8 +1,9 @@
 name: Expo Publish
+
 on:
     push:
-        branches:
-            - master
+      branches: [ master ]
+
 jobs:
     publish:
         name: Install and publish
