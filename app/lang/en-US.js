@@ -94,6 +94,8 @@ export default {
     login_selectaccounts: "Choose an account",
     login_accesstoken_message: "Please enter Mastodon Access Token.",
 
+    logout_alert_text: "Do you really want to logout?",
+
     copy_access_token: "Copy an Access Token",
 
     //Authorize

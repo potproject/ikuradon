@@ -94,6 +94,8 @@ export default {
     login_selectaccounts: "アカウントを選択",
     login_accesstoken_message: "アクセストークンを入力してください",
 
+    logout_alert_text: "本当にログアウトしますか？",
+
     copy_access_token: "アクセストークンをコピーする",
     //認証
     authorize_title: "認証",
