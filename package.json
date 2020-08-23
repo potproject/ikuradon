@@ -6,6 +6,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "eject": "expo eject",
+        "lint": "eslint app App.js",
         "test": "jest",
         "test-watch": "jest --watchAll",
         "test-coverage": "jest --coverage"
@@ -20,6 +21,7 @@
     "dependencies": {
         "@expo/react-native-action-sheet": "^3.7.0",
         "@expo/vector-icons": "^10.0.0",
+        "@react-native-community/async-storage": "~1.11.0",
         "@react-native-community/masked-view": "0.1.10",
         "@react-navigation/bottom-tabs": "^5.0.0",
         "@react-navigation/drawer": "^5.0.0",

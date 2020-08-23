@@ -9,7 +9,7 @@ export default function TimelineTootButton({ enabled, onPress, loading }){
     return (
         <View>
             {enabled &&
-            <TouchableOpacity onPress={onPress} style={styles.view}>
+            <TouchableOpacity disabled={loading} onPress={onPress} style={styles.view}>
                 { loading ?
                     <FontAwesome name="spinner" size={24} color={theme.customColors.primaryBackground} />
                     :

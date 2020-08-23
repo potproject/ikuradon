@@ -20,7 +20,7 @@ import t from "../services/I18n";
 import * as RouterName from "../constants/RouterName";
 import UserList from "../components/UserList";
 
-import { loginSelectAccounts } from "../actions/actioncreators/login";
+import { loginSelectAccounts, accountChangeWithDelete } from "../actions/actioncreators/login";
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
 export default function DrawerContainer({ navigation }){
@@ -114,7 +114,11 @@ export default function DrawerContainer({ navigation }){
             </View>
             <Divider />
             <ScrollView>
-                <UserList current={current} onSelect={(index) => dispatch(loginSelectAccounts(index))} />
+                <UserList 
+                    current={current}
+                    onSelect={(index) => dispatch(loginSelectAccounts(index))}
+                    onCancel={(index) => dispatch(accountChangeWithDelete(index))}
+                />
             </ScrollView>
         </View>
     );

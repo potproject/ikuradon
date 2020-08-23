@@ -1,0 +1,32 @@
+name: Test
+
+on:
+    pull_request:
+        branches: [master]
+    push:
+        branches: [master]
+
+env:
+    TZ: 'Asia/Tokyo'
+
+jobs:
+    CI:
+        name: CI
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: yarn install
+              run: yarn
+            - name: Run eslint
+              run: yarn lint
+            - name: Run just
+              run: yarn test-coverage
+            - name: Coveralls
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Upload test coverage artifact
+              uses: actions/upload-artifact@v1
+              with:
+                  name: coverage
+                  path: coverage

@@ -1,8 +1,9 @@
-import { AsyncStorage } from "react-native";
+import * as Storage from "../util/storage";
+
+import * as CONST_Storage from "../constants/storage";
 
 export async function getAll() {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = JSON.parse(sessionstr);
+    let session = await Storage.getItem(CONST_Storage.Session);
     if (session === null) {
         session = deleteAll();
     }
@@ -10,23 +11,20 @@ export async function getAll() {
 }
 
 export async function setDefault() {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = JSON.parse(sessionstr);
+    let session = await Storage.getItem(CONST_Storage.Session);
     session.login_index = -1;
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem(CONST_Storage.Session, session);
     return session;
 }
 export async function setIndex(index) {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = JSON.parse(sessionstr);
+    let session = await Storage.getItem(CONST_Storage.Session);
     session.login_index = index;
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem(CONST_Storage.Session, session);
     return session;
 }
 
 export async function getDomainAndToken() {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = JSON.parse(sessionstr);
+    let session = await Storage.getItem(CONST_Storage.Session);
     if (session && session.login_index > -1) {
         return session.accounts[session.login_index];
     }
@@ -39,10 +37,9 @@ export async function getDomainAndToken() {
 }
 
 export async function add(domain, access_token, username, avatar) {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = Object.assign({}, JSON.parse(sessionstr));
+    let session = await Storage.getItem(CONST_Storage.Session);
     let existsCheck = -1;
-    if (!session.accounts) {
+    if (!session || !session.accounts) {
         deleteAll();
     }
     for (let accountsIndex in session.accounts) {
@@ -63,13 +60,12 @@ export async function add(domain, access_token, username, avatar) {
     } else {
         session.login_index = existsCheck;
     }
-    console.log(session);
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem(CONST_Storage.Session, session);
 }
 
 export async function init() {
     //存在してないければsessionを作る
-    let oldSession = await AsyncStorage.getItem("session");
+    let oldSession = await Storage.getItem(CONST_Storage.Session);
     if (!oldSession) {
         oldSession = deleteAll();
     }
@@ -77,31 +73,29 @@ export async function init() {
 }
 
 export async function deleteCurrentItems() {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = Object.assign({}, JSON.parse(sessionstr));
+    let session = await Storage.getItem("session");
     if (session.login_index > -1) {
         session.accounts.splice(session.login_index, 1);
         session.login_index = -1;
     }
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem("session", session);
 }
 
 export async function deleteItems(index) {
-    let sessionstr = await AsyncStorage.getItem("session");
-    let session = Object.assign({}, JSON.parse(sessionstr));
+    let session = await Storage.getItem("session");
     if (index > -1) {
         session.accounts.splice(index, 1);
         session.login_index = -1;
     }
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem("session", session);
 }
 
 export async function deleteAll() {
-    await AsyncStorage.removeItem("session");
+    await Storage.removeItem("session");
     let session = {
         login_index: -1,
         accounts: []
     };
-    await AsyncStorage.setItem("session", JSON.stringify(session));
+    await Storage.setItem("session", session);
     return session;
 }

@@ -8,7 +8,6 @@ import t from "../services/I18n";
 function MastoRowPoll({ poll }){
     const { theme } = useContext(ThemeContext);
     let { id, expires_at, expired, multiple, votes_count, voters_count, voted, own_votes, options, emojis } = poll;
-    console.log(poll);
     return (
         <View style={styles.container}>
             {

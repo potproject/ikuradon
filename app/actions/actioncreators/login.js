@@ -1,4 +1,3 @@
-import { AsyncStorage } from "react-native";
 import * as CONST_API from "../../constants/api";
 import Networking from "../../services/Networking";
 import * as Main from "../actiontypes/main";
@@ -98,6 +97,29 @@ export function accountChange() {
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
         }
+    };
+}
+
+export function accountChangeWithDelete(index) {
+    return async dispatch => {
+        await Session.deleteItems(index);
+        await Session.setIndex(0);
+        let { domain, access_token } = await Session.getDomainAndToken();
+        if (access_token && domain) {
+            try {
+                await dispatch({ type: Streaming.STREAM_ALLSTOP });
+                await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                NavigationService.resetAndNavigate({ name: RouterName.Main });
+                return;
+            } catch (e) {
+                //LOGIN ERROR!
+                await Session.setDefault();
+            }
+        }
+        NavigationService.resetAndNavigate({ name: RouterName.Login });
     };
 }
 
