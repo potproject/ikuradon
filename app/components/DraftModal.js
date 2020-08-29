@@ -1,16 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-import { ListItem, ThemeContext } from "react-native-elements";
+import { ListItem } from "react-native-elements";
 import { getDraftAll } from "../util/draft";
-
+  
 export default function DraftModal({ onSelect }){
-    const { theme } = useContext(ThemeContext);
     let [drafts, useDrafts] = useState([]);
-    const [load, useLoad] = useState(false);
-    if (!load && drafts.length === 0){
-        useLoad(true);
+    useEffect(() => {
         getDraftAll().then((drafts) => useDrafts(drafts));
-    }
+    }, []);
     return (
         <View style={styles.container}>
             <FlatList
