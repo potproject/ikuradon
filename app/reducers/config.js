@@ -34,7 +34,7 @@ export default function Config(state = initialState, action = {}) {
             break;
 
         case ConfigActionTypes.INVISIBLE_SETTING:
-            let mergeInvisible = Object.assign(state.invisible, action.invisible);
+            let mergeInvisible = Object.assign({}, state.invisible, action.invisible);
             newstate = Object.assign({}, state, { invisible: mergeInvisible });
             break;
 

@@ -15,6 +15,11 @@ describe("ConfigReducer", () => {
         const ex = ConfigReducer(init, { type:Config.DELETE_BACKGROUNDIMAGE });
         expect(ex).toEqual(initialState);
     });
+    it("Config.INVISIBLE_SETTING", () => {
+        const ex = ConfigReducer(initialState, { type:Config.INVISIBLE_SETTING, invisible:{ home:true } });
+        let mergeInvisible = Object.assign({}, initialState.invisible, { home:true });
+        expect(ex).toEqual(Object.assign({}, initialState, { invisible:mergeInvisible }));
+    });
     it("Config.CHANGE_THEME", () => {
         const ex = ConfigReducer(initialState, { type:Config.CHANGE_THEME, theme: "mikugreen" });
         const ac = Object.assign({}, initialState, { theme:"mikugreen" });
