@@ -14,10 +14,7 @@ export const initialState = {
         notifications: false,
     },
 
-    theme: "default",
-
-    smartMode: false,
-    timelinePerform: false,
+    theme: "default"
     //textsize,textcolor,etc...
 };
 
@@ -39,12 +36,6 @@ export default function Config(state = initialState, action = {}) {
         case ConfigActionTypes.INVISIBLE_SETTING:
             let mergeInvisible = Object.assign(state.invisible, action.invisible);
             newstate = Object.assign({}, state, { invisible: mergeInvisible });
-            break;
-
-        case ConfigActionTypes.TIMELINE_PERFORM:
-            newstate = Object.assign({}, state, {
-                timelinePerform: action.timelinePerform,
-            });
             break;
 
         case ConfigActionTypes.CHANGE_THEME:
