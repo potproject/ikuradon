@@ -2,6 +2,15 @@
 // Not Testing File.
 test.skip("skip", () => {});
 
+export const pushNotification = {
+    "mastodon.server.net:ACCEESS_TOKEN": {
+        subscribeID : "SUBSCRIBE_ID",
+        expoToken : "EXPO_TOKEN[]",
+        accessToken: "ACCEESS_TOKEN",
+        server: "mastodon.push.net"
+    }
+};
+
 export const current = {
     user_credentials: account,
     domain: "example.com",
