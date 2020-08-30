@@ -41,12 +41,6 @@ export default function Config(state = initialState, action = {}) {
             newstate = Object.assign({}, state, { invisible: mergeInvisible });
             break;
 
-        case ConfigActionTypes.SMART_MODE:
-            newstate = Object.assign({}, state, {
-                smartMode: action.smartMode,
-            });
-            break;
-
         case ConfigActionTypes.TIMELINE_PERFORM:
             newstate = Object.assign({}, state, {
                 timelinePerform: action.timelinePerform,
