@@ -21,7 +21,9 @@ export default function CurrentUser(state = initialState, action = {}) {
         case CurrentUserActionTypes.DELETED_CURRENT_USER:
             return Object.assign({}, initialState);
         case CurrentUserActionTypes.NOTIFICATION_PUSH:
-            return Object.assign({}, state, { notification_count: state.notification_count++ });
+            let newState = Object.assign({}, state);
+            newState.notification_count += 1;
+            return newState;
         case CurrentUserActionTypes.NOTIFICATION_CLEAR:
             return Object.assign({}, state, { notification_count: 0 });
         default:
