@@ -63,11 +63,6 @@ export const initialState = {
 
 export default function Main(state = initialState, action = {}) {
     switch (action.type) {
-        case MainActionTypes.GETLOCALDATA_MASTOLIST:
-            if (action.data === null) {
-                return state;
-            }
-            return Object.assign({}, action.data);
         case MainActionTypes.NEW_UPDATE_MASTOLIST:
         case MainActionTypes.OLD_UPDATE_MASTOLIST:
             let reducerType = action.reducerType;
