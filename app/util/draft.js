@@ -6,7 +6,7 @@ export async function getDraft(index, deleting = true){
     if (draft === null){
         return "";
     }
-    if (typeof draft[index].text !== "string"){
+    if (typeof draft[index] !== "object" || typeof draft[index].text !== "string"){
         return "";
     }
     if (deleting){
