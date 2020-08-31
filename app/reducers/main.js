@@ -185,7 +185,8 @@ function changeItem(type, state, id, bool) {
         default:
             return state;
     }
-    let statecopy = Object.assign({}, state);
+    // Deep Copy
+    let statecopy = JSON.parse(JSON.stringify(state));
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {
