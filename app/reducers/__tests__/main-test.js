@@ -43,6 +43,68 @@ describe("MainReducer", () => {
         let ac = createStatusToStateMock(status, "home", new Date(2020, 8, 31, 10, 20, 30), 1);
         expect(ex).toEqual(ac);
     });
+    it("Main.NEW_UPDATE_MASTOLIST with clear", () => {
+        advanceTo(new Date(2020, 8, 31, 10, 20, 30));
+        const ex = MainReducer(initialState, { 
+            type: Main.NEW_UPDATE_MASTOLIST,
+            data: [status],
+            reducerType: "home",
+            clear: true,
+            streaming: false
+        });
+        let ac = createStatusToStateMock(status, "home", new Date(2020, 8, 31, 10, 20, 30), 0);
+        expect(ex).toEqual(ac);
+    });
+    it("Main.REFRESHING_MASTOLIST", () => {
+        const ex = MainReducer(initialState, { 
+            type: Main.REFRESHING_MASTOLIST,
+            reducerType: "home"
+        });
+        let ac = JSON.parse(JSON.stringify(initialState));
+        ac.home.refreshing = true;
+        ac.home.loading = true;
+        expect(ex).toEqual(ac);
+    });
+    it("Main.STOP_REFRESHING_MASTOLIST", () => {
+        let init = JSON.parse(JSON.stringify(initialState));
+        init.home.refreshing = true;
+        const ex = MainReducer(init, { 
+            type: Main.STOP_REFRESHING_MASTOLIST,
+            reducerType: "home"
+        });
+        let ac = initialState;
+        expect(ex).toEqual(ac);
+    });
+    it("Main.LOADING_MASTOLIST", () => {
+        const ex = MainReducer(initialState, { 
+            type: Main.LOADING_MASTOLIST,
+            reducerType: "home"
+        });
+        let ac = JSON.parse(JSON.stringify(initialState));
+        ac.home.loading = true;
+        expect(ex).toEqual(ac);
+    });
+    it("Main.STOP_LOADING_MASTOLIST", () => {
+        let init = JSON.parse(JSON.stringify(initialState));
+        init.home.loading = true;
+        const ex = MainReducer(init, { 
+            type: Main.STOP_LOADING_MASTOLIST,
+            reducerType: "home"
+        });
+        let ac = initialState;
+        expect(ex).toEqual(ac);
+    });
+    it("Main.HIDE_MASTOLIST", () => {
+        advanceTo(new Date(2020, 8, 31, 10, 20, 30));
+        let init = createStatusToStateMock(status, "home", new Date(2020, 8, 31, 10, 20, 30), 1);
+        const ex = MainReducer(init, { 
+            type: Main.HIDE_MASTOLIST,
+            id: "103270115826048975"
+        });
+        let ac = JSON.parse(JSON.stringify(init));
+        ac.home.data = [];
+        expect(ex).toEqual(ac);
+    });
     it("Main.ALLCLEAR_MASTOLIST", () => {
         let init = createStatusToStateMock(status, "home", new Date(2020, 8, 31, 10, 20, 30), 1);
         const ex = MainReducer(init, {
