@@ -1,10 +1,11 @@
 import { getEmojis } from "../../util/emojis";
-import { emojis } from "./example";
+import ExampleEmojis from "../../example/emojis";
 import Networking from "../../services/Networking";
 jest.mock("../../services/Networking");
 
 describe("Util/Emojis", () => {
     it("getEmojis", async () => {
+        const emojis = ExampleEmojis();
         Networking.fetch.mockImplementation(() => emojis);
         expect(await getEmojis("mastodon.test.com")).toEqual({ emojis: emojis, error: null });
         Networking.fetch.mockClear();
