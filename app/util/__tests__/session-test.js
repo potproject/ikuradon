@@ -42,48 +42,57 @@ describe("Util/Session", () => {
         });
         getItem.mockClear();
     });
-    it("Add", async done => {
+    it("Add", async () => {
         getItem.mockImplementation(() => ({ "accounts": [], "login_index": -1 }));
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
-            done();
         });
         const { domain, access_token, username, avatar } = ExampleSession();
         await add(domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
-    it("Add nosession", async done => {
+    it("Add nosession", async () => {
         getItem.mockImplementation(() => null);
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
-            done();
         });
         const { domain, access_token, username, avatar } = ExampleSession();
         await add(domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
-    it("Add exists", async done => {
+    it("Add exists seperate", async () => {
+        let account = ExampleSession();
+        account.access_token = "ACCEESS_TOKEN_SEPERATE";
+        getItem.mockImplementation(() => ({ "accounts": [account], "login_index": -1 }));
+        setItem.mockImplementation((k, v) => {
+            expect(CONST_Storage.Session).toEqual(k);
+            expect({ "accounts": [account, ExampleSession()], "login_index": 1 }).toEqual(v);
+        });
+        const { domain, access_token, username, avatar } = ExampleSession();
+        await add(domain, access_token, username, avatar);
+        getItem.mockClear();
+        setItem.mockClear();
+    });
+    it("Add exists", async () => {
         getItem.mockImplementation(() => ({ "accounts": [ExampleSession()], "login_index": -1 }));
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
-            done();
         });
         const { domain, access_token, username, avatar } = ExampleSession();
         await add(domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
-    it("init", async done => {
+    it("init", async () => {
         getItem.mockImplementation(() => null);
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [], "login_index": -1 }).toEqual(v);
-            done();
         });
         expect(await init()).toEqual({ "accounts": [], "login_index": -1 });
         getItem.mockClear();
@@ -94,12 +103,11 @@ describe("Util/Session", () => {
         expect(await init()).toEqual({ "accounts": [ExampleSession()], "login_index": 0 });
         getItem.mockClear();
     });
-    it("deleteCurrentItems", async done => {
+    it("deleteCurrentItems", async () => {
         getItem.mockImplementation(() => ({ "accounts": [ExampleSession()], "login_index": 0 }));
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [], "login_index": -1 }).toEqual(v);
-            done();
         });
         await deleteCurrentItems();
         getItem.mockClear();
@@ -110,15 +118,19 @@ describe("Util/Session", () => {
         await deleteCurrentItems();
         getItem.mockClear();
     });
-    it("deleteItems", async done => {
+    it("deleteItems", async () => {
         getItem.mockImplementation(() => ({ "accounts": [ExampleSession()], "login_index": 0 }));
         setItem.mockImplementation((k, v) => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [], "login_index": -1 }).toEqual(v);
-            done();
         });
         await deleteItems(0);
         getItem.mockClear();
         setItem.mockClear();
+    });
+    it("deleteItems not found", async () => {
+        getItem.mockImplementation(() => ({ "accounts": [ExampleSession()], "login_index": 0 }));
+        await deleteItems(-1);
+        getItem.mockClear();
     });
 });
