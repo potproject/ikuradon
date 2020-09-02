@@ -37,7 +37,7 @@ export default class Networking {
             try {
                 let baseurl = "https://" + domain + "";
                 let api = CONST_API.UPLOAD_POST_MEDIA;
-                let headers = Object.assign(this.createHeaders(access_token), { "content-type": "multipart/form-data" });
+                let headers = Object.assign(this.createHeaders(access_token), { "Content-Type": "multipart/form-data" });
                 const data = new FormData();
                 data.append("file", {
                     uri: file.uri,
