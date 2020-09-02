@@ -24,9 +24,6 @@ export default {
     setting_visible_federal: "連合タイムラインを非表示",
     setting_visible_notifications: "通知タイムラインを非表示",
 
-    setting_smartmode: "スマートモードを有効にする",
-    setting_timeline_perform: "タイムラインの最適化を行う(実験的)",
-
     setting_instance_uri: "URL",
     setting_instance_version: "バージョン",
     setting_instance_editlink: "プロフィールを編集",

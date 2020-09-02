@@ -24,7 +24,7 @@ export async function upload(openType = "library") {
         let { domain, access_token } = await Session.getDomainAndToken();
         //アップロード中とかほしいね
         let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg", MEDIA_UPLOAD_TIMEOUT);
-        if (!res && !res.id) {
+        if (!res || !res.id) {
             throw new Error("ID Unknown Error!");
         }
         return res;

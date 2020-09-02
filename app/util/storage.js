@@ -16,7 +16,6 @@ export async function getItem(key){
  */
 export async function setItem(key, value){
     await AsyncStorage.setItem(key, JSON.stringify(value));
-    return;
 }
 
 /**
@@ -25,5 +24,4 @@ export async function setItem(key, value){
  */
 export async function removeItem(key){
     await AsyncStorage.removeItem(key);
-    return;
 }

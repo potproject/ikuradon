@@ -1415,6 +1415,21 @@ exports[`<TimelineCenterHeader /> 1`] = `
       }
     }
   >
+    <Image
+      source={
+        Object {
+          "uri": "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+        }
+      }
+      style={
+        Object {
+          "borderRadius": 15,
+          "height": 30,
+          "marginRight": 5,
+          "width": 30,
+        }
+      }
+    />
     <Text
       ellipsizeMode="tail"
       numberOfLines={1}
@@ -1428,6 +1443,7 @@ exports[`<TimelineCenterHeader /> 1`] = `
         }
       }
     >
+      noiob
       @
       example.com
     </Text>

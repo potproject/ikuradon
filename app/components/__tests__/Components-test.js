@@ -25,7 +25,11 @@ import Search from "../Search";
 import SearchList from "../SearchList";
 
 import * as searchConst from "../../constants/search";
-import * as Example from "./example";
+
+import ExampleCurrent from "../../example/current";
+import ExampleStatus from "../../example/status";
+import ExamplePoll from "../../example/poll";
+import ExampleMediaAttachment from "../../example/mediaAttachment";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
@@ -72,8 +76,8 @@ it("<MastoRow />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRow
-                item={Example.status}
-                current={Example.current} 
+                item={ExampleStatus()}
+                current={ExampleCurrent()}
                 actions={{
                     ReplyAction: () => null,
                     BoostAction: () => null,
@@ -95,13 +99,13 @@ it("<MastoRowBody />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRowBody
-                content={Example.status.content}
+                content={ExampleStatus().content}
                 linkStyle={{ color: theme.customColors.link }} 
                 style={{}} 
                 sensitiveButtonColor={theme.colors.primary}
-                emojis={Example.status.emojis} 
-                sensitive={Example.status.sensitive}
-                spoilerText={Example.status.spoiler_text} />
+                emojis={ExampleStatus().emojis} 
+                sensitive={ExampleStatus().sensitive}
+                spoilerText={ExampleStatus().spoiler_text} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
@@ -110,7 +114,7 @@ it("<MastoRowBody />", () => {
 it("<MastoRowImage />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
-            <MastoRowImage mediaAttachments={[Example.mediaAttachment]} sensitive={false} openImageViewer={(a, i)=> null} closeImageViewer={(a, i)=> null} />
+            <MastoRowImage mediaAttachments={[ExampleMediaAttachment()]} sensitive={false} openImageViewer={(a, i)=> null} closeImageViewer={(a, i)=> null} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
@@ -119,7 +123,7 @@ it("<MastoRowImage />", () => {
 it("<MastoRowPoll />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
-            <MastoRowPoll poll={Example.poll} />
+            <MastoRowPoll poll={ExamplePoll()} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
@@ -164,7 +168,7 @@ it("<SearchList />", () => {
 it("<TimelineCenterHeader />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
-            <TimelineCenterHeader fixedTitle={false} onPress={() => null} current={Example.current}/>
+            <TimelineCenterHeader fixedTitle={false} onPress={() => null} current={ExampleCurrent()}/>
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();

@@ -4,13 +4,15 @@ import renderer from "react-test-renderer";
 import theme from "../../themes/default";
 import { ThemeContext } from "react-native-elements";
 
-import * as Example from "./example";
 import Action from "../item/Action";
 import Bookmark from "../item/Bookmark";
 import Boost from "../item/Boost";
 import Favourite from "../item/Favourite";
 import Follow from "../item/Follow";
 import Reply from "../item/Reply";
+
+import ExampleStatus from "../../example/status";
+import ExampleAccount from "../../example/account";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
@@ -19,15 +21,15 @@ it("<Action />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Action
-                id={Example.status.id}
-                tootid={Example.status.id}
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
                 style={{}}
-                url={Example.status.url}
-                account_url={Example.account.url}
-                user={Example.account.display_name}
-                acct={Example.account.acct}
-                image={Example.account.avatar}
-                body={Example.status.content}
+                url={ExampleStatus().url}
+                account_url={ExampleAccount().url}
+                user={ExampleAccount().display_name}
+                acct={ExampleAccount().acct}
+                image={ExampleAccount().avatar}
+                body={ExampleAccount().content}
                 myself={true}
                 onReply={() => null}
                 onHide={() => null}
@@ -42,8 +44,8 @@ it("<Bookmark />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Bookmark
-                id={Example.status.id}
-                tootid={Example.status.id}
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
                 bookmarked={true}
                 style={{}}
                 onBookmark={() => null}
@@ -57,8 +59,8 @@ it("<Boost />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Boost
-                id={Example.status.id}
-                tootid={Example.status.id}
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
                 reblogged={true}
                 count={1}
                 style={{}}
@@ -74,8 +76,8 @@ it("<Favourite />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Favourite
-                id={Example.status.id}
-                tootid={Example.status.id}
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
                 favourited={true}
                 count={2}
                 style={{}}
@@ -90,7 +92,7 @@ it("<Follow />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Follow
-                id={Example.status.id}
+                id={ExampleStatus().id}
                 style={{}}
                 onFollow={() => null}
             />
@@ -103,12 +105,12 @@ it("<Reply />", () => {
     const result = renderer.create(
         <ThemeContext.Provider value={{ theme }}>
             <Reply
-                id={Example.status.id}
-                tootid={Example.status.id}
-                user={Example.account.display_name}
-                acct={Example.account.acct}
-                image={Example.account.avatar}
-                body={Example.status.content}
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
+                user={ExampleAccount().display_name}
+                acct={ExampleAccount().acct}
+                image={ExampleAccount().avatar}
+                body={ExampleStatus().content}
                 style={{}}
                 onReply={() => null}
             />

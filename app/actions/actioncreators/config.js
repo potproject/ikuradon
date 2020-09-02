@@ -49,20 +49,6 @@ export function setInvisibleTimeline(type, value) {
     };
 }
 
-export function setSmartMode(value) {
-    return async dispatch => {
-        dispatch({ type: Config.SMART_MODE, smartMode: value });
-        NavigationService.resetAndNavigate({ name: RouterName.Main });
-    };
-}
-
-export function setTimelinePerform(value) {
-    return async dispatch => {
-        dispatch({ type: Config.TIMELINE_PERFORM, timelinePerform: value });
-        NavigationService.resetAndNavigate({ name: RouterName.Main });
-    };
-}
-
 export function setTheme(value){
     return { type: Config.CHANGE_THEME, theme: value }; 
 }

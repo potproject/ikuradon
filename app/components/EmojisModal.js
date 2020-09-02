@@ -1,23 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { ThemeContext, Image } from "react-native-elements";
+import { Image } from "react-native-elements";
 import { getEmojis } from "../util/emojis";
   
 export default function EmojisModal({ current, onSelect }){
-    const { theme } = useContext(ThemeContext);
     let [emojis, useEmojis] = useState([]);
-    const [load, useLoad] = useState(false);
-    if (!load && emojis.length === 0){
-        useLoad(true);
+    useEffect(() => {
         getEmojis(current.domain).then(({ emojis, error }) => {
             if (error === null){
                 useEmojis(emojis);
-            } else {
-                useLoad(false);
             }
-        }
-        );
-    }
+        });
+    }, []);
     return (
         <View style={styles.container}>
             <FlatList

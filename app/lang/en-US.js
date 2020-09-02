@@ -24,9 +24,6 @@ export default {
     setting_visible_federal: "Do not show Federal Timeline",
     setting_visible_notifications: "Do not show Notifications Timeline",
 
-    setting_smartmode: "Enabled SmartMode",
-    setting_timeline_perform: "Optimized the timeline(Experimental)",
-
     setting_instance_uri: "URL",
     setting_instance_version: "Mastodon Version",
     setting_instance_editlink: "Edit profile",

@@ -63,11 +63,6 @@ export const initialState = {
 
 export default function Main(state = initialState, action = {}) {
     switch (action.type) {
-        case MainActionTypes.GETLOCALDATA_MASTOLIST:
-            if (action.data === null) {
-                return state;
-            }
-            return Object.assign({}, action.data);
         case MainActionTypes.NEW_UPDATE_MASTOLIST:
         case MainActionTypes.OLD_UPDATE_MASTOLIST:
             let reducerType = action.reducerType;
@@ -190,7 +185,8 @@ function changeItem(type, state, id, bool) {
         default:
             return state;
     }
-    let statecopy = Object.assign({}, state);
+    // Deep Copy
+    let statecopy = JSON.parse(JSON.stringify(state));
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {
