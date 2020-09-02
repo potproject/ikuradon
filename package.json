@@ -19,7 +19,8 @@
         "coveragePathIgnorePatterns": [
             "node_modules",
             "app/lang",
-            "app/themes"
+            "app/themes",
+            "app/example"
         ],
         "setupFiles": ["jest-date-mock"]
     },
