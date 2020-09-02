@@ -40,11 +40,11 @@ export async function add(domain, access_token, username, avatar) {
     let session = await Storage.getItem(CONST_Storage.Session);
     let existsCheck = -1;
     if (!session || !session.accounts) {
-        deleteAll();
+        session = { login_index: -1, accounts: [] };
     }
     for (let accountsIndex in session.accounts) {
-        if (session.accounts[accountsIndex] === access_token) {
-            existsCheck = accountsIndex;
+        if (session.accounts[accountsIndex].access_token === access_token) {
+            existsCheck = Number(accountsIndex);
             break;
         }
     }
@@ -77,8 +77,8 @@ export async function deleteCurrentItems() {
     if (session.login_index > -1) {
         session.accounts.splice(session.login_index, 1);
         session.login_index = -1;
+        await Storage.setItem("session", session);
     }
-    await Storage.setItem("session", session);
 }
 
 export async function deleteItems(index) {
@@ -86,8 +86,8 @@ export async function deleteItems(index) {
     if (index > -1) {
         session.accounts.splice(index, 1);
         session.login_index = -1;
+        await Storage.setItem("session", session);
     }
-    await Storage.setItem("session", session);
 }
 
 export async function deleteAll() {
