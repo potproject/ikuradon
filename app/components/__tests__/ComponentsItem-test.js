@@ -1,5 +1,5 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render, fireEvent } from "@testing-library/react-native";
 
 import theme from "../../themes/default";
 import { ThemeContext } from "react-native-elements";
@@ -18,7 +18,7 @@ jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
 
 it("<Action />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Action
                 id={ExampleStatus().id}
@@ -41,7 +41,7 @@ it("<Action />", () => {
 });
 
 it("<Bookmark />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Bookmark
                 id={ExampleStatus().id}
@@ -56,7 +56,7 @@ it("<Bookmark />", () => {
 });
 
 it("<Boost />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Boost
                 id={ExampleStatus().id}
@@ -73,7 +73,7 @@ it("<Boost />", () => {
 });
 
 it("<Favourite />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Favourite
                 id={ExampleStatus().id}
@@ -89,7 +89,7 @@ it("<Favourite />", () => {
 });
 
 it("<Follow />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Follow
                 id={ExampleStatus().id}
@@ -102,7 +102,7 @@ it("<Follow />", () => {
 });
 
 it("<Reply />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Reply
                 id={ExampleStatus().id}

@@ -1,11 +1,9 @@
 import React from "react";
-import renderer from "react-test-renderer";
+import { render, fireEvent, waitForElement  } from "@testing-library/react-native";
 
 import theme from "../../themes/default";
 import { ThemeContext } from "react-native-elements";
 
-import DraftModal from "../DraftModal";
-import EmojisModal from "../EmojisModal";
 import MastoRowBody from "../MastoRowBody";
 import MastoRow from "../MastoRow";
 import ItemTabBar from "../ItemTabBar";
@@ -34,28 +32,8 @@ import ExampleMediaAttachment from "../../example/mediaAttachment";
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
 
-//TODO: getDraftAll mock
-//it("<DraftModal />", () => {
-//    const result = renderer.create(
-//        <ThemeContext.Provider value={{ theme }}>
-//            <DraftModal onSelect={(s)=>null} />
-//        </ThemeContext.Provider>
-//    );
-//    expect(result).toMatchSnapshot();
-//});
-
-//TODO: getEmojis mock
-//it("<EmojisModal />", () => {
-//    const result = renderer.create(
-//        <ThemeContext.Provider value={{ theme }}>
-//            <EmojisModal current={Example.current} onSelect={(s)=>null} />
-//        </ThemeContext.Provider>
-//    );
-//    expect(result).toMatchSnapshot();
-//});
-
 it("<ItemTabBar />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <ItemTabBar name={"home"} badgeCount={1} streamBadge={false} color={"#000000"} size={26} />
         </ThemeContext.Provider>
@@ -73,7 +51,7 @@ it("<ItemTabBar />", () => {
 //});
 
 it("<MastoRow />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRow
                 item={ExampleStatus()}
@@ -96,7 +74,7 @@ it("<MastoRow />", () => {
 });
 
 it("<MastoRowBody />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRowBody
                 content={ExampleStatus().content}
@@ -112,7 +90,7 @@ it("<MastoRowBody />", () => {
 });
 
 it("<MastoRowImage />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRowImage mediaAttachments={[ExampleMediaAttachment()]} sensitive={false} openImageViewer={(a, i)=> null} closeImageViewer={(a, i)=> null} />
         </ThemeContext.Provider>
@@ -121,7 +99,7 @@ it("<MastoRowImage />", () => {
 });
 
 it("<MastoRowPoll />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <MastoRowPoll poll={ExamplePoll()} />
         </ThemeContext.Provider>
@@ -148,7 +126,7 @@ it("<MastoRowPoll />", () => {
 //});
 
 it("<Search />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <Search />
         </ThemeContext.Provider>
@@ -157,7 +135,7 @@ it("<Search />", () => {
 });
 
 it("<SearchList />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <SearchList type={searchConst.TYPE_ACCOUNTS} data={[]} />
         </ThemeContext.Provider>
@@ -166,7 +144,7 @@ it("<SearchList />", () => {
 });
 
 it("<TimelineCenterHeader />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TimelineCenterHeader fixedTitle={false} onPress={() => null} current={ExampleCurrent()}/>
         </ThemeContext.Provider>
@@ -175,7 +153,7 @@ it("<TimelineCenterHeader />", () => {
 });
 
 it("<TimelineLeftHeader />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TimelineLeftHeader isBack={true} onPress={() => null} />
         </ThemeContext.Provider>
@@ -196,7 +174,7 @@ it("<TimelineLeftHeader />", () => {
 //});
 
 it("<TimelineTootButton />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TimelineTootButton 
                 onPress={() => null}
@@ -209,7 +187,7 @@ it("<TimelineTootButton />", () => {
 });
 
 it("<TootButton />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TootButton onPress={()=>null} />
         </ThemeContext.Provider>
@@ -218,7 +196,7 @@ it("<TootButton />", () => {
 });
 
 it("<TootImageClip />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TootImageClip callbackMediaAttachments={()=>null} />
         </ThemeContext.Provider>
@@ -237,7 +215,7 @@ it("<TootImageClip />", () => {
 //});
 
 it("<VisibilityModal />", () => {
-    const result = renderer.create(
+    const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <VisibilityModal onSelect={()=>null} />
         </ThemeContext.Provider>
