@@ -64,17 +64,3 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         }
     };
 }
-
-//未使用
-export function getCurrentUser() {
-    return async dispatch => {
-        try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
-            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-        } catch (e) {
-            DropDownHolder.error(t("messages.network_error"), e.message);
-        }
-    };
-}

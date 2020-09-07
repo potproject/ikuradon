@@ -31,22 +31,23 @@ const fileDataMockCancelled = {
 };
 
 describe("Action/Config", () => {
-    it("allClear", async () => {
+    it("allClear", async done => {
         let action = allClear();
         let call = 0;
         await action(({ type }) => {
             call === 0 && expect(type).toBe(Config.CONFIG_RESET);
             call === 1 && expect(type).toBe(Streaming.STREAM_ALLSTOP);
-            call === 2 && expect(type).toBe(Main.ALLCLEAR_MASTOLIST);
+            call === 2 && expect(type).toBe(Main.ALLCLEAR_MASTOLIST) || done();
             call++;
         });
     });
-    it("setBackground", async () => {
+    it("setBackground", async done => {
         ImagePicker.launchImageLibraryAsync.mockImplementation(() => fileDataMock);
         let action = setBackground();
         await action(({ type, backgroundImage }) => {
             expect(type).toBe(Config.SET_BACKGROUNDIMAGE);
             expect(backgroundImage).toBe(fileDataMock.uri);
+            done();
         });
         ImagePicker.launchImageLibraryAsync.mockClear();
     });

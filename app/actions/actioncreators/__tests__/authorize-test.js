@@ -14,7 +14,7 @@ jest.mock("../../../services/DropDownHolder", () => ({
 }));
 
 describe("Action/Authorize", () => {
-    it("getAccessTokenWithHomeAction", async (done) => {
+    it("getAccessTokenWithHomeAction", async done => {
         let domain = "example.com";
         let client_id = "CLIENT_ID";
         let client_secret = "CLIENT_SECRET";
@@ -35,6 +35,7 @@ describe("Action/Authorize", () => {
             expect(instance).toEqual(ExampleInstance());
             done();
         });
+        Networking.fetch.mockClear();
     });
     it("getAccessTokenWithHomeAction Fail", async done => {
         let domain = "example.com";
@@ -52,5 +53,7 @@ describe("Action/Authorize", () => {
         });
         let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
         await action();
+        Networking.fetch.mockClear();
+        DropDownHolder.error.mockClear();
     });
 });
