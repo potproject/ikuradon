@@ -37,7 +37,7 @@ describe("Action/Config", () => {
         await action(({ type }) => {
             call === 0 && expect(type).toBe(Config.CONFIG_RESET);
             call === 1 && expect(type).toBe(Streaming.STREAM_ALLSTOP);
-            call === 2 && expect(type).toBe(Main.ALLCLEAR_MASTOLIST) || done();
+            call === 2 && (expect(type).toBe(Main.ALLCLEAR_MASTOLIST) || done());
             call++;
         });
     });

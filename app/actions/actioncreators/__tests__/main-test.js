@@ -78,7 +78,7 @@ describe("Action/Main", () => {
         let call = 0;
         action((callback) => {
             call === 0 && expect(callback).toEqual({ type: Main.REFRESHING_MASTOLIST, reducerType: "main" });
-            call === 1 && expect(callback).toEqual({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType: "main" }) || done();
+            call === 1 && (expect(callback).toEqual({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType: "main" }) || done());
             call++;
         });
         Session.getDomainAndToken.mockClear();
@@ -116,7 +116,7 @@ describe("Action/Main", () => {
         let call = 0;
         action((callback) => {
             call === 0 && expect(callback).toEqual({ type: Main.LOADING_MASTOLIST, reducerType: "main" });
-            call === 1 && expect(callback).toEqual({ type: Main.STOP_LOADING_MASTOLIST, reducerType: "main" }) || done();
+            call === 1 && (expect(callback).toEqual({ type: Main.STOP_LOADING_MASTOLIST, reducerType: "main" }) || done());
             call++;
         });
         Session.getDomainAndToken.mockClear();

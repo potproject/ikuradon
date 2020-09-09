@@ -1,4 +1,4 @@
-import { login, loginSelectAccounts } from "../login";
+import { login, loginSelectAccounts, loginWithAccessToken, logout, accountChange, accountChangeWithDelete } from "../login";
 
 import * as Session from "../../../util/session";
 
@@ -90,13 +90,13 @@ describe("Action/Login", () => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
                 call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
-                call === 2 && expect(callback).toEqual({ 
+                call === 2 && (expect(callback).toEqual({ 
                     type: CurrentUser.UPDATE_CURRENT_USER,
                     user_credentials: ExampleAccount(),
                     domain: domain,
                     access_token: access_token,
                     instance: ExampleInstance()
-                }) || done();
+                }) || done());
                 call++;
             } catch (e){
                 done(e);
@@ -128,5 +128,195 @@ describe("Action/Login", () => {
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
         NavigationService.resetAndNavigate.mockClear();
+    });
+    it("loginSelectAccounts notfound", done => {
+        Session.getDomainAndToken.mockImplementation(()=> ({ domain:null, access_token:null }));
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Login });
+            done();
+        });
+        let action = loginSelectAccounts(0);
+        action(() => null);
+        Session.getDomainAndToken.mockClear();
+    });
+    it("loginWithAccessToken", done => {
+        Networking.fetch
+            // CONST_API.GET_CURRENT_USER
+            .mockImplementationOnce(() => ExampleAccount())
+            // CONST_API.GET_INSTANCE
+            .mockImplementationOnce(() => ExampleInstance());
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Main });
+            done();
+        });
+        let { domain, access_token } = ExampleSession();
+        let action = loginWithAccessToken(domain, access_token);
+        let call = 0;
+        action((callback) => {
+            try {
+                call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
+                call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
+                call === 2 && expect(callback).toEqual({ 
+                    type: CurrentUser.UPDATE_CURRENT_USER,
+                    user_credentials: ExampleAccount(),
+                    domain: domain,
+                    access_token: access_token,
+                    instance: ExampleInstance()
+                });
+                call++;
+            } catch (e){
+                done(e);
+            }
+        });
+        Networking.fetch.mockClear();
+        NavigationService.resetAndNavigate.mockClear();
+    });
+    it("loginWithAccessToken Fail", done => {
+        Networking.fetch.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        DropDownHolder.error.mockImplementation((title, message) => {
+            expect(message).toEqual("Network Error");
+            done();
+        });
+        let { domain, access_token } = ExampleSession();
+        let action = loginWithAccessToken(domain, access_token);
+        action(() => null);
+        Networking.fetch.mockClear();
+        DropDownHolder.error.mockClear();
+    });
+    it("logout", done => {
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Login });
+            done();
+        });
+        let action = logout();
+        let call = 0;
+        action((callback) => {
+            try {
+                call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
+                call === 1 && expect(callback).toEqual({ type: CurrentUser.DELETED_CURRENT_USER });
+                call === 2 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
+                call++;
+            } catch (e){
+                done(e);
+            }
+        });
+        NavigationService.resetAndNavigate.mockClear();
+    });
+    it("logout Fail", done => {
+        Session.deleteCurrentItems.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        DropDownHolder.error.mockImplementation((title, message) => {
+            expect(message).toEqual("Network Error");
+            done();
+        });
+        let action = logout();
+        action(() => null);
+        Session.deleteCurrentItems.mockClear();
+        DropDownHolder.error.mockClear();
+    });
+    it("accountChange", done => {
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Login });
+            done();
+        });
+        let action = accountChange();
+        let call = 0;
+        action((callback) => {
+            try {
+                call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
+                call === 1 && expect(callback).toEqual({ type: CurrentUser.DELETED_CURRENT_USER });
+                call === 2 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
+                call++;
+            } catch (e){
+                done(e);
+            }
+        });
+        NavigationService.resetAndNavigate.mockClear();
+    });
+    it("accountChange fail", done => {
+        Session.setDefault.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        DropDownHolder.error.mockImplementation((title, message) => {
+            expect(message).toEqual("Network Error");
+            done();
+        });
+        let action = accountChange();
+        action(() => null);
+        Session.setDefault.mockClear();
+        DropDownHolder.error.mockClear();
+    });
+    it("accountChangeWithDelete", done => {
+        Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
+        Networking.fetch
+            // CONST_API.GET_CURRENT_USER
+            .mockImplementationOnce(() => ExampleAccount())
+            // CONST_API.GET_INSTANCE
+            .mockImplementationOnce(() => ExampleInstance());
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Main });
+            done();
+        });
+        let { domain, access_token } = ExampleSession();
+        let action = accountChangeWithDelete(0);
+        let call = 0;
+        action((callback) => {
+            try {
+                call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
+                call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
+                call === 2 && expect(callback).toEqual({ 
+                    type: CurrentUser.UPDATE_CURRENT_USER,
+                    user_credentials: ExampleAccount(),
+                    domain: domain,
+                    access_token: access_token,
+                    instance: ExampleInstance()
+                });
+                call++;
+            } catch (e){
+                done(e);
+            }
+        });
+        Session.getDomainAndToken.mockClear();
+        Networking.fetch.mockClear();
+        NavigationService.resetAndNavigate.mockClear();
+    });
+    it("accountChangeWithDelete fail", done => {
+        Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
+        Networking.fetch.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        Session.setDefault.mockImplementation(() => null);
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Login });
+            done();
+        });
+        let action = accountChangeWithDelete(0);
+        let call = 0;
+        action((callback) => {
+            try {
+                call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
+                call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
+                call++;
+            } catch (e){
+                done(e);
+            }
+        });
+        Session.getDomainAndToken.mockClear();
+        Session.setDefault.mockClear();
+        Networking.fetch.mockClear();
+        NavigationService.resetAndNavigate.mockClear();
+    });
+    it("accountChangeWithDelete notfound", done => {
+        Session.getDomainAndToken.mockImplementation(()=> ({ domain:null, access_token:null }));
+        NavigationService.resetAndNavigate.mockImplementation((callback) => {
+            expect(callback).toEqual({ name: RouterName.Login });
+            done();
+        });
+        let action = accountChangeWithDelete(0);
+        action(() => null);
+        Session.getDomainAndToken.mockClear();
     });
 });
