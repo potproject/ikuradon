@@ -40,7 +40,6 @@ export function appInit(updateTheme) {
 
         //Session init
         await Session.init();
-
         
         //ここにトークンが生きてるか判断させる
         let { domain, access_token } = await Session.getDomainAndToken();

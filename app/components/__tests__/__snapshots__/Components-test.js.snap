@@ -1445,7 +1445,7 @@ exports[`<TimelineCenterHeader /> 1`] = `
     >
       noiob
       @
-      example.com
+      mastodon.server.net
     </Text>
   </View>
 </View>
