@@ -30,7 +30,7 @@ export function subscribe(domain, accessToken, server = DefaultPushServer){
                 });
                 DropDownHolder.success("Notification Setting Success!", "Subscribed to " + endpoints); 
             } else {
-                throw "Invalid Server Param.";
+                throw new Error("Invalid Server Param.");
             }
         } catch (e){
             DropDownHolder.error("Notification Setting Error!", e.message); 
