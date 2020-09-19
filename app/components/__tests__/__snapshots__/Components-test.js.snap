@@ -1451,7 +1451,38 @@ exports[`<TimelineCenterHeader /> 1`] = `
 </View>
 `;
 
-exports[`<TimelineLeftHeader /> 1`] = `
+exports[`<TimelineLeftHeader isBack={false} /> 1`] = `
+<View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+        "paddingBottom": 4,
+        "paddingLeft": 12,
+        "paddingRight": 4,
+        "paddingTop": 4,
+      }
+    }
+  >
+    <FontAwesome
+      color="#FFFFFF"
+      name="bars"
+      size={20}
+    />
+  </View>
+</View>
+`;
+
+exports[`<TimelineLeftHeader isBack={true} /> 1`] = `
 <View>
   <View
     accessible={true}

@@ -152,10 +152,19 @@ it("<TimelineCenterHeader />", () => {
     expect(result).toMatchSnapshot();
 });
 
-it("<TimelineLeftHeader />", () => {
+it("<TimelineLeftHeader isBack={true} />", () => {
     const result = render(
         <ThemeContext.Provider value={{ theme }}>
             <TimelineLeftHeader isBack={true} onPress={() => null} />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
+
+it("<TimelineLeftHeader isBack={false} />", () => {
+    const result = render(
+        <ThemeContext.Provider value={{ theme }}>
+            <TimelineLeftHeader isBack={false} onPress={() => null} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();
