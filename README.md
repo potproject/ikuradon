@@ -10,7 +10,12 @@ Mastodon client App for React Native (Expo)
 
 マストドン用クライアントの React Native アプリです。
 
-## インストール方法
+## ScreenShots
+
+
+<img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_timeline.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_notifications.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_toot.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_drawer.jpg?raw=true">
+
+## install Guide
 
 App Store、Google Play を通さない Expo アプリとして配布されています。
 
@@ -57,13 +62,6 @@ expo publish
 -   React Native Web Support
 -   Misskey Support
 -   Movie Support
-
-## ScreenShots
-
-|                                                                                               |                                                                                                    |
-| --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_timeline.jpg?raw=true) | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_notifications.jpg?raw=true) |
-| ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_toot.jpg?raw=true)     | ![](https://github.com/potproject/ikuradon/blob/master/screenshots/ios_drawer.jpg?raw=true)        |
 
 ## Development
 
