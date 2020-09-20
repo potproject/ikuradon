@@ -90,8 +90,8 @@ export function accountChange() {
         try {
             await Session.setDefault();
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
-            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             await dispatch({ type: CurrentUser.DELETED_CURRENT_USER });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             DropDownHolder.success(t("login_success"));
             NavigationService.resetAndNavigate({ name: RouterName.Login });
         } catch (e) {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import { ListItem, ThemeContext } from "react-native-elements";
 import t from "../services/I18n";
@@ -8,14 +8,12 @@ import * as Session from "../util/session";
 export default function UserList({ current, onSelect, onCancel }){
     const { theme } = useContext(ThemeContext);
     const [ list, useList ] = useState([]);
-    const [ index, useIndex ] = useState(-1);
     const { domain, access_token } = current;
-    if (list.length === 0){
-        Session.getAll().then(({ accounts, login_index }) => {
+    useEffect(() => {
+        Session.getAll().then(({ accounts }) => {
             useList(accounts);
-            useIndex(login_index);
         });
-    }
+    }, []);
     return (
         <View style={styles.container}>
             {
