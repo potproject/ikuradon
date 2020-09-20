@@ -9,7 +9,6 @@ import ExampleSession from "../../../example/session";
 
 import * as CONST_API from "../../../constants/api";
 import * as Toot from "../../actiontypes/toot";
-import { breakStatement } from "C:/Users/PC USER/AppData/Local/Microsoft/TypeScript/3.7/node_modules/@babel/types/lib/index";
 
 jest.mock("../../../util/session");
 jest.mock("../../../services/Networking");
