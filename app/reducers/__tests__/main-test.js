@@ -128,6 +128,13 @@ describe("MainReducer", () => {
         });
         init.home.data[0].reblogged = false;
         expect(init).toEqual(ex2);
+        const ex3 = MainReducer(ex, { 
+            type: MastoRow.BOOST_MASTOROW,
+            id: null,
+            boosted: false
+        });
+        init.home.data[0].reblogged = true;
+        expect(init).toEqual(ex3);
     });
     it("MastoRow.FAVOURITE_MASTOROW", () => {
         let init = createStatusToStateMock(status(), "home", new Date(2020, 8, 31, 10, 20, 30), 1);
@@ -145,6 +152,13 @@ describe("MainReducer", () => {
         });
         init.home.data[0].favourited = false;
         expect(init).toEqual(ex2);
+        const ex3 = MainReducer(ex, { 
+            type: MastoRow.FAVOURITE_MASTOROW,
+            id: null,
+            favourited: false
+        });
+        init.home.data[0].favourited = true;
+        expect(init).toEqual(ex3);
     });
     it("MastoRow.BOOKMARK_MASTOROW", () => {
         let init = createStatusToStateMock(status(), "home", new Date(2020, 8, 31, 10, 20, 30), 1);
@@ -162,5 +176,12 @@ describe("MainReducer", () => {
         });
         init.home.data[0].bookmarked = false;
         expect(init).toEqual(ex2);
+        const ex3 = MainReducer(ex, { 
+            type: MastoRow.BOOKMARK_MASTOROW,
+            id: null,
+            bookmarked: false
+        });
+        init.home.data[0].bookmarked = true;
+        expect(init).toEqual(ex3);
     });
 });

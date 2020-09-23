@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import { ThemeContext } from "react-native-elements";
-import { on as streamingOn, off as streamingOff } from "../util/stream";
+import { on as streamingOn, off as streamingOff, getStreamingURL } from "../util/stream";
 
 const CurrentUserReducerSelector = state => state.currentUserReducer;
 
@@ -13,18 +13,16 @@ export default function TimelineStreamingButton({ type }){
     const { instance, access_token } = useSelector(CurrentUserReducerSelector);
     const { theme } = useContext(ThemeContext);
     const [enabled, useEnabled] = useState(false);
-    const webSocket = useRef(null);
-    const streamSwitch = () => {
-        useEnabled(!enabled);
-    };
+    const webSocketRef = useRef(null);
+    const streamingURL = getStreamingURL(instance.urls.streaming_api, type, access_token);
     useEffect(() => {
         if (enabled && instance){
             // ON
-            streamingOn(webSocket, dispatch, useEnabled, type, instance, access_token);
+            streamingOn(webSocketRef, dispatch, useEnabled, type, streamingURL);
             console.log("[WS] ON:" + type);
         } else {
             // OFF
-            streamingOff(webSocket, dispatch, useEnabled, type);
+            streamingOff(webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] OFF:" + type);
         }
         return;
@@ -32,13 +30,13 @@ export default function TimelineStreamingButton({ type }){
     useEffect(() => {
         return () => {
             // UNMOUNT
-            streamingOff(webSocket, dispatch, useEnabled, type);
+            streamingOff(webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] UNMOUNTCLOSE:" + type);
         };
     }, []);
     return (
         <View>
-            <TouchableOpacity onPress={() => streamSwitch()} style={styles.view}>
+            <TouchableOpacity onPress={() => useEnabled(!enabled)} style={styles.view}>
                 <FontAwesome name="feed" size={24} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
             </TouchableOpacity>
         </View>

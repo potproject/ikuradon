@@ -83,6 +83,8 @@
         "eslint-plugin-react": "^7.19.0",
         "jest-date-mock": "^1.0.8",
         "jest-expo": "^38.0.0",
+        "jest-websocket-mock": "^2.2.0",
+        "mock-socket": "^9.0.3",
         "prettier": "^2.0.5",
         "prettier-eslint-cli": "^5.0.0",
         "react-test-renderer": "^16.13.1"

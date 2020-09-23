@@ -1,8 +1,7 @@
-import { STREAMING } from "../constants/api";
+import * as CONST_API from "../constants/api";
 import { start, stop, receive } from "../actions/actioncreators/streaming";
 
-export function on(webSocket, dispatch, useEnabled, type, instance, access_token){
-    // ON
+export function getStreamingURL(streamingAPI, type, access_token){
     let stream;
     switch (type) {
         case "federal":
@@ -16,34 +15,39 @@ export function on(webSocket, dispatch, useEnabled, type, instance, access_token
             stream = "user";
             break;
     }
-    let url = instance.urls.streaming_api + STREAMING.url + "?access_token=" + access_token + "&stream=" + stream;
-    webSocket.current = new WebSocket(url);
-    webSocket.current.onopen = () => {
+    return streamingAPI + CONST_API.STREAMING.url + "?access_token=" + access_token + "&stream=" + stream;
+}
+
+export function on(ref, dispatch, useEnabled, type, url){
+    ref.current = new WebSocket(url);
+    ref.current.onopen = () => {
         // connection opened
         console.log("[WS] OPEN:" + type);
     };
-    webSocket.current.onmessage = (message) => {
-        let data = JSON.parse(message.data);
-        if (data !== null){
+    ref.current.onmessage = (message) => {
+        try {
+            let data = JSON.parse(message.data);
             let { event, payload } = data;
             dispatch(receive(type, event, JSON.parse(payload)));
+        } catch (e){
+            console.log("[WS] MESSAGE JSON Parse Error:" + e.message);
         }
     };
-    webSocket.current.onclose = (event) => {
+    ref.current.onclose = (event) => {
         console.log("[WS] CLOSE:" + type + " event:" + JSON.stringify(event));
-    };
-    webSocket.current.onerror = (event) => {
-        console.log("[WS] ERROR:" + type + " event:" + JSON.stringify(event));
-        off(webSocket, dispatch, useEnabled, type);
+        dispatch(stop(type));
         useEnabled(false);
+    };
+    ref.current.onerror = (event) => {
+        console.log("[WS] ERROR:" + type + " event:" + JSON.stringify(event));
     };
     dispatch(start(type));
 }
 
-export function off(webSocket, dispatch, useEnabled, type){
+export function off(ref, dispatch, useEnabled, type){
     dispatch(stop(type));
-    if (webSocket.current !== null && webSocket.current.readyState === WebSocket.OPEN){
-        webSocket.current.close();
+    if (ref.current !== null && ref.current.readyState === WebSocket.OPEN){
+        ref.current.close();
     }
     useEnabled(false);
 }
