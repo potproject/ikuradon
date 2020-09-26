@@ -1,7 +1,7 @@
 import MainReducer, { initialState, changeItem } from "../main";
 import * as Main from "../../actions/actiontypes/main";
 import * as MastoRow from "../../actions/actiontypes/mastorow";
-import status from "../../example/status";
+import status, { statusReblogged } from "../../example/status";
 import { advanceTo } from "jest-date-mock";
 
 function createStatusToStateMock(status, type, date, newArrival){
@@ -183,5 +183,15 @@ describe("MainReducer", () => {
         });
         init.home.data[0].bookmarked = true;
         expect(init).toEqual(ex3);
+    });
+    it("changeItem default", () => {
+        let ac = JSON.parse(JSON.stringify(initialState));
+        const c = changeItem("unknown", ac, "111222333", true);
+        expect(c).toEqual(initialState);
+    });
+    it("changeItem BOOST_MASTOROW notfound", () => {
+        let init = createStatusToStateMock(status(), "home", new Date(2020, 8, 31, 10, 20, 30), 1);
+        const c = changeItem(MastoRow.BOOST_MASTOROW, init, "222333444", true);
+        expect(c).toEqual(init);
     });
 });
