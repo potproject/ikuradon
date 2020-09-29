@@ -14,9 +14,10 @@ export default function TimelineStreamingButton({ type }){
     const { theme } = useContext(ThemeContext);
     const [enabled, useEnabled] = useState(false);
     const webSocketRef = useRef(null);
-    const streamingURL = getStreamingURL(instance.urls.streaming_api, type, access_token);
+    const streamingAPI = instance && typeof instance.urls.streaming_api === "string" ? instance.urls.streaming_api : "";
+    const streamingURL = getStreamingURL(streamingAPI, type, access_token);
     useEffect(() => {
-        if (enabled && instance){
+        if (enabled && instance && streamingAPI){
             // ON
             streamingOn(webSocketRef, dispatch, useEnabled, type, streamingURL);
             console.log("[WS] ON:" + type);

@@ -7,6 +7,7 @@ import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
 import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
 
 import NavigationService from "../services/NavigationService";
@@ -44,6 +45,8 @@ function MastoList({ navigation, type }) {
 
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
+
+        openDetailAction: (id) => {dispatch(openDetailAction(id))},
     };
     return (
         <View style={styles.container}>

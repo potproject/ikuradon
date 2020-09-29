@@ -26,7 +26,7 @@ const MastoRow = ({ item, current, actions, background }) => {
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction, openDetailAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -45,124 +45,134 @@ const MastoRow = ({ item, current, actions, background }) => {
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-            { reblogFlag && useMemo(() =>
-                <View style={styles.isReplyContainer}>
-                    <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}>
-                        <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
+            <TouchableOpacity delayPressIn={150} onPress={() => openDetailAction(tootID)}>
+                { reblogFlag && useMemo(() =>
+                    <View style={styles.isReplyContainer}>
+                        <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}>
+                            <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
+                        </View>
+                        <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(reblogEmojis)}>
+                            <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
+                        </CustomEmoji>
                     </View>
-                    <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(reblogEmojis)}>
-                        <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
-                    </CustomEmoji>
-                </View>
-            , [rebloggedName])}
-            <View style={styles.date}>
-                <Text style={{ fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
-                    {poll &&
+                , [rebloggedName])}
+                <View style={styles.date}>
+                    <Text style={{ fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
+                        {poll &&
                     <FontAwesome name={"comments"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
-                    }
-                    {sensitive &&
+                        }
+                        {sensitive &&
                     <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
-                    }
-                    {" "}
-                    <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
-                    {" " +dateFormat(created_at)}
-                </Text>
-            </View>
-            <View style={styles.innerContainer}>
-                <View style={styles.photoContainer}>
-                    { useMemo(() =>
-                        <View style={styles.innerPhotoContainer}>
-                            <TouchableOpacity
-                                onPress={() => null}>
-                                <Image
-                                    source={{ uri: account.avatar }}
-                                    style={styles.photo}/>
-                                { reblogedImage &&
+                        }
+                        {" "}
+                        <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
+                        {" " +dateFormat(created_at)}
+                    </Text>
+                </View>
+                <View style={styles.innerContainer}>
+                    <View style={styles.photoContainer}>
+                        { useMemo(() =>
+                            <View style={styles.innerPhotoContainer}>
+                                <TouchableOpacity
+                                    onPress={() => null}>
+                                    <Image
+                                        source={{ uri: account.avatar }}
+                                        style={styles.photo}/>
+                                    { reblogedImage &&
                                 <Image
                                     source={{ uri: reblogedImage }}
                                     style={styles.photoByReblogged}/>
-                                }
-                            </TouchableOpacity>
-                        </View>
-                    , [account])}
-                </View>
-                <View style={styles.info}>
-                    { useMemo(() =>
-                        <View style={styles.userDetails}>
-                            <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
-                                <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
-                                    <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]}>{" @"+account.acct}</Text>
-                                </Text>
-                            </CustomEmoji>
-                        </View>
-                    , [account])
-                    }
-                    <View style={styles.tootContainer}>
-                        <MastoRowBody content={content} linkStyle={{ color: theme.customColors.link }} style={styles.tootText} sensitiveButtonColor={theme.colors.primary} emojis={emojis} sensitive={sensitive} spoilerText={spoiler_text} />
+                                    }
+                                </TouchableOpacity>
+                            </View>
+                        , [account])}
                     </View>
-                    { poll &&
+                    <View style={styles.info}>
+                        { useMemo(() =>
+                            <View style={styles.userDetails}>
+                                <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
+                                    <Text style={styles.userName} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
+                                        <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]}>{" @"+account.acct}</Text>
+                                    </Text>
+                                </CustomEmoji>
+                            </View>
+                        , [account])
+                        }
+                        <View style={styles.tootContainer}>
+                            <MastoRowBody
+                                content={content}
+                                linkStyle={{ color: theme.customColors.link }}
+                                style={styles.tootText}
+                                sensitiveButtonColor={theme.colors.primary}
+                                emojis={emojis}
+                                sensitive={sensitive}
+                                spoilerText={spoiler_text}
+                            />
+                        </View>
+                        { poll &&
                     <View style={styles.tootContainer}>
                         <MastoRowPoll poll={poll} />
                     </View>
-                    }
-                    { media_attachments && media_attachments.length > 0 &&
+                        }
+                        { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>
                         <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
                     </View>
-                    }
-                    <View style={styles.item}>
-                        <Reply
-                            id={id}
-                            tootid={tootID}
-                            user={account.display_name !== "" ? account.display_name : account.username}
-                            acct={account.acct}
-                            image={account.avatar}
-                            body={content}
-                            style={styles.itemFlex}
-                            onReply={ReplyAction}
-                        />
-                        <Boost
-                            id={id}
-                            tootid={tootID}
-                            reblogged={reblogged}
-                            count={reblogs_count}
-                            style={styles.itemFlex}
-                            onBoost={BoostAction}
-                            disabled={visibility === "private" || visibility === "direct"}
-                        />
-                        <Favourite
-                            id={id}
-                            tootid={tootID}
-                            favourited={favourited}
-                            count={favourites_count}
-                            style={styles.itemFlex}
-                            onFavourite={FavouriteAction}
-                        />
-                        <Bookmark
-                            id={id}
-                            tootid={tootID}
-                            bookmarked={bookmarked}
-                            style={styles.itemFlex}
-                            onBookmark={BookmarkAction}
-                        />
-                        <Action
-                            id={id}
-                            tootid={tootID}
-                            style={styles.itemFlex}
-                            url={url}
-                            account_url={account.url}
-                            user={account.display_name !== "" ? account.display_name : account.username}
-                            acct={account.acct}
-                            image={account.avatar}
-                            body={content}
-                            myself={myself}
-                            onReply={ReplyAction}
-                            onHide={HideAction}
-                            onDeleting={DeleteAction}
-                        />
+                        }
+                        <View style={styles.item}>
+                            <Reply
+                                id={id}
+                                tootid={tootID}
+                                user={account.display_name !== "" ? account.display_name : account.username}
+                                acct={account.acct}
+                                image={account.avatar}
+                                body={content}
+                                style={styles.itemFlex}
+                                onReply={ReplyAction}
+                            />
+                            <Boost
+                                id={id}
+                                tootid={tootID}
+                                reblogged={reblogged}
+                                count={reblogs_count}
+                                style={styles.itemFlex}
+                                onBoost={BoostAction}
+                                disabled={visibility === "private" || visibility === "direct"}
+                            />
+                            <Favourite
+                                id={id}
+                                tootid={tootID}
+                                favourited={favourited}
+                                count={favourites_count}
+                                style={styles.itemFlex}
+                                onFavourite={FavouriteAction}
+                            />
+                            <Bookmark
+                                id={id}
+                                tootid={tootID}
+                                bookmarked={bookmarked}
+                                style={styles.itemFlex}
+                                onBookmark={BookmarkAction}
+                            />
+                            <Action
+                                id={id}
+                                tootid={tootID}
+                                style={styles.itemFlex}
+                                url={url}
+                                account_url={account.url}
+                                user={account.display_name !== "" ? account.display_name : account.username}
+                                acct={account.acct}
+                                image={account.avatar}
+                                body={content}
+                                myself={myself}
+                                onReply={ReplyAction}
+                                onHide={HideAction}
+                                onDeleting={DeleteAction}
+                            />
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 };
