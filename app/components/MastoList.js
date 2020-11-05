@@ -46,7 +46,8 @@ function MastoList({ navigation, type }) {
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
 
-        openDetailAction: (id) => {dispatch(openDetailAction(id))},
+        // TODO
+        openDetailAction: (id) => {/*dispatch(openDetailAction(id))*/},
     };
     return (
         <View style={styles.container}>
