@@ -18,6 +18,7 @@ const reducerSelector = state => ({
     streaming: state.streamingReducer,
     imageviewer: state.imageViewerReducer,
     config: state.configReducer,
+    openSticker: state.openStickerReducer
 });
 
 const REFRESH_TIME = 300;
@@ -25,7 +26,8 @@ const REFRESH_TIME = 300;
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main, streaming, imageviewer, config } = useSelector(reducerSelector);
+    const { current, main, streaming, imageviewer, config, openSticker } = useSelector(reducerSelector);
+    const { data: openStickerData } = openSticker;
     const listdata = main[type];
     const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
@@ -72,7 +74,7 @@ function MastoList({ navigation, type }) {
                                 }
                             }}
                         />}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
+                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} openStickerData={openStickerData} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}
                     ListFooterComponent={() => 

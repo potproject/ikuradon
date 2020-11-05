@@ -20,7 +20,7 @@ import MastoRowImage from "./MastoRowImage";
 import MastoRowPoll from "./MastoRowPoll";
 import { icon } from "../constants/visibility";
 
-const MastoRow = ({ item, current, actions, background }) => {
+const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
     let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll } = item;
     // current
@@ -218,7 +218,8 @@ MastoRow.propTypes = {
         }
     ),
     actions: PropTypes.object,
-    background: PropTypes.bool
+    background: PropTypes.bool,
+    openStickerData: PropTypes.object
 };
 
 const styles = StyleSheet.create({

@@ -11,6 +11,7 @@ export function on(server){
             if (typeof data.data !== "object" || typeof data.updated !== "string" || typeof data.default !== "object"){
                 throw new Error("Validate Failure.");
             }
+            // TODO: データ加工必要かもしれんな
             DropDownHolder.success("JSON Download Success!", data.data.length + " server counts."); 
             return dispatch({ type: OpenSticker.OPENSTICKER_ON, server, data });
         } catch (e){

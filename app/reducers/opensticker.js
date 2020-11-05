@@ -5,7 +5,7 @@ import * as CONST_Storage from "../constants/storage";
 export const initialState = {
     use: false,
     server: "https://s.0px.io/json",
-    data: []
+    data: {}
 };
 
 export default function OpenSticker(state = initialState, action = {}) {
