@@ -18,7 +18,7 @@ export default function OpenSticker(state = initialState, action = {}) {
             newstate = Object.assign({}, { use:true, server:action.server, data:action.data });
             break;
         case OpenStickerActionTypes.OPENSTICKER_OFF:
-            newstate = Object.assign({}, state, { use:false, data:[] });
+            newstate = Object.assign({}, state, { use:false, data:{} });
             break;
     }
     if (state !== newstate) {
