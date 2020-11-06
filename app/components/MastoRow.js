@@ -18,6 +18,8 @@ import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
 import MastoRowImage from "./MastoRowImage";
 import MastoRowPoll from "./MastoRowPoll";
+import OpenSticker from "./OpenSticker";
+
 import { icon } from "../constants/visibility";
 
 const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
@@ -69,6 +71,9 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         {" " +dateFormat(created_at)}
                     </Text>
                 </View>
+                { Object.keys(openStickerData).length !== 0 &&
+                    <OpenSticker acct={account.acct} currentDomain={domain} data={openStickerData} />
+                }
                 <View style={styles.innerContainer}>
                     <View style={styles.photoContainer}>
                         { useMemo(() =>
