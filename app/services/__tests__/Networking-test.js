@@ -89,4 +89,21 @@ describe("Services/Networking", () => {
     it("createHeaders", () => {
         expect(Networking.createHeaders()).toEqual({ "Accept": "application/json", "Content-Type": "application/json" });
     });
+    it("openStickerGetJSON resolve", async () => {
+        axios.get.mockImplementation((endpoint) => {
+            expect(endpoint).toEqual("https://opensticker.server");
+            return { data: [] };
+        });
+        const res = Networking.openStickerGetJSON("https://opensticker.server");
+        await expect(res).resolves.toEqual([]);
+        axios.get.mockClear();
+    });
+    it("openStickerGetJSON reject", async () => {
+        axios.get.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        const res = Networking.openStickerGetJSON("https://opensticker.server");
+        await expect(res).rejects.toEqual(new Error("Network Error"));
+        axios.get.mockClear();
+    });
 });
