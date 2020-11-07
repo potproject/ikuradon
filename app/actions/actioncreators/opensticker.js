@@ -92,8 +92,10 @@ function serverDataParse(json){
     let serverData = {};
     for (let d of json.data){
         serverData[d.domain] = d;
-        if (typeof d.isDefault === "boolean" && d.isDefault){
+        if (d.bgColor === undefined || d.bgColor === null){
             serverData[d.domain].bgColor = json.default[d.type].bgColor;
+        }
+        if (d.fontColor === undefined || d.fontColor === null){
             serverData[d.domain].fontColor = json.default[d.type].fontColor;
         }
     }

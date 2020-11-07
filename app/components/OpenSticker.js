@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Image } from "react-native-elements";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function OpenSticker({ acct, currentDomain, data }){
     const sticker = getSticker(acct, currentDomain, data);
@@ -8,16 +9,16 @@ export default function OpenSticker({ acct, currentDomain, data }){
         return null;
     }
     return (
-        <View style={[styles.innerContainer, {
-            backgroundColor: sticker.bgColor,
-        }]}>
-            <View style={styles.padding} ></View>
-            <Text style={[styles.sticker, { color:sticker.fontColor }]} ellipsizeMode="tail" numberOfLines={1}>
-                <Image
-                    source={{ uri: sticker.favicon }}
-                    style={styles.photo}/>
-                {sticker.name}
-            </Text>
+        <View style={styles.innerContainer}>
+            <View style={[styles.padding, { backgroundColor: sticker.bgColor }]}></View>
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[...sticker.bgColor, "#FFFFFF"]} style={styles.sticker}>
+                <Text style={{ color:sticker.fontColor }} ellipsizeMode="tail" numberOfLines={1}>
+                    <Image
+                        source={{ uri: sticker.favicon }}
+                        style={styles.photo}/>
+                    {sticker.name}
+                </Text>
+            </LinearGradient>
         </View>
     );
 }
@@ -53,6 +54,6 @@ const styles = StyleSheet.create({
     photo: {
         width: 15,
         height: 15,
-        marginRight:2
+        marginRight:4
     },
 });
