@@ -7,6 +7,7 @@ import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
 import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
 
 import NavigationService from "../services/NavigationService";
@@ -17,6 +18,7 @@ const reducerSelector = state => ({
     streaming: state.streamingReducer,
     imageviewer: state.imageViewerReducer,
     config: state.configReducer,
+    openSticker: state.openStickerReducer
 });
 
 const REFRESH_TIME = 300;
@@ -24,7 +26,8 @@ const REFRESH_TIME = 300;
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
     const [init, setInit] = useState(false);
-    const { current, main, streaming, imageviewer, config } = useSelector(reducerSelector);
+    const { current, main, streaming, imageviewer, config, openSticker } = useSelector(reducerSelector);
+    const { data: openStickerData } = openSticker;
     const listdata = main[type];
     const streamingType = streaming[type];
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
@@ -44,6 +47,9 @@ function MastoList({ navigation, type }) {
 
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
+
+        // TODO
+        openDetailAction: (id) => {/*dispatch(openDetailAction(id))*/},
     };
     return (
         <View style={styles.container}>
@@ -68,7 +74,7 @@ function MastoList({ navigation, type }) {
                                 }
                             }}
                         />}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
+                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} openStickerData={openStickerData} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}
                     ListFooterComponent={() => 

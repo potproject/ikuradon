@@ -34,6 +34,10 @@ export default {
     setting_push_notifications_start: "プッシュ通知を使用する",
     setting_push_notifications_stop: "プッシュ通知を停止する",
 
+    setting_opensticker: "OpenSticker (実験的機能)",
+    setting_opensticker_server: "OpenSticker サーバ",
+    setting_opensticker_use: "OpenStickerを使用する",
+
     //設定ヘッダ
     setting_header_personal: "個人",
     setting_header_accounts: "アカウント",

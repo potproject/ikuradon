@@ -192,6 +192,5 @@ export const GET_SEARCH_V2 = {
 
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
-    method: "get",
     url: "/api/v1/streaming"
 };

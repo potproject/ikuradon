@@ -79,3 +79,23 @@ export default function status() {
         "poll": null
     };
 }
+
+
+export function statusReblogged() {
+    let s = status();
+    s.reblogged = true;
+    s.reblog = status();
+    return s;
+}
+
+export function statusFavourited() {
+    let s = status();
+    s.favourited = true;
+    return s;
+}
+
+export function statusBookmarked() {
+    let s = status();
+    s.bookmarked = true;
+    return s;
+}

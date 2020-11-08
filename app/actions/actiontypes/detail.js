@@ -1,0 +1,1 @@
+export const DETAIL_OPEN = "DETAIL_OPEN";

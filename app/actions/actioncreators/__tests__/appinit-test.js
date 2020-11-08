@@ -4,6 +4,7 @@ import * as Config from "../../actiontypes/config";
 import * as AppInit from "../../actiontypes/appinit";
 import * as PushNotification from "../../actiontypes/pushnotification";
 import * as CurrentUser from "../../actiontypes/currentuser";
+import * as OpenSticker from "../../actiontypes/opensticker";
 
 import Networking from "../../../services/Networking";
 import NavigationService from "../../../services/NavigationService";
@@ -34,6 +35,8 @@ describe("Action/AppInit", () => {
             // CONST_Storage.Config
             .mockImplementationOnce(() => initConfig)
             // CONST_Storage.Push
+            .mockImplementationOnce(() => ({}))
+            // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
@@ -52,8 +55,9 @@ describe("Action/AppInit", () => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
-                call === 2 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
                 done(e);
@@ -69,6 +73,8 @@ describe("Action/AppInit", () => {
             // CONST_Storage.Config
             .mockImplementationOnce(() => null)
             // CONST_Storage.Push
+            .mockImplementationOnce(() => null)
+            // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => null);
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
@@ -106,6 +112,8 @@ describe("Action/AppInit", () => {
                 return initConfigDeepCopy;
             })
             // CONST_Storage.Push
+            .mockImplementationOnce(() => ({}))
+            // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
@@ -124,8 +132,9 @@ describe("Action/AppInit", () => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfigDeepCopy });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
-                call === 2 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
-                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
                 done(e);
@@ -141,6 +150,8 @@ describe("Action/AppInit", () => {
             // CONST_Storage.Config
             .mockImplementationOnce(() => initConfig)
             // CONST_Storage.Push
+            .mockImplementationOnce(() => ({}))
+            // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
@@ -163,7 +174,8 @@ describe("Action/AppInit", () => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
-                call === 2 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
+                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
                 done(e);
@@ -179,6 +191,8 @@ describe("Action/AppInit", () => {
             // CONST_Storage.Config
             .mockImplementationOnce(() => initConfig)
             // CONST_Storage.Push
+            .mockImplementationOnce(() => ({}))
+            // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
         Networking.fetch.mockImplementation(() => {
             throw new Error("Network Error");
@@ -194,7 +208,8 @@ describe("Action/AppInit", () => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
-                call === 2 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
+                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
                 done(e);

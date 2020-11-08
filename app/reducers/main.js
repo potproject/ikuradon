@@ -170,7 +170,7 @@ export default function Main(state = initialState, action = {}) {
     }
 }
 
-function changeItem(type, state, id, bool) {
+export function changeItem(type, state, id, bool) {
     let item;
     switch (type) {
         case MastorowActionTypes.BOOST_MASTOROW:
@@ -190,11 +190,7 @@ function changeItem(type, state, id, bool) {
     for (let viewType of viewTypeArray) {
         for (let row = 0; row < statecopy[viewType].data.length; row++) {
             if (typeof statecopy[viewType].data[row].id !== "undefined" && statecopy[viewType].data[row].id === id) {
-                if (statecopy[viewType].data[row].reblog === null) {
-                    statecopy[viewType].data[row][item] = bool;
-                } else {
-                    statecopy[viewType].data[row].reblog[item] = bool;
-                }
+                statecopy[viewType].data[row][item] = bool;
                 break;
             }
         }

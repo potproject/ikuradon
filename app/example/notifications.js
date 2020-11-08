@@ -1,5 +1,5 @@
 import account from "./account";
-import status from "./status";
+import status, { statusFavourited, statusReblogged } from "./status";
 
 export default function notifications(){
     return [
@@ -42,7 +42,7 @@ export function favourite(){
         "type": "favourite",
         "created_at": "2019-11-23T07:29:18.903Z",
         "account": account(),
-        "status": status()
+        "status": statusFavourited()
     };
 }
 
@@ -52,6 +52,6 @@ export function reblog(){
         "type": "reblog",
         "created_at": "2019-11-23T07:11:54.391Z",
         "account": account(),
-        "status": status()
+        "status": statusReblogged()
     };
 }
