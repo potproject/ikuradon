@@ -54,7 +54,7 @@ expo publish
 -   Multi Theme (Dark Mode And more...)
 -   Media upload Support
 -   Push Notification / Server-Side Source Code: [potproject/ikuradon-salmon](https://github.com/potproject/ikuradon-salmon)
-
+-   [cutls/OpenSticker](https://github.com/cutls/OpenSticker) Support
 ## Future
 
 未実装
