@@ -1,9 +1,8 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Image } from "react-native-elements";
+import React, { memo } from "react";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function OpenSticker({ acct, currentDomain, data }){
+function OpenSticker({ acct, currentDomain, data }){
     const sticker = getSticker(acct, currentDomain, data);
     if (sticker === null){
         return null;
@@ -12,12 +11,14 @@ export default function OpenSticker({ acct, currentDomain, data }){
         <View style={styles.innerContainer}>
             <View style={[styles.padding, { backgroundColor: sticker.bgColor }]}></View>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[...sticker.bgColor, "#FFFFFF"]} style={styles.sticker}>
-                <Text style={{ color:sticker.fontColor }} ellipsizeMode="tail" numberOfLines={1}>
+                <View style={styles.wrapper}>
                     <Image
                         source={{ uri: sticker.favicon }}
                         style={styles.photo}/>
-                    {sticker.name}
-                </Text>
+                    <Text style={{ color:sticker.fontColor }} ellipsizeMode="tail" numberOfLines={1}>
+                        {sticker.name}
+                    </Text>
+                </View>
             </LinearGradient>
         </View>
     );
@@ -51,9 +52,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         fontSize: 15
     },
+    wrapper:{
+        flexDirection:"row",
+        flexWrap:"wrap" 
+    },
     photo: {
         width: 15,
         height: 15,
         marginRight:4
     },
 });
+
+export default memo(OpenSticker, (p, n) => p.acct === n.acct);
