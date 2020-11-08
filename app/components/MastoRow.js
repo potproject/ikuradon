@@ -18,9 +18,11 @@ import { ThemeContext } from "react-native-elements";
 import MastoRowBody from "./MastoRowBody";
 import MastoRowImage from "./MastoRowImage";
 import MastoRowPoll from "./MastoRowPoll";
+import OpenSticker from "./OpenSticker";
+
 import { icon } from "../constants/visibility";
 
-const MastoRow = ({ item, current, actions, background }) => {
+const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
     let { id, created_at, sensitive, spoiler_text, reblog, account, media_attachments, content, reblogged, reblogs_count, favourited, bookmarked, uri, url, favourites_count, visibility, emojis, poll } = item;
     // current
@@ -69,6 +71,9 @@ const MastoRow = ({ item, current, actions, background }) => {
                         {" " +dateFormat(created_at)}
                     </Text>
                 </View>
+                { Object.keys(openStickerData).length !== 0 &&
+                    <OpenSticker acct={account.acct} currentDomain={domain} data={openStickerData} />
+                }
                 <View style={styles.innerContainer}>
                     <View style={styles.photoContainer}>
                         { useMemo(() =>
@@ -218,7 +223,8 @@ MastoRow.propTypes = {
         }
     ),
     actions: PropTypes.object,
-    background: PropTypes.bool
+    background: PropTypes.bool,
+    openStickerData: PropTypes.object
 };
 
 const styles = StyleSheet.create({

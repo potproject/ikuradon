@@ -8,6 +8,7 @@ import t from "../services/I18n";
 import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
 import { subscribe as SubscribeAction, unsubscribe as UnsubscribeAction } from "../actions/actioncreators/pushnotification";
+import { on as OpenStickerOnAction, off as OpenStickerOffAction } from "../actions/actioncreators/opensticker";
 
 import NavigationService from "../services/NavigationService";
 
@@ -17,16 +18,19 @@ const reducerSelector =  state => ({
     current: state.currentUserReducer,
     config: state.configReducer,
     pushNotification: state.pushNotificationReducer,
+    openSticker: state.openStickerReducer
 });
 
 function SettingsScreen() {
     const dispatch = useDispatch();
-    const { current, config, pushNotification } = useSelector(reducerSelector);
+    const { current, config, pushNotification, openSticker } = useSelector(reducerSelector);
     const { invisible } = config;
+    const { use: useOpenSticker, server: serverOpenSticker } = openSticker;
     const { user_credentials, domain, access_token } = current;
     const { theme } = useContext(ThemeContext);
 
     const [pushServer, onChangePushServer] = useState("salmon.potproject.net");
+    const [serverOpenStickerState, onChangeServerOpenSticker] = useState(serverOpenSticker);
 
     const invisibleCheck = (value) => {
         let count = 0;
@@ -111,6 +115,19 @@ function SettingsScreen() {
                     onPress={() => dispatch(UnsubscribeAction(domain, access_token, pushServer))}
                 />
                 }
+
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_opensticker")}</Text>
+                <ListItem
+                    title={t("setting_opensticker_server")}
+                    input={{ value:serverOpenStickerState, onChangeText:onChangeServerOpenSticker }}
+                    bottomDivider
+                />
+                <ListItem
+                    title={t("setting_opensticker_use")}
+                    bottomDivider
+                    switch={{ value: useOpenSticker, onValueChange: value => { value ? dispatch(OpenStickerOnAction(serverOpenStickerState)) : dispatch(OpenStickerOffAction())} }}
+                />
+
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes")}</Text>
                 <ListItem
                     title={t("setting_background")}

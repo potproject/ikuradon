@@ -34,6 +34,10 @@ export default {
     setting_push_notifications_start: "Using Push Notification",
     setting_push_notifications_stop: "Stopping Push Notification",
 
+    setting_opensticker: "OpenSticker (Experimental)",
+    setting_opensticker_server: "OpenSticker Server",
+    setting_opensticker_use: "Use OpenSticker",
+
     //Settings Header
     setting_header_personal: "Personal",
     setting_header_accounts: "Accounts",

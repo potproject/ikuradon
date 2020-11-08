@@ -1,6 +1,7 @@
 import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
+import * as OpenSticker from "../actiontypes/opensticker";
 import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
@@ -37,6 +38,12 @@ export function appInit(updateTheme) {
         }
         // Push Notification init Setting
         pull();
+
+        // OpenSticker load
+        let openSticker = await Storage.getItem(CONST_Storage.OpenSticker);
+        if (openSticker !== null) {
+            await dispatch({ type: OpenSticker.OPENSTICKER_LOAD, openSticker });
+        }
 
         //Session init
         await Session.init();

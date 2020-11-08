@@ -8,6 +8,7 @@ import configReducer from "./config";
 import tootReducer from "./toot";
 import imageViewerReducer from "./imageviewer";
 import pushNotificationReducer from "./pushnotification";
+import openStickerReducer from "./opensticker";
 // ... other reducers
 
 export default combineReducers({
@@ -19,6 +20,7 @@ export default combineReducers({
     configReducer,
     tootReducer,
     imageViewerReducer,
-    pushNotificationReducer
+    pushNotificationReducer,
+    openStickerReducer
     // ... other reducers
 });

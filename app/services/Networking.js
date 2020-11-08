@@ -73,4 +73,16 @@ export default class Networking {
             }
         });
     }
+
+    //OpenSticker Server
+    static openStickerGetJSON(endpoint){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let response = await axios.get(endpoint);
+                resolve(response.data);
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
 }
