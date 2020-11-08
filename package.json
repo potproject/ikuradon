@@ -65,7 +65,7 @@
         "react-native-safe-area-context": "3.0.7",
         "react-native-screens": "~2.9.0",
         "react-native-web": "~0.11.7",
-        "react-native-webview": "9.4.0",
+        "react-native-webview": "10.8.0",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
         "redux-logger": "^3.0.6",
