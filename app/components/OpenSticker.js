@@ -4,12 +4,12 @@ import { LinearGradient } from "expo-linear-gradient";
 
 function OpenSticker({ acct, currentDomain, data }){
     const sticker = getSticker(acct, currentDomain, data);
-    if (sticker === null){
+    if (sticker === null || typeof sticker.bgColor[0] !== "string"){
         return null;
     }
     return (
         <View style={styles.innerContainer}>
-            <View style={[styles.padding, { backgroundColor: sticker.bgColor }]}></View>
+            <View style={[styles.padding, { backgroundColor: sticker.bgColor[0] }]}></View>
             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={[...sticker.bgColor, "#FFFFFF"]} style={styles.sticker}>
                 <View style={styles.wrapper}>
                     <Image
