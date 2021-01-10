@@ -35,8 +35,8 @@ __昔はAndroidと同じ方法でも動いていたようですが、Apple 様�
 Expo のアカウントを取得し、アプリでログイン後、ソースコードをダウンロードし、
 
 ```
-yarn global add expo-cli # or npm install -g expo-cli
-yarn # or npm install
+npm install -g expo-cli
+npm install
 expo login
 expo publish
 ```
@@ -67,9 +67,9 @@ expo publish
 ## Development
 
 ```
-yarn global add expo-cli # or npm install -g expo-cli
-yarn # or npm install
-yarn start # or npm run start
+npm install -g expo-cli
+npm install
+npm run start
 ```
 
 ## LICENSE

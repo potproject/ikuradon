@@ -26,11 +26,11 @@ const NotificationsRow = ({ item, current, actions, background }) => {
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
                 { boostAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{ flex:0.18, flexDirection: "row-reverse" }}>
+                    <View style={styles.paddingReverse}>
                         <FontAwesome name={"retweet"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
                         <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{boostAccounts.length}</Text>
                     </View>
-                    <View style={{ flex:0.82, flexDirection: "row", color: theme.colors.grey0 }}>
+                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         {boostAccounts.map((account, i) => {
                             if (i+1 > MAX_DISPLAY_IMAGE){
                                 return null;
@@ -49,11 +49,11 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 }
                 { favouriteAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{ flex:0.18, flexDirection: "row-reverse" }}>
+                    <View style={styles.paddingReverse}>
                         <FontAwesome name={"star"} size={22} color={theme.customColors.item.favourite} style={styles.icon}/>
                         <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{favouriteAccounts.length}</Text>
                     </View>
-                    <View style={{ flex:0.82, flexDirection: "row", color: theme.colors.grey0 }}>
+                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         {favouriteAccounts.map((account, i) => {
                             if (i+1 > MAX_DISPLAY_IMAGE){
                                 return null;
@@ -71,8 +71,8 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 </View>
                 }
                 <View style={styles.favAndBoostMessage}>
-                    <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
-                    <CustomEmoji style={{ flex:0.82 }} emojis={emojis}>
+                    <View style={styles.paddingEnd}></View>
+                    <CustomEmoji style={styles.info} emojis={emojis}>
                         <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={2}>
                             {boostAccountNames.concat(favouriteAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
                         </Text>
@@ -86,17 +86,17 @@ const NotificationsRow = ({ item, current, actions, background }) => {
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
                 <View style={styles.favAndBoostContainer}>
-                    <View style={{ flex:0.18, flexDirection:"row-reverse" }}>
+                    <View style={styles.paddingReverse}>
                         <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
                     </View>
-                    <View style={{ flex:0.82, flexDirection: "row", color: theme.colors.grey0 }}>
+                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         <Image style={styles.photo} source={{ uri: account.avatar }} />
                         <Follow id={account.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
                     </View>
                 </View>
                 <View style={styles.followMessage}>
                     <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
-                    <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(account.emojis)}>
+                    <CustomEmoji style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
                         <Text style={[styles.followMessageName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={2}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
                             <Text style={[styles.followMessageNotice, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
@@ -110,10 +110,10 @@ const NotificationsRow = ({ item, current, actions, background }) => {
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
                 <View style={styles.mention}>
-                    <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}>
+                    <View style={styles.paddingEnd}>
                         <FontAwesome name={"reply"} size={22} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
                     </View>
-                    <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(account.emojis)}>
+                    <CustomEmoji style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
                         <Text style={[styles.mentionMessageName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={2}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
                             <Text style={[styles.mentionMessageNotice, { color: theme.customColors.char }]}>{t("notifications.mentioned")}</Text>
@@ -130,6 +130,18 @@ const NotificationsRow = ({ item, current, actions, background }) => {
 const styles = StyleSheet.create({
     container: {
         paddingTop: 8,
+    },
+    paddingReverse:{ 
+        width: 68,
+        flexDirection: "row-reverse"
+    },
+    paddingEnd:{ 
+        width: 68,
+        borderWidth: 0,
+        alignItems: "flex-end"
+    },
+    info:{
+        flex: 1
     },
     favAndBoostContainer: {
         flex: 1,

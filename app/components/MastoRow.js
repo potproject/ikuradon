@@ -50,10 +50,10 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
             <TouchableOpacity delayPressIn={150} onPress={() => openDetailAction(tootID)}>
                 { reblogFlag && useMemo(() =>
                     <View style={styles.isReplyContainer}>
-                        <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}>
+                        <View style={{ width:68, borderWidth:0, alignItems:"flex-end" }}>
                             <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
                         </View>
-                        <CustomEmoji style={{ flex:0.82 }} emojis={emojisArrayToObject(reblogEmojis)}>
+                        <CustomEmoji style={{ flex:1 }} emojis={emojisArrayToObject(reblogEmojis)}>
                             <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={1}>{rebloggedName + t("notifications.boosted")} </Text>
                         </CustomEmoji>
                     </View>
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
         height: "auto"
     },
     photoContainer: {
-        flex: 0.18,
+        width: 68,
         borderColor: "yellow",
         flexDirection: "column",
         borderWidth: 0
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
         borderRadius: 2
     },
     info: {
-        flex: 0.82,
+        flex: 1,
         borderColor: "yellow",
         flexDirection: "column",
         borderWidth: 0

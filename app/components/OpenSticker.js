@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
         marginBottom:2
     },
     padding:{
-        flex: 0.18,
+        width: 68,
         flexDirection: "column",
     },
     sticker: {
-        flex: 0.82,
+        flex: 1,
         flexDirection: "column",
         fontSize: 15
     },
