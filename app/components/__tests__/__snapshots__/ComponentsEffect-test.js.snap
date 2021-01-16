@@ -876,7 +876,7 @@ exports[`<UserList /> 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
           "borderBottomWidth": 0.5,
           "borderColor": undefined,
           "flexDirection": "row",

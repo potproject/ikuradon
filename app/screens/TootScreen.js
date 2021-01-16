@@ -96,7 +96,8 @@ function TootScreen({ navigation, route }) {
                     {cw &&
                     <TextInput
                         placeholder={t("toot_cw_placeholder")}
-                        style={styles.cwInput}
+                        placeholderTextColor={theme.colors.grey2}
+                        style={[styles.cwInput, {color:theme.customColors.char}]}
                         onChangeText={text => onChangeCwTootText(text)}
                         value={cwTootText}
                         maxLength={MAX_TOOT_LENGTH}
@@ -104,7 +105,7 @@ function TootScreen({ navigation, route }) {
                     />
                     }
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, {color:theme.customColors.char}]}
                         onChangeText={text => onChangeTootText(text)}
                         value={tootText}
                         autoFocus={true}
@@ -112,6 +113,7 @@ function TootScreen({ navigation, route }) {
                         multiline={true}
                         onSelectionChange={(event) => event.nativeEvent.selection && useTootCursor(event.nativeEvent.selection.start)}
                         placeholder={t("toot_placeholder")}
+                        placeholderTextColor={theme.colors.grey2}
                     />
                 </View>
                 { visibilityClip &&

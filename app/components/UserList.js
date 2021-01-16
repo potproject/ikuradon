@@ -19,6 +19,7 @@ export default function UserList({ current, onSelect, onCancel }){
             {
                 list.map((l, i) => (
                     <ListItem
+                        containerStyle={{ backgroundColor: theme.customColors.charBackground }}
                         key={i}
                         leftAvatar={{ source: { uri: l.avatar } }}
                         title={l.username}

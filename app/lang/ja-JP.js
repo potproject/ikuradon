@@ -17,6 +17,7 @@ export default {
         mikugreen: "ミクグリーン",
         tootblue: "トゥートブルー",
         // ダーク
+        dark: "ダーク(イクラダーク)",
     },
 
     setting_visible_home: "ホームタイムラインを非表示",

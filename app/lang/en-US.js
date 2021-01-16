@@ -17,6 +17,7 @@ export default {
         mikugreen: "MikuGreen",
         tootblue: "TootBlue",
         // Dark
+        dark: "Dark(IkuraDark)",
     },
 
     setting_visible_home: "Do not show Home Timeline",

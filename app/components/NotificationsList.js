@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
@@ -11,6 +11,7 @@ import { openDetail as openDetailAction } from "../actions/actioncreators/detail
 import NavigationService from "../services/NavigationService";
 import * as RouterName from "../constants/RouterName";
 
+import { ThemeContext } from "react-native-elements";
 import NotificationsRow from "./NotificationsRow";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
@@ -25,6 +26,7 @@ const CurrentUserReducerSelector = state => ({
 
 function NotificationsList({ type }) {
     const dispatch = useDispatch();
+    const { theme } = useContext(ThemeContext);
     const [init, setInit] = useState(false);
     const { current, main, imageviewer, config } = useSelector(CurrentUserReducerSelector);
     const listdata = main[type];
@@ -52,11 +54,18 @@ function NotificationsList({ type }) {
     const newNotifications = notificationParse(listdata.data);
     return (
         <View style={styles.container}>
-            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
+            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, {backgroundColor: theme.customColors.charBackground}]}>
                 <FlatList
                     keyExtractor={data => data.type + data.id}
                     data={newNotifications}
-                    refreshControl={<RefreshControl refreshing={listdata.refreshing} onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))} />}
+                    refreshControl={
+                        <RefreshControl
+                            colors={[theme.customColors.char]}
+                            tintColor={theme.customColors.char}    
+                            refreshing={listdata.refreshing}
+                            onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))}
+                        />
+                    }
                     renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}

@@ -27,6 +27,9 @@ export default function TimelineNavigator() {
         <Tab.Navigator tabBarOptions={{
             activeTintColor: theme.colors.primary,
             inactiveTintColor: theme.colors.grey2,
+            activeBackgroundColor : theme.customColors.charBackground,
+            inactiveBackgroundColor: theme.customColors.charBackground,
+            style: {backgroundColor: theme.customColors.charBackground}
         }}>
             { !invisible.home &&
             <Tab.Screen name={RouterName.Timeline_Home} component={TimelineScreen} 

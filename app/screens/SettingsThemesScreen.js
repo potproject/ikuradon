@@ -45,6 +45,15 @@ function SettingsThemesScreen({ updateTheme }) {
                 }}
             />
             <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes_dark")}</Text>
+            <ListItem
+                title={t("themes.dark")}
+                rightIcon={{ name: "check", color: config.theme === "dark" ? theme.colors.primary : "#FFFFFF" }}
+                bottomDivider
+                onPress={()=>{
+                    settingTheme(updateTheme, "dark");
+                    dispatch(setTheme("dark"));
+                }}
+            />
         </View>
     );
 }

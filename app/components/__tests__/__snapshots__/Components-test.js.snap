@@ -276,11 +276,15 @@ exports[`<MastoRow /> 1`] = `
               ellipsizeMode="tail"
               numberOfLines={1}
               style={
-                Object {
-                  "color": "black",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "color": "#000000",
+                  },
+                ]
               }
             >
               Eugen
@@ -432,12 +436,16 @@ exports[`<MastoRow /> 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "black",
-                  "fontSize": 16,
-                  "paddingRight": 10,
-                  "paddingTop": 2,
-                }
+                Array [
+                  Object {
+                    "fontSize": 16,
+                    "paddingRight": 10,
+                    "paddingTop": 2,
+                  },
+                  Object {
+                    "color": "#000000",
+                  },
+                ]
               }
             >
               "I lost my inheritance with one wrong digit on my sort code" 
@@ -445,12 +453,16 @@ exports[`<MastoRow /> 1`] = `
                 onPress={[Function]}
                 style={
                   Array [
-                    Object {
-                      "color": "black",
-                      "fontSize": 16,
-                      "paddingRight": 10,
-                      "paddingTop": 2,
-                    },
+                    Array [
+                      Object {
+                        "fontSize": 16,
+                        "paddingRight": 10,
+                        "paddingTop": 2,
+                      },
+                      Object {
+                        "color": "#000000",
+                      },
+                    ],
                     Object {
                       "color": "#1b95e0",
                     },
