@@ -76,4 +76,4 @@ yarn start # or npm run start
 
 AGPL v3
 
-Copyright (C) 2020 potproject
+Copyright (C) 2021 potproject
