@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { ThemeContext, Card, Button } from "react-native-elements";
+import { ThemeContext } from "react-native-elements";
 import PropTypes from "prop-types";
 import DayJS from "dayjs";
 import t from "../services/I18n";

@@ -15,12 +15,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
-            - name: npm install
-              run: npm install
+            - name: yarn install
+              run: yarn
             - name: Run eslint
-              run: npm run lint
+              run: yarn lint
             - name: Run just
-              run: npm run test-coverage
+              run: yarn test-coverage
             - name: Coveralls
               uses: coverallsapp/github-action@master
               with:
