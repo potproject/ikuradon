@@ -55,7 +55,7 @@ function MastoList({ navigation, type }) {
     };
     return (
         <View style={styles.container}>
-            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, {backgroundColor: theme.customColors.charBackground}]}>
+            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, { backgroundColor: theme.customColors.charBackground }]}>
                 <FlatList
                     keyExtractor={data => data.id}
                     data={listdata.data}

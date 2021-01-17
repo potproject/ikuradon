@@ -97,7 +97,7 @@ function TootScreen({ navigation, route }) {
                     <TextInput
                         placeholder={t("toot_cw_placeholder")}
                         placeholderTextColor={theme.colors.grey2}
-                        style={[styles.cwInput, {color:theme.customColors.char}]}
+                        style={[styles.cwInput, { color:theme.customColors.char }]}
                         onChangeText={text => onChangeCwTootText(text)}
                         value={cwTootText}
                         maxLength={MAX_TOOT_LENGTH}
@@ -105,7 +105,7 @@ function TootScreen({ navigation, route }) {
                     />
                     }
                     <TextInput
-                        style={[styles.input, {color:theme.customColors.char}]}
+                        style={[styles.input, { color:theme.customColors.char }]}
                         onChangeText={text => onChangeTootText(text)}
                         value={tootText}
                         autoFocus={true}

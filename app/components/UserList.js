@@ -31,19 +31,19 @@ export default function UserList({ current, onSelect, onCancel }){
                         </ListItem.Content>
                         { (l.domain !== domain || l.access_token !== access_token) &&
                             <Icon name={"cancel"} color={theme.colors.grey1} onPress={() => {
-                                    Alert.alert(
-                                        `${l.username}@${l.domain}`,
-                                        t("logout_alert_text"),
-                                        [
-                                            {
-                                                text: t("global_cancel"),
-                                                style: "cancel"
-                                            },
-                                            { text: t("global_ok"), onPress: () => onCancel(i) }
-                                        ],
-                                        { cancelable: false }
-                                    );
-                                }
+                                Alert.alert(
+                                    `${l.username}@${l.domain}`,
+                                    t("logout_alert_text"),
+                                    [
+                                        {
+                                            text: t("global_cancel"),
+                                            style: "cancel"
+                                        },
+                                        { text: t("global_ok"), onPress: () => onCancel(i) }
+                                    ],
+                                    { cancelable: false }
+                                );
+                            }
                             } />
                         }
                     </ListItem>

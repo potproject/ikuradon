@@ -96,7 +96,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         { useMemo(() =>
                             <View style={styles.userDetails}>
                                 <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
-                                    <Text style={[styles.userName, {color: theme.customColors.char}]} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
+                                    <Text style={[styles.userName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>{account.display_name !== "" ? account.display_name : account.username}
                                         <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]}>{" @"+account.acct}</Text>
                                     </Text>
                                 </CustomEmoji>
@@ -107,7 +107,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                             <MastoRowBody
                                 content={content}
                                 linkStyle={{ color: theme.customColors.link }}
-                                style={[styles.tootText, {color: theme.customColors.char}]}
+                                style={[styles.tootText, { color: theme.customColors.char }]}
                                 sensitiveButtonColor={theme.colors.primary}
                                 emojis={emojis}
                                 sensitive={sensitive}
