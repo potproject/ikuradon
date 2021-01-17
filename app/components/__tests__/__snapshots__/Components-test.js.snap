@@ -122,8 +122,8 @@ exports[`<MastoRow /> 1`] = `
           Object {
             "borderColor": "yellow",
             "borderWidth": 0,
-            "flex": 0.18,
             "flexDirection": "column",
+            "width": 68,
           }
         }
       >
@@ -259,7 +259,7 @@ exports[`<MastoRow /> 1`] = `
           Object {
             "borderColor": "yellow",
             "borderWidth": 0,
-            "flex": 0.82,
+            "flex": 1,
             "flexDirection": "column",
           }
         }
@@ -276,11 +276,15 @@ exports[`<MastoRow /> 1`] = `
               ellipsizeMode="tail"
               numberOfLines={1}
               style={
-                Object {
-                  "color": "black",
-                  "fontSize": 16,
-                  "fontWeight": "bold",
-                }
+                Array [
+                  Object {
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  Object {
+                    "color": "#000000",
+                  },
+                ]
               }
             >
               Eugen
@@ -432,12 +436,16 @@ exports[`<MastoRow /> 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "black",
-                  "fontSize": 16,
-                  "paddingRight": 10,
-                  "paddingTop": 2,
-                }
+                Array [
+                  Object {
+                    "fontSize": 16,
+                    "paddingRight": 10,
+                    "paddingTop": 2,
+                  },
+                  Object {
+                    "color": "#000000",
+                  },
+                ]
               }
             >
               "I lost my inheritance with one wrong digit on my sort code" 
@@ -445,12 +453,16 @@ exports[`<MastoRow /> 1`] = `
                 onPress={[Function]}
                 style={
                   Array [
-                    Object {
-                      "color": "black",
-                      "fontSize": 16,
-                      "paddingRight": 10,
-                      "paddingTop": 2,
-                    },
+                    Array [
+                      Object {
+                        "fontSize": 16,
+                        "paddingRight": 10,
+                        "paddingTop": 2,
+                      },
+                      Object {
+                        "color": "#000000",
+                      },
+                    ],
                     Object {
                       "color": "#1b95e0",
                     },
@@ -987,6 +999,96 @@ exports[`<MastoRowPoll /> 1`] = `
 </View>
 `;
 
+exports[`<OpenSticker /> 1`] = `
+<View
+  style={
+    Object {
+      "borderWidth": 0,
+      "flex": 1,
+      "flexDirection": "row",
+      "height": "auto",
+      "marginBottom": 2,
+      "marginTop": 1,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "column",
+          "width": 68,
+        },
+        Object {
+          "backgroundColor": "#26a",
+        },
+      ]
+    }
+  />
+  <ViewManagerAdapter_ExpoLinearGradient
+    proxiedProperties={
+      Object {
+        "colors": Array [
+          4280444586,
+          4294967295,
+        ],
+        "endPoint": Array [
+          1,
+          0,
+        ],
+        "locations": undefined,
+        "startPoint": Array [
+          0,
+          0,
+        ],
+      }
+    }
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+        "fontSize": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "https://s.0px.io/a/md",
+          }
+        }
+        style={
+          Object {
+            "height": 15,
+            "marginRight": 4,
+            "width": 15,
+          }
+        }
+      />
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "color": "#fff",
+          }
+        }
+      >
+        mastodon.potproject.net
+      </Text>
+    </View>
+  </ViewManagerAdapter_ExpoLinearGradient>
+</View>
+`;
+
 exports[`<Search /> 1`] = `
 <View
   style={
@@ -1171,35 +1273,6 @@ exports[`<Search /> 1`] = `
               }
             }
             testID="buttonGroupItemText"
-            theme={
-              Object {
-                "colors": Object {
-                  "grey0": "#657786",
-                  "grey1": "#2b90d9",
-                  "grey2": "#8899a6",
-                  "platform": Object {
-                    "android": Object {},
-                    "ios": Object {},
-                  },
-                  "primary": "#FF3300",
-                },
-                "customColors": Object {
-                  "char": "#000000",
-                  "charBackground": "#FFFFFF",
-                  "charReverse": "#FFFFFF",
-                  "item": Object {
-                    "bookmark": "#4c6ef5",
-                    "boost": "#2b90d9",
-                    "favourite": "#ffd27d",
-                    "none": "#8899a6",
-                  },
-                  "link": "#1b95e0",
-                  "primaryBackground": "#FFFFFF",
-                  "primaryComplementary": "#00CCFF",
-                  "tootButton": "#FF5500",
-                },
-              }
-            }
           >
             Accounts
           </Text>
@@ -1251,35 +1324,6 @@ exports[`<Search /> 1`] = `
               }
             }
             testID="buttonGroupItemText"
-            theme={
-              Object {
-                "colors": Object {
-                  "grey0": "#657786",
-                  "grey1": "#2b90d9",
-                  "grey2": "#8899a6",
-                  "platform": Object {
-                    "android": Object {},
-                    "ios": Object {},
-                  },
-                  "primary": "#FF3300",
-                },
-                "customColors": Object {
-                  "char": "#000000",
-                  "charBackground": "#FFFFFF",
-                  "charReverse": "#FFFFFF",
-                  "item": Object {
-                    "bookmark": "#4c6ef5",
-                    "boost": "#2b90d9",
-                    "favourite": "#ffd27d",
-                    "none": "#8899a6",
-                  },
-                  "link": "#1b95e0",
-                  "primaryBackground": "#FFFFFF",
-                  "primaryComplementary": "#00CCFF",
-                  "tootButton": "#FF5500",
-                },
-              }
-            }
           >
             Toots
           </Text>
@@ -1329,35 +1373,6 @@ exports[`<Search /> 1`] = `
               }
             }
             testID="buttonGroupItemText"
-            theme={
-              Object {
-                "colors": Object {
-                  "grey0": "#657786",
-                  "grey1": "#2b90d9",
-                  "grey2": "#8899a6",
-                  "platform": Object {
-                    "android": Object {},
-                    "ios": Object {},
-                  },
-                  "primary": "#FF3300",
-                },
-                "customColors": Object {
-                  "char": "#000000",
-                  "charBackground": "#FFFFFF",
-                  "charReverse": "#FFFFFF",
-                  "item": Object {
-                    "bookmark": "#4c6ef5",
-                    "boost": "#2b90d9",
-                    "favourite": "#ffd27d",
-                    "none": "#8899a6",
-                  },
-                  "link": "#1b95e0",
-                  "primaryBackground": "#FFFFFF",
-                  "primaryComplementary": "#00CCFF",
-                  "tootButton": "#FF5500",
-                },
-              }
-            }
           >
             HashTags
           </Text>
@@ -1666,7 +1681,7 @@ exports[`<VisibilityModal /> 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "white",
+          "backgroundColor": undefined,
           "borderBottomWidth": 0.5,
           "borderColor": undefined,
           "flexDirection": "row",
@@ -1701,44 +1716,45 @@ exports[`<VisibilityModal /> 1`] = `
             "justifyContent": "center",
           }
         }
+        theme={
+          Object {
+            "colors": Object {
+              "grey0": "#657786",
+              "grey1": "#2b90d9",
+              "grey2": "#8899a6",
+              "platform": Object {
+                "android": Object {},
+                "ios": Object {},
+              },
+              "primary": "#FF3300",
+            },
+            "customColors": Object {
+              "char": "#000000",
+              "charBackground": "#FFFFFF",
+              "charReverse": "#FFFFFF",
+              "item": Object {
+                "bookmark": "#4c6ef5",
+                "boost": "#2b90d9",
+                "favourite": "#ffd27d",
+                "none": "#8899a6",
+              },
+              "link": "#1b95e0",
+              "primaryBackground": "#FFFFFF",
+              "primaryComplementary": "#00CCFF",
+              "tootButton": "#FF5500",
+            },
+          }
+        }
       >
         <Text
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 17,
             }
           }
           testID="listItemTitle"
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
         >
           public
         </Text>
@@ -1746,38 +1762,11 @@ exports[`<VisibilityModal /> 1`] = `
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 15,
             }
           }
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
+          testID="listItemTitle"
         >
           Post to public timelines
         </Text>
@@ -1799,7 +1788,7 @@ exports[`<VisibilityModal /> 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "white",
+          "backgroundColor": undefined,
           "borderBottomWidth": 0.5,
           "borderColor": undefined,
           "flexDirection": "row",
@@ -1834,44 +1823,45 @@ exports[`<VisibilityModal /> 1`] = `
             "justifyContent": "center",
           }
         }
+        theme={
+          Object {
+            "colors": Object {
+              "grey0": "#657786",
+              "grey1": "#2b90d9",
+              "grey2": "#8899a6",
+              "platform": Object {
+                "android": Object {},
+                "ios": Object {},
+              },
+              "primary": "#FF3300",
+            },
+            "customColors": Object {
+              "char": "#000000",
+              "charBackground": "#FFFFFF",
+              "charReverse": "#FFFFFF",
+              "item": Object {
+                "bookmark": "#4c6ef5",
+                "boost": "#2b90d9",
+                "favourite": "#ffd27d",
+                "none": "#8899a6",
+              },
+              "link": "#1b95e0",
+              "primaryBackground": "#FFFFFF",
+              "primaryComplementary": "#00CCFF",
+              "tootButton": "#FF5500",
+            },
+          }
+        }
       >
         <Text
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 17,
             }
           }
           testID="listItemTitle"
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
         >
           unlisted
         </Text>
@@ -1879,38 +1869,11 @@ exports[`<VisibilityModal /> 1`] = `
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 15,
             }
           }
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
+          testID="listItemTitle"
         >
           Do not post to public timelines
         </Text>
@@ -1932,7 +1895,7 @@ exports[`<VisibilityModal /> 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "white",
+          "backgroundColor": undefined,
           "borderBottomWidth": 0.5,
           "borderColor": undefined,
           "flexDirection": "row",
@@ -1967,44 +1930,45 @@ exports[`<VisibilityModal /> 1`] = `
             "justifyContent": "center",
           }
         }
+        theme={
+          Object {
+            "colors": Object {
+              "grey0": "#657786",
+              "grey1": "#2b90d9",
+              "grey2": "#8899a6",
+              "platform": Object {
+                "android": Object {},
+                "ios": Object {},
+              },
+              "primary": "#FF3300",
+            },
+            "customColors": Object {
+              "char": "#000000",
+              "charBackground": "#FFFFFF",
+              "charReverse": "#FFFFFF",
+              "item": Object {
+                "bookmark": "#4c6ef5",
+                "boost": "#2b90d9",
+                "favourite": "#ffd27d",
+                "none": "#8899a6",
+              },
+              "link": "#1b95e0",
+              "primaryBackground": "#FFFFFF",
+              "primaryComplementary": "#00CCFF",
+              "tootButton": "#FF5500",
+            },
+          }
+        }
       >
         <Text
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 17,
             }
           }
           testID="listItemTitle"
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
         >
           private
         </Text>
@@ -2012,38 +1976,11 @@ exports[`<VisibilityModal /> 1`] = `
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 15,
             }
           }
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
+          testID="listItemTitle"
         >
           Post to followers only
         </Text>
@@ -2065,7 +2002,7 @@ exports[`<VisibilityModal /> 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "white",
+          "backgroundColor": undefined,
           "borderColor": undefined,
           "flexDirection": "row",
           "padding": 14,
@@ -2099,44 +2036,45 @@ exports[`<VisibilityModal /> 1`] = `
             "justifyContent": "center",
           }
         }
+        theme={
+          Object {
+            "colors": Object {
+              "grey0": "#657786",
+              "grey1": "#2b90d9",
+              "grey2": "#8899a6",
+              "platform": Object {
+                "android": Object {},
+                "ios": Object {},
+              },
+              "primary": "#FF3300",
+            },
+            "customColors": Object {
+              "char": "#000000",
+              "charBackground": "#FFFFFF",
+              "charReverse": "#FFFFFF",
+              "item": Object {
+                "bookmark": "#4c6ef5",
+                "boost": "#2b90d9",
+                "favourite": "#ffd27d",
+                "none": "#8899a6",
+              },
+              "link": "#1b95e0",
+              "primaryBackground": "#FFFFFF",
+              "primaryComplementary": "#00CCFF",
+              "tootButton": "#FF5500",
+            },
+          }
+        }
       >
         <Text
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 17,
             }
           }
           testID="listItemTitle"
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
         >
           direct
         </Text>
@@ -2144,38 +2082,11 @@ exports[`<VisibilityModal /> 1`] = `
           style={
             Object {
               "backgroundColor": "transparent",
+              "color": undefined,
               "fontSize": 15,
             }
           }
-          theme={
-            Object {
-              "colors": Object {
-                "grey0": "#657786",
-                "grey1": "#2b90d9",
-                "grey2": "#8899a6",
-                "platform": Object {
-                  "android": Object {},
-                  "ios": Object {},
-                },
-                "primary": "#FF3300",
-              },
-              "customColors": Object {
-                "char": "#000000",
-                "charBackground": "#FFFFFF",
-                "charReverse": "#FFFFFF",
-                "item": Object {
-                  "bookmark": "#4c6ef5",
-                  "boost": "#2b90d9",
-                  "favourite": "#ffd27d",
-                  "none": "#8899a6",
-                },
-                "link": "#1b95e0",
-                "primaryBackground": "#FFFFFF",
-                "primaryComplementary": "#00CCFF",
-                "tootButton": "#FF5500",
-              },
-            }
-          }
+          testID="listItemTitle"
         >
           Post to mentioned users only
         </Text>

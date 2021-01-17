@@ -40,12 +40,15 @@ export default function VisibilityModal({ onSelect }){
                 list.map((l, i) => (
                     <ListItem
                         key={i}
-                        leftAvatar={() => <FontAwesome style={styles.icon} name={l.icon} size={26} color={theme.colors.grey1} />}
-                        title={l.name}
-                        subtitle={l.subtitle}
                         bottomDivider={i < 3}
                         onPress={() => onSelect(l.key)}
-                    />
+                    >
+                        <FontAwesome style={styles.icon} name={l.icon} size={26} color={theme.colors.grey1} />
+                        <ListItem.Content>
+                            <ListItem.Title>{l.name}</ListItem.Title>
+                            <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+                        </ListItem.Content>
+                    </ListItem>
                 ))
             }
         </View>

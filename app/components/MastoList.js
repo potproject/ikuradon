@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
@@ -10,6 +10,7 @@ import { open as openImageViewerAction, close as closeImageViewerAction } from "
 import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
 
+import { ThemeContext } from "react-native-elements";
 import NavigationService from "../services/NavigationService";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 const reducerSelector = state => ({
@@ -25,6 +26,7 @@ const REFRESH_TIME = 300;
 
 function MastoList({ navigation, type }) {
     const dispatch = useDispatch();
+    const { theme } = useContext(ThemeContext);
     const [init, setInit] = useState(false);
     const { current, main, streaming, imageviewer, config, openSticker } = useSelector(reducerSelector);
     const { data: openStickerData } = openSticker;
@@ -53,13 +55,15 @@ function MastoList({ navigation, type }) {
     };
     return (
         <View style={styles.container}>
-            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={styles.background}>
+            <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, { backgroundColor: theme.customColors.charBackground }]}>
                 <FlatList
                     keyExtractor={data => data.id}
                     data={listdata.data}
                     extraData={listdata.data}
                     refreshControl={
-                        <RefreshControl 
+                        <RefreshControl
+                            colors={[theme.customColors.char]}
+                            tintColor={theme.customColors.char}
                             enabled={!streamingType} 
                             refreshing={listdata.refreshing} 
                             onRefresh={() => {
@@ -105,7 +109,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     background: {
-        backgroundColor: "#ffffff",
         width: "100%",
         height: "100%"
     },

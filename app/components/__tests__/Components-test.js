@@ -21,6 +21,7 @@ import TimelineLeftHeader from "../TimelineLeftHeader";
 import TimelineCenterHeader from "../TimelineCenterHeader";
 import Search from "../Search";
 import SearchList from "../SearchList";
+import OpenSticker from "../OpenSticker";
 
 import * as searchConst from "../../constants/search";
 
@@ -28,6 +29,7 @@ import ExampleCurrent from "../../example/current";
 import ExampleStatus from "../../example/status";
 import ExamplePoll from "../../example/poll";
 import ExampleMediaAttachment from "../../example/mediaAttachment";
+import ExampleOpenSticker from "../../example/opensticker";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
@@ -124,6 +126,15 @@ it("<MastoRowPoll />", () => {
 //    );
 //    expect(result).toMatchSnapshot();
 //});
+
+it("<OpenSticker />", () => {
+    const result = render(
+        <ThemeContext.Provider value={{ theme }}>
+            <OpenSticker acct={ExampleOpenSticker().acct} currentDomain={ExampleOpenSticker().currentDomain} data={ExampleOpenSticker().data} />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
 
 it("<Search />", () => {
     const result = render(
