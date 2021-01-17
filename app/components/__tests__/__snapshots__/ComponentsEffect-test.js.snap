@@ -889,9 +889,8 @@ exports[`<UserList /> 1`] = `
         style={
           Object {
             "backgroundColor": "transparent",
-            "borderRadius": 20,
-            "height": 40,
-            "width": 40,
+            "height": 34,
+            "width": 34,
           }
         }
         theme={
@@ -929,7 +928,6 @@ exports[`<UserList /> 1`] = `
           style={
             Object {
               "backgroundColor": "transparent",
-              "borderRadius": 20,
               "flex": 1,
               "overflow": "hidden",
               "position": "relative",
@@ -937,7 +935,6 @@ exports[`<UserList /> 1`] = `
           }
         >
           <Image
-            borderRadius={20}
             onLoad={[Function]}
             source={
               Object {
@@ -1084,6 +1081,18 @@ exports[`<UserList /> 1`] = `
           testID="listItemTitle"
         >
           noiob
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "color": "#000000",
+              "fontSize": 15,
+            }
+          }
+          testID="listItemTitle"
+        >
+          
         </Text>
       </View>
       <View

@@ -16,11 +16,14 @@ export default function DraftModal({ onSelect }){
                 renderItem={({ item }) =>(
                     <ListItem
                         key={item.id}
-                        title={item.text}
                         bottomDivider
-                        chevron
                         onPress={() => onSelect(item.id, item.text)}
-                    />
+                    >
+                        <ListItem.Content>
+                            <ListItem.Title>{item.text}</ListItem.Title>
+                        </ListItem.Content>
+                        <ListItem.Chevron />
+                    </ListItem>
                 )}
             />
         </View>

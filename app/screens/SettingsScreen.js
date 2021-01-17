@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import { Text, StyleSheet, View, ScrollView, Alert  } from "react-native";
+import { Text, StyleSheet, View, ScrollView, Alert, Switch } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { ListItem, ThemeContext } from "react-native-elements";
+import { ListItem, Icon, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
 import t from "../services/I18n";
 
@@ -49,45 +49,60 @@ function SettingsScreen() {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{user_credentials ? user_credentials.username + "@" + domain : ""}</Text>
-                <ListItem
-                    title={t("logout")}
-                    bottomDivider
-                    chevron
-                    onPress={()=>dispatch(logout())}
-                />
+                <ListItem bottomDivider onPress={()=>dispatch(logout())}>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("logout")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_header_visible")}</Text>
-                <ListItem
-                    title={t("setting_visible_home")}
-                    bottomDivider
-                    switch={{ value: invisible.home, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value)) }}
-                />
-                <ListItem
-                    title={t("setting_visible_local")}
-                    bottomDivider
-                    switch={{ value: invisible.local, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value)) }}
-                />
-                <ListItem
-                    title={t("setting_visible_federal")}
-                    bottomDivider
-                    switch={{ value: invisible.federal, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value)) }}
-                />
-                <ListItem
-                    title={t("setting_visible_notifications")}
-                    bottomDivider
-                    switch={{ value: invisible.notifications, onValueChange: value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value)) }}
-                />
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_visible_home")}</ListItem.Title>
+                    </ListItem.Content>
+                    <Switch
+                        onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("home", value))}
+                        value={invisible.home}
+                    />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_visible_local")}</ListItem.Title>
+                    </ListItem.Content>
+                    <Switch
+                        onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value))}
+                        value={invisible.local}
+                    />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_visible_federal")}</ListItem.Title>
+                    </ListItem.Content>
+                    <Switch
+                        onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value))}
+                        value={invisible.federal}
+                    />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_visible_notifications")}</ListItem.Title>
+                    </ListItem.Content>
+                    <Switch
+                        onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("notifications", value))}
+                        value={invisible.notifications}
+                    />
+                </ListItem>
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_push_notifications")}</Text>
                 { typeof pushNotification[domain+":"+access_token] !== "object" &&
-                <ListItem
-                    title={t("setting_push_notifications_server")}
-                    input={{ value:pushServer, onChangeText:onChangePushServer }}
-                    bottomDivider
-                />
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_push_notifications_server")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={pushServer} onChangeText={onChangePushServer}></ListItem.Input>
+                </ListItem>
                 }
                 { typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem
-                    title={t("setting_push_notifications_start")}
-                    chevron
                     bottomDivider
                     onPress={() => {
                         Alert.alert(
@@ -103,62 +118,76 @@ function SettingsScreen() {
                             { cancelable: false }
                         );
                     }}
-                />
+                >
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_push_notifications_start")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
                 }
                 { typeof pushNotification[domain+":"+access_token] === "object" &&
                 <ListItem
-                    title={t("setting_push_notifications_stop")}
-                    subtitle={ "プッシュ通知サーバ: " + pushNotification[domain+":"+access_token].server }
-                    rightIcon={{ name: "check", color: theme.colors.primary }}
-                    chevron
                     bottomDivider
                     onPress={() => dispatch(UnsubscribeAction(domain, access_token, pushServer))}
-                />
+                >
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_push_notifications_stop")}</ListItem.Title>
+                        <ListItem.Subtitle>{ "プッシュ通知サーバ: " + pushNotification[domain+":"+access_token].server }</ListItem.Subtitle>
+                    </ListItem.Content>
+                    <Icon name={"check"} color={theme.colors.primary} />
+                    <ListItem.Chevron />
+                </ListItem>
                 }
 
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_opensticker")}</Text>
-                <ListItem
-                    title={t("setting_opensticker_server")}
-                    input={{ value:serverOpenStickerState, onChangeText:onChangeServerOpenSticker }}
-                    bottomDivider
-                />
-                <ListItem
-                    title={t("setting_opensticker_use")}
-                    bottomDivider
-                    switch={{ value: useOpenSticker, onValueChange: value => { value ? dispatch(OpenStickerOnAction(serverOpenStickerState)) : dispatch(OpenStickerOffAction())} }}
-                />
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_opensticker_server")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={serverOpenStickerState} onChangeText={onChangeServerOpenSticker}></ListItem.Input>
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_opensticker_use")}</ListItem.Title>
+                    </ListItem.Content>
+                    <Switch
+                        onValueChange={value => { value ? dispatch(OpenStickerOnAction(serverOpenStickerState)) : dispatch(OpenStickerOffAction())}}
+                        value={useOpenSticker}
+                    />
+                </ListItem>
 
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_themes")}</Text>
-                <ListItem
-                    title={t("setting_background")}
-                    bottomDivider
-                    chevron
-                    onPress={()=>dispatch(setBackground())}
-                />
-                <ListItem
-                    title={t("setting_background_clear")}
-                    bottomDivider
-                    chevron
-                    onPress={()=>dispatch(setBackgroundClear())}
-                />
-                <ListItem
-                    title={t("setting_themes")}
-                    bottomDivider
-                    chevron
-                    onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}
-                />
+                <ListItem bottomDivider onPress={()=>dispatch(setBackground())}>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_background")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem bottomDivider onPress={()=>dispatch(setBackgroundClear())}>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_background_clear")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+                <ListItem bottomDivider onPress={()=>NavigationService.navigate({ name: RouterName.Settings_Themes })}>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_themes")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{}</Text>
-                <ListItem
-                    title={t("setting_appversion")}
-                    subtitle={ Constants.manifest.version }
-                    bottomDivider
-                />
-                <ListItem
-                    title={t("setting_allclear")}
-                    bottomDivider
-                    chevron
-                    onPress={()=>dispatch(allClear())}
-                />
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_appversion")}</ListItem.Title>
+                        <ListItem.Subtitle>{Constants.manifest.version}</ListItem.Subtitle>
+                    </ListItem.Content>
+                </ListItem>
+                <ListItem bottomDivider onPress={()=>dispatch(allClear())}>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_allclear")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
             </View>
         </ScrollView>
     );
