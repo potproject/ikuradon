@@ -66,6 +66,30 @@ function SettingsThemesScreen({ updateTheme }) {
                 </ListItem.Content>
                 <Icon name={"check"} color={config.theme === "dark" ? theme.colors.primary : "#FFFFFF"} />
             </ListItem>
+            <ListItem
+                bottomDivider
+                onPress={()=>{
+                    settingTheme(updateTheme, "mikugreendark");
+                    dispatch(setTheme("mikugreendark"));
+                }}
+            >
+                <ListItem.Content>
+                    <ListItem.Title>{t("themes.mikugreendark")}</ListItem.Title>
+                </ListItem.Content>
+                <Icon name={"check"} color={config.theme === "mikugreendark" ? theme.colors.primary : "#FFFFFF"} />
+            </ListItem>
+            <ListItem
+                bottomDivider
+                onPress={()=>{
+                    settingTheme(updateTheme, "tootbluedark");
+                    dispatch(setTheme("tootbluedark"));
+                }}
+            >
+                <ListItem.Content>
+                    <ListItem.Title>{t("themes.tootbluedark")}</ListItem.Title>
+                </ListItem.Content>
+                <Icon name={"check"} color={config.theme === "tootbluedark" ? theme.colors.primary : "#FFFFFF"} />
+            </ListItem>
         </View>
     );
 }
