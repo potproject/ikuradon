@@ -154,7 +154,13 @@ export default {
 
     //poll
     polls:{
-        votes: " votes",
+        voting: "Voting",
+        ended: "Ended",
+        votes: "votes",
+        hours: "Hours",
+        total_one: " Person",
+        total_people: " People",
+        total_votes: " votes",
     },
 
     //Messages

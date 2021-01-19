@@ -9,7 +9,6 @@ import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
 
 export function openDetail(id) {
-    console.log(id);
     return async dispatch => {
         try {
             NavigationService.navigate({ name: RouterName.Detail });

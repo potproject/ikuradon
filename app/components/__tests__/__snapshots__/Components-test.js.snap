@@ -939,38 +939,48 @@ exports[`<MastoRowPoll /> 1`] = `
 >
   <Text
     style={
-      Object {
-        "flex": 1,
-        "fontSize": 14,
-        "marginLeft": 10,
-        "marginRight": 10,
-        "marginTop": 5,
-      }
+      Array [
+        Object {
+          "color": "#000000",
+        },
+        Object {
+          "flex": 1,
+          "fontSize": 14,
+          "marginLeft": 10,
+          "marginRight": 10,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     accept
      - 
     6
-     votes
+    votes
      (
     60%
     )
   </Text>
   <Text
     style={
-      Object {
-        "flex": 1,
-        "fontSize": 14,
-        "marginLeft": 10,
-        "marginRight": 10,
-        "marginTop": 5,
-      }
+      Array [
+        Object {
+          "color": "#000000",
+        },
+        Object {
+          "flex": 1,
+          "fontSize": 14,
+          "marginLeft": 10,
+          "marginRight": 10,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     deny
      - 
     4
-     votes
+    votes
      (
     40%
     )
@@ -992,9 +1002,9 @@ exports[`<MastoRowPoll /> 1`] = `
     }
   >
     
-    (10票)
+    (10 votes)
      - 
-    終了
+    Ended
   </Text>
 </View>
 `;
