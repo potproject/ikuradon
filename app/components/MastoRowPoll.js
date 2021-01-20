@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ThemeContext } from "react-native-elements";
 import PropTypes from "prop-types";
-import { timeStr, votePer, voters, votes } from "../util/poll";
+import { getPoll, timeStr, votePer, voters, votes } from "../util/poll";
 import t from "../services/I18n";
 
 function MastoRowPoll({ poll }){
     const { theme } = useContext(ThemeContext);
-    let { id, expires_at, expired, multiple, votes_count, voters_count, voted, own_votes, options, emojis } = poll;
+    let [pollState, usePollState] = useState(poll);
+    let { id, expires_at, expired, multiple, votes_count, voters_count, voted, own_votes, options, emojis } = pollState;
     return (
         <View style={styles.container}>
             {
@@ -18,6 +19,15 @@ function MastoRowPoll({ poll }){
                 })
             }
             <Text style={[{ color: theme.colors.grey0 }, styles.pollDetailsRow]}>{voters(voters_count)}{votes(votes_count)} - {timeStr(expires_at, expired)}</Text>
+            <TouchableOpacity onPress={async () => {
+                let { data } = await getPoll(id);
+                if (data && typeof data.id !== "undefined"){
+                    usePollState(data);
+                }
+            }
+            }>
+                <Text style={[{ color: theme.colors.grey2 }, styles.pollDetailsRow, styles.reload]}>{t("polls.reload")}</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -35,6 +45,9 @@ const styles = StyleSheet.create({
         marginRight:10,
         fontSize: 14,
     },
+    reload:{
+        textDecorationLine: "underline"
+    }
 });
 
 MastoRowPoll.propTypes = {

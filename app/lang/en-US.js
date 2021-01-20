@@ -161,6 +161,7 @@ export default {
         total_one: " Person",
         total_people: " People",
         total_votes: " votes",
+        reload: "Reload"
     },
 
     //Messages

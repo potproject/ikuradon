@@ -190,6 +190,12 @@ export const GET_SEARCH_V2 = {
     }
 };
 
+export const GET_POLL = {
+    method: "get",
+    url: "/api/v1/polls/:param:",
+    form: {}
+};
+
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
     url: "/api/v1/streaming"

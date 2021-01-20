@@ -1,5 +1,21 @@
 import t from "../services/I18n";
+import Networking from "../services/Networking";
+import * as CONST_API from "../constants/api";
 import DayJS from "dayjs";
+import * as Session from "../util/session";
+
+/**
+ * Poll取得
+ */
+export async function getPoll(id) {
+    try {
+        let { domain, access_token } = await Session.getDomainAndToken();
+        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, access_token);
+        return { data, error: null };
+    } catch (e){
+        return { data: {}, error: e.message };
+    }
+}
 
 /**
  * 残り時間

@@ -160,6 +160,7 @@ export default {
         total_one: "人",
         total_people: "人",
         total_votes: "票",
+        reload: "更新"
     },
 
     //メッセージ

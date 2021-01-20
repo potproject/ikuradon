@@ -1006,6 +1006,44 @@ exports[`<MastoRowPoll /> 1`] = `
      - 
     Ended
   </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#8899a6",
+          },
+          Object {
+            "flex": 1,
+            "fontSize": 14,
+            "marginLeft": 10,
+            "marginRight": 10,
+            "marginTop": 5,
+          },
+          Object {
+            "textDecorationLine": "underline",
+          },
+        ]
+      }
+    >
+      Reload
+    </Text>
+  </View>
 </View>
 `;
 
