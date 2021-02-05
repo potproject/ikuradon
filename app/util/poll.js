@@ -8,12 +8,12 @@ import * as Session from "../util/session";
  * Poll投票
  * @param {string} id 
  * @param {number[]} choices
- * @returns {object}
+ * @returns {Promise<object>}
  */
 export async function votePoll(id, choices) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, { choices }, access_token);
+        let data = await Networking.fetch(domain, CONST_API.POST_POLL_VOTES, id, { choices }, access_token);
         return { data, error: null };
     } catch (e){
         return { data: {}, error: e.message };
@@ -24,7 +24,7 @@ export async function votePoll(id, choices) {
 /**
  * Poll取得
  * @param {string} id 
- * @returns {object}
+ * @returns {Promise<object>}
  */
 export async function getPoll(id) {
     try {
@@ -40,16 +40,23 @@ export async function getPoll(id) {
  * 残り時間
  * @param {string|null} expires_at 
  * @param {boolean} expired
+ * @param {boolean} multiple
  * @returns {string}
  */
-export function timeStr(expires_at, expired){
+export function timeStr(expires_at, expired, multiple){
     if (expired){
         return t("polls.ended");
     }
-    if (!expired && expires_at === null){
+    if (!expired && expires_at === null && multiple){
+        return t("polls.voting_multiple");
+    }
+    if (!expired && expires_at === null && !multiple){
         return t("polls.voting");
     }
-    return DayJS(expires_at).diff(DayJS(), "h") + " " + t("polls.hours");
+    if (multiple){
+        return t("polls.voting_multiple") + " " + DayJS(expires_at).diff(DayJS(), "h") + " " + t("polls.hours");
+    }
+    return t("polls.voting") + " " + DayJS(expires_at).diff(DayJS(), "h") + " " + t("polls.hours");
 }
 
 /**

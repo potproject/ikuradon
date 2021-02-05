@@ -945,7 +945,7 @@ exports[`<MastoRowPoll /> 1`] = `
         },
         Object {
           "flex": 1,
-          "fontSize": 14,
+          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -965,11 +965,11 @@ exports[`<MastoRowPoll /> 1`] = `
     style={
       Array [
         Object {
-          "color": "#000000",
+          "color": "#2b90d9",
         },
         Object {
           "flex": 1,
-          "fontSize": 14,
+          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -993,7 +993,7 @@ exports[`<MastoRowPoll /> 1`] = `
         },
         Object {
           "flex": 1,
-          "fontSize": 14,
+          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -1030,7 +1030,7 @@ exports[`<MastoRowPoll /> 1`] = `
           },
           Object {
             "flex": 1,
-            "fontSize": 14,
+            "fontSize": 16,
             "marginLeft": 10,
             "marginRight": 10,
             "marginTop": 5,

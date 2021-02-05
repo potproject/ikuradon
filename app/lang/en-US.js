@@ -155,7 +155,9 @@ export default {
     //poll
     polls:{
         voting: "Voting",
+        voting_multiple: "Multiple Voting",
         ended: "Ended",
+        vote: "Vote",
         votes: "votes",
         hours: "Hours",
         total_one: " Person",

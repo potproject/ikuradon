@@ -47,9 +47,11 @@ describe("Util/Poll", () => {
         Networking.fetch.mockClear();
     });
     it("timeStr", () => {
-        expect(timeStr("2019-12-05T04:05:08.302Z", true)).toEqual("Ended");
-        expect(timeStr(null, false)).toEqual("Voting");
-        expect(timeStr(DayJS().add(3, "week").format(), false)).toEqual("503 Hours");
+        expect(timeStr("2019-12-05T04:05:08.302Z", true, false)).toEqual("Ended");
+        expect(timeStr(null, false, false)).toEqual("Voting");
+        expect(timeStr(null, false, true)).toEqual("Multiple Voting");
+        expect(timeStr(DayJS().add(3, "week").format(), false, false)).toEqual("Voting 503 Hours");
+        expect(timeStr(DayJS().add(3, "week").format(), false, true)).toEqual("Multiple Voting 503 Hours");
     });
     it("votePer", () => {
         expect(votePer(0, 0)).toEqual("0%");
