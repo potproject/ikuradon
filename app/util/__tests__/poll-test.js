@@ -1,4 +1,4 @@
-import { getPoll, timeStr, votePer, voters, votes } from "../poll";
+import { getPoll, votePoll, timeStr, votePer, voters, votes } from "../poll";
 import Networking from "../../services/Networking";
 import * as Session from "../../util/session";
 import ExampleSession from "../../example/session";
@@ -17,7 +17,7 @@ describe("Util/Poll", () => {
     it("getPoll", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         Networking.fetch.mockImplementation(() => ExamplePoll());
-        expect(await getPoll("100")).toEqual({ "data": ExamplePoll(), "error": null });
+        expect(await getPoll("34830")).toEqual({ "data": ExamplePoll(), "error": null });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
     });
@@ -26,7 +26,23 @@ describe("Util/Poll", () => {
         Networking.fetch.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        expect(await getPoll("100")).toEqual({ "data": {}, "error": "Network Error" });
+        expect(await getPoll("34830")).toEqual({ "data": {}, "error": "Network Error" });
+        Session.getDomainAndToken.mockClear();
+        Networking.fetch.mockClear();
+    });
+    it("votePoll", async () => {
+        Session.getDomainAndToken.mockImplementation(() => ExampleSession());
+        Networking.fetch.mockImplementation(() => ExamplePoll());
+        expect(await votePoll("34830", [1])).toEqual({ "data": ExamplePoll(), "error": null });
+        Session.getDomainAndToken.mockClear();
+        Networking.fetch.mockClear();
+    });
+    it("votePoll Network Error", async () => {
+        Session.getDomainAndToken.mockImplementation(() => ExampleSession());
+        Networking.fetch.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        expect(await votePoll("34830", [1])).toEqual({ "data": {}, "error": "Network Error" });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
     });

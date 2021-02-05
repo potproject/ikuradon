@@ -5,12 +5,31 @@ import DayJS from "dayjs";
 import * as Session from "../util/session";
 
 /**
+ * Poll投票
+ * @param {string} id 
+ * @param {number[]} choices
+ * @returns {object}
+ */
+export async function votePoll(id, choices) {
+    try {
+        let { domain, access_token } = await Session.getDomainAndToken();
+        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, { choices }, access_token);
+        return { data, error: null };
+    } catch (e){
+        return { data: {}, error: e.message };
+    }
+}
+
+
+/**
  * Poll取得
+ * @param {string} id 
+ * @returns {object}
  */
 export async function getPoll(id) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, access_token);
+        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, {}, access_token);
         return { data, error: null };
     } catch (e){
         return { data: {}, error: e.message };
