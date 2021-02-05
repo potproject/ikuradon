@@ -153,7 +153,16 @@ export default {
 
     //投票
     polls:{
-        votes: " 票",
+        voting: "投票中",
+        voting_multiple: "投票中(複数可)",
+        ended: "終了",
+        vote: "投票する",
+        votes: "票",
+        hours: "時間",
+        total_one: "人",
+        total_people: "人",
+        total_votes: "票",
+        reload: "更新"
     },
 
     //メッセージ

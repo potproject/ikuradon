@@ -19,7 +19,7 @@ jobs:
               run: yarn
             - name: Run eslint
               run: yarn lint
-            - name: Run just
+            - name: Run jest
               run: yarn test-coverage
             - name: Coveralls
               uses: coverallsapp/github-action@master
