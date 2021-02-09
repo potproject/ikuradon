@@ -55,6 +55,13 @@ export function unsubscribe(domain, accessToken, server = DefaultPushServer){
             });
             DropDownHolder.success("Notification Setting Success!", "unsubscribed to " + endpoints); 
         } catch (e){
+            // 404の場合でも処理
+            if (e.response && e.response.status === 404) {
+                dispatch({ 
+                    type: PushNotification.PUSHNOTIFICATION_UNSUBSCRIBE,
+                    id: uniq
+                });
+            }
             DropDownHolder.error("Notification Setting Error!", e.message); 
         }
     };
