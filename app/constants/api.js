@@ -109,6 +109,12 @@ export const POST_STATUS = {
     }
 };
 
+export const GET_STATUS = {
+    method: "get",
+    url: "/api/v1/statuses/:param:",
+    form: {}
+};
+
 export const DELETE_STATUS = {
     method: "delete",
     url: "/api/v1/statuses/:param:",

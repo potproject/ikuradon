@@ -7,15 +7,22 @@ import t from "../../services/I18n";
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
+import * as Session from "../../util/session";
 
 export function openDetail(id) {
     return async dispatch => {
+        NavigationService.navigate({ name: RouterName.Detail });
         try {
-            NavigationService.navigate({ name: RouterName.Detail });
-            dispatch({ type: Detail.DETAIL_OPEN });
+            let { domain, access_token } = await Session.getDomainAndToken();
+            let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
+            dispatch({ type: Detail.DETAIL_OPEN, data, loaded: true });
         } catch (e) {
+            dispatch({ type: Detail.DETAIL_OPEN, data: {}, loaded: false });
             DropDownHolder.error(t("Errors_error"), e.message);
         }
     };
 }
 
+export function closeDetail() {
+    return { type: Detail.DETAIL_CLOSE };
+}

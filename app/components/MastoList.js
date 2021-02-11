@@ -50,8 +50,7 @@ function MastoList({ navigation, type }) {
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
 
-        // TODO
-        openDetailAction: (id) => {/*dispatch(openDetailAction(id))*/},
+        openDetailAction: (id) => {dispatch(openDetailAction(id))},
     };
     return (
         <View style={styles.container}>
