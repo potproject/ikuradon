@@ -18,7 +18,7 @@ export function openDetail(id) {
             dispatch({ type: Detail.DETAIL_OPEN, data, loaded: true });
         } catch (e) {
             dispatch({ type: Detail.DETAIL_OPEN, data: {}, loaded: false });
-            DropDownHolder.error(t("Errors_error"), e.message);
+            DropDownHolder.error(t("messages.detail_load_error"), e.message);
         }
     };
 }

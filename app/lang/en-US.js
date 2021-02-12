@@ -60,6 +60,8 @@ export default {
     navigation_notifications: "Notifications",
     navigation_setting: "Setting",
 
+    detail_toot: "Toot",
+
     //Navigation Button
     navigation_button_toot: "Toot",
 
@@ -177,6 +179,8 @@ export default {
         logout_failed: "Failed to logout.",
 
         network_error: "Network error occurred.",
+
+        detail_load_error: "Failed to load a toot.",
 
         streaming_enabled: "Timeline Streaming Enabled.",
         streaming_disabled: "Timeline Streaming Disabled.",

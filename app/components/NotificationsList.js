@@ -44,8 +44,7 @@ function NotificationsList({ type }) {
         openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
         closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
 
-        // TODO
-        openDetailAction: (id) => {/*dispatch(openDetailAction(id))*/},
+        openDetailAction: (id) => {dispatch(openDetailAction(id))},
     };
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);
