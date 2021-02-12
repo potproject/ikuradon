@@ -4,7 +4,7 @@ import { ThemeContext, Header } from "react-native-elements";
 import MastoDetailRow from "../components/MastoDetailRow";
 import { hide as HideAction, deleting as DeleteAction, follow as FollowAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
-import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 
 import { closeDetail } from "../actions/actioncreators/detail";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
@@ -44,10 +44,10 @@ function DetailScreen({ route, navigation }) {
             dispatch(DeleteAction(id));
         },
 
-        followAction: (id, followed) => {dispatch(FollowAction(id, followed))},
+        FollowAction: (id, followed) => {dispatch(FollowAction(id, followed))},
 
-        openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
-        closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
+        OpenImageViewerAction: (media, index) => {dispatch(OpenImageViewerAction(media, index))},
+        CloseImageViewerAction: () => {dispatch(CloseImageViewerAction())},
     };
     const { theme } = useContext(ThemeContext);
     return (

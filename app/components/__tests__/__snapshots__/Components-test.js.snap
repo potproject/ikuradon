@@ -85,11 +85,15 @@ exports[`<MastoRow /> 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#8899a6",
-            "fontSize": 12,
-            "textAlign": "right",
-          }
+          Array [
+            Object {
+              "fontSize": 12,
+              "textAlign": "right",
+            },
+            Object {
+              "color": "#8899a6",
+            },
+          ]
         }
       >
          
@@ -583,7 +587,7 @@ exports[`<MastoRow /> 1`] = `
                 ]
               }
             >
-              6
+              
             </Text>
           </View>
           <View
@@ -637,7 +641,7 @@ exports[`<MastoRow /> 1`] = `
                 ]
               }
             >
-              11
+              
             </Text>
           </View>
           <View
@@ -942,10 +946,10 @@ exports[`<MastoRowPoll /> 1`] = `
       Array [
         Object {
           "color": "#000000",
+          "fontSize": 16,
         },
         Object {
           "flex": 1,
-          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -966,10 +970,10 @@ exports[`<MastoRowPoll /> 1`] = `
       Array [
         Object {
           "color": "#2b90d9",
+          "fontSize": 16,
         },
         Object {
           "flex": 1,
-          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -990,10 +994,10 @@ exports[`<MastoRowPoll /> 1`] = `
       Array [
         Object {
           "color": "#657786",
+          "fontSize": 16,
         },
         Object {
           "flex": 1,
-          "fontSize": 16,
           "marginLeft": 10,
           "marginRight": 10,
           "marginTop": 5,
@@ -1027,10 +1031,10 @@ exports[`<MastoRowPoll /> 1`] = `
         Array [
           Object {
             "color": "#8899a6",
+            "fontSize": 16,
           },
           Object {
             "flex": 1,
-            "fontSize": 16,
             "marginLeft": 10,
             "marginRight": 10,
             "marginTop": 5,

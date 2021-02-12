@@ -15,7 +15,7 @@ import { ThemeContext } from "react-native-elements";
 import NotificationsRow from "./NotificationsRow";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
-import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 
 const CurrentUserReducerSelector = state => ({
     current: state.currentUserReducer,
@@ -41,8 +41,8 @@ function NotificationsList({ type }) {
 
         FollowAction: (id, followed) => {dispatch(FollowAction(id, followed))},
 
-        openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
-        closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
+        OpenImageViewerAction: (media, index) => {dispatch(OpenImageViewerAction(media, index))},
+        CloseImageViewerAction: () => {dispatch(CloseImageViewerAction())},
 
         openDetailAction: (id) => {dispatch(openDetailAction(id))},
     };
@@ -80,11 +80,11 @@ function NotificationsList({ type }) {
                         }
                     }}
                 />
-                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
+                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.CloseImageViewerAction()}>
                     <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
                         enableSwipeDown={true}
                         loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
-                        onSwipeDown={() => { actions.closeImageViewerAction()}} />
+                        onSwipeDown={() => { actions.CloseImageViewerAction()}} />
                 </Modal>
             </ImageBackground>
         </View>

@@ -21,7 +21,8 @@ describe("Action/Toot", () => {
     it("toot", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
         Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
-            try {let ac = ExampleSession();
+            try {
+                let ac = ExampleSession();
                 expect(domain).toEqual(ac.domain);
                 expect(api).toEqual(CONST_API.POST_STATUS);
                 expect(restParams).toEqual(null);
