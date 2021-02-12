@@ -33,8 +33,16 @@ function DetailScreen({ route, navigation }) {
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
-        HideAction: (id) => {dispatch(HideAction(id))},
-        DeleteAction: (id) => {dispatch(DeleteAction(id))},
+        HideAction: (id) => {
+            dispatch(closeDetail());
+            navigation.goBack();
+            dispatch(HideAction(id));
+        },
+        DeleteAction: (id) => {
+            dispatch(closeDetail());
+            navigation.goBack();
+            dispatch(DeleteAction(id));
+        },
 
         followAction: (id, followed) => {dispatch(FollowAction(id, followed))},
 
