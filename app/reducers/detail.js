@@ -9,13 +9,13 @@ export const initialState = {
 export default function detail(state = initialState, action = {}) {
     switch (action.type) {
         //open
-        case Detail.DETAIL_OPEN:
+        case Detail.DETAIL_GET:
             return Object.assign({}, state, { 
                 data: action.data,
                 loaded: action.loaded
             });
         //ナビゲーションの完了時
-        case Detail.DETAIL_CLOSE:
+        case Detail.DETAIL_RESET:
             return { data: {}, loaded: null };
     }
     return state;

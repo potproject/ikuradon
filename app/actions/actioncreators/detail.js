@@ -9,15 +9,15 @@ import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
 
-export function openDetail(id) {
+export function getDetail(id) {
     return async dispatch => {
         NavigationService.navigate({ name: RouterName.Detail });
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
-            dispatch({ type: Detail.DETAIL_OPEN, data, loaded: true });
+            dispatch({ type: Detail.DETAIL_GET, data, loaded: true });
         } catch (e) {
-            dispatch({ type: Detail.DETAIL_OPEN, data: {}, loaded: false });
+            dispatch({ type: Detail.DETAIL_GET, data: {}, loaded: false });
             DropDownHolder.error(t("messages.detail_load_error"), e.message);
         }
     };
@@ -26,17 +26,17 @@ export function openDetail(id) {
 export function reloadDetail(id) {
     return async dispatch => {
         try {
-            dispatch({ type: Detail.DETAIL_CLOSE });
+            dispatch({ type: Detail.DETAIL_RESET });
             let { domain, access_token } = await Session.getDomainAndToken();
             let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
-            dispatch({ type: Detail.DETAIL_OPEN, data, loaded: true });
+            dispatch({ type: Detail.DETAIL_GET, data, loaded: true });
         } catch (e) {
-            dispatch({ type: Detail.DETAIL_OPEN, data: {}, loaded: false });
+            dispatch({ type: Detail.DETAIL_GET, data: {}, loaded: false });
             DropDownHolder.error(t("messages.detail_load_error"), e.message);
         }
     };
 }
 
-export function closeDetail() {
-    return { type: Detail.DETAIL_CLOSE };
+export function resetDetail() {
+    return { type: Detail.DETAIL_RESET };
 }

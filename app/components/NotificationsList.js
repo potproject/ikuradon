@@ -6,7 +6,7 @@ import ImageViewer from "react-native-image-zoom-viewer";
 
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
-import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
+import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 
 import NavigationService from "../services/NavigationService";
 import * as RouterName from "../constants/RouterName";
@@ -44,7 +44,7 @@ function NotificationsList({ type }) {
         OpenImageViewerAction: (media, index) => {dispatch(OpenImageViewerAction(media, index))},
         CloseImageViewerAction: () => {dispatch(CloseImageViewerAction())},
 
-        openDetailAction: (id) => {dispatch(openDetailAction(id))},
+        GetDetailAction: (id) => {dispatch(GetDetailAction(id))},
     };
     if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
         setInit(true);

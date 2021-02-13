@@ -1,4 +1,4 @@
-import { openDetail, closeDetail } from "../detail";
+import { getDetail, resetDetail, reloadDetail } from "../detail";
 
 import * as Detail from "../../actiontypes/detail";
 import DropDownHolder from "../../../services/DropDownHolder";
@@ -18,11 +18,11 @@ jest.mock("../../../services/DropDownHolder", () => ({
 }));
 
 describe("Action/Detail", () => {
-    it("openDetail", async done => {
-        let action = openDetail("100100");
+    it("getDetail", async done => {
+        let action = getDetail("100100");
         let status = ExampleStatus();
         let session = ExampleSession();
-        Session.getDomainAndToken.mockImplementation(()=> session);
+        Session.getDomainAndToken.mockImplementation(() => session);
         Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
             expect(domain).toEqual(session.domain);
             expect(api).toEqual(CONST_API.GET_STATUS);
@@ -32,7 +32,7 @@ describe("Action/Detail", () => {
             return status;
         });
         action(({ type, data, loaded }) => {
-            expect(type).toEqual(Detail.DETAIL_OPEN);
+            expect(type).toEqual(Detail.DETAIL_GET);
             expect(data).toEqual(status);
             expect(loaded).toEqual(true);
             done();
@@ -41,9 +41,9 @@ describe("Action/Detail", () => {
         Networking.fetch.mockClear();
         
     });
-    it("openDetail Error", async done => {
-        let action = openDetail("100100");
-        Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
+    it("getDetail Error", async done => {
+        let action = getDetail("100100");
+        Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         Networking.fetch.mockImplementation(() => {
             throw new Error("Network Error");
         });
@@ -52,14 +52,66 @@ describe("Action/Detail", () => {
             done();
         });
         action(({ type, loaded }) => {
-            expect(type).toEqual(Detail.DETAIL_OPEN);
+            expect(type).toEqual(Detail.DETAIL_GET);
             expect(loaded).toEqual(false);
             done();
         });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
     });
-    it("closeDetail", () => {
-        expect(closeDetail()).toEqual({ type: Detail.DETAIL_CLOSE });
+    it("reloadDetail", async done => {
+        let action = reloadDetail("100100");
+        let status = ExampleStatus();
+        let session = ExampleSession();
+        Session.getDomainAndToken.mockImplementation(() => session);
+        Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
+            expect(domain).toEqual(session.domain);
+            expect(api).toEqual(CONST_API.GET_STATUS);
+            expect(restParams).toEqual("100100");
+            expect(postParams).toEqual({});
+            expect(access_token).toEqual(session.access_token);
+            return status;
+        });
+        let call = 0;
+        action(({ type, data, loaded }) => {
+            if (call === 0){
+                expect(type).toEqual(Detail.DETAIL_RESET);
+                call++;
+            } else {
+                expect(type).toEqual(Detail.DETAIL_GET);
+                expect(data).toEqual(status);
+                expect(loaded).toEqual(true);
+                done();
+            }
+        });
+        Session.getDomainAndToken.mockClear();
+        Networking.fetch.mockClear();
+        
+    });
+    it("reloadDetail Error", async done => {
+        let action = reloadDetail("100100");
+        Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
+        Networking.fetch.mockImplementation(() => {
+            throw new Error("Network Error");
+        });
+        DropDownHolder.error.mockImplementation((title, message) => {
+            expect(message).toEqual("Network Error");
+            done();
+        });
+        let call = 0;
+        action(({ type, loaded }) => {
+            if (call === 0){
+                expect(type).toEqual(Detail.DETAIL_RESET);
+                call++;
+            } else {
+                expect(type).toEqual(Detail.DETAIL_GET);
+                expect(loaded).toEqual(false);
+            }
+        });
+        Session.getDomainAndToken.mockClear();
+        Networking.fetch.mockClear();
+    });
+    it("resetDetail", () => {
+        expect(resetDetail()).toEqual({ type: Detail.DETAIL_RESET });
     });
 });

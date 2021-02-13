@@ -7,7 +7,7 @@ import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
-import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
+import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
 
 import { ThemeContext } from "react-native-elements";
@@ -50,7 +50,7 @@ function MastoList({ navigation, type }) {
         OpenImageViewerAction: (media, index) => {dispatch(OpenImageViewerAction(media, index))},
         CloseImageViewerAction: () => {dispatch(CloseImageViewerAction())},
 
-        openDetailAction: (id) => {dispatch(openDetailAction(id))},
+        GetDetailAction: (id) => {dispatch(GetDetailAction(id))},
     };
     return (
         <View style={styles.container}>

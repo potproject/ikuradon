@@ -6,7 +6,7 @@ import { hide as HideAction, deleting as DeleteAction, follow as FollowAction } 
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 
-import { reloadDetail, closeDetail } from "../actions/actioncreators/detail";
+import { reloadDetail, resetDetail } from "../actions/actioncreators/detail";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import * as RouterName from "../constants/RouterName";
@@ -34,12 +34,12 @@ function DetailScreen({ route, navigation }) {
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
         HideAction: (id) => {
-            dispatch(closeDetail());
+            dispatch(resetDetail());
             navigation.goBack();
             dispatch(HideAction(id));
         },
         DeleteAction: (id) => {
-            dispatch(closeDetail());
+            dispatch(resetDetail());
             navigation.goBack();
             dispatch(DeleteAction(id));
         },
@@ -54,7 +54,7 @@ function DetailScreen({ route, navigation }) {
         <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.container]}>
             <Header
                 leftComponent={<TimelineLeftHeader isBack={true} onPress={() => {
-                    dispatch(closeDetail());
+                    dispatch(resetDetail());
                     navigation.goBack();
                 }} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={t("detail_toot")} onPress={navigation.openDrawer} current={current}/>}   
