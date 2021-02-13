@@ -7,7 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { votePoll, getPoll, timeStr, votePer, voters, votes } from "../util/poll";
 import t from "../services/I18n";
 
-function MastoRowPoll({ poll }){
+function MastoRowPoll({ poll, fontSize }){
     const { theme } = useContext(ThemeContext);
     let [pollState, usePollState] = useState(poll);
     let [pollMultipleSelectedState, usePollMultipleSelectedState] = useState([]);
@@ -17,7 +17,7 @@ function MastoRowPoll({ poll }){
             { (voted || expired) && // Expired or voted
                 options.map((v, i)=>{
                     return (
-                        <Text style={[{ color: own_votes.includes(i) ? theme.colors.grey1 : theme.customColors.char }, styles.pollDetailsRow]} key={i}>
+                        <Text style={[{ color: own_votes.includes(i) ? theme.colors.grey1 : theme.customColors.char, fontSize }, styles.pollDetailsRow]} key={i}>
                             {v.title} - {v.votes_count}{t("polls.votes")} ({votePer(v.votes_count, votes_count)})
                         </Text>
                     );
@@ -33,7 +33,7 @@ function MastoRowPoll({ poll }){
                                 usePollMultipleSelectedState([...pollMultipleSelectedState, i]);
                             }
                         }}>
-                            <Text style={[{ color: pollMultipleSelectedState.includes(i) ? theme.colors.grey1 : theme.colors.grey2 }, styles.pollDetailsRow, styles.underline]}>
+                            <Text style={[{ color: pollMultipleSelectedState.includes(i) ? theme.colors.grey1 : theme.colors.grey2, fontSize }, styles.pollDetailsRow, styles.underline]}>
                                 <FontAwesome name={"comments"} size={14} color={pollMultipleSelectedState.includes(i) ? theme.colors.grey1 : theme.colors.grey2} style={{ marginRight:5 }}/>
                                 {" " + v.title}
                             </Text>
@@ -49,7 +49,7 @@ function MastoRowPoll({ poll }){
                 }
             }
             }>
-                <Text style={[{ color: theme.colors.grey2 }, styles.pollDetailsRow, styles.underline]}>{t("polls.vote")}</Text>
+                <Text style={[{ color: theme.colors.grey2, fontSize }, styles.pollDetailsRow, styles.underline]}>{t("polls.vote")}</Text>
             </TouchableOpacity>
             }
             { (!voted && !expired) && !multiple && // one voting
@@ -62,7 +62,7 @@ function MastoRowPoll({ poll }){
                             }
                         }
                         }>
-                            <Text style={[{ color: theme.colors.grey2 }, styles.pollDetailsRow, styles.underline]}>
+                            <Text style={[{ color: theme.colors.grey2, fontSize }, styles.pollDetailsRow, styles.underline]}>
                                 <FontAwesome name={"comments"} size={14} color={theme.colors.grey2} style={{ marginRight:5 }}/>
                                 {" " + v.title}
                             </Text>
@@ -70,7 +70,7 @@ function MastoRowPoll({ poll }){
                     );
                 })
             }
-            <Text style={[{ color: theme.colors.grey0 }, styles.pollDetailsRow]}>{voters(voters_count)}{votes(votes_count)} - {timeStr(expires_at, expired, multiple)}</Text>
+            <Text style={[{ color: theme.colors.grey0, fontSize }, styles.pollDetailsRow]}>{voters(voters_count)}{votes(votes_count)} - {timeStr(expires_at, expired, multiple)}</Text>
             <TouchableOpacity onPress={async () => {
                 let { data } = await getPoll(id);
                 if (data && typeof data.id !== "undefined"){
@@ -78,7 +78,7 @@ function MastoRowPoll({ poll }){
                 }
             }
             }>
-                <Text style={[{ color: theme.colors.grey2 }, styles.pollDetailsRow, styles.underline]}>{t("polls.reload")}</Text>
+                <Text style={[{ color: theme.colors.grey2, fontSize }, styles.pollDetailsRow, styles.underline]}>{t("polls.reload")}</Text>
             </TouchableOpacity>
         </View>
     );
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginLeft: 10,
         marginRight:10,
-        fontSize: 16,
     },
     underline:{
         textDecorationLine: "underline"

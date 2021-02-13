@@ -60,6 +60,8 @@ export default {
     navigation_notifications: "通知",
     navigation_setting: "設定",
 
+    detail_toot: "トゥート",
+
     //ナビゲーションボタン
     navigation_button_toot: "トゥート",
 
@@ -176,6 +178,8 @@ export default {
         logout_failed: "ログアウトに失敗しました",
 
         network_error: "ネットワークエラーが発生しました",
+
+        detail_load_error: "トゥートの読み込みに失敗しました",
 
         streaming_enabled: "ストリーミングを有効にしました",
         streaming_disabled: "ストリーミングを無効にしました",

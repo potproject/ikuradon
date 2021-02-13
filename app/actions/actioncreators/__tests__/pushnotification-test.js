@@ -19,6 +19,16 @@ jest.mock("../../../services/DropDownHolder", () => ({
     success: jest.fn(),
 }));
 
+class AxiosMockError extends Error {
+    constructor(message = "", ...args) {
+        super(message, ...args);
+        this.message = message;
+        this.request = args[0];
+        this.response = args[1];
+        this.code = args[2];
+    }
+}
+
 describe("Action/PushNotification", () => {
     it("subscribe", async done => {
         grantNotifications.mockImplementation(() => true);
@@ -121,6 +131,33 @@ describe("Action/PushNotification", () => {
         let action = unsubscribe(domain, access_token);
         await action(() => null);
         grantNotifications.mockReset();
+    });
+    it("unsubscribe 404", async done => {
+        grantNotifications.mockImplementation(() => true);
+        getExpoPushTokenAsync.mockImplementation(()=>({ data: "Expo[TOKEN]" }));
+        Networking.pushServer.mockImplementation(() => {
+            throw new AxiosMockError("Not Found", {}, { status: 404 }, 404);
+        });
+        DropDownHolder.error.mockImplementationOnce((title, message) => {
+            expect(message).toEqual("Not Found");
+            done();
+        });
+        const { domain, access_token } = ExampleSession();
+        let action = unsubscribe(domain, access_token);
+        await action((callback) => {
+            try {
+                expect(callback).toEqual({
+                    type: PushNotification.PUSHNOTIFICATION_UNSUBSCRIBE,
+                    id: "mastodon.server.net:ACCEESS_TOKEN"
+                });
+            } catch (e){
+                done(e);
+            }
+        });
+        grantNotifications.mockReset();
+        getExpoPushTokenAsync.mockReset();
+        Networking.pushServer.mockReset();
+        DropDownHolder.error.mockReset();
     });
     it("unsubscribe fail", async done => {
         grantNotifications.mockImplementation(() => true);

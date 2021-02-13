@@ -132,7 +132,7 @@ function SettingsScreen() {
                 >
                     <ListItem.Content>
                         <ListItem.Title>{t("setting_push_notifications_stop")}</ListItem.Title>
-                        <ListItem.Subtitle>{ "プッシュ通知サーバ: " + pushNotification[domain+":"+access_token].server }</ListItem.Subtitle>
+                        <ListItem.Subtitle>{ t("setting_push_notifications_server") + ": " + pushNotification[domain+":"+access_token].server }</ListItem.Subtitle>
                     </ListItem.Content>
                     <Icon name={"check"} color={theme.colors.primary} />
                     <ListItem.Chevron />

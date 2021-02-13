@@ -65,8 +65,8 @@ it("<MastoRow />", () => {
                     BookmarkAction: () => null,
                     HideAction: () => null,
                     DeleteAction: () => null,
-                    openImageViewerAction: () => null,
-                    closeImageViewerAction: () => null
+                    OpenImageViewerAction: () => null,
+                    CloseImageViewerAction: () => null
                 }}
                 background={false}
             />
@@ -103,7 +103,7 @@ it("<MastoRowImage />", () => {
 it("<MastoRowPoll />", () => {
     const result = render(
         <ThemeContext.Provider value={{ theme }}>
-            <MastoRowPoll poll={ExamplePoll()} />
+            <MastoRowPoll poll={ExamplePoll()} fontSize={16} />
         </ThemeContext.Provider>
     );
     expect(result).toMatchSnapshot();

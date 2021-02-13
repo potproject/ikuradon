@@ -6,8 +6,8 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
-import { open as openImageViewerAction, close as closeImageViewerAction } from "../actions/actioncreators/imageviewer";
-import { openDetail as openDetailAction } from "../actions/actioncreators/detail";
+import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
 
 import { ThemeContext } from "react-native-elements";
@@ -45,13 +45,12 @@ function MastoList({ navigation, type }) {
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
 
-        followAction: (id, followed) => {dispatch(FollowAction(id, followed))},
+        FollowAction: (id, followed) => {dispatch(FollowAction(id, followed))},
 
-        openImageViewerAction: (media, index) => {dispatch(openImageViewerAction(media, index))},
-        closeImageViewerAction: () => {dispatch(closeImageViewerAction())},
+        OpenImageViewerAction: (media, index) => {dispatch(OpenImageViewerAction(media, index))},
+        CloseImageViewerAction: () => {dispatch(CloseImageViewerAction())},
 
-        // TODO
-        openDetailAction: (id) => {/*dispatch(openDetailAction(id))*/},
+        GetDetailAction: (id) => {dispatch(GetDetailAction(id))},
     };
     return (
         <View style={styles.container}>
@@ -93,11 +92,11 @@ function MastoList({ navigation, type }) {
                         }
                     }}
                 />
-                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.closeImageViewerAction()}>
+                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.CloseImageViewerAction()}>
                     <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
                         enableSwipeDown={true}
                         loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
-                        onSwipeDown={() => { actions.closeImageViewerAction()}} />
+                        onSwipeDown={() => { actions.CloseImageViewerAction()}} />
                 </Modal>
             </ImageBackground>
         </View>

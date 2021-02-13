@@ -3,7 +3,7 @@ import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { open as openUrl } from "../util/url";
 
-function MastoRowImage({ style, mediaAttachments, sensitive, openImageViewer, closeImageViewerAction }){
+function MastoRowImage({ style, mediaAttachments, sensitive, openImageViewer, CloseImageViewerAction }){
     return (
         <View style={[styles.container, style]}>
             { mediaAttachments.map((media, i) => {

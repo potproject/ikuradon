@@ -28,7 +28,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, openImageViewerAction, closeImageViewerAction, openDetailAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, GetDetailAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -47,7 +47,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-            <TouchableOpacity delayPressIn={150} onPress={() => openDetailAction(tootID)}>
+            <TouchableOpacity delayPressIn={150} onPress={() => GetDetailAction(tootID)}>
                 { reblogFlag && useMemo(() =>
                     <View style={styles.isReplyContainer}>
                         <View style={{ width:68, borderWidth:0, alignItems:"flex-end" }}>
@@ -59,15 +59,15 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                     </View>
                 , [rebloggedName])}
                 <View style={styles.date}>
-                    <Text style={{ fontSize:12, color: theme.colors.grey2, textAlign: "right" }}>
+                    <Text style={[styles.dateText, { color: theme.colors.grey2 }]}>
                         {poll &&
-                    <FontAwesome name={"comments"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
+                    <FontAwesome name={"comments"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                         }
                         {sensitive &&
-                    <FontAwesome name={"exclamation"} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
+                    <FontAwesome name={"exclamation"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                         }
                         {" "}
-                        <FontAwesome name={icon[visibility]} size={12} color={theme.colors.grey0} style={{ marginRight:5 }}/>
+                        <FontAwesome name={icon[visibility]} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight:5 }}/>
                         {" " +dateFormat(created_at)}
                     </Text>
                 </View>
@@ -116,12 +116,12 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         </View>
                         { poll &&
                     <View style={styles.tootContainer}>
-                        <MastoRowPoll poll={poll} />
+                        <MastoRowPoll poll={poll} fontSize={16} />
                     </View>
                         }
                         { media_attachments && media_attachments.length > 0 &&
                     <View style={styles.tootContainer}>
-                        <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={openImageViewerAction} closeImageViewer={closeImageViewerAction} />
+                        <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={OpenImageViewerAction} closeImageViewer={CloseImageViewerAction} />
                     </View>
                         }
                         <View style={styles.item}>
@@ -139,7 +139,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                                 id={id}
                                 tootid={tootID}
                                 reblogged={reblogged}
-                                count={reblogs_count}
+                                count={0}
                                 style={styles.itemFlex}
                                 onBoost={BoostAction}
                                 disabled={visibility === "private" || visibility === "direct"}
@@ -148,7 +148,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                                 id={id}
                                 tootid={tootID}
                                 favourited={favourited}
-                                count={favourites_count}
+                                count={0}
                                 style={styles.itemFlex}
                                 onFavourite={FavouriteAction}
                             />
@@ -242,6 +242,10 @@ const styles = StyleSheet.create({
     },
     date: {
         marginRight: 10,
+    },
+    dateText: {
+        fontSize: 12,
+        textAlign: "right" 
     },
     innerContainer: {
         flex: 1,
