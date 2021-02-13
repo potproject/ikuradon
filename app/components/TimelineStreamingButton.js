@@ -36,11 +36,9 @@ export default function TimelineStreamingButton({ type }){
         };
     }, []);
     return (
-        <View>
-            <TouchableOpacity onPress={() => useEnabled(!enabled)} style={styles.view}>
-                <FontAwesome name="feed" size={24} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.view} onPress={() => useEnabled(!enabled)}>
+            <FontAwesome name="feed" size={24} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
+        </TouchableOpacity>
     );
 }
 const styles = StyleSheet.create({
@@ -48,6 +46,6 @@ const styles = StyleSheet.create({
         paddingTop: 4,
         paddingBottom: 4,
         paddingLeft: 12,
-        paddingRight: 4
+        paddingRight: 8
     }
 });

@@ -23,6 +23,20 @@ export function openDetail(id) {
     };
 }
 
+export function reloadDetail(id) {
+    return async dispatch => {
+        try {
+            dispatch({ type: Detail.DETAIL_CLOSE });
+            let { domain, access_token } = await Session.getDomainAndToken();
+            let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
+            dispatch({ type: Detail.DETAIL_OPEN, data, loaded: true });
+        } catch (e) {
+            dispatch({ type: Detail.DETAIL_OPEN, data: {}, loaded: false });
+            DropDownHolder.error(t("messages.detail_load_error"), e.message);
+        }
+    };
+}
+
 export function closeDetail() {
     return { type: Detail.DETAIL_CLOSE };
 }

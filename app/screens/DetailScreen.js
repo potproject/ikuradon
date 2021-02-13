@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Platform, Text, StyleSheet, View, ActivityIndicator, ScrollView } from "react-native";
+import { TouchableOpacity, StyleSheet, View, ActivityIndicator, ScrollView } from "react-native";
 import { ThemeContext, Header } from "react-native-elements";
 import MastoDetailRow from "../components/MastoDetailRow";
 import { hide as HideAction, deleting as DeleteAction, follow as FollowAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 
-import { closeDetail } from "../actions/actioncreators/detail";
+import { reloadDetail, closeDetail } from "../actions/actioncreators/detail";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import * as RouterName from "../constants/RouterName";
@@ -58,6 +58,11 @@ function DetailScreen({ route, navigation }) {
                     navigation.goBack();
                 }} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={t("detail_toot")} onPress={navigation.openDrawer} current={current}/>}   
+                rightComponent={
+                    <TouchableOpacity style={styles.load} onPress={() => data && typeof data.id === "string" && dispatch(reloadDetail(data.id))}>
+                        <FontAwesome name={"refresh"} size={24} color={theme.customColors.primaryBackground} />
+                    </TouchableOpacity>
+                }
             />
             { loaded === null &&
             <View style={styles.loading}>
@@ -81,6 +86,12 @@ function DetailScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    load:{
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 12,
+        paddingRight: 8
     },
     loading: {
         marginTop: 20,
