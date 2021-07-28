@@ -28,7 +28,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
     // current
     let { user_credentials, domain, access_token, notification_count, instance } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, GetDetailAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, TouchAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let reblogFlag = false;
@@ -47,7 +47,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-            <TouchableOpacity delayPressIn={150} onPress={() => GetDetailAction(tootID)}>
+            <TouchableOpacity delayPressIn={150} onPress={() => TouchAction(tootID)}>
                 { reblogFlag && useMemo(() =>
                     <View style={styles.isReplyContainer}>
                         <View style={{ width:68, borderWidth:0, alignItems:"flex-end" }}>
