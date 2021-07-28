@@ -1,5 +1,5 @@
 import { getItem, setItem, removeItem } from "../storage";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 describe("Util/Storage", () => {
     it("getItem", async () => {

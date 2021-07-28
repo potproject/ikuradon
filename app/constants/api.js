@@ -115,6 +115,12 @@ export const GET_STATUS = {
     form: {}
 };
 
+export const GET_STATUS_CONTEXT = {
+    method: "get",
+    url: "/api/v1/statuses/:param:/context",
+    form: {}
+};
+
 export const DELETE_STATUS = {
     method: "delete",
     url: "/api/v1/statuses/:param:",
