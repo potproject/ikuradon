@@ -24,21 +24,6 @@ export function getDetail(id) {
     };
 }
 
-export function reloadDetail(id) {
-    return async dispatch => {
-        try {
-            dispatch({ type: Detail.DETAIL_RESET });
-            let { domain, access_token } = await Session.getDomainAndToken();
-            let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
-            let { ancestors, descendants } = await Networking.fetch(domain, CONST_API.GET_STATUS_CONTEXT, id, {}, access_token);
-            dispatch({ type: Detail.DETAIL_GET, ancestors, descendants, data, loaded: true });
-        } catch (e) {
-            dispatch({ type: Detail.DETAIL_GET, data: {}, loaded: false });
-            DropDownHolder.error(t("messages.detail_load_error"), e.message);
-        }
-    };
-}
-
 export function resetDetail() {
     return { type: Detail.DETAIL_RESET };
 }

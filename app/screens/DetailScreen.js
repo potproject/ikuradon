@@ -8,9 +8,8 @@ import { Divider } from "react-native-elements";
 import { hide as HideAction, deleting as DeleteAction, follow as FollowAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
-import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 
-import { reloadDetail, resetDetail } from "../actions/actioncreators/detail";
+import { getDetail as GetDetailAction, resetDetail } from "../actions/actioncreators/detail";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import * as RouterName from "../constants/RouterName";
@@ -87,7 +86,7 @@ function DetailScreen({ route, navigation }) {
                 }} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={t("detail_toot")} onPress={navigation.openDrawer} current={current}/>}   
                 rightComponent={
-                    <TouchableOpacity style={styles.load} onPress={() => data && typeof data.id === "string" && dispatch(reloadDetail(data.id))}>
+                    <TouchableOpacity style={styles.load} onPress={() => data && typeof data.id === "string" && dispatch(resetDetail) && dispatch(GetDetailAction(data.id))}>
                         <FontAwesome name={"refresh"} size={24} color={theme.customColors.primaryBackground} />
                     </TouchableOpacity>
                 }
