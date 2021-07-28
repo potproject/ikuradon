@@ -67,7 +67,6 @@ expo publish
 ## Development
 
 ```
-yarn global add expo-cli # or npm install -g expo-cli
 yarn # or npm install
 yarn start # or npm run start
 ```
