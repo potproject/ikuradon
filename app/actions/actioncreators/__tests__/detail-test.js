@@ -23,9 +23,17 @@ describe("Action/Detail", () => {
         let status = ExampleStatus();
         let session = ExampleSession();
         Session.getDomainAndToken.mockImplementation(() => session);
-        Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
+        Networking.fetch.mockImplementationOnce((domain, api, restParams, postParams, access_token) => {
             expect(domain).toEqual(session.domain);
             expect(api).toEqual(CONST_API.GET_STATUS);
+            expect(restParams).toEqual("100100");
+            expect(postParams).toEqual({});
+            expect(access_token).toEqual(session.access_token);
+            return status;
+        });
+        Networking.fetch.mockImplementationOnce((domain, api, restParams, postParams, access_token) => {
+            expect(domain).toEqual(session.domain);
+            expect(api).toEqual(CONST_API.GET_STATUS_CONTEXT);
             expect(restParams).toEqual("100100");
             expect(postParams).toEqual({});
             expect(access_token).toEqual(session.access_token);

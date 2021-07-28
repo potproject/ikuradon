@@ -15,7 +15,8 @@ export function getDetail(id) {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
             let data = await Networking.fetch(domain, CONST_API.GET_STATUS, id, {}, access_token);
-            dispatch({ type: Detail.DETAIL_GET, data, loaded: true });
+            let { ancestors, descendants } = await Networking.fetch(domain, CONST_API.GET_STATUS_CONTEXT, id, {}, access_token);
+            dispatch({ type: Detail.DETAIL_GET, ancestors, descendants, data, loaded: true });
         } catch (e) {
             dispatch({ type: Detail.DETAIL_GET, data: {}, loaded: false });
             DropDownHolder.error(t("messages.detail_load_error"), e.message);
