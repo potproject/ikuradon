@@ -23,7 +23,7 @@ export function allClear() {
 export function setBackground() {
     return async dispatch => {
         try {
-            await Permission.getBeforeAsk(Permission.CAMERA_ROLL);
+            await Permission.getBeforeAskMediaLibrary();
             let fileData = await ImagePicker.launchImageLibraryAsync();
             if (!fileData || !fileData.uri || fileData.cancelled) {
                 return;

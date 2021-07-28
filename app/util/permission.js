@@ -1,13 +1,10 @@
-import * as Permissions from "expo-permissions";
+import * as ImagePicker from "expo-image-picker";
 
-export const CAMERA = Permissions.CAMERA;
-export const CAMERA_ROLL = Permissions.CAMERA_ROLL;
-
-export async function getBeforeAsk(usePermission) {
-    const { getStatus } = await Permissions.getAsync(usePermission);
-    if (getStatus !== "granted") {
-        const { askStatus } = await Permissions.askAsync(usePermission);
-        if (askStatus !== "granted") {
+export async function getBeforeAskMediaLibrary(){
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+        const { accessPrivileges } = await ImagePicker.getMediaLibraryPermissionsAsync();
+        if (accessPrivileges === "none") {
             return false;
         }
     }
