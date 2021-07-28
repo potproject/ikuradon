@@ -7,17 +7,11 @@ import DropDownHolder from "../services/DropDownHolder";
 
 const MEDIA_UPLOAD_TIMEOUT = 60000;
 
-export async function upload(openType = "library") {
+export async function upload() {
     let fileData;
     try {
-        if (openType === "library") {
-            await Permission.getBeforeAsk(Permission.CAMERA_ROLL);
-            fileData = await ImagePicker.launchImageLibraryAsync();
-        }
-        if (openType === "camera") {
-            await Permission.getBeforeAsk(Permission.CAMERA);
-            fileData = await ImagePicker.launchCameraAsync();
-        }
+        await Permission.getBeforeAskMediaLibrary();
+        fileData = await ImagePicker.launchImageLibraryAsync();
         if (!fileData || fileData.cancelled) {
             return null;
         }

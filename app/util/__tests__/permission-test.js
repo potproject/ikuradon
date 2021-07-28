@@ -1,31 +1,38 @@
-import { getBeforeAsk } from "../../util/permission";
-import * as Permissions from "expo-permissions";
+import { getBeforeAskMediaLibrary } from "../../util/permission";
+import * as ImagePicker from "expo-image-picker";
 
-jest.mock("expo-permissions", () => ({
-    getAsync: jest.fn(),
-    askAsync: jest.fn(),
+jest.mock("expo-image-picker", () => ({
+    requestMediaLibraryPermissionsAsync: jest.fn(),
+    getMediaLibraryPermissionsAsync: jest.fn(),
 }));
 
 describe("Util/Permission", () => {
-    it("getBeforeAsk get:granted", async () => {
-        Permissions.getAsync.mockImplementation(() => { return { getStatus: "granted" }});
-        Permissions.askAsync.mockImplementation(() => { return { askStatus: "granted" }});
-        expect(await getBeforeAsk(Permissions.NOTIFICATIONS)).toEqual(true);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+    it("getBeforeAskMediaLibrary request:granted", async () => {
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
+        ImagePicker.getMediaLibraryPermissionsAsync.mockImplementation(() => { return { accessPrivileges: "all" }});
+        expect(await getBeforeAskMediaLibrary()).toEqual(true);
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockClear();
+        ImagePicker.getMediaLibraryPermissionsAsync.mockClear();
     });
-    it("getBeforeAsk ask:granted", async () => {
-        Permissions.getAsync.mockImplementation(() => { return { getStatus: "denied" }});
-        Permissions.askAsync.mockImplementation(() => { return { askStatus: "granted" }});
-        expect(await getBeforeAsk(Permissions.NOTIFICATIONS)).toEqual(true);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+    it("getBeforeAskMediaLibrary get:all", async () => {
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
+        ImagePicker.getMediaLibraryPermissionsAsync.mockImplementation(() => { return { accessPrivileges: "all" }});
+        expect(await getBeforeAskMediaLibrary()).toEqual(true);
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockClear();
+        ImagePicker.getMediaLibraryPermissionsAsync.mockClear();
     });
-    it("getBeforeAsk ask:denied", async () => {
-        Permissions.getAsync.mockImplementation(() => { return { getStatus: "denied" }});
-        Permissions.askAsync.mockImplementation(() => { return { askStatus: "denied" }});
-        expect(await getBeforeAsk(Permissions.NOTIFICATIONS)).toEqual(false);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+    it("getBeforeAsk get:limited", async () => {
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
+        ImagePicker.getMediaLibraryPermissionsAsync.mockImplementation(() => { return { accessPrivileges: "limited" }});
+        expect(await getBeforeAskMediaLibrary()).toEqual(true);
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockClear();
+        ImagePicker.getMediaLibraryPermissionsAsync.mockClear();
+    });
+    it("getBeforeAsk get:none", async () => {
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
+        ImagePicker.getMediaLibraryPermissionsAsync.mockImplementation(() => { return { accessPrivileges: "none" }});
+        expect(await getBeforeAskMediaLibrary()).toEqual(false);
+        ImagePicker.requestMediaLibraryPermissionsAsync.mockClear();
+        ImagePicker.getMediaLibraryPermissionsAsync.mockClear();
     });
 });

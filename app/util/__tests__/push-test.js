@@ -1,13 +1,7 @@
 import { grantNotifications, pull } from "../../util/push";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
-import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
-
-jest.mock("expo-permissions", () => ({
-    getAsync: jest.fn(),
-    askAsync: jest.fn(),
-}));
 
 jest.mock("react-native", () => ({
     Platform: {},
@@ -23,6 +17,8 @@ jest.mock("expo-constants", () => ({
 jest.mock("expo-notifications", () => ({
     addNotificationReceivedListener: jest.fn(),
     setNotificationChannelAsync: jest.fn(),
+    getPermissionsAsync: jest.fn(),
+    requestPermissionsAsync: jest.fn(),
     AndroidImportance: { "DEFAULT":1 }
 }));
 
@@ -35,42 +31,42 @@ describe("Util/Permission", () => {
     it("grantNotifications get:granted Android", async () => {
         Constants.isDevice = true;
         Platform.OS = "android";
-        Permissions.getAsync.mockImplementation(() => { return { status: "granted" }});
-        Permissions.askAsync.mockImplementation(() => { return { status: "granted" }});
+        Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
+        Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
         const result = await grantNotifications();
         expect(result).toEqual(true);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+        Notifications.getPermissionsAsync.mockClear();
+        Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications get:granted iOS", async () => {
         Constants.isDevice = true;
         Platform.OS = "ios";
-        Permissions.getAsync.mockImplementation(() => { return { status: "granted" }});
-        Permissions.askAsync.mockImplementation(() => { return { status: "granted" }});
+        Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
+        Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
         const result = await grantNotifications();
         expect(result).toEqual(true);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+        Notifications.getPermissionsAsync.mockClear();
+        Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications ask:granted", async () => {
         Constants.isDevice = true;
         Platform.OS = "ios";
-        Permissions.getAsync.mockImplementation(() => { return { status: "denied" }});
-        Permissions.askAsync.mockImplementation(() => { return { status: "granted" }});
+        Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
+        Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
         const result = await grantNotifications();
         expect(result).toEqual(true);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+        Notifications.getPermissionsAsync.mockClear();
+        Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications ask:denied", async () => {
         Constants.isDevice = true;
         Platform.OS = "ios";
-        Permissions.getAsync.mockImplementation(() => { return { status: "denied" }});
-        Permissions.askAsync.mockImplementation(() => { return { status: "denied" }});
+        Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
+        Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
         const result = await grantNotifications();
         expect(result).toEqual(false);
-        Permissions.getAsync.mockClear();
-        Permissions.askAsync.mockClear();
+        Notifications.getPermissionsAsync.mockClear();
+        Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications not supported", async () => {
         Constants.isDevice = false;
