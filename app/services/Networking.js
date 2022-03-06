@@ -1,5 +1,8 @@
 import axios from "axios";
 import * as CONST_API from "../constants/api";
+import * as FileSystem from "expo-file-system";
+
+const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 
 export default class Networking {
     static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {
@@ -13,7 +16,7 @@ export default class Networking {
                     headers: this.createHeaders(access_token),
                     params: Object.assign(api.form, postParams)
                 });
-                resolve(response.data);
+                resolve({ data: response.data, status: response.status });
             } catch (e) {
                 reject(e);
             }
@@ -29,33 +32,6 @@ export default class Networking {
             headers.Authorization = "Bearer " + access_token;
         }
         return headers;
-    }
-
-    //MEDIA UPLOAD ONLY
-    static fileUpload(domain, access_token, file, type, timeout = 60000) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let baseurl = "https://" + domain + "";
-                let api = CONST_API.UPLOAD_POST_MEDIA;
-                let headers = Object.assign(this.createHeaders(access_token), { "Content-Type": "multipart/form-data" });
-                const data = new FormData();
-                data.append("file", {
-                    uri: file.uri,
-                    type: type,
-                    name: "upload.jpg"
-                });
-                let response = await axios({
-                    url: baseurl + api.url,
-                    method: api.method,
-                    headers,
-                    data,
-                    timeout  // ms
-                });
-                resolve(response.data);
-            } catch (e) {
-                reject(e);
-            }
-        });
     }
 
     //Push Server Subscribe / Unsubscribe

@@ -1,11 +1,9 @@
 import Networking from "../Networking";
 import * as CONST_API from "../../constants/api";
+
 import axios from "axios";
 jest.mock("axios");
 
-const fileMock = {
-    "uri":"file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg"
-};
 function FormDataMock() {
     this.append = jest.fn();
 }
@@ -21,10 +19,11 @@ describe("Services/Networking", () => {
                 "params": {},
                 "url": "https://server.mastodon.net/api/v1/instance" }
             );
-            return { data: [] };
+            return { data: [], status: 200 };
         });
-        const res = Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE);
-        await expect(res).resolves.toEqual([]);
+        const { data, status } = await Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE);
+        expect(data).toEqual([]);
+        expect(status).toEqual(200);
         axios.mockClear();
     });
     it("fetch restparam resolve", async () => {
@@ -35,38 +34,18 @@ describe("Services/Networking", () => {
                 "params": {},
                 "url": "https://server.mastodon.net/api/v1/statuses/100100/favourite" }
             );
-            return { data: [] };
+            return { data: [], status: 200 };
         });
-        const res = Networking.fetch("server.mastodon.net", CONST_API.POST_FAVOURITED, "100100", {}, "ACCESS_TOKEN");
-        await expect(res).resolves.toEqual([]);
+        const { data, status } = await Networking.fetch("server.mastodon.net", CONST_API.POST_FAVOURITED, "100100", {}, "ACCESS_TOKEN");
+        expect(data).toEqual([]);
+        expect(status).toEqual(200);
         axios.mockClear();
     });
     it("fetch reject", async() => {
         axios.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        const res = Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE);
-        await expect(res).rejects.toEqual(new Error("Network Error"));
-        axios.mockClear();
-    });
-    it("fileUpload resolve", async () => {
-        axios.mockImplementation((req) => {
-            expect(req.headers).toEqual({ "Accept": "application/json", "Authorization": "Bearer ACCESS_TOKEN", "Content-Type": "multipart/form-data" });
-            expect(req.method).toEqual("post");
-            expect(req.url).toEqual("https://server.mastodon.net/api/v1/media");
-            expect(req.timeout).toEqual(60000);
-            return { data: [] };
-        });
-        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "POST");
-        await expect(res).resolves.toEqual([]);
-        axios.mockClear();
-    });
-    it("fileUpload reject", async () => {
-        axios.mockImplementation(() => {
-            throw new Error("Network Error");
-        });
-        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "POST");
-        await expect(res).rejects.toEqual(new Error("Network Error"));
+        await expect(Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE)).rejects.toEqual(new Error("Network Error"));
         axios.mockClear();
     });
     it("pushServer resolve", async () => {

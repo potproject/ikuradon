@@ -16,7 +16,7 @@ export function login(domain) {
         try {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let data = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
+            let { data } = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
             url = createUrl(domain, data);
             client_id = data.client_id;
             client_secret = data.client_secret;
@@ -36,8 +36,8 @@ export function loginSelectAccounts(index) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
@@ -56,8 +56,8 @@ export function loginWithAccessToken(domain, access_token) {
             //アクセストークンでログイン
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+            let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+            let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
@@ -109,8 +109,8 @@ export function accountChangeWithDelete(index) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;

@@ -29,7 +29,7 @@ describe("Action/Detail", () => {
             expect(restParams).toEqual("100100");
             expect(postParams).toEqual({});
             expect(access_token).toEqual(session.access_token);
-            return status;
+            return { data:status };
         });
         Networking.fetch.mockImplementationOnce((domain, api, restParams, postParams, access_token) => {
             expect(domain).toEqual(session.domain);
@@ -37,7 +37,7 @@ describe("Action/Detail", () => {
             expect(restParams).toEqual("100100");
             expect(postParams).toEqual({});
             expect(access_token).toEqual(session.access_token);
-            return status;
+            return { data:status };
         });
         action(({ type, data, loaded }) => {
             expect(type).toEqual(Detail.DETAIL_GET);

@@ -40,9 +40,9 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}));
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
@@ -78,9 +78,9 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => null);
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
@@ -117,9 +117,9 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}));
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });

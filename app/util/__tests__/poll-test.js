@@ -16,7 +16,7 @@ jest.mock("../../util/session", () => ({
 describe("Util/Poll", () => {
     it("getPoll", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => ExamplePoll());
+        Networking.fetch.mockImplementation(() => ({ data: ExamplePoll() }));
         expect(await getPoll("34830")).toEqual({ "data": ExamplePoll(), "error": null });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
@@ -32,7 +32,7 @@ describe("Util/Poll", () => {
     });
     it("votePoll", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => ExamplePoll());
+        Networking.fetch.mockImplementation(() => ({ data: ExamplePoll() }));
         expect(await votePoll("34830", [1])).toEqual({ "data": ExamplePoll(), "error": null });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();

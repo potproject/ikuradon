@@ -101,7 +101,7 @@ async function truefalseTest(done, type, bool){
     }
     console.log = jest.fn();
     Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-    Networking.fetch.mockImplementation(() => (response));
+    Networking.fetch.mockImplementation(() => ({ data:response }));
     await action((callback) => {
         try {
             expect(callback).toEqual(Object.assign({}, { type: reducerType, id: "100100" }, dispatchValue));

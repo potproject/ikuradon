@@ -15,7 +15,7 @@ jest.mock("../../util/session", () => ({
 describe("Util/Search", () => {
     it("search", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => ExampleSearch());
+        Networking.fetch.mockImplementation(() => ({ data: ExampleSearch() }));
         expect(await search("test")).toEqual({ "data": ExampleSearch(), "error": null });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();

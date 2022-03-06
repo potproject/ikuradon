@@ -185,7 +185,14 @@ export const GET_RELATIONSHIPS = {
 
 export const UPLOAD_POST_MEDIA = {
     method: "post",
-    url: "/api/v1/media"
+    url: "/api/v2/media",
+    form: {}
+};
+
+export const UPLOAD_GET_MEDIA = {
+    method: "get",
+    url: "/api/v1/media/:param:",
+    form: {}
 };
 
 export const GET_CUSTOMEMOJIS = {

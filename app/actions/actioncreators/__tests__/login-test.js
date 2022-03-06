@@ -29,7 +29,7 @@ jest.mock("../../../services/DropDownHolder", () => ({
 describe("Action/Login", () => {
     it("login", done => {
         const domain = "example.net";
-        Networking.fetch.mockImplementation(() => ExampleApps());
+        Networking.fetch.mockImplementation(() => ({ data:ExampleApps() }));
         NavigationService.navigate.mockImplementation(({ name, params }) => {
             try {
                 expect(name).toEqual(RouterName.Authorize);
@@ -80,9 +80,9 @@ describe("Action/Login", () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data: ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data: ExampleInstance() }));
         let action = loginSelectAccounts(0);
         let call = 0;
         let { domain, access_token } = ExampleSession();
@@ -142,9 +142,9 @@ describe("Action/Login", () => {
     it("loginWithAccessToken", done => {
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
@@ -253,9 +253,9 @@ describe("Action/Login", () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
         Networking.fetch
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();

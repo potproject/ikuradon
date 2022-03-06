@@ -13,7 +13,7 @@ import * as Session from "../util/session";
 export async function votePoll(id, choices) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let data = await Networking.fetch(domain, CONST_API.POST_POLL_VOTES, id, { choices }, access_token);
+        let { data } = await Networking.fetch(domain, CONST_API.POST_POLL_VOTES, id, { choices }, access_token);
         return { data, error: null };
     } catch (e){
         return { data: {}, error: e.message };
@@ -29,7 +29,7 @@ export async function votePoll(id, choices) {
 export async function getPoll(id) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let data = await Networking.fetch(domain, CONST_API.GET_POLL, id, {}, access_token);
+        let { data } = await Networking.fetch(domain, CONST_API.GET_POLL, id, {}, access_token);
         return { data, error: null };
     } catch (e){
         return { data: {}, error: e.message };

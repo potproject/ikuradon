@@ -21,11 +21,11 @@ describe("Action/Authorize", () => {
         let code = "CODE";
         Networking.fetch
             // CONST_API.GET_OAUTH_ACCESSTOKEN
-            .mockImplementationOnce(() => ({ access_token: "ACCESS_TOKEN" }))
+            .mockImplementationOnce(() => ({ data:{ access_token: "ACCESS_TOKEN" } }))
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ExampleInstance());
+            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
         let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
         await action(({ type, user_credentials, domain, access_token, instance }) => {
             expect(type).toEqual("UPDATE_CURRENT_USER");
