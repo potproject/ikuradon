@@ -1,21 +1,9 @@
 import Networking from "../Networking";
 import * as CONST_API from "../../constants/api";
 
-import * as FileSystem from "expo-file-system";
-
 import axios from "axios";
 jest.mock("axios");
 
-jest.mock("expo-file-system", () => ({
-    uploadAsync: jest.fn(),
-    FileSystemUploadType: {
-        MULTIPART: ""
-    }
-}));
-
-const fileMock = {
-    "uri":"file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg"
-};
 function FormDataMock() {
     this.append = jest.fn();
 }
@@ -59,20 +47,6 @@ describe("Services/Networking", () => {
         });
         await expect(Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE)).rejects.toEqual(new Error("Network Error"));
         axios.mockClear();
-    });
-    it("fileUpload resolve", async () => {
-        FileSystem.uploadAsync.mockImplementation(() => ({ body: "{\"id\": \"1\"}", status: 200 }));
-        const data = await Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
-        expect(data).toEqual({ "id": "1" });
-        FileSystem.uploadAsync.mockClear();
-    });
-    it("fileUpload reject", async () => {
-        FileSystem.uploadAsync.mockImplementation(() => {
-            throw new Error("Network Error");
-        });
-        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
-        await expect(res).rejects.toEqual(new Error("Network Error"));
-        FileSystem.uploadAsync.mockClear();
     });
     it("pushServer resolve", async () => {
         axios.post.mockImplementation((endpoints, params) => {

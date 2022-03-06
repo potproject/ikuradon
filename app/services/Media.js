@@ -1,9 +1,9 @@
 import * as ImagePicker from "expo-image-picker";
 import * as Permission from "../util/permission";
 import * as Session from "../util/session";
-import Networking from "../services/Networking";
 import t from "../services/I18n";
 import DropDownHolder from "../services/DropDownHolder";
+import fileUpload from "./FileUpload";
 
 export async function upload() {
     let fileData;
@@ -15,7 +15,7 @@ export async function upload() {
         }
         let { domain, access_token } = await Session.getDomainAndToken();
         //アップロード中とかほしいね
-        let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg");
+        let res = await fileUpload(domain, access_token, fileData, "image/jpeg");
         if (!res || !res.id) {
             throw new Error("ID Unknown Error!");
         }
