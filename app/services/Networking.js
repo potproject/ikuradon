@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as CONST_API from "../constants/api";
+import * as FileSystem from "expo-file-system";
 
 export default class Networking {
     static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {
@@ -32,27 +33,22 @@ export default class Networking {
     }
 
     //MEDIA UPLOAD ONLY
-    static fileUpload(domain, access_token, file, type, timeout = 60000) {
+    static fileUpload(domain, access_token, file, type) {
         return new Promise(async (resolve, reject) => {
             try {
                 let baseurl = "https://" + domain + "";
                 let api = CONST_API.UPLOAD_POST_MEDIA;
-                let headers = Object.assign(this.createHeaders(access_token), { "Content-Type": "multipart/form-data" });
-                const data = new FormData();
-                data.append("file", {
-                    uri: file.uri,
-                    type: type,
-                    name: "upload.jpg"
-                });
-                let response = await axios({
-                    url: baseurl + api.url,
-                    method: api.method,
+                let url = baseurl + api.url;
+                let headers = this.createHeaders(access_token);
+                let response = await FileSystem.uploadAsync(url, file.uri, {
                     headers,
-                    data,
-                    timeout  // ms
+                    fieldName: "file",
+                    uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+                    mimeType: type
                 });
-                resolve(response.data);
+                resolve(JSON.parse(response.body));
             } catch (e) {
+                console.log(e);
                 reject(e);
             }
         });
