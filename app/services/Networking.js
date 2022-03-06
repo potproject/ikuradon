@@ -48,7 +48,6 @@ export default class Networking {
                 });
                 resolve(JSON.parse(response.body));
             } catch (e) {
-                console.log(e);
                 reject(e);
             }
         });

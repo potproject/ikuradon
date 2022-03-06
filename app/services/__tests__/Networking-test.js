@@ -1,7 +1,17 @@
 import Networking from "../Networking";
 import * as CONST_API from "../../constants/api";
+
+import * as FileSystem from "expo-file-system";
+
 import axios from "axios";
 jest.mock("axios");
+
+jest.mock("expo-file-system", () => ({
+    uploadAsync: jest.fn(),
+    FileSystemUploadType: {
+        MULTIPART: ""
+    }
+}));
 
 const fileMock = {
     "uri":"file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg"
@@ -50,24 +60,18 @@ describe("Services/Networking", () => {
         axios.mockClear();
     });
     it("fileUpload resolve", async () => {
-        axios.mockImplementation((req) => {
-            expect(req.headers).toEqual({ "Accept": "application/json", "Authorization": "Bearer ACCESS_TOKEN", "Content-Type": "multipart/form-data" });
-            expect(req.method).toEqual("post");
-            expect(req.url).toEqual("https://server.mastodon.net/api/v1/media");
-            expect(req.timeout).toEqual(60000);
-            return { data: [] };
-        });
-        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "POST");
-        await expect(res).resolves.toEqual([]);
-        axios.mockClear();
+        FileSystem.uploadAsync.mockImplementation(() => ({ body: "{\"id\": \"1\"}" }));
+        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
+        await expect(res).resolves.toEqual({ "id": "1" });
+        FileSystem.uploadAsync.mockClear();
     });
     it("fileUpload reject", async () => {
-        axios.mockImplementation(() => {
+        FileSystem.uploadAsync.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "POST");
+        const res = Networking.fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
         await expect(res).rejects.toEqual(new Error("Network Error"));
-        axios.mockClear();
+        FileSystem.uploadAsync.mockClear();
     });
     it("pushServer resolve", async () => {
         axios.post.mockImplementation((endpoints, params) => {

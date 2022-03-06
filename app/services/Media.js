@@ -5,8 +5,6 @@ import Networking from "../services/Networking";
 import t from "../services/I18n";
 import DropDownHolder from "../services/DropDownHolder";
 
-const MEDIA_UPLOAD_TIMEOUT = 60000;
-
 export async function upload() {
     let fileData;
     try {
@@ -17,7 +15,7 @@ export async function upload() {
         }
         let { domain, access_token } = await Session.getDomainAndToken();
         //アップロード中とかほしいね
-        let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg", MEDIA_UPLOAD_TIMEOUT);
+        let res = await Networking.fileUpload(domain, access_token, fileData, "image/jpeg");
         if (!res || !res.id) {
             throw new Error("ID Unknown Error!");
         }
