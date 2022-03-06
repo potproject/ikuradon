@@ -2,6 +2,8 @@ import axios from "axios";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
 
+const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+
 export default class Networking {
     static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {
         return new Promise(async (resolve, reject) => {
@@ -14,7 +16,7 @@ export default class Networking {
                     headers: this.createHeaders(access_token),
                     params: Object.assign(api.form, postParams)
                 });
-                resolve(response.data);
+                resolve({ data: response.data, status: response.status });
             } catch (e) {
                 reject(e);
             }
@@ -46,7 +48,25 @@ export default class Networking {
                     uploadType: FileSystem.FileSystemUploadType.MULTIPART,
                     mimeType: type
                 });
-                resolve(JSON.parse(response.body));
+                if (response.status === 200){
+                    resolve(JSON.parse(response.body));
+                    return;
+                }
+                
+                if (response.status === 202){
+                    const { id } = JSON.parse(response.body);
+                    let data = {};
+                    let status = 206;
+                    while (status !== 200){
+                        await sleep(1000);
+                        const res = await Networking.fetch(domain, CONST_API.UPLOAD_GET_MEDIA, id, {}, access_token);
+                        status = res.status;
+                        data = res.data;
+                    }
+                    resolve(data);
+                } else {
+                    throw new Error("Error Status Code:" + response.status);
+                }
             } catch (e) {
                 reject(e);
             }

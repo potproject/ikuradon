@@ -15,14 +15,14 @@ jest.mock("../../util/session", () => ({
 describe("Util/Relationship", () => {
     it("getRelationship", async () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => [ExampleRelationships()]);
+        Networking.fetch.mockImplementation(() => ({ data:[ExampleRelationships()] }));
         expect(await getRelationship(1)).toEqual({ "data": ExampleRelationships(), "error": null });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();
     });
     it("getRelationship Notfound", async () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => []);
+        Networking.fetch.mockImplementation(() => ({ data:[] }));
         expect(await getRelationship(1)).toEqual({ "data": {}, "error": "Account ID: 1 Not Found" });
         Session.getDomainAndToken.mockClear();
         Networking.fetch.mockClear();

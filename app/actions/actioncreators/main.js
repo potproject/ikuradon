@@ -38,10 +38,9 @@ export function deleting(id) {
 export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
-        let data;
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
-            data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id, max_id: null }, access_token);
+            let { data } = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id, max_id: null }, access_token);
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -53,10 +52,9 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
 export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.LOADING_MASTOLIST, reducerType });
-        let data;
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
-            data = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id: null, max_id }, access_token);
+            let { data } = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id: null, max_id }, access_token);
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

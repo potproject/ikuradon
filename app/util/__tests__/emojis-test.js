@@ -6,7 +6,7 @@ jest.mock("../../services/Networking");
 describe("Util/Emojis", () => {
     it("getEmojis", async () => {
         const emojis = ExampleEmojis();
-        Networking.fetch.mockImplementation(() => emojis);
+        Networking.fetch.mockImplementation(() => ({ data:emojis }));
         expect(await getEmojis("mastodon.test.com")).toEqual({ emojis: emojis, error: null });
         Networking.fetch.mockClear();
     });

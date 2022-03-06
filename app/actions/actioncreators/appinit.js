@@ -52,8 +52,8 @@ export function appInit(updateTheme) {
         let { domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
             try {
-                let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                let { data: user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                let { data: instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });

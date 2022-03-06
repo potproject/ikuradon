@@ -11,7 +11,7 @@ export function boost(id, tootid, boosted) {
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
-            let { reblogged: reblogedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let { data: { reblogged: reblogedResult } } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
             console.log("boost:", tootid, boosted, "result:", reblogedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -27,7 +27,7 @@ export function favourite(id, tootid, favourited) {
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = favourited ? CONST_API.POST_FAVOURITED : CONST_API.POST_UNFAVOURITED;
-            let { favourited: favouritedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let { data:{ favourited: favouritedResult } } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
             console.log("favourite:", tootid, favourited, "result:", favouritedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -44,7 +44,7 @@ export function bookmark(id, tootid, bookmarked) {
             dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = bookmarked ? CONST_API.POST_BOOKMARKED : CONST_API.POST_UNBOOKMARKED;
-            let { bookmarked: bookmarkedResult } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let { data:{ bookmarked: bookmarkedResult } } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
             console.log("bookmark:", tootid, bookmarked, "result:", bookmarkedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -61,7 +61,7 @@ export function follow(id, followed) {
             dispatch({ type: Mastorow.FOLLOW_MASTOROW, id, followed });
             let { domain, access_token } = await Session.getDomainAndToken();
             let POST_URL = followed ? CONST_API.POST_FOLLOWED : CONST_API.POST_UNFOLLOWED;
-            let { following: followedResult } = await Networking.fetch(domain, POST_URL, id, {}, access_token);
+            let { data: { following: followedResult } } = await Networking.fetch(domain, POST_URL, id, {}, access_token);
             console.log("follow:", id, followed, "result:", followedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

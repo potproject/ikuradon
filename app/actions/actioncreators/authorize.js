@@ -11,15 +11,15 @@ import DropDownHolder from "../../services/DropDownHolder";
 export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {
     return async dispatch => {
         try {
-            let data = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN, null, {
+            let { data } = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN, null, {
                 client_id,
                 client_secret,
                 code
             });
             let access_token = data.access_token;
             //get current user
-            let user_credentials = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            let instance = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+            let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+            let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);

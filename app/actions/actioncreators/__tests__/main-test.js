@@ -47,7 +47,7 @@ describe("Action/Main", () => {
     });
     it("newLoadingTimeline", done => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => [ExampleStatus()]);
+        Networking.fetch.mockImplementation(() => ({ data:[ExampleStatus()] }));
         let action = newLoadingTimeline("main", null, false, 1);
         let call = 0;
         action((callback) => {
@@ -86,7 +86,7 @@ describe("Action/Main", () => {
     });
     it("oldLoadingTimeline", done => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => [ExampleStatus()]);
+        Networking.fetch.mockImplementation(() => ({ data:[ExampleStatus()] }));
         let action = oldLoadingTimeline("main", null, 1);
         let call = 0;
         action((callback) => {
