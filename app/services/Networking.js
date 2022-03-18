@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
+import * as qs from "qs";
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 
@@ -38,11 +39,12 @@ export default class Networking {
     static pushServer(endpoint, domain, exponent_push_token, access_token){
         return new Promise(async (resolve, reject) => {
             try {
-                let params = new URLSearchParams();
-                params.append("domain", domain);
-                params.append("exponent_push_token", exponent_push_token);
-                params.append("access_token", access_token);
-                let response = await axios.post(endpoint, params);
+                const form = qs.stringify({ 
+                    "domain": domain,
+                    "exponent_push_token": exponent_push_token,
+                    "access_token": access_token
+                });
+                let response = await axios.post(endpoint, form);
                 resolve(response.data);
             } catch (e) {
                 reject(e);
