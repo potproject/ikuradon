@@ -9,7 +9,7 @@ function FormDataMock() {
 }
   
 global.FormData = FormDataMock;
-  
+
 describe("Services/Networking", () => {
     it("fetch resolve", async () => {
         axios.mockImplementation((req) => {
