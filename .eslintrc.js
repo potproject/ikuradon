@@ -1,5 +1,10 @@
 module.exports = {
-    plugins: ["react", "prettier", "jest"],
+    plugins: ["react", "prettier", "jest", "@typescript-eslint"],
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    ],
     extends: ["prettier"],
     env: {
         browser: true,
@@ -9,13 +14,13 @@ module.exports = {
         "jest/globals": true
     },
     parserOptions: {
-        ecmaVersion: 2017,
+        ecmaVersion: 2019,
         ecmaFeatures: {
-            jsx: true
+            tsx: true
         },
         sourceType: "module"
     },
-    parser: "babel-eslint",
+    parser: "@typescript-eslint/parser",
     rules: {
         // max length 200
         "max-len": ["warn", { code: 200, ignoreUrls: true }],

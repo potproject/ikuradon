@@ -3,10 +3,11 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "tsc": "npx tsc --noEmit",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint app App.js",
+    "lint": "eslint 'app/**/{*.ts,*.tsx}'",
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "jest --coverage"
@@ -77,8 +78,10 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@testing-library/react-native": "^7.0.2",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.7.0",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.20.0",
@@ -91,7 +94,10 @@
     "mock-socket": "^9.0.3",
     "prettier": "^2.0.5",
     "prettier-eslint-cli": "^5.0.1",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
   },
   "private": true,
   "version": "0.0.0"
