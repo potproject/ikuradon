@@ -1,5 +1,6 @@
 {
     "extends": "expo/tsconfig.base",
+    "exclude" : ["app/**/__tests__/*"],
     "compilerOptions": {
         "types": [
             "jest",
