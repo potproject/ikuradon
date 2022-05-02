@@ -10,9 +10,9 @@ module.exports = function(api) {
                     "dns": "./__mocks__/empty.ts",
                     "crypto": "crypto-browserify",
                     "https": "https-browserify",
-                    "http": "stream-http",
+                    "http": "@tradle/react-native-http",
                     "stream": "stream-browserify",
-                    "os": "os-browserify/browser",
+                    "os": "react-native-os",
                 }
             }]
         ]
