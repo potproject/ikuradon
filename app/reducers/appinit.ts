@@ -1,16 +1,13 @@
 import * as AppInit from "../actions/actiontypes/appinit";
+import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState = {
     init: false
 };
 
-export default function reducer(state = initialState, action = {}) {
-    switch (action.type) {
-        case AppInit.APPINIT_COMPLETE:
-            state = Object.assign({}, state, {
-                init: true,
-            });
-            break;
-    }
-    return state;
-}
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(AppInit.APPINIT_COMPLETE, (state, action) => {
+            state.init = true;
+        });
+});

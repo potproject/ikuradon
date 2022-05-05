@@ -2,9 +2,6 @@ import ConfigReducer, { initialState } from "../config";
 import * as Config from "../../actions/actiontypes/config";
 
 describe("ConfigReducer", () => {
-    it("init", () => {
-        expect(ConfigReducer()).toEqual(initialState);
-    });
     it("Config.SET_BACKGROUNDIMAGE", () => {
         const ex = ConfigReducer(initialState, { type:Config.SET_BACKGROUNDIMAGE, backgroundImage: "file://URLtest", });
         const ac = Object.assign({}, initialState, { backgroundImage:"file://URLtest" });

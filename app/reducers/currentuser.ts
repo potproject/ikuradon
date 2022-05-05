@@ -1,4 +1,5 @@
 import * as CurrentUserActionTypes from "../actions/actiontypes/currentuser";
+import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState = {
     user_credentials: null,
@@ -8,9 +9,9 @@ export const initialState = {
     instance: null
 };
 
-export default function CurrentUser(state = initialState, action = {}) {
-    switch (action.type) {
-        case CurrentUserActionTypes.UPDATE_CURRENT_USER:
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(CurrentUserActionTypes.UPDATE_CURRENT_USER, (state, action) => {
             return {
                 user_credentials: action.user_credentials,
                 domain: action.domain,
@@ -18,15 +19,14 @@ export default function CurrentUser(state = initialState, action = {}) {
                 notification_count: 0,
                 instance: action.instance
             };
-        case CurrentUserActionTypes.DELETED_CURRENT_USER:
-            return Object.assign({}, initialState);
-        case CurrentUserActionTypes.NOTIFICATION_PUSH:
-            let newState = Object.assign({}, state);
-            newState.notification_count += 1;
-            return newState;
-        case CurrentUserActionTypes.NOTIFICATION_CLEAR:
-            return Object.assign({}, state, { notification_count: 0 });
-        default:
-            return state;
-    }
-}
+        })
+        .addCase(CurrentUserActionTypes.DELETED_CURRENT_USER, (state, action) => {
+            return initialState;
+        })
+        .addCase(CurrentUserActionTypes.NOTIFICATION_PUSH, (state, action) => {
+            state.notification_count += 1;
+        })
+        .addCase(CurrentUserActionTypes.NOTIFICATION_CLEAR, (state, action) => {
+            state.notification_count = 0;
+        });
+});
