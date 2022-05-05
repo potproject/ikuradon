@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
@@ -19,7 +19,6 @@ import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "
 const CurrentUserReducerSelector = state => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
-    imageviewer: state.imageViewerReducer,
     config: state.configReducer,
 });
 
@@ -27,7 +26,7 @@ function NotificationsList({ type }) {
     const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
     const [init, setInit] = useState(false);
-    const { current, main, imageviewer, config } = useSelector(CurrentUserReducerSelector);
+    const { current, main, config } = useSelector(CurrentUserReducerSelector);
     const listdata = main[type];
     const actions = {
         ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
@@ -45,10 +44,12 @@ function NotificationsList({ type }) {
 
         TouchAction: (id) => {dispatch(GetDetailAction(id))},
     };
-    if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
-        setInit(true);
-        dispatch(newLoadingTimeline(type, listdata.maxId, true));
-    }
+    useEffect(() => {
+        if (!init && listdata && listdata.data instanceof Array && listdata.data.length < 1) {
+            setInit(true);
+            dispatch(newLoadingTimeline(type, listdata.maxId, true));
+        }
+    }, []);
     const newNotifications = notificationParse(listdata.data);
     return (
         <View style={styles.container}>
