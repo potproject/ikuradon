@@ -2,12 +2,11 @@ import * as AppInit from "../actions/actiontypes/appinit";
 import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState = {
-    init: false
+    init: false,
 };
 
 export default createReducer(initialState, (builder) => {
-    builder
-        .addCase(AppInit.APPINIT_COMPLETE, (state, action) => {
-            state.init = true;
-        });
+    builder.addCase(AppInit.APPINIT_COMPLETE, (state, action) => {
+        state.init = true;
+    });
 });

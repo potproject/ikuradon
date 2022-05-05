@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
-import ImageViewer from "react-native-image-zoom-viewer";
+
 import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
@@ -92,12 +92,6 @@ function MastoList({ navigation, type }) {
                         }
                     }}
                 />
-                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.CloseImageViewerAction()}>
-                    <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
-                        enableSwipeDown={true}
-                        loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
-                        onSwipeDown={() => { actions.CloseImageViewerAction()}} />
-                </Modal>
             </ImageBackground>
         </View>
     );
@@ -114,6 +108,17 @@ const styles = StyleSheet.create({
     loading: {
         paddingTop: 10,
         paddingBottom: 10
+    },
+    imageFooter: {
+        height: 64,
+        backgroundColor: "#00000077",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 60,
+    },
+    imageFooterText: {
+        fontSize: 17,
+        color: "#FFF"
     }
 });
 

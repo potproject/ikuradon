@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { StyleSheet, View, FlatList, RefreshControl, Modal, ActivityIndicator, ImageBackground } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
-import ImageViewer from "react-native-image-zoom-viewer";
 
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
 import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
@@ -80,12 +79,6 @@ function NotificationsList({ type }) {
                         }
                     }}
                 />
-                <Modal visible={imageviewer.visible} transparent={true} onRequestClose={() => actions.CloseImageViewerAction()}>
-                    <ImageViewer imageUrls={imageviewer.data} index={imageviewer.index} 
-                        enableSwipeDown={true}
-                        loadingRender={() => <ActivityIndicator size="large" color={"#FFFFFF"} />}
-                        onSwipeDown={() => { actions.CloseImageViewerAction()}} />
-                </Modal>
             </ImageBackground>
         </View>
     );

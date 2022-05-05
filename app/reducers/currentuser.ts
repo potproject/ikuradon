@@ -6,7 +6,7 @@ export const initialState = {
     domain: "",
     access_token: "",
     notification_count: 0,
-    instance: null
+    instance: null,
 };
 
 export default createReducer(initialState, (builder) => {
@@ -17,7 +17,7 @@ export default createReducer(initialState, (builder) => {
                 domain: action.domain,
                 access_token: action.access_token,
                 notification_count: 0,
-                instance: action.instance
+                instance: action.instance,
             };
         })
         .addCase(CurrentUserActionTypes.DELETED_CURRENT_USER, (state, action) => {

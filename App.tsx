@@ -33,6 +33,7 @@ import NavigationService from "./app/services/NavigationService";
 import SettingsScreen from "./app/screens/SettingsScreen";
 import SettingsThemesScreen from "./app/screens/SettingsThemesScreen";
 import DetailScreen from "./app/screens/DetailScreen";
+import ImageViewerScreen from "./app/screens/ImageViewerScreen";
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -95,6 +96,7 @@ export default function App(props) {
                                     <Stack.Screen name={RouterName.Search} component={SearchScreen} options={{ headerShown: false }} />
                                 </Stack.Navigator>
                             </NavigationContainer>
+                            <ImageViewerScreen />
                         </ReduxProvider>
                     </ActionSheetProvider>
                 </ThemeProvider>

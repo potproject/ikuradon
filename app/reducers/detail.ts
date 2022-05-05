@@ -11,10 +11,10 @@ export const initialState = {
 export default createReducer(initialState, (builder) => {
     builder
         .addCase(Detail.DETAIL_GET, (state, action) => {
-            state.data= action.data;
-            state.ancestors= action.ancestors;
-            state.descendants= action.descendants;
-            state.loaded= action.loaded;
+            state.data = action.data;
+            state.ancestors = action.ancestors;
+            state.descendants = action.descendants;
+            state.loaded = action.loaded;
         })
         .addCase(Detail.DETAIL_RESET, (state, action) => {
             return initialState;
