@@ -40,9 +40,15 @@ export default createReducer(initialState, (builder) => {
             return initialState;
         })
         .addMatcher(
-            (action) => true,
+            ({ type }) => type === ConfigActionTypes.SET_BACKGROUNDIMAGE ||
+            type === ConfigActionTypes.DELETE_BACKGROUNDIMAGE ||
+            type === ConfigActionTypes.INVISIBLE_SETTING ||
+            type === ConfigActionTypes.CHANGE_THEME ||
+            type === ConfigActionTypes.CONFIG_RESET
+            ,
             (state, action) => {
                 Storage.setItem(CONST_Storage.Config, state);
+                return state;
             }
         );
 });

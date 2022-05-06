@@ -2,9 +2,6 @@ import OpenStickerReducer, { initialState } from "../opensticker";
 import * as OpenSticker from "../../actions/actiontypes/opensticker";
 
 describe("OpenStickerReducer", () => {
-    it("init", () => {
-        expect(OpenStickerReducer()).toEqual(initialState);
-    });
     it("OpenSticker.OPENSTICKER_LOAD", () => {
         expect(OpenStickerReducer(initialState, { type:OpenSticker.OPENSTICKER_LOAD, openSticker:initialState })).toEqual(initialState);
     });

@@ -1,13 +1,9 @@
+import { createReducer } from "@reduxjs/toolkit";
 import * as Navigation from "../actions/actiontypes/navigation";
 
-export default function reducer(state = {}, action = {}) {
-    switch (action.type) {
-        //ナビゲーションが発動時
-        case Navigation.NAVIGATE:
-            break;
-        //ナビゲーションの完了時
-        case Navigation.COMPLETE_TRANSITION:
-            break;
-    }
-    return state;
-}
+export default createReducer({}, (builder) => {
+    builder
+        .addCase(Navigation.NAVIGATE, (state, action) => {})
+        .addCase(Navigation.COMPLETE_TRANSITION, (state, action) => {});
+});
+
