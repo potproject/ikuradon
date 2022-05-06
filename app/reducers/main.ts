@@ -1,3 +1,4 @@
+import { createReducer } from "@reduxjs/toolkit";
 import * as MainActionTypes from "../actions/actiontypes/main";
 import * as MastorowActionTypes from "../actions/actiontypes/mastorow";
 import { getMinMaxId } from "../util/manageid";
@@ -61,26 +62,69 @@ export const initialState = {
     },
 };
 
-export default function Main(state = initialState, action = {}) {
-    switch (action.type) {
-        case MainActionTypes.NEW_UPDATE_MASTOLIST:
-        case MainActionTypes.OLD_UPDATE_MASTOLIST:
-            let reducerType = action.reducerType;
-            let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
-            let data;
-            let newArrival = 0;
-            let lastUpdate = Math.floor(new Date().getTime() / 1000);
-            if (action.clear){
-                data = [...action.data];
-                ({ minId, maxId } = getMinMaxId(null, null, action.data));
-            } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
-                data = state[reducerType].data.concat(action.data);
-            } else {
-                newArrival = action.data.length;
-                data = action.data.concat(state[reducerType].data);
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(MainActionTypes.REFRESHING_MASTOLIST, (state, action) => {
+            state[action.reducerType].refreshing = true;
+            state[action.reducerType].loading = true;
+        })
+        .addCase(MainActionTypes.STOP_REFRESHING_MASTOLIST, (state, action) => {
+            state[action.reducerType].refreshing = false;
+            state[action.reducerType].loading = false;
+        })
+        .addCase(MainActionTypes.LOADING_MASTOLIST, (state, action) => {
+            state[action.reducerType].refreshing = false;
+            state[action.reducerType].loading = true;
+        })
+        .addCase(MainActionTypes.STOP_LOADING_MASTOLIST, (state, action) => {
+            state[action.reducerType].refreshing = false;
+            state[action.reducerType].loading = false;
+        })
+        .addCase(MainActionTypes.HIDE_MASTOLIST, (state, action) => {
+            for (let viewType of viewTypeArray) {
+                state[viewType].data = state[viewType].data.filter(function(v) {
+                    return v.id !== action.id;
+                });
             }
-            let newstate = Object.assign({}, state, {
-                [reducerType]: {
+        })
+        .addCase(MainActionTypes.ALLCLEAR_MASTOLIST, (state, action) => {
+            return initialState;
+        })
+        .addCase(MastorowActionTypes.BOOST_MASTOROW, (state, action) => {
+            if (action.id === null) {
+                return state;
+            }
+            return changeItem(action.type, state, action.id, action.boosted);
+        })
+        .addCase(MastorowActionTypes.FAVOURITE_MASTOROW, (state, action) => {
+            if (action.id === null) {
+                return state;
+            }
+            return changeItem(action.type, state, action.id, action.favourited);
+        })
+        .addCase(MastorowActionTypes.BOOKMARK_MASTOROW, (state, action) => {
+            if (action.id === null) {
+                return state;
+            }
+            return changeItem(action.type, state, action.id, action.bookmarked);
+        })
+        .addMatcher(({ type })=>type === MainActionTypes.NEW_UPDATE_MASTOLIST || type === MainActionTypes.OLD_UPDATE_MASTOLIST
+            , (state, action) => {
+                let reducerType = action.reducerType;
+                let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
+                let data;
+                let newArrival = 0;
+                let lastUpdate = Math.floor(new Date().getTime() / 1000);
+                if (action.clear){
+                    data = [...action.data];
+                    ({ minId, maxId } = getMinMaxId(null, null, action.data));
+                } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
+                    data = state[reducerType].data.concat(action.data);
+                } else {
+                    newArrival = action.data.length;
+                    data = action.data.concat(state[reducerType].data);
+                }
+                state[reducerType] = {
                     data,
                     refreshing: false,
                     loading: false,
@@ -88,87 +132,9 @@ export default function Main(state = initialState, action = {}) {
                     maxId,
                     newArrival,
                     lastUpdate
-                },
+                };
             });
-            return newstate;
-        case MainActionTypes.REFRESHING_MASTOLIST:
-            return Object.assign({}, state, {
-                [action.reducerType]: {
-                    data: state[action.reducerType].data,
-                    refreshing: true,
-                    loading: true,
-                    minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival,
-                    lastUpdate: state[action.reducerType].lastUpdate
-                },
-            });
-        case MainActionTypes.STOP_REFRESHING_MASTOLIST:
-            return Object.assign({}, state, {
-                [action.reducerType]: {
-                    data: state[action.reducerType].data,
-                    refreshing: false,
-                    loading: false,
-                    minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival,
-                    lastUpdate: state[action.reducerType].lastUpdate,
-                },
-            });
-        case MainActionTypes.LOADING_MASTOLIST:
-            return Object.assign({}, state, {
-                [action.reducerType]: {
-                    data: state[action.reducerType].data,
-                    refreshing: false,
-                    loading: true,
-                    minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival,
-                    lastUpdate: state[action.reducerType].lastUpdate
-                },
-            });
-        case MainActionTypes.STOP_LOADING_MASTOLIST:
-            return Object.assign({}, state, {
-                [action.reducerType]: {
-                    data: state[action.reducerType].data,
-                    refreshing: false,
-                    loading: false,
-                    minId: state[action.reducerType].minId,
-                    maxId: state[action.reducerType].maxId,
-                    newArrival: state[action.reducerType].newArrival,
-                    lastUpdate: state[action.reducerType].lastUpdate
-                },
-            });
-        case MainActionTypes.HIDE_MASTOLIST:
-            for (let viewType of viewTypeArray) {
-                state[viewType].data = state[viewType].data.filter(function(v) {
-                    return v.id !== action.id;
-                });
-            }
-            return Object.assign({}, state);
-        case MainActionTypes.ALLCLEAR_MASTOLIST:
-            return Object.assign({}, initialState);
-
-        case MastorowActionTypes.BOOST_MASTOROW:
-            if (action.id === null) {
-                return state;
-            }
-            return changeItem(action.type, state, action.id, action.boosted);
-
-        case MastorowActionTypes.FAVOURITE_MASTOROW:
-            if (action.id === null) {
-                return state;
-            }
-            return changeItem(action.type, state, action.id, action.favourited);
-        case MastorowActionTypes.BOOKMARK_MASTOROW:
-            if (action.id === null) {
-                return state;
-            }
-            return changeItem(action.type, state, action.id, action.bookmarked);
-        default:
-            return state;
-    }
-}
+});
 
 export function changeItem(type, state, id, bool) {
     let item;
