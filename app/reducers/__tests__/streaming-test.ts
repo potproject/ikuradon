@@ -15,9 +15,6 @@ const state2 = {
 };
 
 describe("StreamingReducer", () => {
-    it("init", () => {
-        expect(StreamingReducer()).toEqual(initialState);
-    });
     it("Streaming.STREAM_START", () => {
         expect(StreamingReducer(initialState, { type:Streaming.STREAM_START, reducerType:"home" }))
             .toEqual(state1);

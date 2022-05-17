@@ -3,9 +3,6 @@ import * as CurrentUser from "../../actions/actiontypes/currentuser";
 import current from "../../example/current";
 
 describe("CurrentuserReducer", () => {
-    it("init", () => {
-        expect(CurrentuserReducer()).toEqual(initialState);
-    });
     it("Config.UPDATE_CURRENT_USER", () => {
         const { user_credentials, domain, access_token, instance } = current();
         const ex = CurrentuserReducer(initialState, 

@@ -3,9 +3,6 @@ import * as Detail from "../../actions/actiontypes/detail";
 import statusMock from "../../example/status";
 
 describe("DetailReducer", () => {
-    it("init", () => {
-        expect(DetailReducer()).toEqual({ data: {}, ancestors: [], descendants: [], loaded: null });
-    });
     it("Detail.DETAIL_GET", () => {
         let data = statusMock();
         expect(DetailReducer(initialState, { type:Detail.DETAIL_GET, data, ancestors: [], descendants: [], loaded: true }))

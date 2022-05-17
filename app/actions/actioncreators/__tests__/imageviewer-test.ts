@@ -8,7 +8,7 @@ describe("Action/ImageViewer", () => {
             type: ImageViewer.IMAGEVIEWER_OPEN,
             index: 0,
             data:[
-                { url: ExampleMediaAttachment().url }
+                { uri: ExampleMediaAttachment().url }
             ]
         });
     });

@@ -1,3 +1,4 @@
+import { createReducer } from "@reduxjs/toolkit";
 import * as Detail from "../actions/actiontypes/detail";
 
 export const initialState = {
@@ -7,20 +8,15 @@ export const initialState = {
     loaded: null, // true=完了、false=失敗、null=存在しない
 };
 
-
-export default function detail(state = initialState, action = {}) {
-    switch (action.type) {
-        //open
-        case Detail.DETAIL_GET:
-            return Object.assign({}, state, { 
-                data: action.data,
-                ancestors: action.ancestors,
-                descendants: action.descendants,
-                loaded: action.loaded
-            });
-        //ナビゲーションの完了時
-        case Detail.DETAIL_RESET:
-            return { data: {}, ancestors: [], descendants: [], loaded: null };
-    }
-    return state;
-}
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(Detail.DETAIL_GET, (state, action) => {
+            state.data = action.data;
+            state.ancestors = action.ancestors;
+            state.descendants = action.descendants;
+            state.loaded = action.loaded;
+        })
+        .addCase(Detail.DETAIL_RESET, (state, action) => {
+            return initialState;
+        });
+});

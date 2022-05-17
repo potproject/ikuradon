@@ -2,6 +2,7 @@ import * as ConfigActionTypes from "../actions/actiontypes/config";
 
 import * as Storage from "../util/storage";
 import * as CONST_Storage from "../constants/storage";
+import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState = {
     backgroundImage: null,
@@ -14,49 +15,40 @@ export const initialState = {
         notifications: false,
     },
 
-    theme: "default"
+    theme: "default",
     //textsize,textcolor,etc...
 };
 
-export default function Config(state = initialState, action = {}) {
-    let newstate;
-    switch (action.type) {
-        case ConfigActionTypes.SET_BACKGROUNDIMAGE:
-            newstate = Object.assign({}, state, {
-                backgroundImage: action.backgroundImage,
-            });
-            break;
-
-        case ConfigActionTypes.DELETE_BACKGROUNDIMAGE:
-            newstate = Object.assign({}, state, {
-                backgroundImage: null,
-            });
-            break;
-
-        case ConfigActionTypes.INVISIBLE_SETTING:
-            let mergeInvisible = Object.assign({}, state.invisible, action.invisible);
-            newstate = Object.assign({}, state, { invisible: mergeInvisible });
-            break;
-
-        case ConfigActionTypes.CHANGE_THEME:
-            newstate = Object.assign({}, state, {
-                theme: action.theme,
-            });
-            break;
-        case ConfigActionTypes.CONFIG_LOAD:
-            newstate = Object.assign({}, action.config);
-            break;
-
-        case ConfigActionTypes.CONFIG_RESET:
-            newstate = initialState;
-            break;
-
-        default:
-            newstate = state;
-            break;
-    }
-    if (state !== newstate) {
-        Storage.setItem(CONST_Storage.Config, newstate);
-    }
-    return newstate;
-}
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(ConfigActionTypes.SET_BACKGROUNDIMAGE, (state, action) => {
+            state.backgroundImage = action.backgroundImage;
+        })
+        .addCase(ConfigActionTypes.DELETE_BACKGROUNDIMAGE, (state, _action) => {
+            state.backgroundImage = null;
+        })
+        .addCase(ConfigActionTypes.INVISIBLE_SETTING, (state, action) => {
+            state.invisible = { ...state.invisible, ...action.invisible };
+        })
+        .addCase(ConfigActionTypes.CHANGE_THEME, (state, action) => {
+            state.theme = action.theme;
+        })
+        .addCase(ConfigActionTypes.CONFIG_LOAD, (state, action) => {
+            return { ...initialState, ...action.config };
+        })
+        .addCase(ConfigActionTypes.CONFIG_RESET, (state, _action) => {
+            return initialState;
+        })
+        .addMatcher(
+            ({ type }) => type === ConfigActionTypes.SET_BACKGROUNDIMAGE ||
+            type === ConfigActionTypes.DELETE_BACKGROUNDIMAGE ||
+            type === ConfigActionTypes.INVISIBLE_SETTING ||
+            type === ConfigActionTypes.CHANGE_THEME ||
+            type === ConfigActionTypes.CONFIG_RESET
+            ,
+            (state, action) => {
+                Storage.setItem(CONST_Storage.Config, state);
+                return state;
+            }
+        );
+});

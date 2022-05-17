@@ -85,7 +85,7 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
             }
             { media_attachments && media_attachments.length > 0 &&
             <View style={styles.tootContainer}>
-                <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={OpenImageViewerAction} closeImageViewer={CloseImageViewerAction} />
+                <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={OpenImageViewerAction} />
             </View>
             }
             <View style={styles.date}>
