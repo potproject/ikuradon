@@ -1,7 +1,15 @@
 import * as CurrentUserActionTypes from "../actions/actiontypes/currentuser";
 import { createReducer } from "@reduxjs/toolkit";
 
-export const initialState = {
+type currentUser = {
+    user_credentials: any;
+    domain: string;
+    access_token: string;
+    notification_count: number;
+    instance: any;
+};
+
+export const initialState: currentUser = {
     user_credentials: null,
     domain: "",
     access_token: "",
