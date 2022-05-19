@@ -223,6 +223,7 @@ export const GET_CUSTOMEMOJIS = {
     form: {}
 };
 
+// DEPRECATED!
 export const GET_SEARCH_V2 = {
     method: "get",
     url: "/api/v2/search",
@@ -231,6 +232,7 @@ export const GET_SEARCH_V2 = {
     }
 };
 
+// DEPRECATED!
 export const GET_POLL = {
     method: "get",
     url: "/api/v1/polls/:param:",

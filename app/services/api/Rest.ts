@@ -126,6 +126,15 @@ export async function getInstanceCustomEmojis(sns: sns, domain: string){
     return data;
 }
 
+export async function getPoll(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).getPoll(id);
+    return data;
+}
+
+export async function search(sns: sns, domain: string, access_token: string, q: string, type: "accounts" | "hashtags" | "statuses"){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).search(q, type);
+    return data;
+}
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }

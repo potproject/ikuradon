@@ -1,11 +1,10 @@
-import * as CONST_API from "../constants/api";
-import Networking from "../services/Networking";
 import * as Session from "../util/session";
+import * as Rest from "../services/api/Rest";
 
-export async function search(q){
+export async function search(q: string, type:string){
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let { data } = await Networking.fetch(domain, CONST_API.GET_SEARCH_V2, null, { q }, access_token);
+        const data = await Rest.search("mastodon", domain, access_token, q, type as "accounts" | "hashtags" | "statuses");
         return { data, error: null };
     } catch (e){
         return { data: {

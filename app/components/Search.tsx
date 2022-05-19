@@ -12,6 +12,8 @@ const initSearchData = {
     hashtags: []
 };
 
+const index = [searchConst.TYPE_ACCOUNTS, searchConst.TYPE_STATUSES, searchConst.TYPE_HASHTAGS];
+
 export default function Search(){
     const { theme }= useContext(ThemeContext);
     const [searchValue, onChangeSearchValue] = useState("");
@@ -29,7 +31,7 @@ export default function Search(){
                 onSubmitEditing={() => {
                     useSearchData(initSearchData);
                     useLoading(true);
-                    SearchApi(searchValue)
+                    SearchApi(searchValue, index[searchTypeIndex])
                         .then(({ data, error }) => useSearchData(data))
                         .finally(() => useLoading(false));
                 }}

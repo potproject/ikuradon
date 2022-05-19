@@ -3,6 +3,7 @@ import Networking from "../services/Networking";
 import * as CONST_API from "../constants/api";
 import DayJS from "dayjs";
 import * as Session from "../util/session";
+import * as Rest from "../services/api/Rest";
 
 /**
  * Poll投票
@@ -29,10 +30,10 @@ export async function votePoll(id, choices) {
 export async function getPoll(id) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let { data } = await Networking.fetch(domain, CONST_API.GET_POLL, id, {}, access_token);
+        let data = await Rest.getPoll("mastodon", domain, access_token, id);
         return { data, error: null };
     } catch (e){
-        return { data: {}, error: e.message };
+        return { data: null, error: e.message };
     }
 }
 
