@@ -116,6 +116,11 @@ export async function unfollowAccount(sns: sns, domain: string, access_token: st
     return data;
 }
 
+export async function getRelationships(sns: sns, domain: string, access_token: string, ids: string[]){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).getRelationships(ids);
+    return data;
+}
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }
