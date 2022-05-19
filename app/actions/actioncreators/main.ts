@@ -8,14 +8,15 @@ import * as Session from "../../util/session";
 
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
+import * as Rest from "../../services/api/Rest";
 
 const reducerTypeArray = {
-    home: CONST_API.GET_TIMELINES_HOME,
-    local: CONST_API.GET_TIMELINES_LOCAL,
-    federal: CONST_API.GET_TIMELINES_FEDERAL,
-    notifications: CONST_API.GET_NOTIFICATIONS,
-    favourites: CONST_API.GET_FAVOURITES,
-    bookmarks: CONST_API.GET_BOOKMARKS
+    home: Rest.getHomeTimeline,
+    local: Rest.getLocalTimeline,
+    federal: Rest.getPublicTimeline,
+    notifications: Rest.getNotifications,
+    favourites: Rest.getFavourites,
+    bookmarks: Rest.getBookmarks
 };
 
 export function hide(id) {
@@ -40,7 +41,7 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
         dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
-            let { data } = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id, max_id: null }, access_token);
+            const data = await reducerTypeArray[reducerType]("mastodon", domain, access_token, { limit, since_id, max_id: null });
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -54,7 +55,7 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
         dispatch({ type: Main.LOADING_MASTOLIST, reducerType });
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
-            let { data } = await Networking.fetch(domain, reducerTypeArray[reducerType], null, { limit, since_id: null, max_id }, access_token);
+            const data = await reducerTypeArray[reducerType]("mastodon", domain, access_token, { limit, since_id: null, max_id });
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

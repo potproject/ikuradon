@@ -35,6 +35,7 @@ export const GET_INSTANCE = {
     form: {}
 };
 
+// DEPRECATED!
 export const GET_TIMELINES_HOME = {
     method: "get",
     url: "/api/v1/timelines/home",
@@ -45,6 +46,7 @@ export const GET_TIMELINES_HOME = {
     }
 };
 
+// DEPRECATED!
 export const GET_TIMELINES_LOCAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -56,6 +58,7 @@ export const GET_TIMELINES_LOCAL = {
     }
 };
 
+// DEPRECATED!
 export const GET_TIMELINES_FEDERAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -67,6 +70,7 @@ export const GET_TIMELINES_FEDERAL = {
     }
 };
 
+// DEPRECATED!
 export const GET_NOTIFICATIONS = {
     method: "get",
     url: "/api/v1/notifications",
@@ -77,6 +81,7 @@ export const GET_NOTIFICATIONS = {
     }
 };
 
+// DEPRECATED!
 export const GET_FAVOURITES = {
     method: "get",
     url: "/api/v1/favourites",
