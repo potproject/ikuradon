@@ -38,7 +38,7 @@ export function loginSelectAccounts(index) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
                 const instance = await Rest.getInstance("mastodon", domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
@@ -58,7 +58,7 @@ export function loginWithAccessToken(domain, access_token) {
             //アクセストークンでログイン
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+            const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
             const instance = await Rest.getInstance("mastodon", domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
@@ -111,7 +111,7 @@ export function accountChangeWithDelete(index) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+                const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
                 const instance = await Rest.getInstance("mastodon", domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });

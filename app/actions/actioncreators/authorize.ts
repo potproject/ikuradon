@@ -20,7 +20,7 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             });
             let access_token = data.access_token;
             //get current user
-            let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
+            const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
             const instance = await Rest.getInstance("mastodon", domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;

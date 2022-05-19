@@ -3,7 +3,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { Entity } from "megalodon";
 
 type currentUser = {
-    user_credentials: any;
+    user_credentials: Entity.Account;
     domain: string;
     access_token: string;
     notification_count: number;

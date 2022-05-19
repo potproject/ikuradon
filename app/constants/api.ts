@@ -21,6 +21,7 @@ export const GET_OAUTH_ACCESSTOKEN = {
     }
 };
 
+// DEPRECATED!
 export const GET_CURRENT_USER = {
     method: "get",
     url: "/api/v1/accounts/verify_credentials",
