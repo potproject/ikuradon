@@ -27,6 +27,7 @@ export const GET_CURRENT_USER = {
     form: {}
 };
 
+// DEPRECATED!
 export const GET_INSTANCE = {
     method: "get",
     url: "/api/v1/instance",

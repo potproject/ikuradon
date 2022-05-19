@@ -54,8 +54,7 @@ export function appInit(updateTheme) {
         if (AUTO_LOGIN && access_token && domain) {
             try {
                 let { data: user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data: instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
-                Rest.getInstance("mastodon", domain, access_token);
+                const instance = await Rest.getInstance("mastodon", domain, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });

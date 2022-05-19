@@ -1,9 +1,13 @@
 import generator, { Entity } from "megalodon";
 import { sns } from "../../constants/sns";
 
-export async function getInstance(sns: sns, domain: string, access_token: string): Promise<Entity.Instance>{
-    const client = generator(sns, getBaseUrl(domain), access_token);
-    const { data }  = await client.getInstance();
+export async function getInstance(sns: sns, domain: string, access_token: string){
+    const { data } = await generator(sns, getBaseUrl(domain), access_token).getInstance();
+    return data;
+}
+
+export async function getCurrentUser(sns: sns, domain: string, access_token: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).verifyAccountCredentials();
     return data;
 }
 

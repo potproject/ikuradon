@@ -6,6 +6,8 @@ import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 import t from "../../services/I18n";
 
+import * as Rest from "../../services/api/Rest";
+
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
@@ -37,7 +39,7 @@ export function loginSelectAccounts(index) {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                const instance = await Rest.getInstance("mastodon", domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
@@ -57,7 +59,7 @@ export function loginWithAccessToken(domain, access_token) {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+            const instance = await Rest.getInstance("mastodon", domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
             await Session.add(domain, access_token, username, avatar);
@@ -110,7 +112,7 @@ export function accountChangeWithDelete(index) {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                const instance = await Rest.getInstance("mastodon", domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
