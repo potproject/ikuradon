@@ -71,6 +71,21 @@ export async function getStatusContext(sns: sns, domain: string, access_token: s
     return data;
 }
 
+export async function deleteStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).deleteStatus(id);
+    return data;
+}
+
+export async function reblogStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).reblogStatus(id);
+    return data;
+}
+
+export async function unreblogStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).unreblogStatus(id);
+    return data;
+}
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }

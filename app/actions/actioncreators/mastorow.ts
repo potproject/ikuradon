@@ -4,14 +4,15 @@ import Networking from "../../services/Networking";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
+import * as Rest from "../../services/api/Rest";
 
 export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
             let { domain, access_token } = await Session.getDomainAndToken();
-            let POST_URL = boosted ? CONST_API.POST_REBLOG : CONST_API.POST_UNREBLOG;
-            let { data: { reblogged: reblogedResult } } = await Networking.fetch(domain, POST_URL, tootid, {}, access_token);
+            let postapi = boosted ? Rest.reblogStatus : Rest.unreblogStatus;
+            const { reblogged: reblogedResult } = await postapi("mastodon", domain, access_token, id);
             console.log("boost:", tootid, boosted, "result:", reblogedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

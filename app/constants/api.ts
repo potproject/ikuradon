@@ -132,18 +132,21 @@ export const GET_STATUS_CONTEXT = {
     form: {}
 };
 
+// DEPRECATED!
 export const DELETE_STATUS = {
     method: "delete",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_REBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/reblog",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_UNREBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/unreblog",

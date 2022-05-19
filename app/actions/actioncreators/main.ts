@@ -27,7 +27,7 @@ export function deleting(id) {
     return async dispatch => {
         try {
             let { domain, access_token } = await Session.getDomainAndToken();
-            await Networking.fetch(domain, CONST_API.DELETE_STATUS, id, {}, access_token);
+            await Rest.deleteStatus("mastodon", domain, access_token, id);
             dispatch({ type: Main.HIDE_MASTOLIST, id: id });
             DropDownHolder.success(t("messages.toot_deleted_success"));
         } catch (e) {
