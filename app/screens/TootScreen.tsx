@@ -13,7 +13,7 @@ import t from "../services/I18n";
 import { toot as TootAction } from "../actions/actioncreators/toot";
 import { Header, Overlay, ThemeContext } from "react-native-elements";
 
-const reducerSelector = state => ({
+const reducerSelector = (state: RootState) => ({
     current: state.currentUserReducer,
     toot: state.tootReducer
 });
@@ -24,6 +24,7 @@ import EmojisModal from "../components/EmojisModal";
 import DraftModal from "../components/DraftModal";
 import { addDraft, deleteDraft } from "../util/draft";
 import TootImageClip from "../components/TootImageClip";
+import { RootState } from "../reducers";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;

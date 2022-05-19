@@ -12,9 +12,9 @@ import { Header, ThemeContext } from "react-native-elements";
 import NotificationsList from "../components/NotificationsList";
 
 import * as RouterName from "../constants/RouterName";
-import DeckHeader from "../components/tablet/DeckHeader";
+import { RootState } from "../reducers";
 
-const reducerSelector = state => ({
+const reducerSelector = (state: RootState) => ({
     current: state.currentUserReducer,
     streaming: state.streamingReducer,
     config: state.configReducer

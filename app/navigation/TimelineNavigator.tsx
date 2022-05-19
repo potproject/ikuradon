@@ -7,14 +7,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ThemeContext } from "react-native-elements";
 import { useSelector } from "react-redux";
 
-const MainReducerSelector = state => state.mainReducer;
-const reducerSelector = state => ({ 
+const MainReducerSelector = (state: RootState) => state.mainReducer;
+const reducerSelector = (state: RootState) => ({ 
     streaming: state.streamingReducer,
     config: state.configReducer
 });
 
 import t from "../services/I18n";
 import * as RouterName from "../constants/RouterName";
+import { RootState } from "../reducers";
 
 const Tab = createBottomTabNavigator();
 

@@ -6,7 +6,8 @@ import t from "../services/I18n";
 
 import { setTheme } from "../actions/actioncreators/config";
 import { settingTheme } from "../util/theme";
-const reducerSelector =  state => ({
+import { RootState } from "../reducers";
+const reducerSelector = (state: RootState) => ({
     config: state.configReducer
 });
 

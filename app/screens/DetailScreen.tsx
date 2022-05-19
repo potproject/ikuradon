@@ -18,8 +18,9 @@ import NavigationService from "../services/NavigationService";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesome } from "@expo/vector-icons";
 import t from "../services/I18n";
+import { RootState } from "../reducers";
 
-const reducerSelector =  state => ({
+const reducerSelector =  (state: RootState) => ({
     current: state.currentUserReducer,
     detail: state.detailReducer,
     openSticker: state.openStickerReducer

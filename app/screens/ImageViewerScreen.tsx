@@ -3,8 +3,9 @@ import { Text, View, StyleSheet } from "react-native";
 import ImageView from "react-native-image-viewing";
 import { useDispatch, useSelector } from "react-redux";
 import { close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { RootState } from "../reducers";
 
-const reducerSelector = (state) => ({
+const reducerSelector = (state: RootState) => ({
     imageviewer: state.imageViewerReducer,
 });
 

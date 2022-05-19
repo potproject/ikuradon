@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { ThemeContext } from "react-native-elements";
 import { on as streamingOn, off as streamingOff, getStreamingURL } from "../util/stream";
+import { RootState } from "../reducers";
 
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
 
 export default function TimelineStreamingButton({ type }){
     const dispatch = useDispatch();

@@ -15,8 +15,9 @@ import NotificationsRow from "./NotificationsRow";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
 import { notificationParse } from "../util/notification";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
+import { RootState } from "../reducers";
 
-const CurrentUserReducerSelector = state => ({
+const CurrentUserReducerSelector = (state: RootState) => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
     config: state.configReducer,

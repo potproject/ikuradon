@@ -8,9 +8,10 @@ import TimelineCenterHeader from "../components/TimelineCenterHeader";
 
 import { Header, ThemeContext } from "react-native-elements";
 
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
 
 import * as RouterName from "../constants/RouterName";
+import { RootState } from "../reducers";
 
 function NotificationsScreen({ navigation }) {
     const type = "notifications";
