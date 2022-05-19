@@ -4,9 +4,6 @@ import * as PushNotification from "../../actions/actiontypes/pushnotification";
 import pushNotificationMock from "../../example/pushNotification";
 
 describe("PushNotificationReducer", () => {
-    it("init", () => {
-        expect(PushNotificationReducer()).toEqual(initialState);
-    });
     it("PushNotification.PUSHNOTIFICATION_SUBSCRIBE", () => {
         const pushNotification = pushNotificationMock();
         const ex = PushNotificationReducer(initialState,

@@ -1,6 +1,7 @@
 import * as OpenStickerActionTypes from "../actions/actiontypes/opensticker";
 import * as Storage from "../util/storage";
 import * as CONST_Storage from "../constants/storage";
+import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState = {
     use: false,
@@ -8,21 +9,21 @@ export const initialState = {
     data: {}
 };
 
-export default function OpenSticker(state = initialState, action = {}) {
-    let newstate = state;
-    switch (action.type) {
-        case OpenStickerActionTypes.OPENSTICKER_LOAD:
-            newstate = Object.assign({}, action.openSticker);
-            break;
-        case OpenStickerActionTypes.OPENSTICKER_ON:
-            newstate = Object.assign({}, { use:true, server:action.server, data:action.data });
-            break;
-        case OpenStickerActionTypes.OPENSTICKER_OFF:
-            newstate = Object.assign({}, state, { use:false, data:{} });
-            break;
-    }
-    if (state !== newstate) {
-        Storage.setItem(CONST_Storage.OpenSticker, newstate);
-    }
-    return newstate;
-}
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(OpenStickerActionTypes.OPENSTICKER_LOAD, (state, action) => {
+            const newState = action.openSticker;
+            Storage.setItem(CONST_Storage.OpenSticker, newState);
+            return newState;
+        })
+        .addCase(OpenStickerActionTypes.OPENSTICKER_ON, (state, action) => {
+            const newState = { use: true, server:action.server, data:action.data };
+            Storage.setItem(CONST_Storage.OpenSticker, newState);
+            return newState;
+        })
+        .addCase(OpenStickerActionTypes.OPENSTICKER_OFF, (state, action) => {
+            const newState = initialState;
+            Storage.setItem(CONST_Storage.OpenSticker, newState);
+            return newState;
+        });
+});

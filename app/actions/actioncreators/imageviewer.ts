@@ -6,7 +6,7 @@ export function open(mediaAttachments, index) {
     let data = [];
     for (let media of mediaAttachments){
         if (media.type === "image"){
-            data.push({ url: media.url });
+            data.push({ uri: media.url });
         }
     }
     if (data.length === 0 || mediaAttachments[index].type !== "image"){

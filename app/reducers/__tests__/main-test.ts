@@ -16,9 +16,6 @@ function createStatusToStateMock(status, type, date, newArrival){
 }
 
 describe("MainReducer", () => {
-    it("init", () => {
-        expect(MainReducer()).toEqual(initialState);
-    });
     it("Main.OLD_UPDATE_MASTOLIST", () => {
         advanceTo(new Date(2020, 8, 31, 10, 20, 30));
         const ex = MainReducer(initialState, { 

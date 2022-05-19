@@ -1,3 +1,4 @@
+import { createReducer } from "@reduxjs/toolkit";
 import * as ImageViewer from "../actions/actiontypes/imageviewer";
 
 export const initialState = {
@@ -6,20 +7,16 @@ export const initialState = {
     visible: false,
 };
 
-export default function reducer(state = initialState, action = {}) {
-    switch (action.type) {
-        case ImageViewer.IMAGEVIEWER_OPEN:
-            return Object.assign({}, state, { 
-                data: action.data,
-                index: action.index,
-                visible: true
-            });
-        case ImageViewer.IMAGEVIEWER_CLOSE:
-            return Object.assign({}, state, {
-                data: [],
-                index: 0,
-                visible: false
-            });
-    }
-    return state;
-}
+export default createReducer(initialState, (builder) => {
+    builder
+        .addCase(ImageViewer.IMAGEVIEWER_OPEN, (state, action) => {
+            state.data = action.data;
+            state.index = action.index;
+            state.visible = true;
+        })
+        .addCase(ImageViewer.IMAGEVIEWER_CLOSE, (state, action) => {
+            state.data = [];
+            state.index = 0;
+            state.visible = false;
+        });
+});
