@@ -153,36 +153,42 @@ export const POST_UNREBLOG = {
     form: {}
 };
 
+// DEPRECATED!
 export const POST_FAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/favourite",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_UNFAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unfavourite",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_BOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/bookmark",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_UNBOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unbookmark",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_FOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/follow",
     form: {}
 };
 
+// DEPRECATED!
 export const POST_UNFOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/unfollow",

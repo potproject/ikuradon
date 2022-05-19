@@ -86,6 +86,36 @@ export async function unreblogStatus(sns: sns, domain: string, access_token: str
     return data;
 }
 
+export async function favouriteStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).favouriteStatus(id);
+    return data;
+}
+
+export async function unfavouriteStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).unfavouriteStatus(id);
+    return data;
+}
+
+export async function bookmarkStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).bookmarkStatus(id);
+    return data;
+}
+
+export async function unbookmarkStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).unbookmarkStatus(id);
+    return data;
+}
+
+export async function followAccount(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).followAccount(id);
+    return data;
+}
+
+export async function unfollowAccount(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).unfollowAccount(id);
+    return data;
+}
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }
