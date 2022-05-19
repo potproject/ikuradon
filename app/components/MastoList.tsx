@@ -13,7 +13,8 @@ import * as RouterName from "../constants/RouterName";
 import { ThemeContext } from "react-native-elements";
 import NavigationService from "../services/NavigationService";
 import { oldLoadingTimeline, newLoadingTimeline } from "../actions/actioncreators/main";
-const reducerSelector = (state) => ({
+import { RootState } from "../reducers";
+const reducerSelector = (state: RootState) => ({
     current: state.currentUserReducer,
     main: state.mainReducer,
     streaming: state.streamingReducer,

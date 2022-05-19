@@ -10,9 +10,10 @@ import t from "../services/I18n";
 
 import { Header, ThemeContext } from "react-native-elements";
 
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
 
 import * as RouterName from "../constants/RouterName";
+import { RootState } from "../reducers";
 
 function TimelineScreen({ route, navigation }) {
     const type = dataSelector(route.name);

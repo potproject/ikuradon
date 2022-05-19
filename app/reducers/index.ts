@@ -12,7 +12,7 @@ import pushNotificationReducer from "./pushnotification";
 import openStickerReducer from "./opensticker";
 // ... other reducers
 
-export default combineReducers({
+const rootReducer = combineReducers({
     appInitReducer,
     mainReducer,
     navigationReducer,
@@ -26,3 +26,7 @@ export default combineReducers({
     openStickerReducer
     // ... other reducers
 });
+
+export type RootState = ReturnType<typeof rootReducer>
+ 
+export default rootReducer;

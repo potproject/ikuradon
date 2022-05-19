@@ -21,7 +21,8 @@ import * as RouterName from "../constants/RouterName";
 import UserList from "../components/UserList";
 
 import { loginSelectAccounts, accountChangeWithDelete } from "../actions/actioncreators/login";
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+import { RootState } from "../reducers";
+const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
 
 export default function DrawerContainer({ navigation }){
     const dispatch = useDispatch();

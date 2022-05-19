@@ -13,8 +13,9 @@ import { on as OpenStickerOnAction, off as OpenStickerOffAction } from "../actio
 import NavigationService from "../services/NavigationService";
 
 import * as RouterName from "../constants/RouterName";
+import { RootState } from "../reducers";
 
-const reducerSelector =  state => ({
+const reducerSelector =  (state: RootState) => ({
     current: state.currentUserReducer,
     config: state.configReducer,
     pushNotification: state.pushNotificationReducer,

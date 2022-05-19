@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Text, Image, StyleSheet, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Constants from "expo-constants";
 import { withTheme } from "react-native-elements";
 

@@ -7,8 +7,9 @@ import t from "../services/I18n";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import Search from "../components/Search";
+import { RootState } from "../reducers";
 
-const CurrentUserReducerSelector = state => state.currentUserReducer;
+const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
 
 function SearchScreen({ navigation }) {
     const current = useSelector(CurrentUserReducerSelector);
