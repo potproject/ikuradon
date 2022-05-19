@@ -61,6 +61,16 @@ export async function postStatus(sns: sns, domain: string, access_token: string,
     return data;
 }
 
+export async function getStatus(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).getStatus(id);
+    return data;
+}
+
+export async function getStatusContext(sns: sns, domain: string, access_token: string, id: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).getStatusContext(id);
+    return data;
+}
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }

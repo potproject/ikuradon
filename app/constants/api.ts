@@ -118,12 +118,14 @@ export const POST_STATUS = {
     }
 };
 
+// DEPRECATED!
 export const GET_STATUS = {
     method: "get",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
+// DEPRECATED!
 export const GET_STATUS_CONTEXT = {
     method: "get",
     url: "/api/v1/statuses/:param:/context",
