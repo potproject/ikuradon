@@ -239,6 +239,7 @@ export const GET_POLL = {
     form: {}
 };
 
+// DEPRECATED!
 export const POST_POLL_VOTES = {
     method: "post",
     url: "/api/v1/polls/:param:/votes",

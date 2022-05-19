@@ -131,6 +131,11 @@ export async function getPoll(sns: sns, domain: string, access_token: string, id
     return data;
 }
 
+export async function votePoll(sns: sns, domain: string, access_token: string, id: string, choices: number[]){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).votePoll(id, choices);
+    return data;
+}
+
 export async function search(sns: sns, domain: string, access_token: string, q: string, type: "accounts" | "hashtags" | "statuses"){
     const { data }  = await generator(sns, getBaseUrl(domain), access_token).search(q, type);
     return data;

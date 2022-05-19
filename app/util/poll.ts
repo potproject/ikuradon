@@ -1,6 +1,4 @@
 import t from "../services/I18n";
-import Networking from "../services/Networking";
-import * as CONST_API from "../constants/api";
 import DayJS from "dayjs";
 import * as Session from "../util/session";
 import * as Rest from "../services/api/Rest";
@@ -14,10 +12,10 @@ import * as Rest from "../services/api/Rest";
 export async function votePoll(id, choices) {
     try {
         let { domain, access_token } = await Session.getDomainAndToken();
-        let { data } = await Networking.fetch(domain, CONST_API.POST_POLL_VOTES, id, { choices }, access_token);
+        const data = await Rest.votePoll("mastodon", domain, access_token, id, choices);
         return { data, error: null };
     } catch (e){
-        return { data: {}, error: e.message };
+        return { data: null, error: e.message };
     }
 }
 
