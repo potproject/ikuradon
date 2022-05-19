@@ -92,6 +92,7 @@ export const GET_FAVOURITES = {
     }
 };
 
+// DEPRECATED!
 export const GET_BOOKMARKS = {
     method: "get",
     url: "/api/v1/bookmarks",
@@ -102,6 +103,7 @@ export const GET_BOOKMARKS = {
     }
 };
 
+// DEPRECATED!
 export const POST_STATUS = {
     method: "post",
     url: "/api/v1/statuses",

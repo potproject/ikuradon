@@ -12,9 +12,9 @@ export async function getCurrentUser(sns: sns, domain: string, access_token: str
 }
 
 type tlOptions = {
-    limit: number;
-    max_id: string;
-    since_id: string;
+    limit?: number;
+    max_id?: string;
+    since_id?: string;
 };
 
 export async function getHomeTimeline(sns: sns, domain: string, access_token: string, options: tlOptions){
@@ -44,6 +44,20 @@ export async function getFavourites(sns: sns, domain: string, access_token: stri
 
 export async function getBookmarks(sns: sns, domain: string, access_token: string, options: tlOptions){
     const { data }  = await generator(sns, getBaseUrl(domain), access_token).getBookmarks(options);
+    return data;
+}
+
+type statusOptions = {
+    visibility?: "public" | "unlisted" | "private" | "direct";
+    sensitive?: boolean,
+    spoiler_text?: string,
+    media_ids?: Array<string>,
+    in_reply_to_id?: string,
+    scheduled_at?: string;
+};
+
+export async function postStatus(sns: sns, domain: string, access_token: string, status: string, options: statusOptions){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).postStatus(status, options);
     return data;
 }
 

@@ -6,6 +6,7 @@ import * as Session from "../../util/session";
 
 import NavigationService from "../../services/NavigationService";
 import * as Toot from "../actiontypes/toot";
+import * as Rest from "../../services/api/Rest";
 
 export function toot(status, visibility, sensitive, spoiler_text, media_ids = [], reply = null, scheduled_at = null) {
     return async dispatch => {
@@ -16,20 +17,15 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined") {
                 in_reply_to_id = reply.tootid;
             }
-            await Networking.fetch(
-                domain,
-                CONST_API.POST_STATUS,
-                null,
+            await Rest.postStatus("mastodon", domain, access_token, status,
                 {
-                    status,
                     visibility,
                     sensitive,
                     spoiler_text,
                     media_ids,
                     in_reply_to_id,
                     scheduled_at
-                },
-                access_token
+                }
             );
             DropDownHolder.success(t("messages.toot_success"));
             NavigationService.back();
