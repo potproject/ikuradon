@@ -195,6 +195,7 @@ export const POST_UNFOLLOWED = {
     form: {}
 };
 
+// DEPRECATED!
 export const GET_RELATIONSHIPS = {
     method: "get",
     url: "/api/v1/accounts/relationships",
@@ -215,6 +216,7 @@ export const UPLOAD_GET_MEDIA = {
     form: {}
 };
 
+// DEPRECATED!
 export const GET_CUSTOMEMOJIS = {
     method: "get",
     url: "/api/v1/custom_emojis",

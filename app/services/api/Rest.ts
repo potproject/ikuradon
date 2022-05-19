@@ -121,6 +121,11 @@ export async function getRelationships(sns: sns, domain: string, access_token: s
     return data;
 }
 
+export async function getInstanceCustomEmojis(sns: sns, domain: string){
+    const { data }  = await generator(sns, getBaseUrl(domain)).getInstanceCustomEmojis();
+    return data;
+}
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }
