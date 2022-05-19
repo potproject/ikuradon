@@ -2,9 +2,15 @@ import Networking from "./Networking";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
 
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
 
-export default function fileUpload(domain, access_token, file, type) {
+export default function fileUpload(sns: "mastodon", domain: string, access_token: string, file: any, type: string) {
+    if (sns === "mastodon"){
+        return fileUploadMastodonV2(domain, access_token, file, type);
+    }
+}
+
+function fileUploadMastodonV2(domain: string, access_token: string, file: any, type: string) {
     return new Promise(async (resolve, reject) => {
         try {
             let baseurl = "https://" + domain + "";
@@ -46,7 +52,7 @@ function createHeaders(access_token = null) {
     let headers = {
         Accept: "application/json",
         "Content-Type": "application/json"
-    };
+    } as any;
     if (access_token !== null) {
         headers.Authorization = "Bearer " + access_token;
     }

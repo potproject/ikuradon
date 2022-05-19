@@ -21,21 +21,40 @@ export const GET_OAUTH_ACCESSTOKEN = {
     }
 };
 
-// DEPRECATED!
+export const UPLOAD_POST_MEDIA = {
+    method: "post",
+    url: "/api/v2/media",
+    form: {}
+};
+
+export const UPLOAD_GET_MEDIA = {
+    method: "get",
+    url: "/api/v1/media/:param:",
+    form: {}
+};
+
+
+/** Streaming API とりあえずUSERのみサポート */
+export const STREAMING = {
+    url: "/api/v1/streaming"
+};
+
+
+// UNUSED!
 export const GET_CURRENT_USER = {
     method: "get",
     url: "/api/v1/accounts/verify_credentials",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_INSTANCE = {
     method: "get",
     url: "/api/v1/instance",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_TIMELINES_HOME = {
     method: "get",
     url: "/api/v1/timelines/home",
@@ -46,7 +65,7 @@ export const GET_TIMELINES_HOME = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_TIMELINES_LOCAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -58,7 +77,7 @@ export const GET_TIMELINES_LOCAL = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_TIMELINES_FEDERAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -70,7 +89,7 @@ export const GET_TIMELINES_FEDERAL = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_NOTIFICATIONS = {
     method: "get",
     url: "/api/v1/notifications",
@@ -81,7 +100,7 @@ export const GET_NOTIFICATIONS = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_FAVOURITES = {
     method: "get",
     url: "/api/v1/favourites",
@@ -92,7 +111,7 @@ export const GET_FAVOURITES = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_BOOKMARKS = {
     method: "get",
     url: "/api/v1/bookmarks",
@@ -103,7 +122,7 @@ export const GET_BOOKMARKS = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_STATUS = {
     method: "post",
     url: "/api/v1/statuses",
@@ -118,84 +137,84 @@ export const POST_STATUS = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_STATUS = {
     method: "get",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_STATUS_CONTEXT = {
     method: "get",
     url: "/api/v1/statuses/:param:/context",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const DELETE_STATUS = {
     method: "delete",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_REBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/reblog",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_UNREBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/unreblog",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_FAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/favourite",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_UNFAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unfavourite",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_BOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/bookmark",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_UNBOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unbookmark",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_FOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/follow",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_UNFOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/unfollow",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_RELATIONSHIPS = {
     method: "get",
     url: "/api/v1/accounts/relationships",
@@ -204,26 +223,14 @@ export const GET_RELATIONSHIPS = {
     }
 };
 
-export const UPLOAD_POST_MEDIA = {
-    method: "post",
-    url: "/api/v2/media",
-    form: {}
-};
-
-export const UPLOAD_GET_MEDIA = {
-    method: "get",
-    url: "/api/v1/media/:param:",
-    form: {}
-};
-
-// DEPRECATED!
+// UNUSED!
 export const GET_CUSTOMEMOJIS = {
     method: "get",
     url: "/api/v1/custom_emojis",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_SEARCH_V2 = {
     method: "get",
     url: "/api/v2/search",
@@ -232,23 +239,18 @@ export const GET_SEARCH_V2 = {
     }
 };
 
-// DEPRECATED!
+// UNUSED!
 export const GET_POLL = {
     method: "get",
     url: "/api/v1/polls/:param:",
     form: {}
 };
 
-// DEPRECATED!
+// UNUSED!
 export const POST_POLL_VOTES = {
     method: "post",
     url: "/api/v1/polls/:param:/votes",
     form: {
         choices: [], //Required (array)
     }
-};
-
-/** Streaming API とりあえずUSERのみサポート */
-export const STREAMING = {
-    url: "/api/v1/streaming"
 };

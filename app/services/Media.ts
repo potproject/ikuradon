@@ -15,7 +15,7 @@ export async function upload() {
         }
         let { domain, access_token } = await Session.getDomainAndToken();
         //アップロード中とかほしいね
-        let res = await fileUpload(domain, access_token, fileData, "image/jpeg");
+        let res = await fileUpload("mastodon", domain, access_token, fileData, "image/jpeg");
         if (!res || !res.id) {
             throw new Error("ID Unknown Error!");
         }
