@@ -13,12 +13,8 @@ import DropDownHolder from "../../services/DropDownHolder";
 export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {
     return async dispatch => {
         try {
-            let { data } = await Networking.fetch(domain, CONST_API.GET_OAUTH_ACCESSTOKEN, null, {
-                client_id,
-                client_secret,
-                code
-            });
-            let access_token = data.access_token;
+            const appData = await Rest.fetchAccessToken("mastodon", domain, client_id, client_secret, code, "urn:ietf:wg:oauth:2.0:oob");
+            const { access_token } = appData;
             //get current user
             const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
             const instance = await Rest.getInstance("mastodon", domain, access_token);

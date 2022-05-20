@@ -1,26 +1,3 @@
-export const REGISTERING_AN_APPLICATION = {
-    method: "post",
-    url: "/api/v1/apps",
-    form: {
-        client_name: "ikuradon",
-        redirect_uris: "urn:ietf:wg:oauth:2.0:oob",
-        scopes: "read write follow push"
-    }
-};
-
-export const GET_OAUTH_ACCESSTOKEN = {
-    method: "post",
-    url: "/oauth/token",
-    form: {
-        client_id: "", //required
-        client_secret: "", //required
-        code: "", //required
-        grant_type: "authorization_code",
-        redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-        scope: "read write follow push"
-    }
-};
-
 export const UPLOAD_POST_MEDIA = {
     method: "post",
     url: "/api/v2/media",
@@ -33,12 +10,35 @@ export const UPLOAD_GET_MEDIA = {
     form: {}
 };
 
-
 /** Streaming API とりあえずUSERのみサポート */
 export const STREAMING = {
     url: "/api/v1/streaming"
 };
 
+// UNUSED!
+export const REGISTERING_AN_APPLICATION = {
+    method: "post",
+    url: "/api/v1/apps",
+    form: {
+        client_name: "ikuradon",
+        redirect_uris: "urn:ietf:wg:oauth:2.0:oob",
+        scopes: "read write follow push"
+    }
+};
+
+// UNUSED!
+export const GET_OAUTH_ACCESSTOKEN = {
+    method: "post",
+    url: "/oauth/token",
+    form: {
+        client_id: "", //required
+        client_secret: "", //required
+        code: "", //required
+        grant_type: "authorization_code",
+        redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
+        scope: "read write follow push"
+    }
+};
 
 // UNUSED!
 export const GET_CURRENT_USER = {

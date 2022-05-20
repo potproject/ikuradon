@@ -14,14 +14,12 @@ import DropDownHolder from "../../services/DropDownHolder";
 
 export function login(domain) {
     return async dispatch => {
-        let url, client_id, client_secret;
         try {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let { data } = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
-            url = createUrl(domain, data);
-            client_id = data.client_id;
-            client_secret = data.client_secret;
+            const appData = await Rest.createApp("mastodon", domain, "ikuradon", ["read", "write", "follow", "push"], "urn:ietf:wg:oauth:2.0:oob");
+            const url = createUrl(domain, appData.clientId);
+            const { client_id, client_secret } = appData;
             //この時点ではまだログインしていません
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
         } catch (e) {
@@ -125,6 +123,6 @@ export function accountChangeWithDelete(index) {
     };
 }
 
-function createUrl(domain, data) {
-    return `https://${domain}/oauth/authorize?` + `client_id=${data.client_id}&` + "response_type=code&" + "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" + "scope=read%20write%20follow%20push";
+function createUrl(domain, client_id) {
+    return `https://${domain}/oauth/authorize?` + `client_id=${client_id}&` + "response_type=code&" + "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" + "scope=read%20write%20follow%20push";
 }

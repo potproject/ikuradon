@@ -1,6 +1,19 @@
 import generator from "megalodon";
 import { sns } from "../../constants/sns";
 
+export async function createApp(sns: sns, domain: string, client_name: string, scopes: string[], redirect_uris: string){
+    const data = await generator(sns, getBaseUrl(domain)).createApp(client_name, {
+        scopes,
+        redirect_uris
+    });
+    return data;
+}
+
+export async function fetchAccessToken(sns: sns, domain: string, client_id: string, client_secret: string, code: string, redirect_uris: string){
+    const data = await generator(sns, getBaseUrl(domain)).fetchAccessToken(client_id, client_secret, code, redirect_uris);
+    return data;
+}
+
 export async function getInstance(sns: sns, domain: string, access_token: string){
     const { data } = await generator(sns, getBaseUrl(domain), access_token).getInstance();
     return data;
