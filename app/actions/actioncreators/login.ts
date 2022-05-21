@@ -50,17 +50,17 @@ export function loginSelectAccounts(index) {
     };
 }
 
-export function loginWithAccessToken(domain, access_token) {
+export function loginWithAccessToken(sns, domain, access_token) {
     return async dispatch => {
         try {
             //アクセストークンでログイン
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
-            const instance = await Rest.getInstance("mastodon", domain, access_token);
+            const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+            const instance = await Rest.getInstance(sns, domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
-            await Session.add("mastodon", domain, access_token, username, avatar);
+            await Session.add(sns, domain, access_token, username, avatar);
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
