@@ -2,7 +2,6 @@ import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
 import * as OpenSticker from "../actiontypes/opensticker";
-import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
 
