@@ -17,6 +17,9 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined") {
                 in_reply_to_id = reply.tootid;
             }
+            if (media_ids.length === 0){
+                media_ids = undefined;
+            }
             await Rest.postStatus(sns, domain, access_token, status,
                 {
                     visibility,
@@ -32,6 +35,7 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             dispatch({ type: Toot.TOOT_OK });
         } catch (e) {
             DropDownHolder.error(t("messages.toot_failed"), e.message);
+            console.log(e.response.data);
             dispatch({ type: Toot.TOOT_FAILURE });
         }
         return;
