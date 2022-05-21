@@ -6,20 +6,20 @@ import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 import t from "../../services/I18n";
 
+import * as Rest from "../../services/api/Rest";
+
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
 
 export function login(domain) {
     return async dispatch => {
-        let url, client_id, client_secret;
         try {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let { data } = await Networking.fetch(domain, CONST_API.REGISTERING_AN_APPLICATION);
-            url = createUrl(domain, data);
-            client_id = data.client_id;
-            client_secret = data.client_secret;
+            const appData = await Rest.createApp("mastodon", domain, "ikuradon", ["read", "write", "follow", "push"], "urn:ietf:wg:oauth:2.0:oob");
+            const url = createUrl(domain, appData.clientId);
+            const { client_id, client_secret } = appData;
             //この時点ではまだログインしていません
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });
         } catch (e) {
@@ -31,13 +31,13 @@ export function login(domain) {
 export function loginSelectAccounts(index) {
     return async dispatch => {
         await Session.setIndex(index);
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
@@ -50,17 +50,17 @@ export function loginSelectAccounts(index) {
     };
 }
 
-export function loginWithAccessToken(domain, access_token) {
+export function loginWithAccessToken(sns, domain, access_token) {
     return async dispatch => {
         try {
             //アクセストークンでログイン
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-            let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+            const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+            const instance = await Rest.getInstance(sns, domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
-            await Session.add(domain, access_token, username, avatar);
+            await Session.add(sns, domain, access_token, username, avatar);
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
@@ -104,13 +104,13 @@ export function accountChangeWithDelete(index) {
     return async dispatch => {
         await Session.deleteItems(index);
         await Session.setIndex(0);
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                let { data:user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data:instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
@@ -123,6 +123,6 @@ export function accountChangeWithDelete(index) {
     };
 }
 
-function createUrl(domain, data) {
-    return `https://${domain}/oauth/authorize?` + `client_id=${data.client_id}&` + "response_type=code&" + "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" + "scope=read%20write%20follow%20push";
+function createUrl(domain, client_id) {
+    return `https://${domain}/oauth/authorize?` + `client_id=${client_id}&` + "response_type=code&" + "redirect_uri=urn:ietf:wg:oauth:2.0:oob&" + "scope=read%20write%20follow%20push";
 }

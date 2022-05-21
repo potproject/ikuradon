@@ -6,7 +6,7 @@ import { getEmojis } from "../util/emojis";
 export default function EmojisModal({ current, onSelect }){
     let [emojis, useEmojis] = useState([]);
     useEffect(() => {
-        getEmojis(current.domain).then(({ emojis, error }) => {
+        getEmojis().then(({ emojis, error }) => {
             if (error === null){
                 useEmojis(emojis);
             }

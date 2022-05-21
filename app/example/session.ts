@@ -1,5 +1,6 @@
 export default function session() {
     return {
+        sns: "mastodon",
         domain: "mastodon.server.net",
         access_token: "ACCEESS_TOKEN",
         username: "mynameis",

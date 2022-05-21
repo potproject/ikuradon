@@ -2,7 +2,6 @@ import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
 import * as OpenSticker from "../actiontypes/opensticker";
-import { getMinMaxId } from "../../util/manageid";
 import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
 
@@ -16,6 +15,7 @@ import NavigationService from "../../services/NavigationService";
 import * as AppInit from "../actiontypes/appinit";
 import { settingTheme } from "../../util/theme";
 import { pull } from "../../util/push";
+import * as Rest from "../../services/api/Rest";
 
 const AUTO_LOGIN = true; // Auto Login
 
@@ -49,11 +49,11 @@ export function appInit(updateTheme) {
         await Session.init();
         
         //ここにトークンが生きてるか判断させる
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
             try {
-                let { data: user_credentials } = await Networking.fetch(domain, CONST_API.GET_CURRENT_USER, null, {}, access_token);
-                let { data: instance } = await Networking.fetch(domain, CONST_API.GET_INSTANCE, null, {}, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });

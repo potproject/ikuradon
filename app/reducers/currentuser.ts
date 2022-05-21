@@ -1,7 +1,16 @@
 import * as CurrentUserActionTypes from "../actions/actiontypes/currentuser";
 import { createReducer } from "@reduxjs/toolkit";
+import { Entity } from "megalodon";
 
-export const initialState = {
+type currentUser = {
+    user_credentials: Entity.Account;
+    domain: string;
+    access_token: string;
+    notification_count: number;
+    instance: Entity.Instance;
+};
+
+export const initialState: currentUser = {
     user_credentials: null,
     domain: "",
     access_token: "",

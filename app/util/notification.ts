@@ -7,6 +7,7 @@ const NOTIFICATION_TYPE = {
 
 export const NEW_NOTIFICATION_TYPE = {
     FAVOURITEANDBOOST: "FavouriteAndBoost",
+    EMOJIREACTION: "emoji_reaction", // TODO: Misskey Only!
     FOLLOW: "follow",
     MENTION: "mention",
 };

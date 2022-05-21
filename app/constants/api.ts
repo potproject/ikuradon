@@ -1,3 +1,21 @@
+export const UPLOAD_POST_MEDIA = {
+    method: "post",
+    url: "/api/v2/media",
+    form: {}
+};
+
+export const UPLOAD_GET_MEDIA = {
+    method: "get",
+    url: "/api/v1/media/:param:",
+    form: {}
+};
+
+/** Streaming API とりあえずUSERのみサポート */
+export const STREAMING = {
+    url: "/api/v1/streaming"
+};
+
+// UNUSED!
 export const REGISTERING_AN_APPLICATION = {
     method: "post",
     url: "/api/v1/apps",
@@ -8,6 +26,7 @@ export const REGISTERING_AN_APPLICATION = {
     }
 };
 
+// UNUSED!
 export const GET_OAUTH_ACCESSTOKEN = {
     method: "post",
     url: "/oauth/token",
@@ -21,18 +40,21 @@ export const GET_OAUTH_ACCESSTOKEN = {
     }
 };
 
+// UNUSED!
 export const GET_CURRENT_USER = {
     method: "get",
     url: "/api/v1/accounts/verify_credentials",
     form: {}
 };
 
+// UNUSED!
 export const GET_INSTANCE = {
     method: "get",
     url: "/api/v1/instance",
     form: {}
 };
 
+// UNUSED!
 export const GET_TIMELINES_HOME = {
     method: "get",
     url: "/api/v1/timelines/home",
@@ -43,6 +65,7 @@ export const GET_TIMELINES_HOME = {
     }
 };
 
+// UNUSED!
 export const GET_TIMELINES_LOCAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -54,6 +77,7 @@ export const GET_TIMELINES_LOCAL = {
     }
 };
 
+// UNUSED!
 export const GET_TIMELINES_FEDERAL = {
     method: "get",
     url: "/api/v1/timelines/public",
@@ -65,6 +89,7 @@ export const GET_TIMELINES_FEDERAL = {
     }
 };
 
+// UNUSED!
 export const GET_NOTIFICATIONS = {
     method: "get",
     url: "/api/v1/notifications",
@@ -75,6 +100,7 @@ export const GET_NOTIFICATIONS = {
     }
 };
 
+// UNUSED!
 export const GET_FAVOURITES = {
     method: "get",
     url: "/api/v1/favourites",
@@ -85,6 +111,7 @@ export const GET_FAVOURITES = {
     }
 };
 
+// UNUSED!
 export const GET_BOOKMARKS = {
     method: "get",
     url: "/api/v1/bookmarks",
@@ -95,6 +122,7 @@ export const GET_BOOKMARKS = {
     }
 };
 
+// UNUSED!
 export const POST_STATUS = {
     method: "post",
     url: "/api/v1/statuses",
@@ -109,72 +137,84 @@ export const POST_STATUS = {
     }
 };
 
+// UNUSED!
 export const GET_STATUS = {
     method: "get",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
+// UNUSED!
 export const GET_STATUS_CONTEXT = {
     method: "get",
     url: "/api/v1/statuses/:param:/context",
     form: {}
 };
 
+// UNUSED!
 export const DELETE_STATUS = {
     method: "delete",
     url: "/api/v1/statuses/:param:",
     form: {}
 };
 
+// UNUSED!
 export const POST_REBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/reblog",
     form: {}
 };
 
+// UNUSED!
 export const POST_UNREBLOG = {
     method: "post",
     url: "/api/v1/statuses/:param:/unreblog",
     form: {}
 };
 
+// UNUSED!
 export const POST_FAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/favourite",
     form: {}
 };
 
+// UNUSED!
 export const POST_UNFAVOURITED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unfavourite",
     form: {}
 };
 
+// UNUSED!
 export const POST_BOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/bookmark",
     form: {}
 };
 
+// UNUSED!
 export const POST_UNBOOKMARKED = {
     method: "post",
     url: "/api/v1/statuses/:param:/unbookmark",
     form: {}
 };
 
+// UNUSED!
 export const POST_FOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/follow",
     form: {}
 };
 
+// UNUSED!
 export const POST_UNFOLLOWED = {
     method: "post",
     url: "/api/v1/accounts/:param:/unfollow",
     form: {}
 };
 
+// UNUSED!
 export const GET_RELATIONSHIPS = {
     method: "get",
     url: "/api/v1/accounts/relationships",
@@ -183,24 +223,14 @@ export const GET_RELATIONSHIPS = {
     }
 };
 
-export const UPLOAD_POST_MEDIA = {
-    method: "post",
-    url: "/api/v2/media",
-    form: {}
-};
-
-export const UPLOAD_GET_MEDIA = {
-    method: "get",
-    url: "/api/v1/media/:param:",
-    form: {}
-};
-
+// UNUSED!
 export const GET_CUSTOMEMOJIS = {
     method: "get",
     url: "/api/v1/custom_emojis",
     form: {}
 };
 
+// UNUSED!
 export const GET_SEARCH_V2 = {
     method: "get",
     url: "/api/v2/search",
@@ -209,21 +239,18 @@ export const GET_SEARCH_V2 = {
     }
 };
 
+// UNUSED!
 export const GET_POLL = {
     method: "get",
     url: "/api/v1/polls/:param:",
     form: {}
 };
 
+// UNUSED!
 export const POST_POLL_VOTES = {
     method: "post",
     url: "/api/v1/polls/:param:/votes",
     form: {
         choices: [], //Required (array)
     }
-};
-
-/** Streaming API とりあえずUSERのみサポート */
-export const STREAMING = {
-    url: "/api/v1/streaming"
 };

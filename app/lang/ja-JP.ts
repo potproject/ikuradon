@@ -1,4 +1,9 @@
 export default {
+    sns: {
+        mastodon: "Mastodon",
+        misskey: "Misskey",
+        pleroma: "Pleroma",
+    },
     //設定
     setting_streamingapi: "ストリーミング API",
     logout: "ログアウト",
@@ -32,7 +37,8 @@ export default {
     setting_instance_editlink: "プロフィールを編集",
 
     setting_push_notifications: "プッシュ通知 (実験的機能)",
-    setting_push_notifications_alert_text: "アクセストークンをPushサーバに送信することになるため、信頼できないサーバにアクセストークンを送ることはセキュリティ上のリスクが伴います。",
+    setting_push_notifications_alert_text:
+        "アクセストークンをPushサーバに送信することになるため、信頼できないサーバにアクセストークンを送ることはセキュリティ上のリスクが伴います。",
     setting_push_notifications_server: "プッシュサーバ",
     setting_push_notifications_start: "プッシュ通知を使用する",
     setting_push_notifications_stop: "プッシュ通知を停止する",
@@ -110,7 +116,7 @@ export default {
     toot_title: "トゥート",
     toot_placeholder: "今何してる？",
     toot_cw_placeholder: "ここに警告を書いてください",
-    toot_draft_delete:  "削除",
+    toot_draft_delete: "削除",
     toot_draft_save: "下書きを保存",
 
     //トゥート公開範囲
@@ -154,7 +160,7 @@ export default {
     global_warning: "警告",
 
     //投票
-    polls:{
+    polls: {
         voting: "投票中",
         voting_multiple: "投票中(複数可)",
         ended: "終了",
@@ -164,7 +170,7 @@ export default {
         total_one: "人",
         total_people: "人",
         total_votes: "票",
-        reload: "更新"
+        reload: "更新",
     },
 
     //メッセージ
@@ -191,7 +197,7 @@ export default {
         toot_mediaupload_maximum_exceed: "最大アップロードファイル数が超過しています(最大 4 ファイル).",
 
         toot_deleted_success: "トゥートの削除に成功しました",
-        toot_deleted_failed: "トゥートの削除に失敗しました"
+        toot_deleted_failed: "トゥートの削除に失敗しました",
     },
 
     //通知タイトル
@@ -202,5 +208,5 @@ export default {
         favourited: " がお気に入りに登録しました",
         follow: "フォローする",
         unfollow: "フォローを解除する",
-    }
+    },
 };

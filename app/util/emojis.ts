@@ -1,9 +1,10 @@
-import * as CONST_API from "../constants/api";
-import Networking from "../services/Networking";
+import * as Rest from "../services/api/Rest";
+import * as Session from "../util/session";
 
-export async function getEmojis(domain){
+export async function getEmojis(){
     try {
-        let { data:emojis } = await Networking.fetch(domain, CONST_API.GET_CUSTOMEMOJIS);
+        let { sns, domain } = await Session.getDomainAndToken();
+        const emojis = await Rest.getInstanceCustomEmojis(sns, domain);
         return { emojis, error: null };
     } catch (e){
         return { emojis: [], error: e.message };

@@ -111,19 +111,18 @@ export default createReducer(initialState, (builder) => {
         .addMatcher(({ type })=>type === MainActionTypes.NEW_UPDATE_MASTOLIST || type === MainActionTypes.OLD_UPDATE_MASTOLIST
             , (state, action) => {
                 let reducerType = action.reducerType;
-                let { minId, maxId } = getMinMaxId(state[reducerType].minId, state[reducerType].maxId, action.data);
                 let data;
                 let newArrival = 0;
                 let lastUpdate = Math.floor(new Date().getTime() / 1000);
                 if (action.clear){
                     data = [...action.data];
-                    ({ minId, maxId } = getMinMaxId(null, null, action.data));
                 } else if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST) {
                     data = state[reducerType].data.concat(action.data);
                 } else {
                     newArrival = action.data.length;
                     data = action.data.concat(state[reducerType].data);
                 }
+                const { minId, maxId } = getMinMaxId(data);
                 state[reducerType] = {
                     data,
                     refreshing: false,
