@@ -14,9 +14,9 @@ export function getDetail(id) {
     return async dispatch => {
         NavigationService.navigate({ name: RouterName.Detail });
         try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            const data = await Rest.getStatus("mastodon", domain, access_token, id);
-            const { ancestors, descendants } = await Rest.getStatusContext("mastodon", domain, access_token, id);
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
+            const data = await Rest.getStatus(sns, domain, access_token, id);
+            const { ancestors, descendants } = await Rest.getStatusContext(sns, domain, access_token, id);
             dispatch({ type: Detail.DETAIL_GET, ancestors, descendants, data, loaded: true });
         } catch (e) {
             dispatch({ type: Detail.DETAIL_GET, data: {}, loaded: false });

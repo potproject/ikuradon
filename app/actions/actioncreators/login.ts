@@ -31,13 +31,13 @@ export function login(domain) {
 export function loginSelectAccounts(index) {
     return async dispatch => {
         await Session.setIndex(index);
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
-                const instance = await Rest.getInstance("mastodon", domain, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
@@ -60,7 +60,7 @@ export function loginWithAccessToken(domain, access_token) {
             const instance = await Rest.getInstance("mastodon", domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
-            await Session.add(domain, access_token, username, avatar);
+            await Session.add("mastodon", domain, access_token, username, avatar);
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
@@ -104,13 +104,13 @@ export function accountChangeWithDelete(index) {
     return async dispatch => {
         await Session.deleteItems(index);
         await Session.setIndex(0);
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (access_token && domain) {
             try {
                 await dispatch({ type: Streaming.STREAM_ALLSTOP });
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-                const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
-                const instance = await Rest.getInstance("mastodon", domain, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;

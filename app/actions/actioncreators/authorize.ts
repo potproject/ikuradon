@@ -20,7 +20,7 @@ export function getAccessTokenWithHomeAction(domain, client_id, client_secret, c
             const instance = await Rest.getInstance("mastodon", domain, access_token);
             let username = user_credentials.acct;
             let avatar = user_credentials.avatar;
-            await Session.add(domain, access_token, username, avatar);
+            await Session.add("mastodon", domain, access_token, username, avatar);
             DropDownHolder.success(t("messages.login_success"));
             dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });

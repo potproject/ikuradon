@@ -50,11 +50,11 @@ export function appInit(updateTheme) {
         await Session.init();
         
         //ここにトークンが生きてるか判断させる
-        let { domain, access_token } = await Session.getDomainAndToken();
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
             try {
-                const user_credentials = await Rest.getCurrentUser("mastodon", domain, access_token);
-                const instance = await Rest.getInstance("mastodon", domain, access_token);
+                const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+                const instance = await Rest.getInstance(sns, domain, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });

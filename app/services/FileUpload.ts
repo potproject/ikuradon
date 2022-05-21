@@ -1,10 +1,11 @@
 import Networking from "./Networking";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
+import { sns } from "../constants/sns";
 
 const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
 
-export default function fileUpload(sns: "mastodon", domain: string, access_token: string, file: any, type: string) {
+export default function fileUpload(sns: sns, domain: string, access_token: string, file: any, type: string) {
     if (sns === "mastodon"){
         return fileUploadMastodonV2(domain, access_token, file, type);
     }

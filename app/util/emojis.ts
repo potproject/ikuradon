@@ -1,8 +1,10 @@
 import * as Rest from "../services/api/Rest";
+import * as Session from "../util/session";
 
-export async function getEmojis(domain){
+export async function getEmojis(){
     try {
-        const emojis = await Rest.getInstanceCustomEmojis("mastodon", domain);
+        let { sns, domain } = await Session.getDomainAndToken();
+        const emojis = await Rest.getInstanceCustomEmojis(sns, domain);
         return { emojis, error: null };
     } catch (e){
         return { emojis: [], error: e.message };

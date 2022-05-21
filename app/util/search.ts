@@ -3,8 +3,8 @@ import * as Rest from "../services/api/Rest";
 
 export async function search(q: string, type:string){
     try {
-        let { domain, access_token } = await Session.getDomainAndToken();
-        const data = await Rest.search("mastodon", domain, access_token, q, type as "accounts" | "hashtags" | "statuses");
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
+        const data = await Rest.search(sns, domain, access_token, q, type as "accounts" | "hashtags" | "statuses");
         return { data, error: null };
     } catch (e){
         return { data: {

@@ -11,8 +11,8 @@ import * as Rest from "../services/api/Rest";
  */
 export async function votePoll(id, choices) {
     try {
-        let { domain, access_token } = await Session.getDomainAndToken();
-        const data = await Rest.votePoll("mastodon", domain, access_token, id, choices);
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
+        const data = await Rest.votePoll(sns, domain, access_token, id, choices);
         return { data, error: null };
     } catch (e){
         return { data: null, error: e.message };
@@ -27,8 +27,8 @@ export async function votePoll(id, choices) {
  */
 export async function getPoll(id) {
     try {
-        let { domain, access_token } = await Session.getDomainAndToken();
-        let data = await Rest.getPoll("mastodon", domain, access_token, id);
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
+        let data = await Rest.getPoll(sns, domain, access_token, id);
         return { data, error: null };
     } catch (e){
         return { data: null, error: e.message };

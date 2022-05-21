@@ -10,9 +10,9 @@ export function boost(id, tootid, boosted) {
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.BOOST_MASTOROW, id, boosted });
-            const { domain, access_token } = await Session.getDomainAndToken();
+            const { sns, domain, access_token } = await Session.getDomainAndToken();
             const postapi = boosted ? Rest.reblogStatus : Rest.unreblogStatus;
-            const { reblogged: reblogedResult } = await postapi("mastodon", domain, access_token, id);
+            const { reblogged: reblogedResult } = await postapi(sns, domain, access_token, id);
             console.log("boost:", tootid, boosted, "result:", reblogedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -26,9 +26,9 @@ export function favourite(id, tootid, favourited) {
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.FAVOURITE_MASTOROW, id, favourited });
-            const { domain, access_token } = await Session.getDomainAndToken();
+            const { sns, domain, access_token } = await Session.getDomainAndToken();
             const postapi = favourited ? Rest.favouriteStatus : Rest.unfavouriteStatus;
-            const { favourited: favouritedResult } = await postapi("mastodon", domain, access_token, id);
+            const { favourited: favouritedResult } = await postapi(sns, domain, access_token, id);
             console.log("favourite:", tootid, favourited, "result:", favouritedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -43,9 +43,9 @@ export function bookmark(id, tootid, bookmarked) {
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.BOOKMARK_MASTOROW, id, bookmarked });
-            let { domain, access_token } = await Session.getDomainAndToken();
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
             const postapi = bookmarked ? Rest.bookmarkStatus : Rest.unbookmarkStatus;
-            const { bookmarked: bookmarkedResult } = await postapi("mastodon", domain, access_token, id);
+            const { bookmarked: bookmarkedResult } = await postapi(sns, domain, access_token, id);
             console.log("bookmark:", tootid, bookmarked, "result:", bookmarkedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -60,9 +60,9 @@ export function follow(id, followed) {
     return async dispatch => {
         try {
             dispatch({ type: Mastorow.FOLLOW_MASTOROW, id, followed });
-            let { domain, access_token } = await Session.getDomainAndToken();
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
             const postapi = followed ? Rest.followAccount : Rest.unfollowAccount;
-            const { following: followedResult } = await postapi("mastodon", domain, access_token, id);
+            const { following: followedResult } = await postapi(sns, domain, access_token, id);
             console.log("follow:", id, followed, "result:", followedResult);
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

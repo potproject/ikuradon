@@ -26,8 +26,8 @@ export function hide(id) {
 export function deleting(id) {
     return async dispatch => {
         try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            await Rest.deleteStatus("mastodon", domain, access_token, id);
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
+            await Rest.deleteStatus(sns, domain, access_token, id);
             dispatch({ type: Main.HIDE_MASTOLIST, id: id });
             DropDownHolder.success(t("messages.toot_deleted_success"));
         } catch (e) {
@@ -40,8 +40,8 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
     return async dispatch => {
         dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
         try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            const data = await reducerTypeArray[reducerType]("mastodon", domain, access_token, { limit, since_id, max_id: null });
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
+            const data = await reducerTypeArray[reducerType](sns, domain, access_token, { limit, since_id, max_id: null });
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
@@ -54,8 +54,8 @@ export function oldLoadingTimeline(reducerType, max_id, limit = 40) {
     return async dispatch => {
         dispatch({ type: Main.LOADING_MASTOLIST, reducerType });
         try {
-            let { domain, access_token } = await Session.getDomainAndToken();
-            const data = await reducerTypeArray[reducerType]("mastodon", domain, access_token, { limit, since_id: null, max_id });
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
+            const data = await reducerTypeArray[reducerType](sns, domain, access_token, { limit, since_id: null, max_id });
             dispatch({ type: Main.OLD_UPDATE_MASTOLIST, data: data, reducerType, clear: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);

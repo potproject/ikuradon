@@ -12,12 +12,12 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
     return async dispatch => {
         try {
             dispatch({ type: Toot.TOOT_WAITING });
-            let { domain, access_token } = await Session.getDomainAndToken();
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
             let in_reply_to_id = null;
             if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined") {
                 in_reply_to_id = reply.tootid;
             }
-            await Rest.postStatus("mastodon", domain, access_token, status,
+            await Rest.postStatus(sns, domain, access_token, status,
                 {
                     visibility,
                     sensitive,
