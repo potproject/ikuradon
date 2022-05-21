@@ -945,7 +945,6 @@ exports[`<MastoRowPoll /> 1`] = `
     style={
       Array [
         Object {
-          "color": "#000000",
           "fontSize": 16,
         },
         Object {
@@ -969,7 +968,6 @@ exports[`<MastoRowPoll /> 1`] = `
     style={
       Array [
         Object {
-          "color": "#2b90d9",
           "fontSize": 16,
         },
         Object {
@@ -1005,7 +1003,6 @@ exports[`<MastoRowPoll /> 1`] = `
       ]
     }
   >
-    
     (10 votes)
      - 
     Ended

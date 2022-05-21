@@ -35,6 +35,7 @@ describe("Util/Session", () => {
     it("getDomainAndToken noindex", async () => {
         getItem.mockImplementation(() => ({ "accounts": [ExampleSession()], "login_index": -1 }));
         expect(await getDomainAndToken()).toEqual({
+            sns: null,
             domain: null,
             access_token: null,
             username: null,
@@ -48,8 +49,8 @@ describe("Util/Session", () => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
         });
-        const { domain, access_token, username, avatar } = ExampleSession();
-        await add(domain, access_token, username, avatar);
+        const { sns, domain, access_token, username, avatar } = ExampleSession();
+        await add(sns as "mastodon", domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
@@ -59,8 +60,8 @@ describe("Util/Session", () => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
         });
-        const { domain, access_token, username, avatar } = ExampleSession();
-        await add(domain, access_token, username, avatar);
+        const { sns, domain, access_token, username, avatar } = ExampleSession();
+        await add(sns as "mastodon", domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
@@ -72,8 +73,8 @@ describe("Util/Session", () => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [account, ExampleSession()], "login_index": 1 }).toEqual(v);
         });
-        const { domain, access_token, username, avatar } = ExampleSession();
-        await add(domain, access_token, username, avatar);
+        const { sns, domain, access_token, username, avatar } = ExampleSession();
+        await add(sns as "mastodon", domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
@@ -83,8 +84,8 @@ describe("Util/Session", () => {
             expect(CONST_Storage.Session).toEqual(k);
             expect({ "accounts": [ExampleSession()], "login_index": 0 }).toEqual(v);
         });
-        const { domain, access_token, username, avatar } = ExampleSession();
-        await add(domain, access_token, username, avatar);
+        const { sns, domain, access_token, username, avatar } = ExampleSession();
+        await add(sns as "mastodon", domain, access_token, username, avatar);
         getItem.mockClear();
         setItem.mockClear();
     });
