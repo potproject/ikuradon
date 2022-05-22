@@ -1,5 +1,3 @@
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";

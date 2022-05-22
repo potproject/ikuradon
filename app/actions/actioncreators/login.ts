@@ -1,5 +1,3 @@
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import * as Main from "../actiontypes/main";
 import * as Streaming from "../actiontypes/streaming";
 import * as Session from "../../util/session";

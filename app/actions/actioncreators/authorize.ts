@@ -1,5 +1,3 @@
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import * as Session from "../../util/session";
 import * as CurrentUser from "../actiontypes/currentuser";
 import t from "../../services/I18n";

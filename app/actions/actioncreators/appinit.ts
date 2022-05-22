@@ -1,13 +1,10 @@
-import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
 import * as OpenSticker from "../actiontypes/opensticker";
 import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
 
-import * as CONST_API from "../../constants/api";
 import * as CONST_Storage from "../../constants/storage";
-import Networking from "../../services/Networking";
 import * as CurrentUser from "../actiontypes/currentuser";
 
 import * as RouterName from "../../constants/RouterName";

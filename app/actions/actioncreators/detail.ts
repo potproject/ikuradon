@@ -1,5 +1,3 @@
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import * as Detail from "../actiontypes/detail";
 
 import t from "../../services/I18n";
