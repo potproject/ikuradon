@@ -1,39 +1,61 @@
+import emojis from "../example/emojis";
+
 const NOTIFICATION_TYPE = {
     FAVOURITE: "favourite",
     BOOST: "reblog",
+    EMOJIREACTION: "emoji_reaction", // Misskey Only!
     FOLLOW: "follow",
     MENTION: "mention",
 };
 
 export const NEW_NOTIFICATION_TYPE = {
-    FAVOURITEANDBOOST: "FavouriteAndBoost",
-    EMOJIREACTION: "emoji_reaction", // TODO: Misskey Only!
+    FAVOURITEANDBOOSTANDREACTION: "FavouriteAndBoostAndReaction",
     FOLLOW: "follow",
     MENTION: "mention",
 };
 
+type newNotificationsType = {
+    id: string;
+    type: string;
+    status?: any;
+    account?: account;
+    favouriteAccounts?: account[];
+    boostAccounts?: account[];
+    reactions?: reaction[];
+}[];
+
+type reaction = {
+    emoji: string;
+    url: string|null;
+    accounts: account[];
+}
+
+type account = any;
+
 export function notificationParse(notifications){
-    //お気に入りまたはブースト
-    // [ {id, status, favouriteAccounts:[account...]}, boostAccounts:[account...]},]
-    let newNotifications = [];
+    let newNotifications: newNotificationsType = [];
     for (let notification of notifications){
         const { type } = notification;
         switch (type){
             case NOTIFICATION_TYPE.FAVOURITE:
             case NOTIFICATION_TYPE.BOOST:
+            case NOTIFICATION_TYPE.EMOJIREACTION:
+                //お気に入りまたはブーストまたはリアクション
                 const { account, status } = notification;
-                const findIndex = newNotifications.findIndex(item => item.type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST && item.id === status.id);
+                const findIndex = newNotifications.findIndex(item => item.type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION && item.id === status.id);
                 if (findIndex !== -1){
                     type === NOTIFICATION_TYPE.FAVOURITE && newNotifications[findIndex].favouriteAccounts.push(account);
                     type === NOTIFICATION_TYPE.BOOST && newNotifications[findIndex].boostAccounts.push(account);
+                    type === NOTIFICATION_TYPE.EMOJIREACTION && (newNotifications[findIndex].reactions = reactionsMigrate(newNotifications[findIndex].reactions, notification));
                 } else {
                     newNotifications.push(
                         {
                             id: status.id,
-                            type: NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST,
+                            type: NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION,
                             status: status,
                             favouriteAccounts: type === NOTIFICATION_TYPE.FAVOURITE ? [account] : [],
                             boostAccounts: type === NOTIFICATION_TYPE.BOOST ? [account] : [],
+                            reactions: type === NOTIFICATION_TYPE.EMOJIREACTION ? [getMisskeyCustomEmojiReaction(notification)] : [],
                         }
                     );
                 }
@@ -62,4 +84,24 @@ export function notificationParse(notifications){
         }
     }
     return newNotifications;
+}
+
+function getMisskeyCustomEmojiReaction(notification): reaction{
+    const customEmojiArr = notification.status.emojis.filter(({ shortcode }) => shortcode === notification.emoji.replaceAll(":", ""));
+    if (customEmojiArr.length > 0){
+        return { emoji:notification.emoji, url:customEmojiArr[0].url, accounts: [notification.account] };
+    }
+    return { emoji:notification.emoji, url:null, accounts: [notification.account] };
+}
+
+function reactionsMigrate(reactions: reaction[], notification): reaction[]{
+    let migrate = false;
+    reactions = reactions.map(reaction => {
+        if (reaction.emoji === notification.emoji){
+            migrate = true;
+            reaction.accounts = [...reaction.accounts, notification.account];
+        }
+        return reaction;
+    });
+    return migrate ? reactions : [...reactions, getMisskeyCustomEmojiReaction(notification)];
 }
