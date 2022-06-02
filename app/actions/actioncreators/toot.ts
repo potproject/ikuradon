@@ -33,7 +33,6 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             dispatch({ type: Toot.TOOT_OK });
         } catch (e) {
             DropDownHolder.error(t("messages.toot_failed"), e.message);
-            console.log(e.response.data);
             dispatch({ type: Toot.TOOT_FAILURE });
         }
         return;

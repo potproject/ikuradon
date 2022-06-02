@@ -1,41 +1,39 @@
 import { toot } from "../toot";
 
-import Networking from "../../../services/Networking";
 import * as Session from "../../../util/session";
 
 import ExampleSession from "../../../example/session";
 import ExampleStatus from "../../../example/status";
 
-import * as CONST_API from "../../../constants/api";
 import * as Toot from "../../actiontypes/toot";
+import * as Rest from "../../../services/api/Rest";
 
 jest.mock("../../../util/session");
-jest.mock("../../../services/Networking");
 jest.mock("../../../services/NavigationService");
 jest.mock("../../../services/DropDownHolder", () => ({
     error: jest.fn(),
     success: jest.fn(),
 }));
+jest.mock("../../../services/api/Rest");
 
 describe("Action/Toot", () => {
     it("toot", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
+        Rest.postStatus.mockImplementation((sns, domain, access_token, status, options) => {
             try {
                 let ac = ExampleSession();
+                expect(sns).toEqual(ac.sns);
                 expect(domain).toEqual(ac.domain);
-                expect(api).toEqual(CONST_API.POST_STATUS);
-                expect(restParams).toEqual(null);
-                expect(postParams).toEqual({
+                expect(access_token).toEqual(ac.access_token);
+                expect(status).toEqual("status");
+                expect(options).toEqual({
                     "in_reply_to_id": null,
-                    "media_ids": [],
+                    "media_ids": undefined,
                     "scheduled_at": null,
                     "sensitive": false,
                     "spoiler_text": "",
-                    "status": "status",
                     "visibility": "public"
                 });
-                expect(access_token).toEqual(ac.access_token);
             } catch (e){
                 done(e);
             }
@@ -53,25 +51,25 @@ describe("Action/Toot", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.postStatus.mockClear();
     });
     it("toot reply", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation((domain, api, restParams, postParams, access_token) => {
-            try {let ac = ExampleSession();
+        Rest.postStatus.mockImplementation((sns, domain, access_token, status, options) => {
+            try {
+                let ac = ExampleSession();
+                expect(sns).toEqual(ac.sns);
                 expect(domain).toEqual(ac.domain);
-                expect(api).toEqual(CONST_API.POST_STATUS);
-                expect(restParams).toEqual(null);
-                expect(postParams).toEqual({
+                expect(access_token).toEqual(ac.access_token);
+                expect(status).toEqual("status");
+                expect(options).toEqual({
                     "in_reply_to_id": "100100",
-                    "media_ids": [],
+                    "media_ids": undefined,
                     "scheduled_at": null,
                     "sensitive": false,
                     "spoiler_text": "",
-                    "status": "status",
                     "visibility": "public"
                 });
-                expect(access_token).toEqual(ac.access_token);
             } catch (e){
                 done(e);
             }
@@ -89,11 +87,11 @@ describe("Action/Toot", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.postStatus.mockClear();
     });
     it("toot fail", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.postStatus.mockImplementation(() => {
             throw new Error("Network Error");
         });
         let action = toot("status", "public", false, "");
@@ -108,6 +106,6 @@ describe("Action/Toot", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.postStatus.mockClear();
     });
 });

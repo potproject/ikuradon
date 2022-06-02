@@ -2,20 +2,18 @@ import { getDetail, resetDetail } from "../detail";
 
 import * as Detail from "../../actiontypes/detail";
 import DropDownHolder from "../../../services/DropDownHolder";
-import Networking from "../../../services/Networking";
 import * as Session from "../../../util/session";
 import ExampleSession from "../../../example/session";
 import ExampleStatus from "../../../example/status";
-
-import * as CONST_API from "../../../constants/api";
+import * as Rest from "../../../services/api/Rest";
 
 jest.mock("../../../util/session");
 jest.mock("../../../services/NavigationService");
-jest.mock("../../../services/Networking");
 jest.mock("../../../services/DropDownHolder", () => ({
     error: jest.fn(),
     success: jest.fn(),
 }));
+jest.mock("../../../services/api/Rest");
 
 describe("Action/Detail", () => {
     it("getDetail", async done => {
@@ -23,21 +21,19 @@ describe("Action/Detail", () => {
         let status = ExampleStatus();
         let session = ExampleSession();
         Session.getDomainAndToken.mockImplementation(() => session);
-        Networking.fetch.mockImplementationOnce((domain, api, restParams, postParams, access_token) => {
+        Rest.getStatus.mockImplementationOnce((sns, domain, access_token, id) => {
+            expect(sns).toEqual(session.sns);
             expect(domain).toEqual(session.domain);
-            expect(api).toEqual(CONST_API.GET_STATUS);
-            expect(restParams).toEqual("100100");
-            expect(postParams).toEqual({});
             expect(access_token).toEqual(session.access_token);
-            return { data:status };
+            expect(id).toEqual("100100");
+            return status;
         });
-        Networking.fetch.mockImplementationOnce((domain, api, restParams, postParams, access_token) => {
+        Rest.getStatusContext.mockImplementationOnce((sns, domain, access_token, id) => {
+            expect(sns).toEqual(session.sns);
             expect(domain).toEqual(session.domain);
-            expect(api).toEqual(CONST_API.GET_STATUS_CONTEXT);
-            expect(restParams).toEqual("100100");
-            expect(postParams).toEqual({});
             expect(access_token).toEqual(session.access_token);
-            return { data:status };
+            expect(id).toEqual("100100");
+            return status;
         });
         action(({ type, data, loaded }) => {
             expect(type).toEqual(Detail.DETAIL_GET);
@@ -46,13 +42,14 @@ describe("Action/Detail", () => {
             done();
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getStatus.mockClear();
+        Rest.getStatusContext.mockClear();
         
     });
     it("getDetail Error", async done => {
         let action = getDetail("100100");
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.getStatus.mockImplementation(() => {
             throw new Error("Network Error");
         });
         DropDownHolder.error.mockImplementation((title, message) => {
@@ -65,7 +62,7 @@ describe("Action/Detail", () => {
             done();
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getStatus.mockClear();
     });
     it("resetDetail", () => {
         expect(resetDetail()).toEqual({ type: Detail.DETAIL_RESET });
