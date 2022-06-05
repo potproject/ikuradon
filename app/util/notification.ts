@@ -21,10 +21,10 @@ type newNotificationsType = {
     account?: account;
     favouriteAccounts?: account[];
     boostAccounts?: account[];
-    reactions?: reaction[];
+    reactions?: reactionNotification[];
 }[];
 
-type reaction = {
+type reactionNotification = {
     emoji: string;
     url: string|null;
     accounts: account[];
@@ -86,7 +86,7 @@ export function notificationParse(notifications){
     return newNotifications;
 }
 
-function getMisskeyCustomEmojiReaction(notification): reaction{
+function getMisskeyCustomEmojiReaction(notification): reactionNotification{
     const customEmojiArr = notification.status.emojis.filter(({ shortcode }) => shortcode === notification.emoji.replaceAll(":", ""));
     if (customEmojiArr.length > 0){
         return { emoji:notification.emoji, url:customEmojiArr[0].url, accounts: [notification.account] };
@@ -94,7 +94,7 @@ function getMisskeyCustomEmojiReaction(notification): reaction{
     return { emoji:notification.emoji, url:null, accounts: [notification.account] };
 }
 
-function reactionsMigrate(reactions: reaction[], notification): reaction[]{
+function reactionsMigrate(reactions: reactionNotification[], notification): reactionNotification[]{
     let migrate = false;
     reactions = reactions.map(reaction => {
         if (reaction.emoji === notification.emoji){
