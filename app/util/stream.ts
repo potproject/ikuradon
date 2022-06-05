@@ -2,6 +2,10 @@ import * as CONST_API from "../constants/api";
 import { start, stop, receive } from "../actions/actioncreators/streaming";
 import { sns } from "../constants/sns";
 
+export function streamSupported(sns: sns){
+    return sns === "mastodon";
+}
+
 export function getStreamingURL(streamingAPI, type, access_token){
     let stream;
     switch (type) {
@@ -20,10 +24,12 @@ export function getStreamingURL(streamingAPI, type, access_token){
 }
 
 export function on(sns: sns, ref, dispatch, useEnabled, type, url){
+    console.log(sns);
     if (sns==="mastodon"){
         return onMastodon(ref, dispatch, useEnabled, type, url);
     }
     // Not Supported!
+    console.log("Stream Not Supported...");
 }
 
 function onMastodon(ref, dispatch, useEnabled, type, url){
@@ -57,6 +63,7 @@ export function off(sns: sns, ref, dispatch, useEnabled, type){
         return offMastodon(ref, dispatch, useEnabled, type);
     }
     // Not Supported!
+    console.log("Stream Not Supported...");
 }
 
 export function offMastodon(ref, dispatch, useEnabled, type){

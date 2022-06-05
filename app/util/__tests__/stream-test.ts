@@ -1,10 +1,13 @@
-import { on, off, getStreamingURL } from "../../util/stream";
+import { on, off, getStreamingURL, streamSupported } from "../../util/stream";
 import WS from "jest-websocket-mock";
 import { STREAMING } from "../../constants/api";
 
 import ExampleStatus from "../../example/status";
 
 describe("Util/Stream", () => {
+    it("streamSupported", () => {
+        expect(streamSupported("mastodon")).toBeTruthy();
+    });
     it("getStreamingURL", () => {
         const url = "wss://server.mastodon.net";
         const accessToken = "ACCESS_TOKEN";

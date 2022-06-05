@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 
 import { ThemeContext } from "react-native-elements";
-import { on as streamingOn, off as streamingOff, getStreamingURL } from "../util/stream";
+import { on as streamingOn, off as streamingOff, getStreamingURL, streamSupported } from "../util/stream";
 import { RootState } from "../reducers";
 
 const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
@@ -36,6 +36,9 @@ export default function TimelineStreamingButton({ type }){
             console.log("[WS] UNMOUNTCLOSE:" + type);
         };
     }, []);
+    if (!streamSupported(sns)){
+        return <View></View>;
+    }
     return (
         <TouchableOpacity style={styles.view} onPress={() => useEnabled(!enabled)}>
             <FontAwesome name="feed" size={24} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
