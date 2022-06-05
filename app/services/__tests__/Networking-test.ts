@@ -4,12 +4,6 @@ import * as CONST_API from "../../constants/api";
 import axios from "axios";
 jest.mock("axios");
 
-function FormDataMock() {
-    this.append = jest.fn();
-}
-  
-global.FormData = FormDataMock;
-
 describe("Services/Networking", () => {
     it("fetch resolve", async () => {
         axios.mockImplementation((req) => {
@@ -21,7 +15,11 @@ describe("Services/Networking", () => {
             );
             return { data: [], status: 200 };
         });
-        const { data, status } = await Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE);
+        const { data, status } = await Networking.fetch("server.mastodon.net", {
+            method: "get",
+            url: "/api/v1/instance",
+            form: {}
+        });
         expect(data).toEqual([]);
         expect(status).toEqual(200);
         axios.mockClear();
@@ -36,7 +34,11 @@ describe("Services/Networking", () => {
             );
             return { data: [], status: 200 };
         });
-        const { data, status } = await Networking.fetch("server.mastodon.net", CONST_API.POST_FAVOURITED, "100100", {}, "ACCESS_TOKEN");
+        const { data, status } = await Networking.fetch("server.mastodon.net", {
+            method: "post",
+            url: "/api/v1/statuses/:param:/favourite",
+            form: {}
+        }, "100100", {}, "ACCESS_TOKEN");
         expect(data).toEqual([]);
         expect(status).toEqual(200);
         axios.mockClear();
@@ -45,7 +47,11 @@ describe("Services/Networking", () => {
         axios.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        await expect(Networking.fetch("server.mastodon.net", CONST_API.GET_INSTANCE)).rejects.toEqual(new Error("Network Error"));
+        await expect(Networking.fetch("server.mastodon.net", {
+            method: "get",
+            url: "/api/v1/instance",
+            form: {}
+        })).rejects.toEqual(new Error("Network Error"));
         axios.mockClear();
     });
     it("pushServer resolve", async () => {

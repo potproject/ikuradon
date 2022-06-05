@@ -1,4 +1,3 @@
-
 import * as FileSystem from "expo-file-system";
 import Networking from "../Networking";
 import fileUpload from "../FileUpload";
@@ -20,8 +19,14 @@ const fileMock = {
 describe("Services/FileUpload", () => {
     it("fileUpload resolve", async () => {
         FileSystem.uploadAsync.mockImplementation(() => ({ body: "{\"id\": \"1\"}", status: 200 }));
-        const data = await fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
+        const data = await fileUpload("pleroma", "server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
         expect(data).toEqual({ "id": "1" });
+        FileSystem.uploadAsync.mockClear();
+    });
+    it("fileUpload resolve misskey", async () => {
+        FileSystem.uploadAsync.mockImplementation(() => ({ body: "{\"id\": \"1\", \"thumbnailUrl\": \"http://example.com/\"}", status: 200 }));
+        const data = await fileUpload("misskey", "server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
+        expect(data).toEqual({ "id": "1", "preview_url": "http://example.com/" });
         FileSystem.uploadAsync.mockClear();
     });
     it("fileUpload resolve v2", async () => {
@@ -29,7 +34,7 @@ describe("Services/FileUpload", () => {
         Networking.fetch
             .mockImplementationOnce(() => ({ data: { id: "1", url: null }, status: 206 }))
             .mockImplementationOnce(() => ({ data: { id: "1", url:"http://example.com/" }, status: 200 }));
-        const data = await fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
+        const data = await fileUpload("mastodon", "server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
         expect(data).toEqual({ id: "1", url:"http://example.com/" });
         FileSystem.uploadAsync.mockClear();
         Networking.fetch.mockClear();
@@ -38,7 +43,7 @@ describe("Services/FileUpload", () => {
         FileSystem.uploadAsync.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        const res = fileUpload("server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
+        const res = fileUpload("mastodon", "server.mastodon.net", "ACCESS_TOKEN", fileMock, "image/jpeg");
         await expect(res).rejects.toEqual(new Error("Network Error"));
         FileSystem.uploadAsync.mockClear();
     });
