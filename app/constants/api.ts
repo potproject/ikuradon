@@ -52,7 +52,10 @@ export const MISSKEY_DELETE_REACTION: api = {
     }
 };
 
-/** Streaming API とりあえずUSERのみサポート */
-export const STREAMING: streaming = {
+export const STREAMING_MASTODON: streaming = {
     url: "/api/v1/streaming"
+};
+
+export const STREAMING_MISSKEY: streaming = {
+    url: "/streaming"
 };
