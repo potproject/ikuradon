@@ -16,7 +16,7 @@ export function login(domain) {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
             const appData = await Rest.createApp("mastodon", domain, "ikuradon", ["read", "write", "follow", "push"], "urn:ietf:wg:oauth:2.0:oob");
-            const url = createUrl(domain, appData.clientId);
+            const url = createUrl(domain, appData.client_id);
             const { client_id, client_secret } = appData;
             //この時点ではまだログインしていません
             NavigationService.navigate({ name: RouterName.Authorize, params: { domain, url, client_id, client_secret } });

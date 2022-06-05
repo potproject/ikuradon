@@ -2,7 +2,6 @@ import { login, loginSelectAccounts, loginWithAccessToken, logout, accountChange
 
 import * as Session from "../../../util/session";
 
-import Networking from "../../../services/Networking";
 import NavigationService from "../../../services/NavigationService";
 import DropDownHolder from "../../../services/DropDownHolder";
 
@@ -17,9 +16,11 @@ import ExampleSession from "../../../example/session";
 import ExampleAccount from "../../../example/account";
 import ExampleInstance from "../../../example/instance";
 
+import * as Rest from "../../../services/api/Rest";
+jest.mock("../../../services/api/Rest");
+
 jest.mock("../../../util/session");
 
-jest.mock("../../../services/Networking");
 jest.mock("../../../services/NavigationService");
 jest.mock("../../../services/DropDownHolder", () => ({
     error: jest.fn(),
@@ -29,7 +30,7 @@ jest.mock("../../../services/DropDownHolder", () => ({
 describe("Action/Login", () => {
     it("login", done => {
         const domain = "example.net";
-        Networking.fetch.mockImplementation(() => ({ data:ExampleApps() }));
+        Rest.createApp.mockImplementation(() => ExampleApps());
         NavigationService.navigate.mockImplementation(({ name, params }) => {
             try {
                 expect(name).toEqual(RouterName.Authorize);
@@ -53,12 +54,12 @@ describe("Action/Login", () => {
             call++;
         });
 
-        Networking.fetch.mockClear();
+        Rest.createApp.mockClear();
         NavigationService.navigate.mockClear();
     });
     it("login Fail", done => {
         const domain = "example.net";
-        Networking.fetch.mockImplementation(() => {
+        Rest.createApp.mockImplementation(() => {
             throw new Error("Network Error");
         });
         DropDownHolder.error.mockImplementation((title, message) => {
@@ -73,16 +74,13 @@ describe("Action/Login", () => {
             call++;
         });
 
-        Networking.fetch.mockClear();
+        Rest.createApp.mockClear();
         DropDownHolder.error.mockClear();
     });
     it("loginSelectAccounts", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch
-            // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data: ExampleAccount() }))
-            // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data: ExampleInstance() }));
+        Rest.getCurrentUser.mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance.mockImplementationOnce(() => ExampleInstance());
         let action = loginSelectAccounts(0);
         let call = 0;
         let { domain, access_token } = ExampleSession();
@@ -103,11 +101,12 @@ describe("Action/Login", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
+        Rest.getInstance.mockClear();
     });
     it("loginSelectAccounts Fail", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.getCurrentUser.mockImplementation(() => {
             throw new Error("Network Error");
         });
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
@@ -126,7 +125,7 @@ describe("Action/Login", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
         NavigationService.resetAndNavigate.mockClear();
     });
     it("loginSelectAccounts notfound", done => {
@@ -140,17 +139,14 @@ describe("Action/Login", () => {
         Session.getDomainAndToken.mockClear();
     });
     it("loginWithAccessToken", done => {
-        Networking.fetch
-            // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
-            // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+        Rest.getCurrentUser.mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance.mockImplementationOnce(() => ExampleInstance());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
         let { domain, access_token } = ExampleSession();
-        let action = loginWithAccessToken(domain, access_token);
+        let action = loginWithAccessToken("misskey", domain, access_token);
         let call = 0;
         action((callback) => {
             try {
@@ -168,11 +164,12 @@ describe("Action/Login", () => {
                 done(e);
             }
         });
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
+        Rest.getInstance.mockClear();
         NavigationService.resetAndNavigate.mockClear();
     });
     it("loginWithAccessToken Fail", done => {
-        Networking.fetch.mockImplementation(() => {
+        Rest.getCurrentUser.mockImplementationOnce(() =>  {
             throw new Error("Network Error");
         });
         DropDownHolder.error.mockImplementation((title, message) => {
@@ -180,9 +177,9 @@ describe("Action/Login", () => {
             done();
         });
         let { domain, access_token } = ExampleSession();
-        let action = loginWithAccessToken(domain, access_token);
+        let action = loginWithAccessToken("misskey", domain, access_token);
         action(() => null);
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
         DropDownHolder.error.mockClear();
     });
     it("logout", done => {
@@ -251,11 +248,8 @@ describe("Action/Login", () => {
     });
     it("accountChangeWithDelete", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch
-            // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
-            // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+        Rest.getCurrentUser.mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance.mockImplementationOnce(() => ExampleInstance());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
@@ -280,12 +274,13 @@ describe("Action/Login", () => {
             }
         });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
+        Rest.getInstance.mockClear();
         NavigationService.resetAndNavigate.mockClear();
     });
     it("accountChangeWithDelete fail", done => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.getCurrentUser.mockImplementationOnce(() => {
             throw new Error("Network Error");
         });
         Session.setDefault.mockImplementation(() => null);
@@ -306,7 +301,7 @@ describe("Action/Login", () => {
         });
         Session.getDomainAndToken.mockClear();
         Session.setDefault.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getCurrentUser.mockClear();
         NavigationService.resetAndNavigate.mockClear();
     });
     it("accountChangeWithDelete notfound", done => {
