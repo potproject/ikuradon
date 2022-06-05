@@ -1,256 +1,61 @@
-export const UPLOAD_POST_MEDIA = {
+export type api = {
+    method: "post"|"get";
+    url: string;
+    form: {};
+};
+
+type streaming = {
+    url: string;
+}
+
+export const UPLOAD_POST_MEDIA_V1: api = {
+    method: "post",
+    url: "/api/v1/media",
+    form: {}
+};
+
+export const UPLOAD_POST_MEDIA_V2: api = {
     method: "post",
     url: "/api/v2/media",
     form: {}
 };
 
-export const UPLOAD_GET_MEDIA = {
+export const UPLOAD_POST_MEDIA_MISSKEY: api = {
+    method: "post",
+    url: "/api/drive/files/create",
+    form: {}
+};
+
+export const UPLOAD_GET_MEDIA: api = {
     method: "get",
     url: "/api/v1/media/:param:",
     form: {}
 };
 
-/** Streaming API とりあえずUSERのみサポート */
-export const STREAMING = {
+
+export const MISSKEY_CREATE_REACTION: api = {
+    method: "post",
+    url: "/api/reactions/create",
+    form: {
+        i: "", //required
+        noteId: "", //required
+        reaction: "", //required
+    }
+};
+
+export const MISSKEY_DELETE_REACTION: api = {
+    method: "post",
+    url: "/api/reactions/delete",
+    form: {
+        i: "", //required
+        noteId: "", //required
+    }
+};
+
+export const STREAMING_MASTODON: streaming = {
     url: "/api/v1/streaming"
 };
 
-// UNUSED!
-export const REGISTERING_AN_APPLICATION = {
-    method: "post",
-    url: "/api/v1/apps",
-    form: {
-        client_name: "ikuradon",
-        redirect_uris: "urn:ietf:wg:oauth:2.0:oob",
-        scopes: "read write follow push"
-    }
-};
-
-// UNUSED!
-export const GET_OAUTH_ACCESSTOKEN = {
-    method: "post",
-    url: "/oauth/token",
-    form: {
-        client_id: "", //required
-        client_secret: "", //required
-        code: "", //required
-        grant_type: "authorization_code",
-        redirect_uri: "urn:ietf:wg:oauth:2.0:oob",
-        scope: "read write follow push"
-    }
-};
-
-// UNUSED!
-export const GET_CURRENT_USER = {
-    method: "get",
-    url: "/api/v1/accounts/verify_credentials",
-    form: {}
-};
-
-// UNUSED!
-export const GET_INSTANCE = {
-    method: "get",
-    url: "/api/v1/instance",
-    form: {}
-};
-
-// UNUSED!
-export const GET_TIMELINES_HOME = {
-    method: "get",
-    url: "/api/v1/timelines/home",
-    form: {
-        limit: "40", //optional
-        since_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const GET_TIMELINES_LOCAL = {
-    method: "get",
-    url: "/api/v1/timelines/public",
-    form: {
-        local: true,
-        limit: "40", //optional
-        since_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const GET_TIMELINES_FEDERAL = {
-    method: "get",
-    url: "/api/v1/timelines/public",
-    form: {
-        local: false,
-        limit: "40", //optional
-        since_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const GET_NOTIFICATIONS = {
-    method: "get",
-    url: "/api/v1/notifications",
-    form: {
-        limit: "40", //optional
-        since_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const GET_FAVOURITES = {
-    method: "get",
-    url: "/api/v1/favourites",
-    form: {
-        limit: "40", //optional
-        min_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const GET_BOOKMARKS = {
-    method: "get",
-    url: "/api/v1/bookmarks",
-    form: {
-        limit: "40", //optional
-        since_id: null, //new timeline
-        max_id: null //old timeline
-    }
-};
-
-// UNUSED!
-export const POST_STATUS = {
-    method: "post",
-    url: "/api/v1/statuses",
-    form: {
-        status: "", //toot
-        in_reply_to_id: null, //optional
-        media_ids: null, //optional
-        sensitive: false, //optional, nsfw flag
-        spoiler_text: null, //optional, nsfw message
-        visibility: "public", //"direct", "private", "unlisted" or "public"
-        scheduled_at: null // [v2.7.0 Support] scheduled statuses. timestamp string
-    }
-};
-
-// UNUSED!
-export const GET_STATUS = {
-    method: "get",
-    url: "/api/v1/statuses/:param:",
-    form: {}
-};
-
-// UNUSED!
-export const GET_STATUS_CONTEXT = {
-    method: "get",
-    url: "/api/v1/statuses/:param:/context",
-    form: {}
-};
-
-// UNUSED!
-export const DELETE_STATUS = {
-    method: "delete",
-    url: "/api/v1/statuses/:param:",
-    form: {}
-};
-
-// UNUSED!
-export const POST_REBLOG = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/reblog",
-    form: {}
-};
-
-// UNUSED!
-export const POST_UNREBLOG = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/unreblog",
-    form: {}
-};
-
-// UNUSED!
-export const POST_FAVOURITED = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/favourite",
-    form: {}
-};
-
-// UNUSED!
-export const POST_UNFAVOURITED = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/unfavourite",
-    form: {}
-};
-
-// UNUSED!
-export const POST_BOOKMARKED = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/bookmark",
-    form: {}
-};
-
-// UNUSED!
-export const POST_UNBOOKMARKED = {
-    method: "post",
-    url: "/api/v1/statuses/:param:/unbookmark",
-    form: {}
-};
-
-// UNUSED!
-export const POST_FOLLOWED = {
-    method: "post",
-    url: "/api/v1/accounts/:param:/follow",
-    form: {}
-};
-
-// UNUSED!
-export const POST_UNFOLLOWED = {
-    method: "post",
-    url: "/api/v1/accounts/:param:/unfollow",
-    form: {}
-};
-
-// UNUSED!
-export const GET_RELATIONSHIPS = {
-    method: "get",
-    url: "/api/v1/accounts/relationships",
-    form: {
-        id: [], //Required (array)
-    }
-};
-
-// UNUSED!
-export const GET_CUSTOMEMOJIS = {
-    method: "get",
-    url: "/api/v1/custom_emojis",
-    form: {}
-};
-
-// UNUSED!
-export const GET_SEARCH_V2 = {
-    method: "get",
-    url: "/api/v2/search",
-    form: {
-        q: ""
-    }
-};
-
-// UNUSED!
-export const GET_POLL = {
-    method: "get",
-    url: "/api/v1/polls/:param:",
-    form: {}
-};
-
-// UNUSED!
-export const POST_POLL_VOTES = {
-    method: "post",
-    url: "/api/v1/polls/:param:/votes",
-    form: {
-        choices: [], //Required (array)
-    }
+export const STREAMING_MISSKEY: streaming = {
+    url: "/streaming"
 };

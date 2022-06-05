@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import * as MainActionTypes from "../actions/actiontypes/main";
 import * as MastorowActionTypes from "../actions/actiontypes/mastorow";
-import { getMinMaxId } from "../util/manageid";
+import { getFirstAndLastID } from "../util/manageid";
 
 const viewTypeArray = ["home", "local", "federal"];
 
@@ -122,7 +122,7 @@ export default createReducer(initialState, (builder) => {
                     newArrival = action.data.length;
                     data = action.data.concat(state[reducerType].data);
                 }
-                const { minId, maxId } = getMinMaxId(data);
+                const { minId, maxId } = getFirstAndLastID(data);
                 state[reducerType] = {
                     data,
                     refreshing: false,

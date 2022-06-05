@@ -1,5 +1,3 @@
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
@@ -35,7 +33,6 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             dispatch({ type: Toot.TOOT_OK });
         } catch (e) {
             DropDownHolder.error(t("messages.toot_failed"), e.message);
-            console.log(e.response.data);
             dispatch({ type: Toot.TOOT_FAILURE });
         }
         return;

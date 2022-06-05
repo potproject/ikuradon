@@ -1,13 +1,10 @@
-import * as Main from "../actiontypes/main";
 import * as Config from "../actiontypes/config";
 import * as PushNotification from "../actiontypes/pushnotification";
 import * as OpenSticker from "../actiontypes/opensticker";
 import * as Session from "../../util/session";
 import * as Storage from "../../util/storage";
 
-import * as CONST_API from "../../constants/api";
 import * as CONST_Storage from "../../constants/storage";
-import Networking from "../../services/Networking";
 import * as CurrentUser from "../actiontypes/currentuser";
 
 import * as RouterName from "../../constants/RouterName";
@@ -54,7 +51,7 @@ export function appInit(updateTheme) {
             try {
                 const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
                 const instance = await Rest.getInstance(sns, domain, access_token);
-                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;

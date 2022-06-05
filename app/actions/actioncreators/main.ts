@@ -1,13 +1,7 @@
 import * as Main from "../actiontypes/main";
-import * as CurrentUser from "../actiontypes/currentuser";
-import * as CONST_API from "../../constants/api";
-import Networking from "../../services/Networking";
 import t from "../../services/I18n";
 import DropDownHolder from "../../services/DropDownHolder";
 import * as Session from "../../util/session";
-
-import * as RouterName from "../../constants/RouterName";
-import NavigationService from "../../services/NavigationService";
 import * as Rest from "../../services/api/Rest";
 
 const reducerTypeArray = {
