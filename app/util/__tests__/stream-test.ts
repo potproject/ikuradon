@@ -28,7 +28,7 @@ describe("Util/Stream", () => {
         const server = new WS(url, { jsonProtocol: true });
 
         // onOpen
-        on(ref, dispatchMock, useEnabledMock, "home", url);
+        on("mastodon", ref, dispatchMock, useEnabledMock, "home", url);
         await server.connected;
         expect(ref.current.readyState).toBe(WebSocket.OPEN);
 
@@ -58,12 +58,12 @@ describe("Util/Stream", () => {
             }
         };
         const useEnabledMock = () => null;
-        off(refMock, dispatchMock, useEnabledMock, "home");
+        off("mastodon", refMock, dispatchMock, useEnabledMock, "home");
     });
     it("off webSocket=Off", () => {
         const dispatchMock = () => {};
         const refMock = { current: null };
         const useEnabledMock = () => null;
-        off(refMock, dispatchMock, useEnabledMock, "home");
+        off("mastodon", refMock, dispatchMock, useEnabledMock, "home");
     });
 });

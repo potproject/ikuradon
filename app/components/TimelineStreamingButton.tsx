@@ -11,7 +11,7 @@ const CurrentUserReducerSelector = (state: RootState) => state.currentUserReduce
 
 export default function TimelineStreamingButton({ type }){
     const dispatch = useDispatch();
-    const { instance, access_token } = useSelector(CurrentUserReducerSelector);
+    const { instance, access_token, sns } = useSelector(CurrentUserReducerSelector);
     const { theme } = useContext(ThemeContext);
     const [enabled, useEnabled] = useState(false);
     const webSocketRef = useRef(null);
@@ -20,11 +20,11 @@ export default function TimelineStreamingButton({ type }){
     useEffect(() => {
         if (enabled && instance && streamingAPI){
             // ON
-            streamingOn(webSocketRef, dispatch, useEnabled, type, streamingURL);
+            streamingOn(sns, webSocketRef, dispatch, useEnabled, type, streamingURL);
             console.log("[WS] ON:" + type);
         } else {
             // OFF
-            streamingOff(webSocketRef, dispatch, useEnabled, type);
+            streamingOff(sns, webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] OFF:" + type);
         }
         return;
@@ -32,7 +32,7 @@ export default function TimelineStreamingButton({ type }){
     useEffect(() => {
         return () => {
             // UNMOUNT
-            streamingOff(webSocketRef, dispatch, useEnabled, type);
+            streamingOff("mastodon", webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] UNMOUNTCLOSE:" + type);
         };
     }, []);

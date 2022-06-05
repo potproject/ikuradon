@@ -30,7 +30,8 @@ describe("Action/Authorize", () => {
         // CONST_API.GET_INSTANCE
             .mockImplementationOnce(() => ExampleInstance());
         let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
-        await action(({ type, user_credentials, domain, access_token, instance }) => {
+        await action(({ sns, type, user_credentials, domain, access_token, instance }) => {
+            expect(sns).toEqual("mastodon");
             expect(type).toEqual("UPDATE_CURRENT_USER");
             expect(user_credentials).toEqual(ExampleAccount());
             expect(domain).toEqual("example.com");

@@ -51,7 +51,7 @@ export function appInit(updateTheme) {
             try {
                 const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
                 const instance = await Rest.getInstance(sns, domain, access_token);
-                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 await dispatch({ type:AppInit.APPINIT_COMPLETE });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;

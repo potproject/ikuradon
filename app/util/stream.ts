@@ -1,5 +1,6 @@
 import * as CONST_API from "../constants/api";
 import { start, stop, receive } from "../actions/actioncreators/streaming";
+import { sns } from "../constants/sns";
 
 export function getStreamingURL(streamingAPI, type, access_token){
     let stream;
@@ -18,7 +19,14 @@ export function getStreamingURL(streamingAPI, type, access_token){
     return streamingAPI + CONST_API.STREAMING.url + "?access_token=" + access_token + "&stream=" + stream;
 }
 
-export function on(ref, dispatch, useEnabled, type, url){
+export function on(sns: sns, ref, dispatch, useEnabled, type, url){
+    if (sns==="mastodon"){
+        return onMastodon(ref, dispatch, useEnabled, type, url);
+    }
+    // Not Supported!
+}
+
+function onMastodon(ref, dispatch, useEnabled, type, url){
     ref.current = new WebSocket(url);
     ref.current.onopen = () => {
         // connection opened
@@ -44,7 +52,14 @@ export function on(ref, dispatch, useEnabled, type, url){
     dispatch(start(type));
 }
 
-export function off(ref, dispatch, useEnabled, type){
+export function off(sns: sns, ref, dispatch, useEnabled, type){
+    if (sns==="mastodon"){
+        return offMastodon(ref, dispatch, useEnabled, type);
+    }
+    // Not Supported!
+}
+
+export function offMastodon(ref, dispatch, useEnabled, type){
     dispatch(stop(type));
     if (ref.current !== null && ref.current.readyState === WebSocket.OPEN){
         ref.current.close();

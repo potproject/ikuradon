@@ -51,13 +51,13 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
@@ -91,10 +91,10 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
-                call === 0 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 0 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 1 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
@@ -132,13 +132,13 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfigDeepCopy });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){

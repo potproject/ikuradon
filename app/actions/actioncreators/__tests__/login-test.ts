@@ -83,12 +83,13 @@ describe("Action/Login", () => {
         Rest.getInstance.mockImplementationOnce(() => ExampleInstance());
         let action = loginSelectAccounts(0);
         let call = 0;
-        let { domain, access_token } = ExampleSession();
+        let { domain, access_token, sns } = ExampleSession();
         action((callback) => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
                 call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
                 call === 2 && (expect(callback).toEqual({ 
+                    sns: sns,
                     type: CurrentUser.UPDATE_CURRENT_USER,
                     user_credentials: ExampleAccount(),
                     domain: domain,
@@ -145,14 +146,15 @@ describe("Action/Login", () => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
-        let { domain, access_token } = ExampleSession();
-        let action = loginWithAccessToken("misskey", domain, access_token);
+        let { domain, access_token, sns } = ExampleSession();
+        let action = loginWithAccessToken("mastodon", domain, access_token);
         let call = 0;
         action((callback) => {
             try {
                 call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
                 call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
                 call === 2 && expect(callback).toEqual({ 
+                    sns: sns,
                     type: CurrentUser.UPDATE_CURRENT_USER,
                     user_credentials: ExampleAccount(),
                     domain: domain,
@@ -254,7 +256,7 @@ describe("Action/Login", () => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
-        let { domain, access_token } = ExampleSession();
+        let { domain, access_token, sns } = ExampleSession();
         let action = accountChangeWithDelete(0);
         let call = 0;
         action((callback) => {
@@ -262,6 +264,7 @@ describe("Action/Login", () => {
                 call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });
                 call === 1 && expect(callback).toEqual({ type: Main.ALLCLEAR_MASTOLIST });
                 call === 2 && expect(callback).toEqual({ 
+                    sns: sns,
                     type: CurrentUser.UPDATE_CURRENT_USER,
                     user_credentials: ExampleAccount(),
                     domain: domain,

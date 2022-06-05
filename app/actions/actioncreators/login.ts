@@ -36,7 +36,7 @@ export function loginSelectAccounts(index) {
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
                 const instance = await Rest.getInstance(sns, domain, access_token);
-                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
             } catch (e) {
@@ -60,7 +60,7 @@ export function loginWithAccessToken(sns, domain, access_token) {
             let avatar = user_credentials.avatar;
             await Session.add(sns, domain, access_token, username, avatar);
             DropDownHolder.success(t("messages.login_success"));
-            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
             NavigationService.resetAndNavigate({ name: RouterName.Main });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
@@ -109,7 +109,7 @@ export function accountChangeWithDelete(index) {
                 await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
                 const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
                 const instance = await Rest.getInstance(sns, domain, access_token);
-                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                await dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 NavigationService.resetAndNavigate({ name: RouterName.Main });
                 return;
             } catch (e) {
