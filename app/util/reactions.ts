@@ -15,7 +15,7 @@ export function getMisskeyCustomEmojiReaction(emoji_reaction: Entity.Reaction, e
     return { count:emoji_reaction.count, me:emoji_reaction.me, emoji:emoji_reaction.name, url:null };
 }
 
-export function reactioned(emoji_reactions: Entity.Reaction[]){
+export function isReactioned(emoji_reactions: Entity.Reaction[]){
     const meReaction = emoji_reactions.filter(emoji_reaction => emoji_reaction.me === true);
     return meReaction.length > 0;
 }

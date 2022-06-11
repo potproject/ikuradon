@@ -22,7 +22,7 @@ import MastoRowPoll from "./MastoRowPoll";
 import OpenSticker from "./OpenSticker";
 
 import { icon } from "../constants/visibility";
-import { getMisskeyCustomEmojiReaction, reactioned } from "../util/reactions";
+import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 
 const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
@@ -84,6 +84,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
             poll,
         } = reblog);
     }
+    const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
     let myself = user_credentials && user_credentials.acct === account.acct;
     return (
         <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
@@ -174,14 +175,18 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                                 {
                                     emoji_reactions.map((emoji_reaction) => {
                                         const { count, emoji, me, url } = getMisskeyCustomEmojiReaction(emoji_reaction, emojis);
-                                        return <TouchableOpacity key={id + "_" + emoji_reaction.name + "_reaction"} style={styles.reaction}>
+                                        return <TouchableOpacity
+                                            key={id + "_" + emoji_reaction.name + "_reaction"}
+                                            style={styles.reaction}
+                                            onPress={() => { emoji.indexOf("@") === -1 && !reactioned && ReactionAction(id, id, true, emoji)}}
+                                        >
                                             {url &&
                                             <Image style={styles.reactionImg} source={{ uri: url }} />
                                             }
                                             {!url &&
                                             <Text style={styles.reactionText}>{emoji}</Text>
                                             }
-                                            <Text style={styles.reactionCount}>{count}</Text>
+                                            <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, styles.reactionCount]}>{count}</Text>
                                         </TouchableOpacity>
                                         ;
                                     })
@@ -213,7 +218,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                             <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
                             }
                             { sns === "misskey" && 
-                            <Reaction id={id} tootid={tootID} reactioned={reactioned(emoji_reactions)} style={styles.itemFlex} onReaction={ReactionAction} />
+                            <Reaction id={id} tootid={tootID} reactioned={reactioned} style={styles.itemFlex} onReaction={ReactionAction} />
                             }
                             <Action
                                 id={id}

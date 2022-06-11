@@ -63,7 +63,6 @@ export function reaction(id, tootid, reactioned, emoji) {
             dispatch({ type: Mastorow.REACTION_MASTOROW, id, reactioned, emoji_reactions, emojis });
             console.log("reaction:", tootid, reactioned, "emoji:", emoji);
         } catch (e) {
-            console.log(e.response.data);
             DropDownHolder.error(t("messages.network_error"), e.message);
             return;
         }
