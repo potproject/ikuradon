@@ -6,18 +6,18 @@ import { Overlay, ThemeContext } from "react-native-elements";
 import EmojisModal from "../EmojisModal";
 
 function Reaction({ id, tootid, style, reactioned, onReaction }){
-    const [stateReactioned, useStateReactioned] = useState(reactioned);
+    const [stateOnPress, useStateOnPress] = useState(false);
     const { theme } = useContext(ThemeContext);
     return (
         <View style={[style, styles.container]}>
             <TouchableOpacity style={[style, { flex: 1 }]} onPress={() => {
-                useStateReactioned(!stateReactioned);
+                useStateOnPress(true);
             }}>
-                <FontAwesome name="plus" size={20} color={stateReactioned ? theme.customColors.item.bookmark : theme.customColors.item.none} />
+                <FontAwesome name="plus" size={20} color={reactioned ? theme.customColors.item.bookmark : theme.customColors.item.none} />
             </TouchableOpacity>
-            { stateReactioned && 
-            <Overlay isVisible={stateReactioned} onBackdropPress={() => useStateReactioned(false)}>
-                <EmojisModal onSelect={(emoji) => onReaction(id, tootid, stateReactioned, emoji)} />
+            { stateOnPress && 
+            <Overlay isVisible={stateOnPress} onBackdropPress={() => useStateOnPress(false)}>
+                <EmojisModal onSelect={(emoji) => onReaction(id, tootid, reactioned, emoji)} />
             </Overlay>
             }
         </View>
