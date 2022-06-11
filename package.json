@@ -65,7 +65,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-customemoji": "^1.0.0",
+    "react-native-customemoji": "^1.0.1",
     "react-native-dropdownalert": "^4.2.1",
     "react-native-elements": "^2.0.0",
     "react-native-gesture-handler": "~2.1.0",
