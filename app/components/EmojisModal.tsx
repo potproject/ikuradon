@@ -3,7 +3,7 @@ import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from "react-native-elements";
 import { getEmojis } from "../util/emojis";
   
-export default function EmojisModal({ current, onSelect }){
+export default function EmojisModal({ onSelect }){
     let [emojis, useEmojis] = useState([]);
     useEffect(() => {
         getEmojis().then(({ emojis, error }) => {

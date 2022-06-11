@@ -40,7 +40,7 @@ it("<EmojisModal />", async () => {
         });
     });
     const result = render(
-        <EmojisModal current={ExampleCurrent()} onSelect={(s)=>null} />
+        <EmojisModal onSelect={(s)=>null} />
     );
 
     await waitFor(() => {});
@@ -54,7 +54,7 @@ it("<EmojisModal /> Network Error", async () => {
         });
     });
     const result = render(
-        <EmojisModal current={ExampleCurrent()} onSelect={(s)=>null} />
+        <EmojisModal onSelect={(s)=>null} />
     );
 
     await waitFor(() => {});

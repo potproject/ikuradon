@@ -12,6 +12,7 @@ import Reply from "./item/Reply";
 import Boost from "./item/Boost";
 import Favourite from "./item/Favourite";
 import Bookmark from "./item/Bookmark";
+import Reaction  from "./item/Reaction";
 import Action from "./item/Action";
 
 import { ThemeContext } from "react-native-elements";
@@ -21,7 +22,7 @@ import MastoRowPoll from "./MastoRowPoll";
 import OpenSticker from "./OpenSticker";
 
 import { icon } from "../constants/visibility";
-import { getMisskeyCustomEmojiReaction } from "../util/reactions";
+import { getMisskeyCustomEmojiReaction, reactioned } from "../util/reactions";
 
 const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
@@ -47,7 +48,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
         emoji_reactions,
     } = item;
     // current
-    let { user_credentials, domain, access_token, notification_count, instance } = current;
+    let { user_credentials, domain, access_token, notification_count, instance, sns } = current;
     // Actions
     let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, TouchAction } =
         actions;
@@ -208,7 +209,12 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                                 disabled={visibility === "private" || visibility === "direct"}
                             />
                             <Favourite id={id} tootid={tootID} favourited={favourited} count={0} style={styles.itemFlex} onFavourite={FavouriteAction} />
+                            { sns !== "misskey" && 
                             <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
+                            }
+                            { sns === "misskey" && 
+                            <Reaction id={id} tootid={tootID} current={current} reactioned={reactioned(emoji_reactions)} style={styles.itemFlex} onReaction={(a)=>{console.log(a)}} />
+                            }
                             <Action
                                 id={id}
                                 tootid={tootID}
