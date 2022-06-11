@@ -406,6 +406,8 @@ export default memo(MastoRow, (p, n) => {
         p.item.reblogs_count === n.item.reblogs_count &&
         p.item.favourited === n.item.favourited &&
         p.item.favourites_count === n.item.favourites_count &&
+        p.item.emojis === n.item.emojis &&
+        p.item.emoji_reactions === n.item.emoji_reactions &&
         p.item.reblog === null
     );
 });
