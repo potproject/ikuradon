@@ -5,7 +5,7 @@ import { Divider } from "react-native-elements";
 
 import MastoRow from "../components/MastoRow";
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction, reaction as ReactionAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 import * as RouterName from "../constants/RouterName";
@@ -51,17 +51,18 @@ function MastoList({ navigation, type }) {
         BookmarkAction: (id, tootid, bookmarked) => {
             dispatch(BookmarkAction(id, tootid, bookmarked));
         },
+        ReactionAction: (id, tootid, reactioned, emoji) => {
+            dispatch(ReactionAction(id, tootid, reactioned, emoji));
+        },
         HideAction: (id) => {
             dispatch(HideAction(id));
         },
         DeleteAction: (id) => {
             dispatch(DeleteAction(id));
         },
-
         FollowAction: (id, followed) => {
             dispatch(FollowAction(id, followed));
         },
-
         OpenImageViewerAction: (media, index) => {
             dispatch(OpenImageViewerAction(media, index));
         },

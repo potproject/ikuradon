@@ -119,6 +119,16 @@ export async function unbookmarkStatus(sns: sns, domain: string, access_token: s
     return data;
 }
 
+export async function createEmojiReaction(sns: "misskey", domain: string, access_token: string, id: string, emoji: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).createEmojiReaction(id, emoji);
+    return data;
+}
+
+export async function deleteEmojiReaction(sns: "misskey", domain: string, access_token: string, id: string, emoji: string){
+    const { data }  = await generator(sns, getBaseUrl(domain), access_token).deleteEmojiReaction(id, emoji);
+    return data;
+}
+
 export async function followAccount(sns: sns, domain: string, access_token: string, id: string){
     const { data }  = await generator(sns, getBaseUrl(domain), access_token).followAccount(id);
     return data;

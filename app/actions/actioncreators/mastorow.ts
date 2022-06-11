@@ -54,6 +54,12 @@ export function bookmark(id, tootid, bookmarked) {
     };
 }
 
+export function reaction(id, tootid, reactioned, emoji) {
+    return async dispatch => {
+        console.log(id, tootid, reactioned, emoji);
+    };
+}
+
 export function follow(id, followed) {
     return async dispatch => {
         try {

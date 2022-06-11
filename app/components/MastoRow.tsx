@@ -50,7 +50,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
     // current
     let { user_credentials, domain, access_token, notification_count, instance, sns } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, TouchAction } =
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction, TouchAction } =
         actions;
     // Theme
     const { theme } = useContext(ThemeContext);
@@ -213,7 +213,7 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                             <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
                             }
                             { sns === "misskey" && 
-                            <Reaction id={id} tootid={tootID} current={current} reactioned={reactioned(emoji_reactions)} style={styles.itemFlex} onReaction={(a)=>{console.log(a)}} />
+                            <Reaction id={id} tootid={tootID} reactioned={reactioned(emoji_reactions)} style={styles.itemFlex} onReaction={ReactionAction} />
                             }
                             <Action
                                 id={id}

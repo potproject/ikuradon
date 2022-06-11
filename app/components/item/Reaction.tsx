@@ -17,7 +17,7 @@ function Reaction({ id, tootid, style, reactioned, onReaction }){
             </TouchableOpacity>
             { stateReactioned && 
             <Overlay isVisible={stateReactioned} onBackdropPress={() => useStateReactioned(false)}>
-                <EmojisModal onSelect={onReaction} />
+                <EmojisModal onSelect={(emoji) => onReaction(id, tootid, stateReactioned, emoji)} />
             </Overlay>
             }
         </View>

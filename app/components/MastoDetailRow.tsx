@@ -21,7 +21,8 @@ import MastoRowPoll from "./MastoRowPoll";
 import OpenSticker from "./OpenSticker";
 
 import { icon } from "../constants/visibility";
-import { getMisskeyCustomEmojiReaction } from "../util/reactions";
+import { getMisskeyCustomEmojiReaction, reactioned } from "../util/reactions";
+import Reaction from "./item/Reaction";
 
 const MastoDetailRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
@@ -48,9 +49,9 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
         emoji_reactions,
     } = item;
     // current
-    let { user_credentials, domain, access_token, notification_count, instance } = current;
+    let { user_credentials, domain, sns } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let tootID = id;
@@ -163,7 +164,12 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                     disabled={visibility === "private" || visibility === "direct"}
                 />
                 <Favourite id={id} tootid={tootID} favourited={favourited} count={favourites_count} style={styles.itemFlex} onFavourite={FavouriteAction} />
+                { sns !== "misskey" && 
                 <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
+                }
+                { sns === "misskey" && 
+                <Reaction id={id} tootid={tootID} reactioned={reactioned(emoji_reactions)} style={styles.itemFlex} onReaction={ReactionAction} />
+                }
                 <Action
                     id={id}
                     tootid={tootID}
