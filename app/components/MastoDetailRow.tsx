@@ -176,6 +176,7 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                 <Reaction id={id} tootid={tootID} reactioned={reactioned} style={styles.itemFlex} onReaction={ReactionAction} />
                 }
                 <Action
+                    sns={sns}
                     id={id}
                     tootid={tootID}
                     style={styles.itemFlex}
