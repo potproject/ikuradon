@@ -1,4 +1,4 @@
-import { getMisskeyCustomEmojiReaction, reactioned } from "../reactions";
+import { getMisskeyCustomEmojiReaction, isReactioned } from "../reactions";
 
 describe("Util/reactions", () => {
     it("getMisskeyCustomEmojiReaction", () => {
@@ -23,8 +23,8 @@ describe("Util/reactions", () => {
         );
         expect(r2).toEqual({ "count": 2, "emoji": ":test@misskey.io:", "me": false, "url": "URL" });
     });
-    it("reactioned", () => {
-        const r = reactioned([
+    it("isReactioned", () => {
+        const r = isReactioned([
             {
                 count: 1,
                 me: true,
@@ -33,7 +33,7 @@ describe("Util/reactions", () => {
             },
         ]);
         expect(r).toBeTruthy();
-        const r2 = reactioned([
+        const r2 = isReactioned([
             {
                 count: 1,
                 me: false,
