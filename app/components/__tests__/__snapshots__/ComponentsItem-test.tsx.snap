@@ -246,6 +246,44 @@ exports[`<Follow /> 1`] = `
 </View>
 `;
 
+exports[`<Reaction /> 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flex": 1,
+        "opacity": 1,
+      }
+    }
+  >
+    <FontAwesome
+      color="#4c6ef5"
+      name="minus"
+      size={20}
+    />
+  </View>
+</View>
+`;
+
 exports[`<Reply /> 1`] = `
 <View
   style={

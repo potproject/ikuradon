@@ -61,6 +61,7 @@ export default function status() {
         "mentions": [],
         "tags": [],
         "emojis": [],
+        "emoji_reactions": [],
         "card": {
             "url": "https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code",
             "title": "‘I lost my £193,000 inheritance – with one wrong digit on my sort code’",
