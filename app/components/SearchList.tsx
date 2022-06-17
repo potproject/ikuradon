@@ -30,7 +30,7 @@ export default function SearchList({ type, data }){
                                 <ListItem bottomDivider onPress={() => null}>
                                     <ListItem.Content>
                                         <ListItem.Title>{"#" + item.name}</ListItem.Title>
-                                        <ListItem.Subtitle>{item.history[0] && item.history[0].accounts}</ListItem.Subtitle>
+                                        <ListItem.Subtitle>{item && item.history && item.history[0] && item.history[0].accounts}</ListItem.Subtitle>
                                     </ListItem.Content>
                                 </ListItem>
                             );

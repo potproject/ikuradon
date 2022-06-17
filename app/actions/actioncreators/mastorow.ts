@@ -54,6 +54,22 @@ export function bookmark(id, tootid, bookmarked) {
     };
 }
 
+export function reaction(id, tootid, reactioned, emoji) {
+    return async dispatch => {
+        try {
+            let { sns, domain, access_token } = await Session.getDomainAndToken();
+            const postapi = reactioned ? Rest.createEmojiReaction : Rest.deleteEmojiReaction;
+            const { emoji_reactions, emojis } = await postapi(sns as "misskey", domain, access_token, id, emoji);
+            dispatch({ type: Mastorow.REACTION_MASTOROW, id, reactioned, emoji_reactions, emojis });
+            console.log("reaction:", tootid, reactioned, "emoji:", emoji);
+        } catch (e) {
+            DropDownHolder.error(t("messages.network_error"), e.message);
+            return;
+        }
+        return;
+    };
+}
+
 export function follow(id, followed) {
     return async dispatch => {
         try {

@@ -21,7 +21,9 @@ import MastoRowPoll from "./MastoRowPoll";
 import OpenSticker from "./OpenSticker";
 
 import { icon } from "../constants/visibility";
-import { getMisskeyCustomEmojiReaction } from "../util/reactions";
+import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
+import Reaction from "./item/Reaction";
+import { accountURLMigrate, urlMigrate } from "../util/account";
 
 const MastoDetailRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
@@ -48,15 +50,16 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
         emoji_reactions,
     } = item;
     // current
-    let { user_credentials, domain, access_token, notification_count, instance } = current;
+    let { user_credentials, domain, sns } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     let tootID = id;
     let myself = user_credentials && user_credentials.acct === account.acct;
+    const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
     return (
-        <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
+        <View key={"detail_"+id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
             {Object.keys(openStickerData).length !== 0 && <OpenSticker acct={account.acct} currentDomain={domain} data={openStickerData} />}
             <View style={styles.innerContainer}>
                 <View style={styles.photoContainer}>
@@ -115,10 +118,14 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                     {emoji_reactions.map((emoji_reaction) => {
                         const { count, emoji, me, url } = getMisskeyCustomEmojiReaction(emoji_reaction, emojis);
                         return (
-                            <TouchableOpacity key={id + "_" + emoji_reaction.name + "_reaction"} style={styles.reaction}>
+                            <TouchableOpacity
+                                key={id + "_" + emoji_reaction.name + "_reaction"}
+                                style={styles.reaction}
+                                onPress={() => { emoji.indexOf("@") === -1 && !reactioned && ReactionAction(id, id, true, emoji)}}
+                            >
                                 {url && <Image style={styles.reactionImg} source={{ uri: url }} />}
                                 {!url && <Text style={styles.reactionText}>{emoji}</Text>}
-                                <Text style={styles.reactionCount}>{count}</Text>
+                                <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, styles.reactionCount]}>{count}</Text>
                             </TouchableOpacity>
                         );
                     })}
@@ -163,13 +170,18 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                     disabled={visibility === "private" || visibility === "direct"}
                 />
                 <Favourite id={id} tootid={tootID} favourited={favourited} count={favourites_count} style={styles.itemFlex} onFavourite={FavouriteAction} />
+                { sns !== "misskey" && 
                 <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
+                }
+                { sns === "misskey" && 
+                <Reaction id={id} tootid={tootID} reactioned={reactioned} style={styles.itemFlex} onReaction={ReactionAction} />
+                }
                 <Action
                     id={id}
                     tootid={tootID}
                     style={styles.itemFlex}
-                    url={url}
-                    account_url={account.url}
+                    url={urlMigrate(sns, domain, url, tootID)}
+                    account_url={accountURLMigrate(sns, domain, account.url)}
                     user={account.display_name !== "" ? account.display_name : account.username}
                     acct={account.acct}
                     image={account.avatar}
@@ -364,6 +376,8 @@ export default memo(MastoDetailRow, (p, n) => {
         p.item.reblogs_count === n.item.reblogs_count &&
         p.item.favourited === n.item.favourited &&
         p.item.favourites_count === n.item.favourites_count &&
+        p.item.emojis === n.item.emojis &&
+        p.item.emoji_reactions === n.item.emoji_reactions &&
         p.item.reblog === null
     );
 });

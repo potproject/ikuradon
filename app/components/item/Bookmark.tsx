@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default memo(Bookmark, (p, n) => p.id === n.id && p.favourited === n.favourited);
+export default memo(Bookmark, (p, n) => p.id === n.id && p.bookmarked === n.bookmarked);

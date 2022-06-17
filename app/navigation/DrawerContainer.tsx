@@ -28,7 +28,7 @@ export default function DrawerContainer({ navigation }){
     const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
     const current = useSelector(CurrentUserReducerSelector);
-    const { user_credentials, domain } = current;
+    const { user_credentials, domain, sns } = current;
     return (
         <View style={[styles.container, { backgroundColor:theme.customColors.charBackground }]}>
             <View style={styles.profile}>
@@ -76,6 +76,7 @@ export default function DrawerContainer({ navigation }){
                         <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("search_title")} </Text>
                     </View>
                 </TouchableOpacity>
+                { sns !== "misskey" &&
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();
                     navigation.navigate(RouterName.Bookmarks);
@@ -85,6 +86,7 @@ export default function DrawerContainer({ navigation }){
                         <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("bookmarks_title")} </Text>
                     </View>
                 </TouchableOpacity>
+                }
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();
                     navigation.navigate(RouterName.Favourites);

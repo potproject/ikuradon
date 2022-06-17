@@ -40,7 +40,21 @@ it("<EmojisModal />", async () => {
         });
     });
     const result = render(
-        <EmojisModal current={ExampleCurrent()} onSelect={(s)=>null} />
+        <EmojisModal reaction={false} onSelect={(s)=>null} />
+    );
+
+    await waitFor(() => {});
+    expect(result).toMatchSnapshot();
+});
+
+it("<EmojisModal reaction={true} />", async () => {
+    getEmojis.mockImplementation(() => {
+        return new Promise((resolve) => {
+            resolve({ emojis:ExampleEmojis(), error: null });
+        });
+    });
+    const result = render(
+        <EmojisModal reaction={true} onSelect={(s)=>null} />
     );
 
     await waitFor(() => {});
@@ -54,7 +68,7 @@ it("<EmojisModal /> Network Error", async () => {
         });
     });
     const result = render(
-        <EmojisModal current={ExampleCurrent()} onSelect={(s)=>null} />
+        <EmojisModal onSelect={(s)=>null} />
     );
 
     await waitFor(() => {});

@@ -157,7 +157,7 @@ function TootScreen({ navigation, route }) {
                     }} />
                 </Overlay>
                 <Overlay isVisible={emojisModal} onBackdropPress={() => useEmojisModal(false)}>
-                    <EmojisModal current={current} onSelect={(selected)=>{
+                    <EmojisModal reaction={false} onSelect={(selected)=>{
                         const emojisSuffix = " :" + selected + ": ";
                         useEmojisModal(false);
                         onChangeTootText(tootText.slice(0, tootCursor) + emojisSuffix + tootText.slice(tootCursor));
