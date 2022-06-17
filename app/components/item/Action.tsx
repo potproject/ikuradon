@@ -7,9 +7,8 @@ import { open as openUrl } from "../../util/url";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 import { ThemeContext } from "react-native-elements";
-import { accountURLMigrate } from "../../util/misskey";
 
-function Action({ sns, id, tootid, style, url, account_url, user, acct, image, body, myself, onReply, onHide, onDeleting }){
+function Action({ id, tootid, style, url, account_url, user, acct, image, body, myself, onReply, onHide, onDeleting }){
     const { theme } = useContext(ThemeContext);
     const { showActionSheetWithOptions } = useActionSheet();
     const onOpenActionSheet = () => {
@@ -35,9 +34,6 @@ function Action({ sns, id, tootid, style, url, account_url, user, acct, image, b
                         openUrl(url);
                         return;
                     case 1: //Open in Browser Profile
-                        if (sns === "misskey"){
-                            account_url = accountURLMigrate(account_url);
-                        }
                         openUrl(account_url);
                         return;
                     case 2: //Copy

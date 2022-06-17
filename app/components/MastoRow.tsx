@@ -23,6 +23,7 @@ import OpenSticker from "./OpenSticker";
 
 import { icon } from "../constants/visibility";
 import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
+import { accountURLMigrate, urlMigrate } from "../util/account";
 
 const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
     // Toot data
@@ -221,12 +222,11 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                             <Reaction id={id} tootid={tootID} reactioned={reactioned} style={styles.itemFlex} onReaction={ReactionAction} />
                             }
                             <Action
-                                sns={sns}
                                 id={id}
                                 tootid={tootID}
                                 style={styles.itemFlex}
-                                url={url}
-                                account_url={account.url}
+                                url={urlMigrate(sns, domain, url, tootID)}
+                                account_url={accountURLMigrate(sns, domain, account.url)}
                                 user={account.display_name !== "" ? account.display_name : account.username}
                                 acct={account.acct}
                                 image={account.avatar}
