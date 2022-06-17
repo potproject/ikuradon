@@ -1,4 +1,4 @@
-import { boost, favourite, bookmark, follow } from "../mastorow";
+import { boost, favourite, bookmark, follow, reaction } from "../mastorow";
 
 import * as Mastorow from "../../actiontypes/mastorow";
 
@@ -63,6 +63,18 @@ describe("Action/MastoRow", () => {
         await failTest(done, "follow");
         done();
     });
+    it("reaction true", async done => {
+        await truefalseTest(done, "reaction", true);
+        done();
+    });
+    it("reaction false", async done => {
+        await truefalseTest(done, "reaction", false);
+        done();
+    });
+    it("reaction fail", async done => {
+        await failTest(done, "reaction");
+        done();
+    });
 });
 
 async function truefalseTest(done, type, bool){
@@ -103,6 +115,14 @@ async function truefalseTest(done, type, bool){
             Rest.unfollowAccount.mockImplementation(() => response);
             action = follow("100100", bool);
             break;
+        case "reaction":
+            response = { emoji_reactions: [], emojis: [] };
+            dispatchValue = { reactioned: bool, emoji_reactions: [], emojis: [] };
+            reducerType = Mastorow.REACTION_MASTOROW;
+            Rest.createEmojiReaction.mockImplementation(() => response);
+            Rest.deleteEmojiReaction.mockImplementation(() => response);
+            action = reaction("100100", "100100", bool, "👍");
+            break;
     }
     console.log = jest.fn();
     Session.getDomainAndToken.mockImplementation(() => ExampleSession());
@@ -123,6 +143,8 @@ async function truefalseTest(done, type, bool){
     Rest.unbookmarkStatus.mockReset();
     Rest.followAccount.mockReset();
     Rest.unfollowAccount.mockReset();
+    Rest.createEmojiReaction.mockReset();
+    Rest.deleteEmojiReaction.mockReset();
 }
 
 async function failTest(done, type){
@@ -154,6 +176,12 @@ async function failTest(done, type){
             dispatchValueF = { followed: false };
             reducerType = Mastorow.FOLLOW_MASTOROW;
             action = follow("100100", true);
+            break;
+        case "reaction":
+            dispatchValueT = { reactioned: true };
+            dispatchValueF = { reactioned: false };
+            reducerType = Mastorow.REACTION_MASTOROW;
+            action = reaction("100100", "100100", true, "👍");
             break;
     }
     console.log = jest.fn();
