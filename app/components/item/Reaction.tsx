@@ -23,8 +23,8 @@ function Reaction({ id, tootid, style, reactioned, onReaction }){
             </TouchableOpacity>
             { !reactioned && stateOnPress && 
             <Overlay isVisible={stateOnPress} onBackdropPress={() => useStateOnPress(false)}>
-                <EmojisModal onSelect={(emoji) => {
-                    onReaction(id, tootid, !reactioned, ":"+emoji+":");
+                <EmojisModal reaction={true} onSelect={(emoji) => {
+                    onReaction(id, tootid, !reactioned, emoji.length !== 1 ? ":"+emoji+":" : emoji);
                     useStateOnPress(false);
                 }
                 } />

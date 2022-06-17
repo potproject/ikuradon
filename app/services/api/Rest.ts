@@ -163,6 +163,7 @@ export async function search(sns: sns, domain: string, access_token: string, q: 
     const { data }  = await generator(sns, getBaseUrl(domain), access_token).search(q, type);
     return data;
 }
+
 function getBaseUrl(domain: string):string{
     return "https://" + domain + "";
 }

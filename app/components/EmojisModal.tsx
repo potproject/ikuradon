@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from "react-native-elements";
-import { getEmojis } from "../util/emojis";
+import { getEmojis, getDefaultReaction } from "../util/emojis";
   
-export default function EmojisModal({ onSelect }){
+export default function EmojisModal({ reaction, onSelect }){
     let [emojis, useEmojis] = useState([]);
     useEffect(() => {
         getEmojis().then(({ emojis, error }) => {
             if (error === null){
+                if (reaction){
+                    emojis = [...getDefaultReaction(), ...emojis];
+                }
                 useEmojis(emojis);
             }
         });
@@ -21,7 +24,12 @@ export default function EmojisModal({ onSelect }){
                 numColumns={8}
                 renderItem={({ item }) =>(
                     <TouchableOpacity style={styles.emojiList} onPress={() => onSelect(item.shortcode)}>
+                        { item.url !== "" &&
                         <Image source={{ uri: item.url }} style={styles.emoji}/>
+                        }
+                        { item.url === "" &&
+                        <Text style={styles.emojiText}>{item.shortcode}</Text>
+                        }
                     </TouchableOpacity>
                 )}
             />
@@ -42,6 +50,12 @@ const styles = StyleSheet.create({
         height: 40,
     },
     emoji: {
+        width:32,
+        height:32,
+    },
+    emojiText: {
+        fontSize: 28,
+        margin:2,
         width:32,
         height:32,
     }
