@@ -181,6 +181,20 @@ describe("MainReducer", () => {
         init.home.data[0].bookmarked = true;
         expect(init).toEqual(ex3);
     });
+    it("MastoRow.REACTION_MASTOROW", () => {
+        let init = createStatusToStateMock(status(), "home", new Date(2020, 8, 31, 10, 20, 30), 1);
+        const emoji_reactions = [{ count: 1, me: false, name: "👍", accounts: [] }];
+        const emojis = [{ shortcode: "👍", static_url: "STATIC_URL", url: "URL", visible_in_picker: true }];
+        const ex = MainReducer(init, { 
+            type: MastoRow.REACTION_MASTOROW,
+            id: "103270115826048975",
+            emoji_reactions: emoji_reactions,
+            emojis: emojis,
+        });
+        init.home.data[0].emoji_reactions = emoji_reactions;
+        init.home.data[0].emojis = emojis;
+        expect(init).toEqual(ex);
+    });
     it("changeItem default", () => {
         let ac = JSON.parse(JSON.stringify(initialState));
         const c = changeItem("unknown", ac, "111222333", true);
