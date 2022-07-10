@@ -34,10 +34,11 @@ export default class Networking {
     }
 
     //Push Server Subscribe / Unsubscribe
-    static pushServer(endpoint, domain, exponent_push_token, access_token){
+    static pushServer(sns, endpoint, domain, exponent_push_token, access_token){
         return new Promise(async (resolve, reject) => {
             try {
                 const form = qs.stringify({ 
+                    "sns": sns,
                     "domain": domain,
                     "exponent_push_token": exponent_push_token,
                     "access_token": access_token

@@ -59,7 +59,7 @@ describe("Services/Networking", () => {
             expect(endpoints).toEqual("push.mastodon.net");
             return { data: [] };
         });
-        const res = Networking.pushServer("push.mastodon.net", "server.mastodon.net", "PUSH_TOKEN", "ACCESS_TOKEN");
+        const res = Networking.pushServer("mastodon", "push.mastodon.net", "server.mastodon.net", "PUSH_TOKEN", "ACCESS_TOKEN");
         await expect(res).resolves.toEqual([]);
         axios.post.mockClear();
     });
@@ -67,7 +67,7 @@ describe("Services/Networking", () => {
         axios.post.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        const res = Networking.pushServer("push.mastodon.net", "server.mastodon.net", "PUSH_TOKEN", "ACCESS_TOKEN");
+        const res = Networking.pushServer("mastodon", "push.mastodon.net", "server.mastodon.net", "PUSH_TOKEN", "ACCESS_TOKEN");
         await expect(res).rejects.toEqual(new Error("Network Error"));
         axios.post.mockClear();
     });

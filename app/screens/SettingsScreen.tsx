@@ -27,7 +27,7 @@ function SettingsScreen() {
     const { current, config, pushNotification, openSticker } = useSelector(reducerSelector);
     const { invisible } = config;
     const { use: useOpenSticker, server: serverOpenSticker } = openSticker;
-    const { user_credentials, domain, access_token } = current;
+    const { user_credentials, domain, access_token, sns } = current;
     const { theme } = useContext(ThemeContext);
 
     const [pushServer, onChangePushServer] = useState("salmon.potproject.net");
@@ -114,7 +114,7 @@ function SettingsScreen() {
                                     text: t("global_cancel"),
                                     style: "cancel"
                                 },
-                                { text: t("global_ok"), onPress: () => dispatch(SubscribeAction(domain, access_token, pushServer)) }
+                                { text: t("global_ok"), onPress: () => dispatch(SubscribeAction(sns, domain, access_token, pushServer)) }
                             ],
                             { cancelable: false }
                         );
@@ -129,7 +129,7 @@ function SettingsScreen() {
                 { typeof pushNotification[domain+":"+access_token] === "object" &&
                 <ListItem
                     bottomDivider
-                    onPress={() => dispatch(UnsubscribeAction(domain, access_token, pushServer))}
+                    onPress={() => dispatch(UnsubscribeAction(sns, domain, access_token, pushServer))}
                 >
                     <ListItem.Content>
                         <ListItem.Title>{t("setting_push_notifications_stop")}</ListItem.Title>

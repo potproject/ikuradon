@@ -8,7 +8,7 @@ const DefaultPushServer = "salmon.potproject.net";
 const PushServerSubscribeEndpoints = "/api/v1/subscribe"; 
 const PushServerUnSubscribeEndpoints = "/api/v1/unsubscribe"; 
 
-export function subscribe(domain, accessToken, server = DefaultPushServer){
+export function subscribe(sns, domain, accessToken, server = DefaultPushServer){
     const uniq = `${domain}:${accessToken}`;
     return async dispatch => {
         let granted = await grantNotifications();
@@ -18,7 +18,7 @@ export function subscribe(domain, accessToken, server = DefaultPushServer){
         let { data : expoToken } = await Notifications.getExpoPushTokenAsync();
         try {
             const endpoints = `https://${server}${PushServerSubscribeEndpoints}`;
-            let data = await Networking.pushServer(endpoints, domain, expoToken, accessToken);
+            let data = await Networking.pushServer(sns, endpoints, domain, expoToken, accessToken);
             if (data && data.data && typeof data.data.subscribe_id === "string"){
                 dispatch({ 
                     type: PushNotification.PUSHNOTIFICATION_SUBSCRIBE,
@@ -38,7 +38,7 @@ export function subscribe(domain, accessToken, server = DefaultPushServer){
     };
 };
 
-export function unsubscribe(domain, accessToken, server = DefaultPushServer){
+export function unsubscribe(sns, domain, accessToken, server = DefaultPushServer){
     const uniq = `${domain}:${accessToken}`;
     return async dispatch => {
         let granted = await grantNotifications();
@@ -48,7 +48,7 @@ export function unsubscribe(domain, accessToken, server = DefaultPushServer){
         let { data : expoToken } = await Notifications.getExpoPushTokenAsync();
         try {
             const endpoints = `https://${server}${PushServerUnSubscribeEndpoints}`;
-            await Networking.pushServer(endpoints, domain, expoToken, accessToken);
+            await Networking.pushServer(sns, endpoints, domain, expoToken, accessToken);
             dispatch({ 
                 type: PushNotification.PUSHNOTIFICATION_UNSUBSCRIBE,
                 id: uniq
