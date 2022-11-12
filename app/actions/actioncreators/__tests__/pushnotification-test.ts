@@ -39,7 +39,7 @@ describe("Action/PushNotification", () => {
             }
         }));
         const { domain, access_token } = ExampleSession();
-        let action = subscribe(domain, access_token);
+        let action = subscribe("mastodon", domain, access_token);
         await action((callback) => {
             try {
                 expect(callback).toEqual({
@@ -109,7 +109,7 @@ describe("Action/PushNotification", () => {
             }
         }));
         const { domain, access_token } = ExampleSession();
-        let action = unsubscribe(domain, access_token);
+        let action = unsubscribe("mastodon", domain, access_token);
         await action((callback) => {
             try {
                 expect(callback).toEqual({
@@ -143,7 +143,7 @@ describe("Action/PushNotification", () => {
             done();
         });
         const { domain, access_token } = ExampleSession();
-        let action = unsubscribe(domain, access_token);
+        let action = unsubscribe("mastodon", domain, access_token);
         await action((callback) => {
             try {
                 expect(callback).toEqual({

@@ -1,13 +1,11 @@
 import { getPoll, votePoll, timeStr, votePer, voters, votes } from "../poll";
-import Networking from "../../services/Networking";
 import * as Session from "../../util/session";
 import ExampleSession from "../../example/session";
 import ExamplePoll from "../../example/poll";
 import DayJS from "dayjs";
 
-jest.mock("../../services/Networking", () => ({
-    fetch: jest.fn(),
-}));
+import * as Rest from "../../services/api/Rest";
+jest.mock("../../services/api/Rest");
 
 jest.mock("../../util/session", () => ({
     getDomainAndToken: jest.fn(),
@@ -16,35 +14,35 @@ jest.mock("../../util/session", () => ({
 describe("Util/Poll", () => {
     it("getPoll", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => ({ data: ExamplePoll() }));
+        Rest.getPoll.mockImplementation(() => ExamplePoll());
         expect(await getPoll("34830")).toEqual({ "data": ExamplePoll(), "error": null });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getPoll.mockClear();
     });
     it("getPoll Network Error", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.getPoll.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        expect(await getPoll("34830")).toEqual({ "data": {}, "error": "Network Error" });
+        expect(await getPoll("34830")).toEqual({ "data": null, "error": "Network Error" });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getPoll.mockClear();
     });
     it("votePoll", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => ({ data: ExamplePoll() }));
+        Rest.votePoll.mockImplementation(() => ExamplePoll());
         expect(await votePoll("34830", [1])).toEqual({ "data": ExamplePoll(), "error": null });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.votePoll.mockClear();
     });
     it("votePoll Network Error", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.votePoll.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        expect(await votePoll("34830", [1])).toEqual({ "data": {}, "error": "Network Error" });
+        expect(await votePoll("34830", [1])).toEqual({ "data": null, "error": "Network Error" });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.votePoll.mockClear();
     });
     it("timeStr", () => {
         expect(timeStr("2019-12-05T04:05:08.302Z", true, false)).toEqual("Ended");

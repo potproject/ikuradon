@@ -17,10 +17,11 @@ const MAX_DISPLAY_IMAGE = 8;
 const NotificationsRow = ({ item, current, actions, background }) => {
     const { id, type } = item;
     const { theme } = useContext(ThemeContext);
-    if (type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOST){
-        const { status, favouriteAccounts, boostAccounts } = item;
+    if (type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION){
+        const { status, favouriteAccounts, boostAccounts, reactions } = item;
         const boostAccountNames = boostAccounts.map((account) => account.display_name !== "" ? account.display_name : account.username);
         const favouriteAccountNames = favouriteAccounts.map((account) => account.display_name !== "" ? account.display_name : account.username);
+        const reactionAccountNames = reactions.map(({ accounts }) => accounts).flat().map((account) => account.display_name !== "" ? account.display_name : account.username);
         let emojis = {};
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
@@ -70,11 +71,42 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                     </View>
                 </View>
                 }
+                { reactions.length > 0 &&
+                reactions.map((reaction) => {
+                    return <View key={reaction.emoji + "_reaction"} style={styles.favAndBoostContainer}>
+                        <View style={styles.paddingReverse}>
+                            { reaction.url && 
+                                <Image style={styles.reactionImg} source={{ uri: reaction.url }} />
+                            }
+                            { !reaction.url && 
+                                <Text style={styles.reactionChar}>{reaction.emoji}</Text>
+                            }
+                            <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{reaction.accounts.length}</Text>
+                        </View>
+                        <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
+                            {reaction.accounts.map((account, i) => {
+                                if (i+1 > MAX_DISPLAY_IMAGE){
+                                    return null;
+                                }
+                                emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
+                                return (
+                                    <Image key={i} style={styles.photo} source={{ uri: account.avatar }} />
+                                );
+                            })
+                            }
+                            { reactions.length > MAX_DISPLAY_IMAGE &&
+                            <Text style={{ color: theme.colors.grey0 }}>...</Text>
+                            }
+                        </View>
+                    </View>
+                    ;
+                })
+                }
                 <View style={styles.favAndBoostMessage}>
                     <View style={styles.paddingEnd}></View>
                     <CustomEmoji style={styles.info} emojis={emojis}>
                         <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={2}>
-                            {boostAccountNames.concat(favouriteAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
+                            {boostAccountNames.concat(favouriteAccountNames).concat(reactionAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
                         </Text>
                     </CustomEmoji>
                 </View>
@@ -153,6 +185,17 @@ const styles = StyleSheet.create({
     favAndBoostMessage: {
         flex: 1,
         flexDirection: "row",
+    },
+    reactionImg: {
+        width:25,
+        height:25,
+        marginRight: 5,
+        alignSelf: "center"
+    },
+    reactionChar: {
+        marginLeft: 2,
+        marginRight: 2,
+        fontSize: 20,
     },
     photo: {
         marginLeft: 2,

@@ -1,17 +1,14 @@
-import { boost, favourite, bookmark, follow } from "../mastorow";
+import { boost, favourite, bookmark, follow, reaction } from "../mastorow";
 
 import * as Mastorow from "../../actiontypes/mastorow";
 
-import Networking from "../../../services/Networking";
 import * as Session from "../../../util/session";
+import * as Rest from "../../../services/api/Rest";
 
 import ExampleSession from "../../../example/session";
-
-import * as CONST_API from "../../../constants/api";
-import * as Toot from "../../actiontypes/toot";
+jest.mock("../../../services/api/Rest");
 
 jest.mock("../../../util/session");
-jest.mock("../../../services/Networking");
 jest.mock("../../../services/DropDownHolder", () => ({
     error: jest.fn(),
     success: jest.fn(),
@@ -66,6 +63,18 @@ describe("Action/MastoRow", () => {
         await failTest(done, "follow");
         done();
     });
+    it("reaction true", async done => {
+        await truefalseTest(done, "reaction", true);
+        done();
+    });
+    it("reaction false", async done => {
+        await truefalseTest(done, "reaction", false);
+        done();
+    });
+    it("reaction fail", async done => {
+        await failTest(done, "reaction");
+        done();
+    });
 });
 
 async function truefalseTest(done, type, bool){
@@ -78,30 +87,45 @@ async function truefalseTest(done, type, bool){
             response = { reblogged: bool };
             dispatchValue = { boosted: bool };
             reducerType = Mastorow.BOOST_MASTOROW;
+            Rest.reblogStatus.mockImplementation(() => response);
+            Rest.unreblogStatus.mockImplementation(() => response);
             action = boost("100100", "100100", bool);
             break;
         case "favourite":
             response = { favourited: bool };
             dispatchValue = { favourited: bool };
             reducerType = Mastorow.FAVOURITE_MASTOROW;
+            Rest.favouriteStatus.mockImplementation(() => response);
+            Rest.unfavouriteStatus.mockImplementation(() => response);
             action = favourite("100100", "100100", bool);
             break;
         case "bookmark":
             response = { bookmarked: bool };
             dispatchValue = { bookmarked: bool };
             reducerType = Mastorow.BOOKMARK_MASTOROW;
+            Rest.bookmarkStatus.mockImplementation(() => response);
+            Rest.unbookmarkStatus.mockImplementation(() => response);
             action = bookmark("100100", "100100", bool);
             break;
         case "follow":
             response = { following: bool };
             dispatchValue = { followed: bool };
             reducerType = Mastorow.FOLLOW_MASTOROW;
+            Rest.followAccount.mockImplementation(() => response);
+            Rest.unfollowAccount.mockImplementation(() => response);
             action = follow("100100", bool);
+            break;
+        case "reaction":
+            response = { emoji_reactions: [], emojis: [] };
+            dispatchValue = { reactioned: bool, emoji_reactions: [], emojis: [] };
+            reducerType = Mastorow.REACTION_MASTOROW;
+            Rest.createEmojiReaction.mockImplementation(() => response);
+            Rest.deleteEmojiReaction.mockImplementation(() => response);
+            action = reaction("100100", "100100", bool, "👍");
             break;
     }
     console.log = jest.fn();
     Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-    Networking.fetch.mockImplementation(() => ({ data:response }));
     await action((callback) => {
         try {
             expect(callback).toEqual(Object.assign({}, { type: reducerType, id: "100100" }, dispatchValue));
@@ -111,7 +135,16 @@ async function truefalseTest(done, type, bool){
     });
     console.log.mockReset();
     Session.getDomainAndToken.mockReset();
-    Networking.fetch.mockReset();
+    Rest.reblogStatus.mockReset();
+    Rest.unreblogStatus.mockReset();
+    Rest.favouriteStatus.mockReset();
+    Rest.unfavouriteStatus.mockReset();
+    Rest.bookmarkStatus.mockReset();
+    Rest.unbookmarkStatus.mockReset();
+    Rest.followAccount.mockReset();
+    Rest.unfollowAccount.mockReset();
+    Rest.createEmojiReaction.mockReset();
+    Rest.deleteEmojiReaction.mockReset();
 }
 
 async function failTest(done, type){
@@ -144,10 +177,15 @@ async function failTest(done, type){
             reducerType = Mastorow.FOLLOW_MASTOROW;
             action = follow("100100", true);
             break;
+        case "reaction":
+            dispatchValueT = { reactioned: true };
+            dispatchValueF = { reactioned: false };
+            reducerType = Mastorow.REACTION_MASTOROW;
+            action = reaction("100100", "100100", true, "👍");
+            break;
     }
     console.log = jest.fn();
-    Session.getDomainAndToken.mockImplementation(() => ExampleSession());
-    Networking.fetch.mockImplementation(() => {
+    Session.getDomainAndToken.mockImplementation(() => {
         throw new Error("Network Error");
     });
     let call = 0;
@@ -162,5 +200,4 @@ async function failTest(done, type){
     });
     console.log.mockReset();
     Session.getDomainAndToken.mockReset();
-    Networking.fetch.mockReset();
 }

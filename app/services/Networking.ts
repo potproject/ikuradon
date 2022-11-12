@@ -1,13 +1,10 @@
 import axios from "axios";
-import * as CONST_API from "../constants/api";
-import * as FileSystem from "expo-file-system";
 import * as qs from "qs";
-
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+import { api } from "../constants/api";
 
 export default class Networking {
-    static fetch(domain, api, restParams = null, postParams = {}, access_token = null) {
-        return new Promise(async (resolve, reject) => {
+    static fetch(domain: string, api: api, restParams = null, postParams = {}, access_token = null){
+        return new Promise<{data:any, status:number}>(async (resolve, reject) => {
             try {
                 let baseurl = "https://" + domain + "";
                 let url = restParams !== null ? api.url.replace(":param:", restParams) : api.url;
@@ -27,7 +24,8 @@ export default class Networking {
     static createHeaders(access_token = null) {
         let headers = {
             Accept: "application/json",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: undefined
         };
         if (access_token !== null) {
             headers.Authorization = "Bearer " + access_token;
@@ -36,10 +34,11 @@ export default class Networking {
     }
 
     //Push Server Subscribe / Unsubscribe
-    static pushServer(endpoint, domain, exponent_push_token, access_token){
+    static pushServer(sns, endpoint, domain, exponent_push_token, access_token){
         return new Promise(async (resolve, reject) => {
             try {
                 const form = qs.stringify({ 
+                    "sns": sns,
                     "domain": domain,
                     "exponent_push_token": exponent_push_token,
                     "access_token": access_token

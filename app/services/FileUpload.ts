@@ -1,14 +1,56 @@
 import Networking from "./Networking";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
+import { sns } from "../constants/sns";
 
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
 
-export default function fileUpload(domain, access_token, file, type) {
+export default function fileUpload(sns: sns|undefined, domain: string, access_token: string, file: any, type: string) {
+    if (sns === "mastodon" || sns === undefined){
+        return fileUploadMastodonV2(domain, access_token, file, type);
+    }
+    if (sns === "misskey"){
+        return fileUploadMisskey(domain, access_token, file, type);
+    }
+    return fileUploadMastodonV1(domain, access_token, file, type);
+}
+
+function fileUploadMisskey(domain: string, access_token: string, file: any, type: string){
     return new Promise(async (resolve, reject) => {
         try {
             let baseurl = "https://" + domain + "";
-            let api = CONST_API.UPLOAD_POST_MEDIA;
+            let api = CONST_API.UPLOAD_POST_MEDIA_MISSKEY;
+            let url = baseurl + api.url;
+            let headers = createHeaders();
+            let response = await FileSystem.uploadAsync(url, file.uri, {
+                headers,
+                fieldName: "file",
+                uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+                mimeType: type,
+                parameters: {
+                    "i": access_token,
+                }
+            });
+            if (response.status === 200){
+                const { id, thumbnailUrl } = JSON.parse(response.body);
+                resolve({
+                    id,
+                    preview_url: thumbnailUrl
+                });
+                return;
+            }
+            throw new Error("Error Status Code:" + response.status);
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
+function fileUploadMastodonV2(domain: string, access_token: string, file: any, type: string) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let baseurl = "https://" + domain + "";
+            let api = CONST_API.UPLOAD_POST_MEDIA_V2;
             let url = baseurl + api.url;
             let headers = createHeaders(access_token);
             let response = await FileSystem.uploadAsync(url, file.uri, {
@@ -42,11 +84,36 @@ export default function fileUpload(domain, access_token, file, type) {
     });
 }
 
+function fileUploadMastodonV1(domain: string, access_token: string, file: any, type: string) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let baseurl = "https://" + domain + "";
+            let api = CONST_API.UPLOAD_POST_MEDIA_V1;
+            let url = baseurl + api.url;
+            let headers = createHeaders(access_token);
+            let response = await FileSystem.uploadAsync(url, file.uri, {
+                headers,
+                fieldName: "file",
+                uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+                mimeType: type
+            });
+            if (response.status === 200){
+                resolve(JSON.parse(response.body));
+                return;
+            } else {
+                throw new Error("Error Status Code:" + response.status);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
 function createHeaders(access_token = null) {
     let headers = {
         Accept: "application/json",
         "Content-Type": "application/json"
-    };
+    } as any;
     if (access_token !== null) {
         headers.Authorization = "Bearer " + access_token;
     }

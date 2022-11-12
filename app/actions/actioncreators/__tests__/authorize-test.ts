@@ -2,16 +2,17 @@ import { getAccessTokenWithHomeAction } from "../authorize";
 
 import ExampleAccount from "../../../example/account";
 import ExampleInstance from "../../../example/instance";
-import Networking from "../../../services/Networking";
 import DropDownHolder from "../../../services/DropDownHolder";
+import * as Rest from "../../../services/api/Rest";
 
 jest.mock("../../../util/session");
-jest.mock("../../../services/Networking");
 jest.mock("../../../services/NavigationService");
 jest.mock("../../../services/DropDownHolder", () => ({
     error: jest.fn(),
     success: jest.fn(),
 }));
+
+jest.mock("../../../services/api/Rest");
 
 describe("Action/Authorize", () => {
     it("getAccessTokenWithHomeAction", async done => {
@@ -19,15 +20,18 @@ describe("Action/Authorize", () => {
         let client_id = "CLIENT_ID";
         let client_secret = "CLIENT_SECRET";
         let code = "CODE";
-        Networking.fetch
-            // CONST_API.GET_OAUTH_ACCESSTOKEN
-            .mockImplementationOnce(() => ({ data:{ access_token: "ACCESS_TOKEN" } }))
-            // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
-            // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+        Rest.fetchAccessToken
+        // CONST_API.GET_CURRENT_USER
+            .mockImplementationOnce(() => ({ access_token: "ACCESS_TOKEN" }));
+        Rest.getCurrentUser
+        // CONST_API.GET_CURRENT_USER
+            .mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance
+        // CONST_API.GET_INSTANCE
+            .mockImplementationOnce(() => ExampleInstance());
         let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
-        await action(({ type, user_credentials, domain, access_token, instance }) => {
+        await action(({ sns, type, user_credentials, domain, access_token, instance }) => {
+            expect(sns).toEqual("mastodon");
             expect(type).toEqual("UPDATE_CURRENT_USER");
             expect(user_credentials).toEqual(ExampleAccount());
             expect(domain).toEqual("example.com");
@@ -35,25 +39,25 @@ describe("Action/Authorize", () => {
             expect(instance).toEqual(ExampleInstance());
             done();
         });
-        Networking.fetch.mockClear();
+        Rest.fetchAccessToken.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
     });
     it("getAccessTokenWithHomeAction Fail", async done => {
         let domain = "example.com";
         let client_id = "CLIENT_ID";
         let client_secret = "CLIENT_SECRET";
         let code = "CODE";
-        Networking.fetch
-            // CONST_API.GET_OAUTH_ACCESSTOKEN
-            .mockImplementation(() => {
-                throw new Error("Network Error");
-            });
+        Rest.fetchAccessToken
+        // CONST_API.GET_CURRENT_USER
+            .mockImplementationOnce(() => {throw new Error("Network Error")});
         DropDownHolder.error.mockImplementationOnce((title, message) => {
             expect(message).toEqual("Network Error");
             done();
         });
         let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
         await action();
-        Networking.fetch.mockClear();
+        Rest.fetchAccessToken.mockReset();
         DropDownHolder.error.mockClear();
     });
 });

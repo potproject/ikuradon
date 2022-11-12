@@ -3,12 +3,13 @@ import DayJS from "dayjs";
 
 export function bodyFormat(body) {
     //改行 <br />
-    let newbody = body.replace(/(<br\s*>|<br\s*\/>)/g, "\n");
+    //<p></p>を改行に変換
+    let newbody = body.replace(/(<br\s*>|<br\s*\/>)/g, "\n").replace(/<p>/g, "").replace(/<\/p>/g, "\n\n");
     //URL <a > </a>
     newbody = newbody.replace(/(<a("[^"]*"|'[^']*'|[^'">])*>|<\/a>)/g, " ");
     //Other HTML Tag
     newbody = newbody.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, "");
-    return He.unescape(newbody);
+    return He.unescape(newbody).trim();
 }
 
 export function bodyExtractionUrl(body) {

@@ -1,12 +1,10 @@
 import { getRelationship } from "../../util/relationships";
-import Networking from "../../services/Networking";
 import * as Session from "../../util/session";
 import ExampleSession from "../../example/session";
 import ExampleRelationships from "../../example/relationships";
 
-jest.mock("../../services/Networking", () => ({
-    fetch: jest.fn(),
-}));
+import * as Rest from "../../services/api/Rest";
+jest.mock("../../services/api/Rest");
 
 jest.mock("../../util/session", () => ({
     getDomainAndToken: jest.fn(),
@@ -15,25 +13,25 @@ jest.mock("../../util/session", () => ({
 describe("Util/Relationship", () => {
     it("getRelationship", async () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => ({ data:[ExampleRelationships()] }));
+        Rest.getRelationships.mockImplementation(() => [ExampleRelationships()]);
         expect(await getRelationship(1)).toEqual({ "data": ExampleRelationships(), "error": null });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getRelationships.mockClear();
     });
     it("getRelationship Notfound", async () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => ({ data:[] }));
-        expect(await getRelationship(1)).toEqual({ "data": {}, "error": "Account ID: 1 Not Found" });
+        Rest.getRelationships.mockImplementation(() => []);
+        expect(await getRelationship(1)).toEqual({ "data": null, "error": "Account ID: 1 Not Found" });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getRelationships.mockClear();
     });
     it("getRelationship Network Error", async () => {
         Session.getDomainAndToken.mockImplementation(()=> ExampleSession());
-        Networking.fetch.mockImplementation(() => {
+        Rest.getRelationships.mockImplementation(() => {
             throw new Error("Network Error");
         });
-        expect(await getRelationship(1)).toEqual({ "data": {}, "error": "Network Error" });
+        expect(await getRelationship(1)).toEqual({ "data": null, "error": "Network Error" });
         Session.getDomainAndToken.mockClear();
-        Networking.fetch.mockClear();
+        Rest.getRelationships.mockClear();
     });
 });

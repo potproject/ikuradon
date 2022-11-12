@@ -5,8 +5,8 @@ import MastoDetailRow from "../components/MastoDetailRow";
 import MastoRow from "../components/MastoRow";
 import { Divider } from "react-native-elements";
 
-import { hide as HideAction, deleting as DeleteAction, follow as FollowAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction } from "../actions/actioncreators/mastorow";
+import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction, reaction as ReactionAction } from "../actions/actioncreators/mastorow";
 import { open as OpenImageViewerAction, close as CloseImageViewerAction } from "../actions/actioncreators/imageviewer";
 
 import { getDetail as GetDetailAction, resetDetail } from "../actions/actioncreators/detail";
@@ -37,6 +37,7 @@ function DetailScreen({ route, navigation }) {
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
+        ReactionAction: (id, tootid, reactioned, emoji) => {dispatch(ReactionAction(id, tootid, reactioned, emoji))},
         HideAction: (id) => {
             dispatch(resetDetail());
             navigation.goBack();

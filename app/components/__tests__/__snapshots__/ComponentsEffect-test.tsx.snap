@@ -22,16 +22,12 @@ exports[`<DraftModal /> 1`] = `
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
@@ -40,9 +36,7 @@ exports[`<DraftModal /> 1`] = `
     renderItem={[Function]}
     scrollEventThrottle={50}
     stickyHeaderIndices={Array []}
-    updateCellsBatchingPeriod={50}
     viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
   >
     <View>
       <View
@@ -162,29 +156,7 @@ exports[`<DraftModal /> 1`] = `
                     }
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#D1D1D6",
-                          "fontSize": 16,
-                        },
-                        Object {
-                          "backgroundColor": "transparent",
-                        },
-                        Object {
-                          "fontFamily": "ionicons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                    testID="iconIcon"
-                  >
-                    
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -308,29 +280,7 @@ exports[`<DraftModal /> 1`] = `
                     }
                   }
                 >
-                  <Text
-                    allowFontScaling={false}
-                    style={
-                      Array [
-                        Object {
-                          "color": "#D1D1D6",
-                          "fontSize": 16,
-                        },
-                        Object {
-                          "backgroundColor": "transparent",
-                        },
-                        Object {
-                          "fontFamily": "ionicons",
-                          "fontStyle": "normal",
-                          "fontWeight": "normal",
-                        },
-                        Object {},
-                      ]
-                    }
-                    testID="iconIcon"
-                  >
-                    
-                  </Text>
+                  <Text />
                 </View>
               </View>
             </View>
@@ -381,16 +331,12 @@ exports[`<EmojisModal /> 1`] = `
         },
       ]
     }
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
@@ -404,9 +350,7 @@ exports[`<EmojisModal /> 1`] = `
         "flexDirection": "column",
       }
     }
-    updateCellsBatchingPeriod={50}
     viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
   >
     <View>
       <View
@@ -422,6 +366,7 @@ exports[`<EmojisModal /> 1`] = `
         >
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -513,6 +458,7 @@ exports[`<EmojisModal /> 1`] = `
               />
               <View
                 accessibilityElementsHidden={true}
+                collapsable={false}
                 importantForAccessibility="no-hide-descendants"
                 pointerEvents="none"
                 style={
@@ -551,6 +497,7 @@ exports[`<EmojisModal /> 1`] = `
           </View>
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -642,6 +589,7 @@ exports[`<EmojisModal /> 1`] = `
               />
               <View
                 accessibilityElementsHidden={true}
+                collapsable={false}
                 importantForAccessibility="no-hide-descendants"
                 pointerEvents="none"
                 style={
@@ -680,6 +628,7 @@ exports[`<EmojisModal /> 1`] = `
           </View>
           <View
             accessible={true}
+            collapsable={false}
             focusable={true}
             onClick={[Function]}
             onResponderGrant={[Function]}
@@ -771,6 +720,7 @@ exports[`<EmojisModal /> 1`] = `
               />
               <View
                 accessibilityElementsHidden={true}
+                collapsable={false}
                 importantForAccessibility="no-hide-descendants"
                 pointerEvents="none"
                 style={
@@ -825,16 +775,12 @@ exports[`<EmojisModal /> Network Error 1`] = `
 >
   <RCTScrollView
     data={Array []}
-    disableVirtualization={false}
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={false}
-    initialNumToRender={10}
     keyExtractor={[Function]}
-    maxToRenderPerBatch={10}
     onContentSizeChange={[Function]}
-    onEndReachedThreshold={2}
     onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
     onMomentumScrollEnd={[Function]}
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
@@ -848,9 +794,44 @@ exports[`<EmojisModal /> Network Error 1`] = `
         "flexDirection": "column",
       }
     }
-    updateCellsBatchingPeriod={50}
     viewabilityConfigCallbackPairs={Array []}
-    windowSize={21}
+  >
+    <View />
+  </RCTScrollView>
+</View>
+`;
+
+exports[`<EmojisModal reaction={true} /> 1`] = `
+<View
+  style={
+    Object {
+      "height": 320,
+      "width": 320,
+    }
+  }
+>
+  <RCTScrollView
+    data={Array []}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "flexDirection": "column",
+      }
+    }
+    viewabilityConfigCallbackPairs={Array []}
   >
     <View />
   </RCTScrollView>
@@ -987,6 +968,7 @@ exports[`<UserList /> 1`] = `
           />
           <View
             accessibilityElementsHidden={true}
+            collapsable={false}
             importantForAccessibility="no-hide-descendants"
             pointerEvents="none"
             style={
@@ -1091,9 +1073,7 @@ exports[`<UserList /> 1`] = `
             }
           }
           testID="listItemTitle"
-        >
-          
-        </Text>
+        />
       </View>
       <View
         style={
@@ -1110,6 +1090,11 @@ exports[`<UserList /> 1`] = `
         }
       >
         <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
           accessible={true}
           focusable={true}
           onClick={[Function]}
@@ -1129,29 +1114,7 @@ exports[`<UserList /> 1`] = `
               }
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": "#2b90d9",
-                    "fontSize": 24,
-                  },
-                  Object {
-                    "backgroundColor": "transparent",
-                  },
-                  Object {
-                    "fontFamily": "material",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-              testID="iconIcon"
-            >
-              
-            </Text>
+            <Text />
           </View>
         </View>
       </View>

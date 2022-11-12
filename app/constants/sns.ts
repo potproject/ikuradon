@@ -1,0 +1,1 @@
+export type sns = "mastodon" | "pleroma" | "misskey";

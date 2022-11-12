@@ -6,7 +6,7 @@ import * as PushNotification from "../../actiontypes/pushnotification";
 import * as CurrentUser from "../../actiontypes/currentuser";
 import * as OpenSticker from "../../actiontypes/opensticker";
 
-import Networking from "../../../services/Networking";
+import * as Rest from "../../../services/api/Rest";
 import NavigationService from "../../../services/NavigationService";
 
 import * as RouterName from "../../../constants/RouterName";
@@ -27,7 +27,7 @@ jest.mock("../../../util/session");
 jest.mock("../../../util/push");
 jest.mock("../../../services/NavigationService");
 jest.mock("../../../services/Networking");
-
+jest.mock("../../../services/api/Rest");
 
 describe("Action/AppInit", () => {
     it("appInit", async done => {
@@ -38,11 +38,12 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}))
             // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
-        Networking.fetch
+        Rest.getCurrentUser
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
+            .mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+            .mockImplementationOnce(() => ExampleInstance());
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
@@ -50,13 +51,13 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
@@ -65,7 +66,8 @@ describe("Action/AppInit", () => {
         });
         getItem.mockReset();
         Session.getDomainAndToken.mockReset();
-        Networking.fetch.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
     });
     it("appInit config and push null", async done => {
@@ -76,11 +78,12 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => null)
             // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => null);
-        Networking.fetch
+        Rest.getCurrentUser
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
+            .mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+            .mockImplementationOnce(() => ExampleInstance());
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
@@ -88,10 +91,10 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
-                call === 0 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 0 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 1 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
@@ -100,7 +103,8 @@ describe("Action/AppInit", () => {
         });
         getItem.mockReset();
         Session.getDomainAndToken.mockReset();
-        Networking.fetch.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
     });
     it("appInit config.theme undefined", async done => {
@@ -115,11 +119,12 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}))
             // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
-        Networking.fetch
+        Rest.getCurrentUser
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ({ data:ExampleAccount() }))
+            .mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance
             // CONST_API.GET_INSTANCE
-            .mockImplementationOnce(() => ({ data:ExampleInstance() }));
+            .mockImplementationOnce(() => ExampleInstance());
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Main });
@@ -127,13 +132,13 @@ describe("Action/AppInit", () => {
         });
         let action = appInit(()=>null);
         let call = 0;
-        const { user_credentials, domain, access_token, instance } = ExampleCurrent();
+        const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfigDeepCopy });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance });
+                call === 3 && expect(callback).toEqual({ type:CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
                 call === 4 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
                 call++;
             } catch (e){
@@ -142,7 +147,8 @@ describe("Action/AppInit", () => {
         });
         getItem.mockReset();
         Session.getDomainAndToken.mockReset();
-        Networking.fetch.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
     });
     it("appInit domain&access_token null", async done => {
@@ -153,9 +159,10 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}))
             // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
-        Networking.fetch
+        Rest.getCurrentUser
             // CONST_API.GET_CURRENT_USER
-            .mockImplementationOnce(() => ExampleAccount())
+            .mockImplementationOnce(() => ExampleAccount());
+        Rest.getInstance
             // CONST_API.GET_INSTANCE
             .mockImplementationOnce(() => ExampleInstance());
         Session.getDomainAndToken.mockImplementation(() => ({
@@ -183,7 +190,8 @@ describe("Action/AppInit", () => {
         });
         getItem.mockReset();
         Session.getDomainAndToken.mockReset();
-        Networking.fetch.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
     });
     it("appInit Login Error", async done => {
@@ -194,9 +202,12 @@ describe("Action/AppInit", () => {
             .mockImplementationOnce(() => ({}))
             // CONST_Storage.OpenSticker
             .mockImplementationOnce(() => ({}));
-        Networking.fetch.mockImplementation(() => {
-            throw new Error("Network Error");
-        });
+        Rest.getCurrentUser
+            // CONST_API.GET_CURRENT_USER
+            .mockImplementation(() => {throw new Error("Network Error")});
+        Rest.getInstance
+            // CONST_API.GET_INSTANCE
+            .mockImplementation(() => {throw new Error("Network Error")});
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         NavigationService.resetAndNavigate.mockImplementation((callback) => {
             expect(callback).toEqual({ name: RouterName.Login });
@@ -217,7 +228,8 @@ describe("Action/AppInit", () => {
         });
         getItem.mockReset();
         Session.getDomainAndToken.mockReset();
-        Networking.fetch.mockReset();
+        Rest.getInstance.mockReset();
+        Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
     });
 });

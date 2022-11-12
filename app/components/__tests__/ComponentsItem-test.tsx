@@ -13,6 +13,7 @@ import Reply from "../item/Reply";
 
 import ExampleStatus from "../../example/status";
 import ExampleAccount from "../../example/account";
+import Reaction from "../item/Reaction";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
@@ -113,6 +114,21 @@ it("<Reply />", () => {
                 body={ExampleStatus().content}
                 style={{}}
                 onReply={() => null}
+            />
+        </ThemeContext.Provider>
+    );
+    expect(result).toMatchSnapshot();
+});
+
+it("<Reaction />", () => {
+    const result = render(
+        <ThemeContext.Provider value={{ theme }}>
+            <Reaction
+                id={ExampleStatus().id}
+                tootid={ExampleStatus().id}
+                style={{}}
+                reactioned={true}
+                onReaction={() => null}
             />
         </ThemeContext.Provider>
     );

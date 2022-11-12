@@ -1,4 +1,9 @@
 export default {
+    sns: {
+        mastodon: "Mastodon",
+        misskey: "Misskey",
+        pleroma: "Pleroma",
+    },
     //Settings
     setting_streamingapi: "Streaming API",
     logout: "Logout",

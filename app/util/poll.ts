@@ -1,8 +1,7 @@
 import t from "../services/I18n";
-import Networking from "../services/Networking";
-import * as CONST_API from "../constants/api";
 import DayJS from "dayjs";
 import * as Session from "../util/session";
+import * as Rest from "../services/api/Rest";
 
 /**
  * Poll投票
@@ -12,11 +11,11 @@ import * as Session from "../util/session";
  */
 export async function votePoll(id, choices) {
     try {
-        let { domain, access_token } = await Session.getDomainAndToken();
-        let { data } = await Networking.fetch(domain, CONST_API.POST_POLL_VOTES, id, { choices }, access_token);
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
+        const data = await Rest.votePoll(sns, domain, access_token, id, choices);
         return { data, error: null };
     } catch (e){
-        return { data: {}, error: e.message };
+        return { data: null, error: e.message };
     }
 }
 
@@ -28,11 +27,11 @@ export async function votePoll(id, choices) {
  */
 export async function getPoll(id) {
     try {
-        let { domain, access_token } = await Session.getDomainAndToken();
-        let { data } = await Networking.fetch(domain, CONST_API.GET_POLL, id, {}, access_token);
+        let { sns, domain, access_token } = await Session.getDomainAndToken();
+        let data = await Rest.getPoll(sns, domain, access_token, id);
         return { data, error: null };
     } catch (e){
-        return { data: {}, error: e.message };
+        return { data: null, error: e.message };
     }
 }
 

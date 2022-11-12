@@ -6,7 +6,7 @@ describe("CurrentuserReducer", () => {
     it("Config.UPDATE_CURRENT_USER", () => {
         const { user_credentials, domain, access_token, instance } = current();
         const ex = CurrentuserReducer(initialState, 
-            { type: CurrentUser.UPDATE_CURRENT_USER, user_credentials, domain, access_token, instance }
+            { type: CurrentUser.UPDATE_CURRENT_USER, sns: "mastodon", user_credentials, domain, access_token, instance }
         );
         expect(ex).toEqual(current());
     });

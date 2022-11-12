@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Divider } from "react-native-elements";
 
 import { hide as HideAction, deleting as DeleteAction } from "../actions/actioncreators/main";
-import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction } from "../actions/actioncreators/mastorow";
+import { boost as BoostAction, favourite as FavouriteAction, bookmark as BookmarkAction, follow as FollowAction, reaction as ReactionAction  } from "../actions/actioncreators/mastorow";
 import { getDetail as GetDetailAction } from "../actions/actioncreators/detail";
 
 import NavigationService from "../services/NavigationService";
@@ -35,6 +35,7 @@ function NotificationsList({ type }) {
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
+        ReactionAction: (id, tootid, reactioned, emoji) => {dispatch(ReactionAction(id, tootid, reactioned, emoji))},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
 
