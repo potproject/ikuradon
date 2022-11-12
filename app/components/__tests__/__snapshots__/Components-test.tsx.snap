@@ -339,7 +339,9 @@ exports[`<MastoRow /> 1`] = `
                 ]
               }
             >
-              "I lost my inheritance with one wrong digit on my sort code" 
+              "I lost my inheritance with one wrong digit on my sort code"
+
+ 
               <Text
                 onPress={[Function]}
                 style={
@@ -362,6 +364,7 @@ exports[`<MastoRow /> 1`] = `
               >
                 https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code
               </Text>
+              &lt;/span}
             </Text>
           </View>
         </View>
@@ -636,7 +639,9 @@ exports[`<MastoRowBody /> 1`] = `
   <Text
     style={Object {}}
   >
-    "I lost my inheritance with one wrong digit on my sort code" 
+    "I lost my inheritance with one wrong digit on my sort code"
+
+ 
     <Text
       onPress={[Function]}
       style={
@@ -650,6 +655,7 @@ exports[`<MastoRowBody /> 1`] = `
     >
       https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code
     </Text>
+    &lt;/span}
   </Text>
 </View>
 `;
