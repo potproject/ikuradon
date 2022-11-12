@@ -1,4 +1,4 @@
-# <img width="30" heigth="30" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true"> ikuradon 2
+# <img width="30" heigth="30" src="https://github.com/potproject/ikuradon/blob/master/assets/image/icon250.png?raw=true"> ikuradon 3
 
 ![Test](https://github.com/potproject/ikuradon/workflows/Test/badge.svg?branch=master)
 ![Expo Publish](https://github.com/potproject/ikuradon/workflows/Expo%20Publish/badge.svg?branch=master)
@@ -15,7 +15,7 @@ Mastodon client App for React Native (Expo)
 
 <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_timeline.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_notifications.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_toot.jpg?raw=true"> <img width="180" heigth="360" src="https://github.com/potproject/ikuradon/blob/master/screenshots/ios_drawer.jpg?raw=true">
 
-## install Guide
+## Install Guide
 
 App Store、Google Play を通さない Expo アプリとして配布されています。
 
@@ -46,6 +46,8 @@ expo publish
 ## Feature
 
 -   iOS / Android Device Support
+-   Mastodon Support
+-   Misskey / Pleroma (Maybe) Support
 -   Modern UI
 -   Multi Account Support
 -   Streaming API Support
@@ -55,14 +57,6 @@ expo publish
 -   Media upload Support
 -   Push Notification / Server-Side Source Code: [potproject/ikuradon-salmon](https://github.com/potproject/ikuradon-salmon)
 -   [cutls/OpenSticker](https://github.com/cutls/OpenSticker) Support
-
-## Future
-
-未実装
-
--   React Native Web Support
--   Misskey Support
--   Movie Support
 
 ## Development
 
