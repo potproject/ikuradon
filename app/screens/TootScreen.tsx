@@ -1,13 +1,12 @@
 
 import React, { useState, useContext } from "react";
-import { Platform, Text, StyleSheet, View, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { Platform, Text, StyleSheet, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import TimelineLeftHeader from "../components/TimelineLeftHeader";
 import TimelineCenterHeader from "../components/TimelineCenterHeader";
 import TimelineTootButton from "../components/TimelineTootButton";
 import { FontAwesome } from "@expo/vector-icons";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-import KeyboardSpacer from "react-native-keyboard-spacer";
 import t from "../services/I18n";
 
 import { toot as TootAction } from "../actions/actioncreators/toot";
@@ -77,7 +76,7 @@ function TootScreen({ navigation, route }) {
         );
     };
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <Header
                 leftComponent={<TimelineLeftHeader
                     isBack={true}
@@ -170,8 +169,7 @@ function TootScreen({ navigation, route }) {
                     }} />
                 </Overlay>
             </View>
-            { Platform.OS === "ios" && <KeyboardSpacer /> }
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
