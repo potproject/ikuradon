@@ -13,7 +13,7 @@ function ImageViewerScreen() {
     const dispatch = useDispatch();
     const { imageviewer } = useSelector(reducerSelector);
     return (
-        <ImageView
+        imageviewer.visible && <ImageView
             images={imageviewer.data}
             imageIndex={imageviewer.index}
             visible={imageviewer.visible}
