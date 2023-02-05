@@ -46,6 +46,7 @@
     "expo": "^46.0.0",
     "expo-asset": "~8.6.1",
     "expo-constants": "~13.2.4",
+    "expo-device": "~4.3.0",
     "expo-file-system": "~14.1.0",
     "expo-font": "~10.2.0",
     "expo-image-picker": "~13.3.1",

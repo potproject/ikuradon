@@ -11,7 +11,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 import MainNavigator from "./app/navigation/MainNavigator";
-import { useLinking } from "@react-navigation/native";
 
 import reducers from "./app/reducers";
 
@@ -38,9 +37,6 @@ const Stack = createStackNavigator();
 
 export default function App(props) {
     const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-    const [initialNavigationState, setInitialNavigationState] = React.useState();
-    const containerRef = React.useRef();
-    const { getInitialState } = useLinking(containerRef, {});
     const store = configureStore({
         reducer: reducers,
     });
@@ -48,11 +44,6 @@ export default function App(props) {
     React.useEffect(() => {
         async function loadResourcesAndDataAsync() {
             try {
-                await SplashScreen.preventAutoHideAsync();
-
-                // Load our initial navigation state
-                setInitialNavigationState(await getInitialState());
-
                 // Load fonts
                 await Font.loadAsync({
                     ...Ionicons.font,
@@ -81,7 +72,7 @@ export default function App(props) {
                             {Platform.OS === "ios" && <StatusBar barStyle="default" />}
                             <NavigationContainer ref={navigatorRef => {
                                 NavigationService.setTopLevelNavigator(navigatorRef);
-                            }} initialState={initialNavigationState}>
+                            }}>
                                 <Stack.Navigator>
                                     <Stack.Screen name={RouterName.AppInit} component={AppInitScreen} options={{ headerShown: false, title: t("appinit_title") }} />
                                     <Stack.Screen name={RouterName.Login} component={LoginScreen} options={{ title: t("login_title") }} />

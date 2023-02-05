@@ -1,7 +1,7 @@
 import { grantNotifications, pull } from "../../util/push";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
+import * as Device from "expo-device";
 
 jest.mock("react-native", () => ({
     Platform: {},
@@ -10,7 +10,7 @@ jest.mock("react-native", () => ({
     }
 }));
 
-jest.mock("expo-constants", () => ({
+jest.mock("expo-device", () => ({
     isDevice: true,
 }));
 
@@ -29,7 +29,7 @@ jest.mock("../../services/DropDownHolder", () => ({
 
 describe("Util/Permission", () => {
     it("grantNotifications get:granted Android", async () => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "android";
         Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
         Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
@@ -39,7 +39,7 @@ describe("Util/Permission", () => {
         Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications get:granted iOS", async () => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "ios";
         Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
         Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
@@ -49,7 +49,7 @@ describe("Util/Permission", () => {
         Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications ask:granted", async () => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "ios";
         Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
         Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "granted" }});
@@ -59,7 +59,7 @@ describe("Util/Permission", () => {
         Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications ask:denied", async () => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "ios";
         Notifications.getPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
         Notifications.requestPermissionsAsync.mockImplementation(() => { return { status: "denied" }});
@@ -69,18 +69,18 @@ describe("Util/Permission", () => {
         Notifications.requestPermissionsAsync.mockClear();
     });
     it("grantNotifications not supported", async () => {
-        Constants.isDevice = false;
+        Device.isDevice = false;
         Platform.OS = "web";
         const result = await grantNotifications();
         expect(result).toEqual(false);
     });
     it("pull iOS", () => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "ios";
         pull();
     });
     it("pull Android with Listener", done => {
-        Constants.isDevice = true;
+        Device.isDevice = true;
         Platform.OS = "android";
         const notification = { request:{ content:{ title: "title", body: "body" } } };
         Notifications.addNotificationReceivedListener.mockImplementation((callback) => {
