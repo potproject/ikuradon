@@ -5,7 +5,7 @@ import { ListItem, Icon, ThemeContext } from "react-native-elements";
 import Constants from "expo-constants";
 import t from "../services/I18n";
 
-import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear } from "../actions/actioncreators/config";
+import { setInvisibleTimeline, allClear, setBackground, setBackgroundClear, setFontSize } from "../actions/actioncreators/config";
 import { logout } from "../actions/actioncreators/login";
 import { subscribe as SubscribeAction, unsubscribe as UnsubscribeAction } from "../actions/actioncreators/pushnotification";
 import { on as OpenStickerOnAction, off as OpenStickerOffAction } from "../actions/actioncreators/opensticker";
@@ -33,6 +33,8 @@ function SettingsScreen() {
     const [pushServer, onChangePushServer] = useState("salmon.potproject.net");
     const [serverOpenStickerState, onChangeServerOpenSticker] = useState(serverOpenSticker);
 
+    const [fontSizeState, onChangeFontSize] = useState(config.fontSize);
+
     const invisibleCheck = (value) => {
         let count = 0;
         invisible.home && count++;
@@ -46,6 +48,15 @@ function SettingsScreen() {
         }
         return true;
     };
+
+    const fontSizeValidate = (value: string) => {
+        const num = Number(value);
+        if (num < 1 || num > 50) {
+            return false;
+        }
+        return true;
+    };
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -93,6 +104,66 @@ function SettingsScreen() {
                         value={invisible.notifications}
                     />
                 </ListItem>
+
+                <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_fontsize")}</Text>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_username")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.userName)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, userName: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_usernameemoji")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.userNameEmoji)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, userNameEmoji: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_datetext")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.dateText)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, dateText: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_detailtext")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.detailText)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, detailText: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_text")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.text)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, text: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem bottomDivider>
+                    <ListItem.Content>
+                        <ListItem.Title>{t("setting_fontsize_emoji")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Input value={String(fontSizeState.emoji)} onChangeText={(value) =>onChangeFontSize({ ...fontSizeState, emoji: !isNaN(Number(value)) ? Number(value) : 0 })} />
+                </ListItem>
+                <ListItem
+                    bottomDivider
+                    onPress={() => {
+                        const state = fontSizeState;
+                        // validate
+                        for (const key in state) {
+                            const validate = fontSizeValidate(state[key]);
+                            if (!validate) {
+                                Alert.alert(t("setting_fontsize_error_title"), t("setting_fontsize_error_message"));
+                                onChangeFontSize(fontSizeState);
+                                return;
+                            }
+                        }
+                        dispatch(setFontSize(state));
+                    }}
+                >
+                    <ListItem.Content>
+                        <ListItem.Title style={{ fontWeight:"bold" }}>{t("setting_fontsize_change")}</ListItem.Title>
+                    </ListItem.Content>
+                    <ListItem.Chevron />
+                </ListItem>
+
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_push_notifications")}</Text>
                 { typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem bottomDivider>
