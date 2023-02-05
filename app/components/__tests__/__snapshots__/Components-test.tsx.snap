@@ -88,8 +88,10 @@ exports[`<MastoRow /> 1`] = `
         style={
           Array [
             Object {
-              "fontSize": 12,
               "textAlign": "right",
+            },
+            Object {
+              "fontSize": 14,
             },
             Object {
               "color": "#8899a6",
@@ -101,7 +103,7 @@ exports[`<MastoRow /> 1`] = `
         <FontAwesome
           color="#657786"
           name="globe"
-          size={12}
+          size={14}
           style={
             Object {
               "marginRight": 5,
@@ -285,8 +287,10 @@ exports[`<MastoRow /> 1`] = `
               style={
                 Array [
                   Object {
-                    "fontSize": 16,
                     "fontWeight": "bold",
+                  },
+                  Object {
+                    "fontSize": 16,
                   },
                   Object {
                     "color": "#000000",
@@ -299,8 +303,10 @@ exports[`<MastoRow /> 1`] = `
                 style={
                   Array [
                     Object {
-                      "fontSize": 15,
                       "fontWeight": "normal",
+                    },
+                    Object {
+                      "fontSize": 16,
                     },
                     Object {
                       "color": "#8899a6",
@@ -329,9 +335,11 @@ exports[`<MastoRow /> 1`] = `
               style={
                 Array [
                   Object {
-                    "fontSize": 16,
                     "paddingRight": 10,
                     "paddingTop": 2,
+                  },
+                  Object {
+                    "fontSize": 16,
                   },
                   Object {
                     "color": "#000000",
@@ -348,9 +356,11 @@ exports[`<MastoRow /> 1`] = `
                   Array [
                     Array [
                       Object {
-                        "fontSize": 16,
                         "paddingRight": 10,
                         "paddingTop": 2,
+                      },
+                      Object {
+                        "fontSize": 16,
                       },
                       Object {
                         "color": "#000000",

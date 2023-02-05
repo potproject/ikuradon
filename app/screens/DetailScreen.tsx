@@ -23,12 +23,13 @@ import { RootState } from "../reducers";
 const reducerSelector =  (state: RootState) => ({
     current: state.currentUserReducer,
     detail: state.detailReducer,
-    openSticker: state.openStickerReducer
+    openSticker: state.openStickerReducer,
+    config: state.configReducer,
 });
 
 function DetailScreen({ route, navigation }) {
     const dispatch = useDispatch();
-    const { current, detail, openSticker } = useSelector(reducerSelector);
+    const { current, detail, openSticker, config } = useSelector(reducerSelector);
     const { data, ancestors, descendants, loaded } = detail;
     const { data: openStickerData } = openSticker;
     const detailRowActions = {
@@ -109,17 +110,17 @@ function DetailScreen({ route, navigation }) {
                     keyExtractor={data => data.id}
                     data={ancestors}
                     extraData={ancestors}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} />}
+                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} fontSize={config.fontSize} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}
                 />
                 {ancestors.length !== 0 && <Divider /> }
-                <MastoDetailRow item={data} current={current} actions={detailRowActions} background={false} openStickerData={openStickerData} />
+                <MastoDetailRow item={data} current={current} actions={detailRowActions} background={false} openStickerData={openStickerData} fontSize={config.fontSize} />
                 <FlatList
                     keyExtractor={data => data.id}
                     data={descendants}
                     extraData={descendants}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} />}
+                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} fontSize={config.fontSize} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}
                 />

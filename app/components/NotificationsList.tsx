@@ -67,7 +67,7 @@ function NotificationsList({ type }) {
                             onRefresh={() => dispatch(newLoadingTimeline(type, listdata.maxId))}
                         />
                     }
-                    renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} />}
+                    renderItem={({ item }) => <NotificationsRow item={item} current={current} actions={actions} background={config.backgroundImage !== null} fontSize={config.fontSize} />}
                     ItemSeparatorComponent={() => <Divider />}
                     onEndReachedThreshold={1.5}
                     ListFooterComponent={() => 

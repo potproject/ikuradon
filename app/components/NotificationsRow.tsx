@@ -14,7 +14,7 @@ import Follow from "./item/Follow";
 
 const MAX_DISPLAY_IMAGE = 8;
 
-const NotificationsRow = ({ item, current, actions, background }) => {
+const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
     const { id, type } = item;
     const { theme } = useContext(ThemeContext);
     if (type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION){
@@ -28,8 +28,8 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 { boostAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
                     <View style={styles.paddingReverse}>
-                        <FontAwesome name={"retweet"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
-                        <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{boostAccounts.length}</Text>
+                        <FontAwesome name={"retweet"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
+                        <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{boostAccounts.length}</Text>
                     </View>
                     <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         {boostAccounts.map((account, i) => {
@@ -51,8 +51,8 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 { favouriteAccounts.length > 0 &&
                 <View style={styles.favAndBoostContainer}>
                     <View style={styles.paddingReverse}>
-                        <FontAwesome name={"star"} size={22} color={theme.customColors.item.favourite} style={styles.icon}/>
-                        <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{favouriteAccounts.length}</Text>
+                        <FontAwesome name={"star"} size={fontSize.text+6} color={theme.customColors.item.favourite} style={styles.icon}/>
+                        <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{favouriteAccounts.length}</Text>
                     </View>
                     <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         {favouriteAccounts.map((account, i) => {
@@ -79,9 +79,9 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                                 <Image style={styles.reactionImg} source={{ uri: reaction.url }} />
                             }
                             { !reaction.url && 
-                                <Text style={styles.reactionChar}>{reaction.emoji}</Text>
+                                <Text style={[styles.reactionChar, { fontSize: fontSize.text }]}>{reaction.emoji}</Text>
                             }
-                            <Text style={[{ color: theme.colors.grey0 }, styles.count]}>{reaction.accounts.length}</Text>
+                            <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{reaction.accounts.length}</Text>
                         </View>
                         <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                             {reaction.accounts.map((account, i) => {
@@ -104,13 +104,13 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 }
                 <View style={styles.favAndBoostMessage}>
                     <View style={styles.paddingEnd}></View>
-                    <CustomEmoji style={styles.info} emojis={emojis}>
-                        <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={2}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={styles.info} emojis={emojis}>
+                        <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail" numberOfLines={4}>
                             {boostAccountNames.concat(favouriteAccountNames).concat(reactionAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} background={background} />
+                <MastoRow item={status} current={current} actions={actions} background={background} fontSize={fontSize} />
             </View>
         );
     } else if (type === NEW_NOTIFICATION_TYPE.FOLLOW){
@@ -119,7 +119,7 @@ const NotificationsRow = ({ item, current, actions, background }) => {
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
                 <View style={styles.favAndBoostContainer}>
                     <View style={styles.paddingReverse}>
-                        <FontAwesome name={"user"} size={22} color={theme.customColors.item.boost} style={styles.icon}/>
+                        <FontAwesome name={"user"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
                     </View>
                     <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
                         <Image style={styles.photo} source={{ uri: account.avatar }} />
@@ -128,10 +128,10 @@ const NotificationsRow = ({ item, current, actions, background }) => {
                 </View>
                 <View style={styles.followMessage}>
                     <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
-                    <CustomEmoji style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
-                        <Text style={[styles.followMessageName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={2}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.emoji, height: fontSize.emoji }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
+                        <Text style={[styles.followMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
-                            <Text style={[styles.followMessageNotice, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
+                            <Text style={[styles.followMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
                         </Text>
                     </CustomEmoji>
                 </View>
@@ -143,16 +143,16 @@ const NotificationsRow = ({ item, current, actions, background }) => {
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
                 <View style={styles.mention}>
                     <View style={styles.paddingEnd}>
-                        <FontAwesome name={"reply"} size={22} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
+                        <FontAwesome name={"reply"} size={fontSize.text+6} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
                     </View>
-                    <CustomEmoji style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
-                        <Text style={[styles.mentionMessageName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={2}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
+                        <Text style={[styles.mentionMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
-                            <Text style={[styles.mentionMessageNotice, { color: theme.customColors.char }]}>{t("notifications.mentioned")}</Text>
+                            <Text style={[styles.mentionMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.mentioned")}</Text>
                         </Text>
                     </CustomEmoji>
                 </View>
-                <MastoRow item={status} current={current} actions={actions} background={background} />
+                <MastoRow item={status} current={current} actions={actions} background={background} fontSize={fontSize} />
             </View>
         );
     }
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
     reactionChar: {
         marginLeft: 2,
         marginRight: 2,
-        fontSize: 20,
     },
     photo: {
         marginLeft: 2,
@@ -205,7 +204,6 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     count: {
-        fontSize: 16,
         fontWeight: "bold",
         marginRight: 5,
         alignSelf: "center",
@@ -224,24 +222,20 @@ const styles = StyleSheet.create({
         marginBottom:5
     },
     followMessageName: {
-        fontWeight: "bold",
-        fontSize: 16
+        fontWeight: "bold"
     },
     followMessageNotice: {
-        fontWeight: "normal",
-        fontSize: 16
+        fontWeight: "normal"
     },
     mention:{
         flex: 1,
         flexDirection: "row",
     },
     mentionMessageName: {
-        fontWeight: "bold",
-        fontSize: 16
+        fontWeight: "bold"
     },
     mentionMessageNotice: {
-        fontWeight: "normal",
-        fontSize: 16
+        fontWeight: "normal"
     },
     followIcon: {
         flex: 1,

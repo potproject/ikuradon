@@ -23,12 +23,15 @@ import UserList from "../components/UserList";
 import { loginSelectAccounts, accountChangeWithDelete } from "../actions/actioncreators/login";
 import { RootState } from "../reducers";
 const CurrentUserReducerSelector = (state: RootState) => state.currentUserReducer;
+const ConfigReducerSelector = (state: RootState) => state.configReducer;
 
 export default function DrawerContainer({ navigation }){
     const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
     const current = useSelector(CurrentUserReducerSelector);
+    const config = useSelector(ConfigReducerSelector);
     const { user_credentials, domain, sns } = current;
+    const { fontSize } = config;
     return (
         <View style={[styles.container, { backgroundColor:theme.customColors.charBackground }]}>
             <View style={styles.profile}>
@@ -38,8 +41,8 @@ export default function DrawerContainer({ navigation }){
                     source={{ uri: user_credentials.avatar }}
                     style={[{ borderColor: theme.colors.primary }, styles.photo]}/>
                 }
-                <CustomEmoji emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
-                    <Text style={[styles.userName, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
+                <CustomEmoji emojiStyle={{ width: config.fontSize.userNameEmoji, height: config.fontSize.userNameEmoji }}  emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
+                    <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
                 </CustomEmoji>
                 <Text style={[styles.userHandle, { color: theme.colors.grey0 }]}>{user_credentials && "@"+user_credentials.username}</Text>
                 <Text style={[styles.domain, { color: theme.colors.grey0 }]}>{domain}</Text>
@@ -72,8 +75,8 @@ export default function DrawerContainer({ navigation }){
                     navigation.navigate(RouterName.Search);
                 }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='search' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("search_title")} </Text>
+                        <FontAwesome style={styles.icon} name='search' size={fontSize.text + 4} color={theme.colors.grey0}/>
+                        <Text style={[{ color: theme.customColors.char }, { fontSize: fontSize.text }, styles.text]}> {t("search_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 { sns !== "misskey" &&
@@ -82,8 +85,8 @@ export default function DrawerContainer({ navigation }){
                     navigation.navigate(RouterName.Bookmarks);
                 }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='bookmark' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("bookmarks_title")} </Text>
+                        <FontAwesome style={styles.icon} name='bookmark' size={fontSize.text + 4} color={theme.colors.grey0}/>
+                        <Text style={[{ color: theme.customColors.char }, { fontSize: fontSize.text }, styles.text]}> {t("bookmarks_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 }
@@ -92,8 +95,8 @@ export default function DrawerContainer({ navigation }){
                     navigation.navigate(RouterName.Favourites);
                 }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='star' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("favourited_title")} </Text>
+                        <FontAwesome style={styles.icon} name='star' size={fontSize.text + 4} color={theme.colors.grey0}/>
+                        <Text style={[{ color: theme.customColors.char }, { fontSize: fontSize.text }, styles.text]}> {t("favourited_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -101,8 +104,8 @@ export default function DrawerContainer({ navigation }){
                     navigation.navigate(RouterName.Settings);
                 }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='cog' size={20} color={theme.colors.grey0}/>
-                        <Text style={[{ color: theme.customColors.char }, styles.text]}> {t("settings_title")} </Text>
+                        <FontAwesome style={styles.icon} name='cog' size={fontSize.text + 4} color={theme.colors.grey0}/>
+                        <Text style={[{ color: theme.customColors.char }, { fontSize: fontSize.text }, styles.text]}> {t("settings_title")} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
@@ -110,8 +113,8 @@ export default function DrawerContainer({ navigation }){
                     navigation.navigate(RouterName.Login);
                 }} >
                     <View>
-                        <FontAwesome style={styles.icon} name='user' size={18} color={theme.colors.grey1}/>
-                        <Text style={[{ color: theme.colors.grey1 }, styles.text]}> {t("drawer_addaccount")} </Text>
+                        <FontAwesome style={styles.icon} name='user' size={fontSize.text + 2} color={theme.colors.grey1}/>
+                        <Text style={[{ color: theme.colors.grey1 }, { fontSize: fontSize.text }, styles.text]}> {t("drawer_addaccount")} </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -143,8 +146,7 @@ const styles = StyleSheet.create({
     text: {
         position: "absolute",
         left: "20%",
-        top: 10,
-        fontSize: 16
+        top: 10
     },
     profile:{
         paddingBottom: 30,
@@ -160,7 +162,6 @@ const styles = StyleSheet.create({
     },
     userName:{
         marginTop: 10,
-        fontSize: 16,
         fontWeight: "bold"
     },
     userHandle:{

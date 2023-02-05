@@ -43,6 +43,19 @@ export default {
     setting_push_notifications_start: "プッシュ通知を使用する",
     setting_push_notifications_stop: "プッシュ通知を停止する",
 
+    setting_fontsize: "文字サイズ",
+    setting_fontsize_username: "ユーザー",
+    setting_fontsize_usernameemoji: "ユーザー(カスタム絵文字)",
+    setting_fontsize_datetext: "日付",
+    setting_fontsize_detailtext: "詳細テキスト",
+    setting_fontsize_text: "通常テキスト",
+    setting_fontsize_emoji: "カスタム絵文字",
+    setting_fontsize_change: "変更",
+
+    setting_fontsize_error_title: "エラー",
+    setting_fontsize_error_message: "文字サイズは1〜50の範囲で設定してください",
+    setting_fontsize_success: "文字サイズを変更しました",
+
     setting_opensticker: "OpenSticker (実験的機能)",
     setting_opensticker_server: "OpenSticker サーバ",
     setting_opensticker_use: "OpenStickerを使用する",

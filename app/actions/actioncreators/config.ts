@@ -51,3 +51,11 @@ export function setTheme(value){
     NavigationService.resetAndNavigate({ name: RouterName.Main });
     return { type: Config.CHANGE_THEME, theme: value }; 
 }
+
+export function setFontSize(value){
+    return async dispatch => {
+        dispatch({ type: Config.CHANGE_FONTSIZE, fontSize: value });
+        NavigationService.resetAndNavigate({ name: RouterName.Main });
+        DropDownHolder.success(t("setting_fontsize_success"));
+    };
+}

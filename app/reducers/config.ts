@@ -16,7 +16,14 @@ export const initialState = {
     },
 
     theme: "default",
-    //textsize,textcolor,etc...
+    fontSize: {
+        userName: 16,
+        userNameEmoji: 16,
+        dateText: 14,
+        detailText: 22,
+        text: 16,
+        emoji: 16,
+    }
 };
 
 export default createReducer(initialState, (builder) => {
@@ -39,11 +46,15 @@ export default createReducer(initialState, (builder) => {
         .addCase(ConfigActionTypes.CONFIG_RESET, (state, _action) => {
             return initialState;
         })
+        .addCase(ConfigActionTypes.CHANGE_FONTSIZE, (state, action) => {
+            state.fontSize = { ...state.fontSize, ...action.fontSize };
+        })
         .addMatcher(
             ({ type }) => type === ConfigActionTypes.SET_BACKGROUNDIMAGE ||
             type === ConfigActionTypes.DELETE_BACKGROUNDIMAGE ||
             type === ConfigActionTypes.INVISIBLE_SETTING ||
             type === ConfigActionTypes.CHANGE_THEME ||
+            type === ConfigActionTypes.CHANGE_FONTSIZE ||
             type === ConfigActionTypes.CONFIG_RESET
             ,
             (state, action) => {

@@ -1,10 +1,10 @@
 import * as Notifications from "expo-notifications";
 import { Platform, Vibration } from "react-native";
-import Constants from "expo-constants";
+import * as Device from "expo-device";
 import DropDownHolder from "../services/DropDownHolder";
 
 export async function grantNotifications(){
-    if (Constants.isDevice && (Platform.OS === "ios" || Platform.OS === "android")) {
+    if (Device.isDevice && (Platform.OS === "ios" || Platform.OS === "android")) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== "granted") {

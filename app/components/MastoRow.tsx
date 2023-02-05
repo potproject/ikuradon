@@ -25,7 +25,7 @@ import { icon } from "../constants/visibility";
 import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 import { accountURLMigrate, urlMigrate } from "../util/account";
 
-const MastoRow = ({ item, current, actions, background, openStickerData = {} }) => {
+const MastoRow = ({ item, current, actions, background, fontSize, openStickerData = {} }) => {
     // Toot data
     let {
         id,
@@ -95,10 +95,10 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         () => (
                             <View style={styles.isReplyContainer}>
                                 <View style={{ width: 68, borderWidth: 0, alignItems: "flex-end" }}>
-                                    <FontAwesome name={"retweet"} size={16} color={theme.customColors.item.boost} style={{ marginRight: 5 }} />
+                                    <FontAwesome name={"retweet"} size={fontSize.text+2} color={theme.customColors.item.boost} style={{ marginRight: 5 }} />
                                 </View>
-                                <CustomEmoji style={{ flex: 1 }} emojis={emojisArrayToObject(reblogEmojis)}>
-                                    <Text style={{ color: theme.colors.grey0 }} ellipsizeMode="tail" numberOfLines={1}>
+                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={{ flex: 1 }} emojis={emojisArrayToObject(reblogEmojis)}>
+                                    <Text style={{ color: theme.colors.grey0, fontSize: fontSize.text }} ellipsizeMode="tail" numberOfLines={1}>
                                         {rebloggedName + t("notifications.boosted")}{" "}
                                     </Text>
                                 </CustomEmoji>
@@ -107,12 +107,12 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         [rebloggedName]
                     )}
                 <View style={styles.date}>
-                    <Text style={[styles.dateText, { color: theme.colors.grey2 }]}>
-                        {poll && <FontAwesome name={"comments"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
+                    <Text style={[styles.dateText, { fontSize: fontSize.dateText }, { color: theme.colors.grey2 }]}>
+                        {poll && <FontAwesome name={"comments"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {sensitive && (
-                            <FontAwesome name={"exclamation"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />
+                            <FontAwesome name={"exclamation"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />
                         )}{" "}
-                        <FontAwesome name={icon[visibility]} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />
+                        <FontAwesome name={icon[visibility]} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />
                         {" " + dateFormat(created_at)}
                     </Text>
                 </View>
@@ -135,10 +135,10 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                         {useMemo(
                             () => (
                                 <View style={styles.userDetails}>
-                                    <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
-                                        <Text style={[styles.userName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
+                                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} emojis={emojisArrayToObject(account.emojis)}>
+                                        <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
                                             {account.display_name !== "" ? account.display_name : account.username}
-                                            <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]}>{" @" + account.acct}</Text>
+                                            <Text style={[styles.userHandleAndTime, { fontSize: fontSize.userName }, { color: theme.colors.grey2 }]}>{" @" + account.acct}</Text>
                                         </Text>
                                     </CustomEmoji>
                                 </View>
@@ -149,16 +149,18 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                             <MastoRowBody
                                 content={content}
                                 linkStyle={{ color: theme.customColors.link }}
-                                style={[styles.tootText, { color: theme.customColors.char }]}
+                                style={[styles.tootText, { fontSize: fontSize.text }, { color: theme.customColors.char }]}
+                                cwfontSize={fontSize.text}
                                 sensitiveButtonColor={theme.colors.primary}
                                 emojis={emojis}
                                 sensitive={sensitive}
                                 spoilerText={spoiler_text}
+                                customEmojiFontSize={fontSize.emoji}
                             />
                         </View>
                         {poll && (
                             <View style={styles.tootContainer}>
-                                <MastoRowPoll poll={poll} fontSize={16} />
+                                <MastoRowPoll poll={poll} fontSize={fontSize.text} />
                             </View>
                         )}
                         {media_attachments && media_attachments.length > 0 && (
@@ -185,9 +187,9 @@ const MastoRow = ({ item, current, actions, background, openStickerData = {} }) 
                                             <Image style={styles.reactionImg} source={{ uri: url }} />
                                             }
                                             {!url &&
-                                            <Text style={styles.reactionText}>{emoji}</Text>
+                                            <Text style={[styles.reactionText, { fontSize: fontSize.text }]}>{emoji}</Text>
                                             }
-                                            <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, styles.reactionCount]}>{count}</Text>
+                                            <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, { fontSize: fontSize.text }]}>{count}</Text>
                                         </TouchableOpacity>
                                         ;
                                     })
@@ -295,14 +297,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         borderWidth: 0,
-        height: 20,
         marginTop: 2,
     },
     date: {
         marginRight: 10,
     },
     dateText: {
-        fontSize: 12,
         textAlign: "right",
     },
     innerContainer: {
@@ -345,11 +345,9 @@ const styles = StyleSheet.create({
     },
     userName: {
         fontWeight: "bold",
-        fontSize: 16,
     },
     userHandleAndTime: {
         fontWeight: "normal",
-        fontSize: 15,
     },
     tootContainer: {
         flex: 1,
@@ -359,7 +357,6 @@ const styles = StyleSheet.create({
     tootText: {
         paddingTop: 2,
         paddingRight: 10,
-        fontSize: 16,
     },
     tootActionsContainer: {
         flex: 1,
@@ -391,7 +388,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     reactionText:{
-        fontSize: 18,
         marginRight: 2,
     },
     reactionImg: {
@@ -399,9 +395,6 @@ const styles = StyleSheet.create({
         height:18,
         marginRight: 5,
         alignSelf: "center"
-    },
-    reactionCount:{
-        fontSize: 18,
     },
 });
 export default memo(MastoRow, (p, n) => {

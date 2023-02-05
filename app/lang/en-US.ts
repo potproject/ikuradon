@@ -42,6 +42,19 @@ export default {
     setting_push_notifications_start: "Using Push Notification",
     setting_push_notifications_stop: "Stopping Push Notification",
 
+    setting_fontsize: "Font Size",
+    setting_fontsize_username: "UserName",
+    setting_fontsize_usernameemoji: "UserName Custom Emoji",
+    setting_fontsize_datetext: "Date Text",
+    setting_fontsize_detailtext: "Detail Text",
+    setting_fontsize_text: "Normal Text",
+    setting_fontsize_emoji: "Custom Emoji",
+    setting_fontsize_change: "Change",
+
+    setting_fontsize_error_title: "Error",
+    setting_fontsize_error_message: "Please enter a number between 1 and 50.",
+    setting_fontsize_success: "Font Size Changed.",
+
     setting_opensticker: "OpenSticker (Experimental)",
     setting_opensticker_server: "OpenSticker Server",
     setting_opensticker_use: "Use OpenSticker",

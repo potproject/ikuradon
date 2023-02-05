@@ -111,6 +111,7 @@ function MastoList({ navigation, type }) {
                             actions={actions}
                             background={config.backgroundImage !== null}
                             openStickerData={openStickerData}
+                            fontSize={config.fontSize}
                         />
                     )}
                     ItemSeparatorComponent={() => <Divider />}
@@ -152,10 +153,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginBottom: 60,
-    },
-    imageFooterText: {
-        fontSize: 17,
-        color: "#FFF",
     },
 });
 

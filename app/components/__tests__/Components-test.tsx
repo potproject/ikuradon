@@ -30,6 +30,7 @@ import ExampleStatus from "../../example/status";
 import ExamplePoll from "../../example/poll";
 import ExampleMediaAttachment from "../../example/mediaAttachment";
 import ExampleOpenSticker from "../../example/opensticker";
+import { initialState as configState } from "../../reducers/config";
 
 jest.mock("@expo/vector-icons/build/FontAwesome", () => "FontAwesome");
 jest.mock("react-native-elements/src/icons/Icon", () => "Icon");
@@ -69,6 +70,7 @@ it("<MastoRow />", () => {
                     CloseImageViewerAction: () => null
                 }}
                 background={false}
+                fontSize={configState.fontSize}
             />
         </ThemeContext.Provider>
     );
