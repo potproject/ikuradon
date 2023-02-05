@@ -16,7 +16,14 @@ export const initialState = {
     },
 
     theme: "default",
-    //textsize,textcolor,etc...
+    fontSize: {
+        userName: 16,
+        dateText: 14,
+        detailText: 22,
+        text: 16,
+        userNameEmoji: 16,
+        emoji: 16,
+    }
 };
 
 export default createReducer(initialState, (builder) => {

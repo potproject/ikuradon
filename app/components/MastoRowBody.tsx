@@ -6,7 +6,7 @@ import Hyperlink from "react-native-hyperlink";
 import CustomEmoji from "react-native-customemoji";
 import t from "../services/I18n";
 
-function MastoRowBody({ content, style, linkStyle, sensitiveButtonColor, emojis, sensitive, spoilerText }){
+function MastoRowBody({ content, style, cwfontSize, customEmojiFontSize, linkStyle, sensitiveButtonColor, emojis, sensitive, spoilerText }){
     let newContent = bodyFormat(content);
     let existsURL = bodySearchUrl(newContent);
     let emojiObject = emojisArrayToObject(emojis);
@@ -17,11 +17,11 @@ function MastoRowBody({ content, style, linkStyle, sensitiveButtonColor, emojis,
                 <Text style={style}>{spoilerText}</Text>
                 { !sensitiveDisplay &&
                 <TouchableOpacity onPress={() => useSensitiveDisplay(true)}>
-                    <Text style={[styles.cwButton, { color: sensitiveButtonColor }]}>{t("timeline_cwtext")}</Text>
+                    <Text style={[styles.cwButton, { fontSize: cwfontSize }, { color: sensitiveButtonColor }]}>{t("timeline_cwtext")}</Text>
                 </TouchableOpacity>
                 }
                 { sensitiveDisplay &&
-                <CustomEmoji emojis={emojiObject}>
+                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
                     <Text style={style}>{newContent}</Text>
                 </CustomEmoji>
                 }
@@ -31,7 +31,7 @@ function MastoRowBody({ content, style, linkStyle, sensitiveButtonColor, emojis,
     if (Object.keys(emojiObject).length > 0 && existsURL) {
         return (
             <Hyperlink linkStyle={linkStyle} onPress={url => openUrl(url)}>
-                <CustomEmoji emojis={emojiObject}>
+                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
                     <Text style={style}>{newContent}</Text>
                 </CustomEmoji>
             </Hyperlink>
@@ -39,7 +39,7 @@ function MastoRowBody({ content, style, linkStyle, sensitiveButtonColor, emojis,
     }
     if (Object.keys(emojiObject).length > 0) {
         return (
-            <CustomEmoji emojis={emojiObject}>
+            <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
                 <Text style={style}>{newContent}</Text>
             </CustomEmoji>
         );
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     cwButton: {
         paddingTop: 4,
         paddingBottom: 4,
-        fontSize: 16,
     },
 });
 export default memo(MastoRowBody, (p, n) => p.content === n.content);

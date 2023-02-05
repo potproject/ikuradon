@@ -25,7 +25,7 @@ import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 import Reaction from "./item/Reaction";
 import { accountURLMigrate, urlMigrate } from "../util/account";
 
-const MastoDetailRow = ({ item, current, actions, background, openStickerData = {} }) => {
+const MastoDetailRow = ({ item, current, actions, background, fontSize, openStickerData = {} }) => {
     // Toot data
     let {
         id,
@@ -78,12 +78,12 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                     {useMemo(
                         () => (
                             <View style={styles.userDetails}>
-                                <CustomEmoji emojis={emojisArrayToObject(account.emojis)}>
-                                    <Text style={[styles.userName, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
+                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} emojis={emojisArrayToObject(account.emojis)}>
+                                    <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
                                         {account.display_name !== "" ? account.display_name : account.username}
                                     </Text>
                                 </CustomEmoji>
-                                <Text style={[styles.userHandleAndTime, { color: theme.colors.grey2 }]} ellipsizeMode="tail" numberOfLines={2}>
+                                <Text style={[styles.userHandleAndTime, { fontSize: fontSize.userName }, { color: theme.colors.grey2 }]} ellipsizeMode="tail" numberOfLines={2}>
                                     {"@" + account.acct}
                                 </Text>
                             </View>
@@ -96,16 +96,18 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                 <MastoRowBody
                     content={content}
                     linkStyle={{ color: theme.customColors.link }}
-                    style={[styles.tootText, { color: theme.customColors.char }]}
+                    style={[styles.tootText, { fontSize: fontSize.detailText }, { color: theme.customColors.char }]}
                     sensitiveButtonColor={theme.colors.primary}
                     emojis={emojis}
                     sensitive={sensitive}
                     spoilerText={spoiler_text}
+                    cwfontSize={fontSize.text}
+                    customEmojiFontSize={fontSize.emoji}
                 />
             </View>
             {poll && (
                 <View style={styles.tootContainer}>
-                    <MastoRowPoll poll={poll} fontSize={20} />
+                    <MastoRowPoll poll={poll} fontSize={fontSize.text} />
                 </View>
             )}
             {media_attachments && media_attachments.length > 0 && (
@@ -124,20 +126,20 @@ const MastoDetailRow = ({ item, current, actions, background, openStickerData = 
                                 onPress={() => { emoji.indexOf("@") === -1 && !reactioned && ReactionAction(id, id, true, emoji)}}
                             >
                                 {url && <Image style={styles.reactionImg} source={{ uri: url }} />}
-                                {!url && <Text style={styles.reactionText}>{emoji}</Text>}
-                                <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, styles.reactionCount]}>{count}</Text>
+                                {!url && <Text style={[styles.reactionText, { fontSize: fontSize.text }]}>{emoji}</Text>}
+                                <Text style={[{ color: me ? theme.colors.primary :  theme.customColors.char }, { fontSize: fontSize.text }]}>{count}</Text>
                             </TouchableOpacity>
                         );
                     })}
                 </View>
             )}
             <View style={styles.date}>
-                <Text style={[styles.dateText, { color: theme.colors.grey2 }]}>
-                    {poll && <FontAwesome name={"comments"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
+                <Text style={[styles.dateText, { fontSize: fontSize.text }, { color: theme.colors.grey2 }]}>
+                    {poll && <FontAwesome name={"comments"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {sensitive && (
-                        <FontAwesome name={"exclamation"} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />
+                        <FontAwesome name={"exclamation"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />
                     )}{" "}
-                    <FontAwesome name={icon[visibility]} size={styles.dateText.fontSize} color={theme.colors.grey0} style={{ marginRight: 5 }} />
+                    <FontAwesome name={icon[visibility]} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />
                     {" " + dateFormat(created_at)}
                 </Text>
             </View>
@@ -255,7 +257,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     dateText: {
-        fontSize: 16,
         textAlign: "right",
     },
     detailData: {
@@ -263,7 +264,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     detailDataText: {
-        fontSize: 14,
         textAlign: "right",
     },
     innerContainer: {
@@ -306,12 +306,10 @@ const styles = StyleSheet.create({
         borderWidth: 0,
     },
     userName: {
-        fontWeight: "bold",
-        fontSize: 16,
+        fontWeight: "bold"
     },
     userHandleAndTime: {
-        fontWeight: "normal",
-        fontSize: 15,
+        fontWeight: "normal"
     },
     tootContainer: {
         flex: 1,
@@ -321,7 +319,6 @@ const styles = StyleSheet.create({
     },
     tootText: {
         paddingRight: 12,
-        fontSize: 22,
         lineHeight: 28,
     },
     tootActionsContainer: {
@@ -355,7 +352,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     reactionText: {
-        fontSize: 18,
         marginRight: 2,
     },
     reactionImg: {
@@ -363,10 +359,7 @@ const styles = StyleSheet.create({
         height: 18,
         marginRight: 5,
         alignSelf: "center",
-    },
-    reactionCount: {
-        fontSize: 18,
-    },
+    }
 });
 export default memo(MastoDetailRow, (p, n) => {
     // TODO: boostもmemoしたい
