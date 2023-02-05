@@ -297,7 +297,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         borderWidth: 0,
-        height: 20,
         marginTop: 2,
     },
     date: {
