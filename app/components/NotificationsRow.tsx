@@ -104,7 +104,7 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
                 }
                 <View style={styles.favAndBoostMessage}>
                     <View style={styles.paddingEnd}></View>
-                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={styles.info} emojis={emojis}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
                         <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail" numberOfLines={4}>
                             {boostAccountNames.concat(favouriteAccountNames).concat(reactionAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
                         </Text>
@@ -128,7 +128,7 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
                 </View>
                 <View style={styles.followMessage}>
                     <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
-                    <CustomEmoji emojiStyle={{ width: fontSize.emoji, height: fontSize.emoji }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.emoji, height: fontSize.emoji, resizeMode: "contain" }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
                         <Text style={[styles.followMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
                             <Text style={[styles.followMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
@@ -145,7 +145,7 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
                     <View style={styles.paddingEnd}>
                         <FontAwesome name={"reply"} size={fontSize.text+6} color={theme.customColors.item.boost} style={{ marginRight:5 }}/>
                     </View>
-                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
+                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
                         <Text style={[styles.mentionMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
                             {(account.display_name !== "" ? account.display_name : account.username)}
                             <Text style={[styles.mentionMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.mentioned")}</Text>

@@ -78,7 +78,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     {useMemo(
                         () => (
                             <View style={styles.userDetails}>
-                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} emojis={emojisArrayToObject(account.emojis)}>
+                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} emojis={emojisArrayToObject(account.emojis)}>
                                     <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
                                         {account.display_name !== "" ? account.display_name : account.username}
                                     </Text>

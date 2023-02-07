@@ -21,7 +21,7 @@ function MastoRowBody({ content, style, cwfontSize, customEmojiFontSize, linkSty
                 </TouchableOpacity>
                 }
                 { sensitiveDisplay &&
-                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
+                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize, resizeMode: "contain" }} emojis={emojiObject}>
                     <Text style={style}>{newContent}</Text>
                 </CustomEmoji>
                 }
@@ -31,7 +31,7 @@ function MastoRowBody({ content, style, cwfontSize, customEmojiFontSize, linkSty
     if (Object.keys(emojiObject).length > 0 && existsURL) {
         return (
             <Hyperlink linkStyle={linkStyle} onPress={url => openUrl(url)}>
-                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
+                <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize, resizeMode: "contain" }} emojis={emojiObject}>
                     <Text style={style}>{newContent}</Text>
                 </CustomEmoji>
             </Hyperlink>
@@ -39,7 +39,7 @@ function MastoRowBody({ content, style, cwfontSize, customEmojiFontSize, linkSty
     }
     if (Object.keys(emojiObject).length > 0) {
         return (
-            <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize }} emojis={emojiObject}>
+            <CustomEmoji emojiStyle={{ width: customEmojiFontSize, height: customEmojiFontSize, resizeMode: "contain" }} emojis={emojiObject}>
                 <Text style={style}>{newContent}</Text>
             </CustomEmoji>
         );

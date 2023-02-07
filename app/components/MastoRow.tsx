@@ -97,7 +97,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 <View style={{ width: 68, borderWidth: 0, alignItems: "flex-end" }}>
                                     <FontAwesome name={"retweet"} size={fontSize.text+2} color={theme.customColors.item.boost} style={{ marginRight: 5 }} />
                                 </View>
-                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} style={{ flex: 1 }} emojis={emojisArrayToObject(reblogEmojis)}>
+                                <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={{ flex: 1 }} emojis={emojisArrayToObject(reblogEmojis)}>
                                     <Text style={{ color: theme.colors.grey0, fontSize: fontSize.text }} ellipsizeMode="tail" numberOfLines={1}>
                                         {rebloggedName + t("notifications.boosted")}{" "}
                                     </Text>
@@ -135,7 +135,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                         {useMemo(
                             () => (
                                 <View style={styles.userDetails}>
-                                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji }} emojis={emojisArrayToObject(account.emojis)}>
+                                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} emojis={emojisArrayToObject(account.emojis)}>
                                         <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={1}>
                                             {account.display_name !== "" ? account.display_name : account.username}
                                             <Text style={[styles.userHandleAndTime, { fontSize: fontSize.userName }, { color: theme.colors.grey2 }]}>{" @" + account.acct}</Text>

@@ -41,7 +41,7 @@ export default function DrawerContainer({ navigation }){
                     source={{ uri: user_credentials.avatar }}
                     style={[{ borderColor: theme.colors.primary }, styles.photo]}/>
                 }
-                <CustomEmoji emojiStyle={{ width: config.fontSize.userNameEmoji, height: config.fontSize.userNameEmoji }}  emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
+                <CustomEmoji emojiStyle={{ width: config.fontSize.userNameEmoji, height: config.fontSize.userNameEmoji, resizeMode: "contain" }}  emojis={user_credentials && user_credentials.emojis ? emojisArrayToObject(user_credentials.emojis) : []}>
                     <Text style={[styles.userName, { fontSize: fontSize.userName }, { color: theme.customColors.char }]}>{user_credentials && user_credentials.display_name}</Text>
                 </CustomEmoji>
                 <Text style={[styles.userHandle, { color: theme.colors.grey0 }]}>{user_credentials && "@"+user_credentials.username}</Text>
