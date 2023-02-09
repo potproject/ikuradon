@@ -31,6 +31,8 @@ function DetailScreen({ route, navigation }) {
     const dispatch = useDispatch();
     const { current, detail, openSticker, config } = useSelector(reducerSelector);
     const { data, ancestors, descendants, loaded } = detail;
+    const listData = [...ancestors, data, ...descendants];
+    const detailID = typeof data.id === "string" ? data.id : null;
     const { data: openStickerData } = openSticker;
     const detailRowActions = {
         ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
@@ -105,26 +107,20 @@ function DetailScreen({ route, navigation }) {
             </View>
             }
             { loaded === true &&
-            <ScrollView>
-                <FlatList
-                    keyExtractor={data => data.id}
-                    data={ancestors}
-                    extraData={ancestors}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} fontSize={config.fontSize} />}
-                    ItemSeparatorComponent={() => <Divider />}
-                    onEndReachedThreshold={1.5}
-                />
-                {ancestors.length !== 0 && <Divider /> }
-                <MastoDetailRow item={data} current={current} actions={detailRowActions} background={false} openStickerData={openStickerData} fontSize={config.fontSize} />
-                <FlatList
-                    keyExtractor={data => data.id}
-                    data={descendants}
-                    extraData={descendants}
-                    renderItem={({ item }) => <MastoRow item={item} current={current} actions={rowActions} background={false} delayPressIn={0} openStickerData={openStickerData} fontSize={config.fontSize} />}
-                    ItemSeparatorComponent={() => <Divider />}
-                    onEndReachedThreshold={1.5}
-                />
-            </ScrollView>
+            <FlatList
+                keyExtractor={data => data.id}
+                data={listData}
+                extraData={listData}
+                renderItem={({ item }) => {
+                    if (item.id === detailID){
+                        return <MastoDetailRow item={data} current={current} actions={detailRowActions} background={false} openStickerData={openStickerData} fontSize={config.fontSize} />;
+                    } else {
+                        return <MastoRow item={item} current={current} actions={rowActions} background={false} openStickerData={openStickerData} fontSize={config.fontSize} />;
+                    }
+                }}
+                ItemSeparatorComponent={() => <Divider />}
+                onEndReachedThreshold={1.5}
+            />
             }
         </View>
     );
