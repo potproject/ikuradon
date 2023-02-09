@@ -21,6 +21,7 @@ import * as RouterName from "../constants/RouterName";
 import VisibilityModal from "../components/VisibilityModal";
 import EmojisModal from "../components/EmojisModal";
 import DraftModal from "../components/DraftModal";
+import ScheduledModal from "../components/ScheduledModal";
 import { addDraft, deleteDraft } from "../util/draft";
 import TootImageClip from "../components/TootImageClip";
 import { RootState } from "../reducers";
@@ -52,6 +53,8 @@ function TootScreen({ navigation, route }) {
     const [visibility, useVisibility] = useState(VISIBILITY_DEFAULT);
     const [emojisModal, useEmojisModal] = useState(false);
     const [draftModal, useDraftModal] = useState(false);
+    const [scheduledModal, useScheduledModal] = useState(false);
+    const [scheduled, useScheduled] = useState<string|null>(null);
     const [mediaIds, useMediaIds] = useState([]);
     const callbackMediaAttachments = (MediaAttachments) => useMediaIds(MediaAttachments.map((media) => media.id));
     const onOpenActionSheet = () => {
@@ -85,7 +88,7 @@ function TootScreen({ navigation, route }) {
                 centerComponent={<TimelineCenterHeader fixedTitle={false} onPress={navigation.openDrawer} current={current}/>}
                 rightComponent={(
                     <TimelineTootButton
-                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, mediaIds, reply, null))}
+                        onPress={() => dispatch(TootAction(tootText, visibility, cw, cwTootText, mediaIds, reply, scheduled))}
                         enabled={MAX_TOOT_LENGTH - tootText.length - cwTootText.length >= 0}
                         loading={toot.tootWaiting}
                     />
@@ -122,7 +125,7 @@ function TootScreen({ navigation, route }) {
                 <View style={[{ backgroundColor: theme.colors.charBackground }, styles.itemForm]}>
                     <TouchableOpacity
                         style={styles.icon}
-                        onPress={() => mediaIds < 1 && useVisibilityClip(!visibilityClip)}>
+                        onPress={() => mediaIds && mediaIds.length < 1 && useVisibilityClip(!visibilityClip)}>
                         <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -135,6 +138,13 @@ function TootScreen({ navigation, route }) {
                         onPress={() => useEmojisModal(true)}>
                         <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    { Platform.OS === "ios" &&
+                    <TouchableOpacity
+                        style={styles.icon}
+                        onPress={() => useScheduledModal(true)}>
+                        <FontAwesome name={"calendar"} size={26} color={scheduled === null ? theme.colors.grey1 : theme.colors.primary} />
+                    </TouchableOpacity>
+                    }
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useDraftModal(true)}>
@@ -168,6 +178,14 @@ function TootScreen({ navigation, route }) {
                         deleteDraft(index).finally(() => onChangeTootText(text));
                     }} />
                 </Overlay>
+                { Platform.OS === "ios" &&
+                <Overlay isVisible={scheduledModal} onBackdropPress={() => useScheduledModal(false)}>
+                    <ScheduledModal onSelect={(date: string|null)=>{
+                        useScheduledModal(false);
+                        useScheduled(date);
+                    }} />
+                </Overlay>
+                }
             </View>
         </KeyboardAvoidingView>
     );
