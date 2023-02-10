@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { ListItem, Avatar } from "react-native-elements";
 import * as searchConst from "../constants/search";
 
+import { open as openUrl } from "../util/url";
+
 import { follow as FollowAction  } from "../actions/actioncreators/mastorow";
 
 import { FontAwesome } from "@expo/vector-icons";
@@ -25,7 +27,7 @@ export default function SearchList({ type, data }){
                     switch (type){
                         case searchConst.TYPE_ACCOUNTS:
                             return (
-                                <ListItem bottomDivider onPress={() => null}>
+                                <ListItem bottomDivider onPress={() => {openUrl(item.url)}}>
                                     <Avatar source={{ uri: item.avatar }} />
                                     <ListItem.Content>
                                         <Follow id={item.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
