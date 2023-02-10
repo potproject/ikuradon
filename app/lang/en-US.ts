@@ -221,5 +221,6 @@ export default {
         favourited: " favourited you.",
         follow: "Follow",
         unfollow: "Unfollow",
+        followered: "Followed",
     }
 };

@@ -219,7 +219,8 @@ export default {
         mentioned: " があなたに返信しました",
         boosted: " がブーストしました",
         favourited: " がお気に入りに登録しました",
-        follow: "フォローする",
-        unfollow: "フォローを解除する",
+        follow: "フォロー",
+        unfollow: "フォロー解除",
+        followered: "フォロワー",
     },
 };

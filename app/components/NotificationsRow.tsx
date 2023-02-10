@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
     followIcon: {
         flex: 1,
         paddingLeft: 5,
+        marginRight: 5,
     }
 });
 

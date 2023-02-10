@@ -9,11 +9,15 @@ import { getRelationship } from "../../util/relationships";
 
 function Follow({ id, style, onFollow }){
     const [stateFollowed, useStateFollowed] = useState(false);
+    const [stateFollowered, useStateFollowered] = useState(false);
     const { theme } = useContext(ThemeContext);
     useEffect(() => {
         getRelationship(id).then(({ data, error }) => {
             if (error === null && data.following){
                 useStateFollowed(true);
+            }
+            if (error===null && data.followed_by){
+                useStateFollowered(true);
             }
         });
     }, []);
@@ -23,13 +27,18 @@ function Follow({ id, style, onFollow }){
                 useStateFollowed(!stateFollowed);
                 onFollow(id, !stateFollowed);
             }}>
-                <Text style={styles.text}>
-                    <FontAwesome name={stateFollowed ? "user" : "user-plus"} size={26} color={stateFollowed ? theme.colors.primary : theme.customColors.item.none} />
+                <Text style={styles.followText}>
+                    <FontAwesome name={stateFollowed ? "user" : "user-plus"} size={18} color={stateFollowed ? theme.colors.primary : theme.customColors.item.none} />
                     <Text style={[{ color: stateFollowed ? theme.colors.primary : theme.customColors.item.none }, styles.inlineText]}>
                         {" "}{stateFollowed ? t("notifications.unfollow") : t("notifications.follow")}
                     </Text>
                 </Text>
             </TouchableOpacity>
+            {stateFollowered &&
+                    <View style={[styles.followeredView, { borderColor: theme.colors.primary }, ]}>
+                        <Text style={[styles.followeredText, { color: theme.colors.primary }]}>{t("notifications.followered")}</Text>
+                    </View>
+            }
         </View>
     );
 }
@@ -43,11 +52,22 @@ Follow.propTypes = {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: "row",
     },
-    text: {
-        fontSize: 16,
+    followText: {
+        fontSize: 18,
         fontWeight: "bold",
+    },
+    followeredView: {
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 2,
+        paddingRight: 2,
+    },
+    followeredText: {
+        fontSize: 17,
+        marginRight: 6,
     },
 });
 
