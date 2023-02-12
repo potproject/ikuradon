@@ -1,5 +1,8 @@
 import React from "react";
-import { render, fireEvent, waitForElement  } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
+
+import { Provider } from "react-redux";
+import createStore from "../../store/store";
 
 import theme from "../../themes/default";
 import { ThemeContext } from "react-native-elements";
@@ -149,9 +152,11 @@ it("<Search />", () => {
 
 it("<SearchList />", () => {
     const result = render(
-        <ThemeContext.Provider value={{ theme }}>
-            <SearchList type={searchConst.TYPE_ACCOUNTS} data={[]} />
-        </ThemeContext.Provider>
+        <Provider store={createStore()}>
+            <ThemeContext.Provider value={{ theme }}>
+                <SearchList type={searchConst.TYPE_ACCOUNTS} data={[]} />
+            </ThemeContext.Provider>
+        </Provider>
     );
     expect(result).toMatchSnapshot();
 });
