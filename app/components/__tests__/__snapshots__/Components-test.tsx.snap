@@ -1129,63 +1129,6 @@ exports[`<Search /> 1`] = `
     <View
       style={
         Object {
-          "borderRightColor": undefined,
-          "borderRightWidth": 1,
-          "flex": 1,
-        }
-      }
-    >
-      <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "flex": 1,
-            "opacity": 1,
-          }
-        }
-        testID="buttonGroupItem"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flex": 1,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#8899a6",
-                "fontSize": 16.25,
-                "fontWeight": "500",
-              }
-            }
-            testID="buttonGroupItemText"
-          >
-            Toots
-          </Text>
-        </View>
-      </View>
-    </View>
-    <View
-      style={
-        Object {
           "flex": 1,
         }
       }
@@ -1316,23 +1259,44 @@ exports[`<TimelineCenterHeader /> 1`] = `
         }
       }
     />
-    <Text
-      ellipsizeMode="tail"
-      numberOfLines={1}
-      style={
-        Object {
-          "alignSelf": "center",
-          "color": "#FFFFFF",
-          "fontWeight": "bold",
-          "height": 30,
-          "width": 200,
+    <View>
+      <Text
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "color": "#FFFFFF",
+            "fontWeight": "bold",
+            "height": 18,
+            "width": 200,
+          }
         }
-      }
-    >
-      noiob
-      @
-      mastodon.server.net
-    </Text>
+      >
+        noiob
+        @
+        mastodon.server.net
+      </Text>
+      <View>
+        <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={
+            Object {
+              "alignSelf": "center",
+              "color": "#FFFFFF",
+              "fontWeight": "bold",
+              "height": 18,
+              "width": 200,
+            }
+          }
+        >
+          <Text>
+            ikea shark fan account
+          </Text>
+        </Text>
+      </View>
+    </View>
   </View>
 </View>
 `;

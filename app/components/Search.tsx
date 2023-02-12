@@ -12,12 +12,12 @@ const initSearchData = {
     hashtags: []
 };
 
-const index = [searchConst.TYPE_ACCOUNTS, searchConst.TYPE_STATUSES, searchConst.TYPE_HASHTAGS];
+const index = [searchConst.TYPE_ACCOUNTS, searchConst.TYPE_HASHTAGS];
 
 export default function Search(){
     const { theme }= useContext(ThemeContext);
     const [searchValue, onChangeSearchValue] = useState("");
-    const searchTypesArray = [t("search_accounts"), t("search_statuses"), t("search_hashtags")];
+    const searchTypesArray = [t("search_accounts"), t("search_hashtags")];
     const [searchTypeIndex, onChangeSearchTypeIndex] = useState(0);
     const [searchData, useSearchData] = useState(initSearchData);
     const [loading, useLoading] = useState(false);
@@ -51,9 +51,6 @@ export default function Search(){
             <SearchList type={searchConst.TYPE_ACCOUNTS} data={searchData[searchConst.TYPE_ACCOUNTS]} />
             }
             {searchTypeIndex === 1 && searchValue !== "" &&
-            <SearchList type={searchConst.TYPE_STATUSES} data={searchData[searchConst.TYPE_STATUSES]} />
-            }
-            {searchTypeIndex === 2 && searchValue !== "" &&
             <SearchList type={searchConst.TYPE_HASHTAGS} data={searchData[searchConst.TYPE_HASHTAGS]} />
             }
         </View>

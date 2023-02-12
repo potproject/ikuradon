@@ -18,6 +18,7 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             if (media_ids.length === 0){
                 media_ids = undefined;
             }
+            // TODO scheduled_atが含まれる場合落ちるので修正
             await Rest.postStatus(sns, domain, access_token, status,
                 {
                     visibility,

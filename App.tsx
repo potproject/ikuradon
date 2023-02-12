@@ -5,14 +5,12 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Provider as ReduxProvider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 import MainNavigator from "./app/navigation/MainNavigator";
 
-import reducers from "./app/reducers";
 
 import DropdownAlert from "react-native-dropdownalert";
 import DropDownHolder from "./app/services/DropDownHolder";
@@ -33,13 +31,12 @@ import SettingsScreen from "./app/screens/SettingsScreen";
 import SettingsThemesScreen from "./app/screens/SettingsThemesScreen";
 import DetailScreen from "./app/screens/DetailScreen";
 import ImageViewerScreen from "./app/screens/ImageViewerScreen";
+import createStore from "./app/store/store";
 const Stack = createStackNavigator();
 
 export default function App(props) {
     const [isLoadingComplete, setLoadingComplete] = React.useState(false);
-    const store = configureStore({
-        reducer: reducers,
-    });
+    const store = createStore();
     // Load any resources or data that we need prior to rendering the app
     React.useEffect(() => {
         async function loadResourcesAndDataAsync() {

@@ -204,6 +204,7 @@ exports[`<Follow /> 1`] = `
       Object {},
       Object {
         "flex": 1,
+        "flexDirection": "row",
       },
     ]
   }
@@ -228,7 +229,7 @@ exports[`<Follow /> 1`] = `
     <Text
       style={
         Object {
-          "fontSize": 16,
+          "fontSize": 18,
           "fontWeight": "bold",
         }
       }
@@ -236,7 +237,7 @@ exports[`<Follow /> 1`] = `
       <FontAwesome
         color="#8899a6"
         name="user-plus"
-        size={26}
+        size={18}
       />
       <Text
         style={
