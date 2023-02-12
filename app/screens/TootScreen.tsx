@@ -178,7 +178,8 @@ function TootScreen({ navigation, route }) {
                         deleteDraft(index).finally(() => onChangeTootText(text));
                     }} />
                 </Overlay>
-                { Platform.OS === "ios" &&
+                { /* TODO: バグのため一旦無効化にする */ }
+                { false && Platform.OS === "ios" &&
                 <Overlay isVisible={scheduledModal} onBackdropPress={() => useScheduledModal(false)}>
                     <ScheduledModal onSelect={(date: string|null)=>{
                         useScheduledModal(false);

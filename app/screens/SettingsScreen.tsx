@@ -163,9 +163,10 @@ function SettingsScreen() {
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
-
+                { current.sns === "mastodon" &&
                 <Text style={[{ color: theme.colors.grey0 }, styles.label]}>{t("setting_push_notifications")}</Text>
-                { typeof pushNotification[domain+":"+access_token] !== "object" &&
+                }
+                { current.sns === "mastodon" && typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem bottomDivider>
                     <ListItem.Content>
                         <ListItem.Title>{t("setting_push_notifications_server")}</ListItem.Title>
@@ -173,7 +174,7 @@ function SettingsScreen() {
                     <ListItem.Input value={pushServer} onChangeText={onChangePushServer}></ListItem.Input>
                 </ListItem>
                 }
-                { typeof pushNotification[domain+":"+access_token] !== "object" &&
+                { current.sns === "mastodon" && typeof pushNotification[domain+":"+access_token] !== "object" &&
                 <ListItem
                     bottomDivider
                     onPress={() => {
