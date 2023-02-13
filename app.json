@@ -30,6 +30,11 @@
         "CAMERA",
         "READ_EXTERNAL_STORAGE"
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2121d830-8f19-11e7-8104-4764ee54fc79"
+      }
     }
   }
 }
