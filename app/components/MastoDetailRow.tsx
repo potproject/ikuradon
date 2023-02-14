@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { FontAwesome } from "@expo/vector-icons";
 import { bodyFormat, dateFormat, bodySearchUrl, emojisArrayToObject } from "../util/parser";
 import CustomEmoji from "react-native-customemoji";
+import { open as openUrl } from "../util/url";
 
 import t from "../services/I18n";
 
@@ -66,7 +67,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     {useMemo(
                         () => (
                             <View style={styles.innerPhotoContainer}>
-                                <TouchableOpacity onPress={() => null}>
+                                <TouchableOpacity onPress={() => openUrl(url)}>
                                     <Image source={{ uri: account.avatar }} style={styles.photo} />
                                 </TouchableOpacity>
                             </View>
