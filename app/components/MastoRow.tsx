@@ -21,6 +21,7 @@ import MastoRowImage from "./MastoRowImage";
 import MastoRowPoll from "./MastoRowPoll";
 import OpenSticker from "./OpenSticker";
 
+import { open as openUrl } from "../util/url";
 import { icon } from "../constants/visibility";
 import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 import { accountURLMigrate, urlMigrate } from "../util/account";
@@ -122,7 +123,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                         {useMemo(
                             () => (
                                 <View style={styles.innerPhotoContainer}>
-                                    <TouchableOpacity onPress={() => null}>
+                                    <TouchableOpacity onPress={() => openUrl(accountURLMigrate(sns, domain, account.url))}>
                                         <Image source={{ uri: account.avatar }} style={styles.photo} />
                                         {reblogedImage && <Image source={{ uri: reblogedImage }} style={styles.photoByReblogged} />}
                                     </TouchableOpacity>

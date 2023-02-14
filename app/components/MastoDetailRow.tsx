@@ -67,7 +67,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     {useMemo(
                         () => (
                             <View style={styles.innerPhotoContainer}>
-                                <TouchableOpacity onPress={() => openUrl(url)}>
+                                <TouchableOpacity onPress={() => openUrl(accountURLMigrate(sns, domain, account.url))}>
                                     <Image source={{ uri: account.avatar }} style={styles.photo} />
                                 </TouchableOpacity>
                             </View>

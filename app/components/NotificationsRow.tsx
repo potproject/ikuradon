@@ -13,6 +13,7 @@ import { ThemeContext, Image } from "react-native-elements";
 import Follow from "./item/Follow";
 
 import { open as openUrl } from "../util/url";
+import { accountURLMigrate } from "../util/account";
 
 const MAX_DISPLAY_IMAGE = 8;
 
@@ -119,7 +120,7 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
         const { account } = item;
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-                <TouchableOpacity delayPressIn={150} onPress={() => openUrl(account.url)}>
+                <TouchableOpacity delayPressIn={150} onPress={() => openUrl(accountURLMigrate(current.sns, current.domain, account.url))}>
                     <View style={styles.favAndBoostContainer}>
                         <View style={styles.paddingReverse}>
                             <FontAwesome name={"user"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
