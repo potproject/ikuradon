@@ -34,7 +34,11 @@ function LoginScreen() {
                     <FontAwesome5 name='mastodon' size={24} color={theme.colors.primary} />
                 }
             />
-            { Platform.OS !== "web" && <Button style={styles.button} onPress={() => dispatch(login(domain))} title={t("login_button")} />}
+            <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => useSnsModal(true)}>
+                <Image style={styles.logo} source={snsImage[sns]} />
+                <Text style={styles.sns}>Target: {t(`sns.${sns}`)}</Text>
+            </TouchableOpacity>
+            { Platform.OS !== "web" && (sns === "misskey" || sns === "mastodon") && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
             <Input
                 onChangeText={text => setAccessToken(text)}
                 value={accessToken}
@@ -47,10 +51,6 @@ function LoginScreen() {
                     />
                 }
             />
-            <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => useSnsModal(true)}>
-                <Image style={styles.logo} source={snsImage[sns]} />
-                <Text style={styles.sns}>Target: {t(`sns.${sns}`)}</Text>
-            </TouchableOpacity>
             <Button style={styles.button} onPress={() => dispatch(loginWithAccessToken(sns, domain, accessToken))} title={t("login_token_button")} />
             <Overlay isVisible={snsModal} onBackdropPress={() => useSnsModal(false)}>
                 <SnsModal onSelect={(selected)=>{

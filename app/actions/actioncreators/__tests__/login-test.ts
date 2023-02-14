@@ -30,12 +30,14 @@ jest.mock("../../../services/DropDownHolder", () => ({
 describe("Action/Login", () => {
     it("login", done => {
         const domain = "example.net";
+        const sns = "mastodon";
         Rest.createApp.mockImplementation(() => ExampleApps());
         NavigationService.navigate.mockImplementation(({ name, params }) => {
             try {
                 expect(name).toEqual(RouterName.Authorize);
                 let { client_id, client_secret } = ExampleApps();
                 expect(params).toEqual({
+                    sns,
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "domain": domain,
@@ -46,7 +48,7 @@ describe("Action/Login", () => {
                 done(error);
             }
         });
-        let action = login(domain);
+        let action = login(domain, sns);
         let call = 0;
         action((callback) => {
             call === 0 && expect(callback).toEqual({ type: Streaming.STREAM_ALLSTOP });

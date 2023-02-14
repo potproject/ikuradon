@@ -16,6 +16,7 @@ jest.mock("../../../services/api/Rest");
 
 describe("Action/Authorize", () => {
     it("getAccessTokenWithHomeAction", async done => {
+        let sns = "mastodon";
         let domain = "example.com";
         let client_id = "CLIENT_ID";
         let client_secret = "CLIENT_SECRET";
@@ -29,7 +30,7 @@ describe("Action/Authorize", () => {
         Rest.getInstance
         // CONST_API.GET_INSTANCE
             .mockImplementationOnce(() => ExampleInstance());
-        let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
+        let action = getAccessTokenWithHomeAction(sns, domain, client_id, client_secret, code);
         await action(({ sns, type, user_credentials, domain, access_token, instance }) => {
             expect(sns).toEqual("mastodon");
             expect(type).toEqual("UPDATE_CURRENT_USER");
@@ -44,6 +45,7 @@ describe("Action/Authorize", () => {
         Rest.getCurrentUser.mockReset();
     });
     it("getAccessTokenWithHomeAction Fail", async done => {
+        let sns = "mastodon";
         let domain = "example.com";
         let client_id = "CLIENT_ID";
         let client_secret = "CLIENT_SECRET";
@@ -55,7 +57,7 @@ describe("Action/Authorize", () => {
             expect(message).toEqual("Network Error");
             done();
         });
-        let action = getAccessTokenWithHomeAction(domain, client_id, client_secret, code);
+        let action = getAccessTokenWithHomeAction(sns, domain, client_id, client_secret, code);
         await action();
         Rest.fetchAccessToken.mockReset();
         DropDownHolder.error.mockClear();

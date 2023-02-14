@@ -7,13 +7,18 @@ import * as Rest from "../../services/api/Rest";
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
+import { miAuthCheck } from "../../services/api/MiAuth";
 
-export function getAccessTokenWithHomeAction(domain, client_id, client_secret, code) {
+export function getAccessTokenWithHomeAction(sns: "mastodon"|"misskey", domain, client_id, client_secret, code) {
     return async dispatch => {
         try {
-            const sns = "mastodon";
-            const appData = await Rest.fetchAccessToken(sns, domain, client_id, client_secret, code, "urn:ietf:wg:oauth:2.0:oob");
-            const { access_token } = appData;
+            let access_token: string;
+            if (sns === "mastodon") {
+                const appData = await Rest.fetchAccessToken(sns, domain, client_id, client_secret, code, "urn:ietf:wg:oauth:2.0:oob");
+                ({ access_token } = appData);
+            } else {
+                access_token = await miAuthCheck(domain, code);
+            }
             //get current user
             const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
             const instance = await Rest.getInstance(sns, domain, access_token);

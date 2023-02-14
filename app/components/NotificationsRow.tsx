@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import MastoRow from "../components/MastoRow";
 import { emojisArrayToObject } from "../util/parser";
 
@@ -11,6 +11,9 @@ import { NEW_NOTIFICATION_TYPE } from "../util/notification";
 import { FontAwesome } from "@expo/vector-icons";
 import { ThemeContext, Image } from "react-native-elements";
 import Follow from "./item/Follow";
+
+import { open as openUrl } from "../util/url";
+import { accountURLMigrate } from "../util/account";
 
 const MAX_DISPLAY_IMAGE = 8;
 
@@ -117,24 +120,26 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
         const { account } = item;
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-                <View style={styles.favAndBoostContainer}>
-                    <View style={styles.paddingReverse}>
-                        <FontAwesome name={"user"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
+                <TouchableOpacity delayPressIn={150} onPress={() => openUrl(accountURLMigrate(current.sns, current.domain, account.url))}>
+                    <View style={styles.favAndBoostContainer}>
+                        <View style={styles.paddingReverse}>
+                            <FontAwesome name={"user"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
+                        </View>
+                        <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
+                            <Image style={styles.photo} source={{ uri: account.avatar }} />
+                            <Follow id={account.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
+                        </View>
                     </View>
-                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
-                        <Image style={styles.photo} source={{ uri: account.avatar }} />
-                        <Follow id={account.id} style={styles.followIcon} onFollow={actions.FollowAction}/>
+                    <View style={styles.followMessage}>
+                        <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
+                        <CustomEmoji emojiStyle={{ width: fontSize.emoji, height: fontSize.emoji, resizeMode: "contain" }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
+                            <Text style={[styles.followMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
+                                {(account.display_name !== "" ? account.display_name : account.username)}
+                                <Text style={[styles.followMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
+                            </Text>
+                        </CustomEmoji>
                     </View>
-                </View>
-                <View style={styles.followMessage}>
-                    <View style={{ flex:0.18, borderWidth:0, alignItems:"flex-end" }}></View>
-                    <CustomEmoji emojiStyle={{ width: fontSize.emoji, height: fontSize.emoji, resizeMode: "contain" }} style={styles.info} emojis={emojisArrayToObject(account.emojis)}>
-                        <Text style={[styles.followMessageName, { fontSize: fontSize.text }, { color: theme.customColors.char }]} ellipsizeMode="tail" numberOfLines={4}>
-                            {(account.display_name !== "" ? account.display_name : account.username)}
-                            <Text style={[styles.followMessageNotice, { fontSize: fontSize.text }, { color: theme.customColors.char }]}>{t("notifications.followed")}</Text>
-                        </Text>
-                    </CustomEmoji>
-                </View>
+                </TouchableOpacity>
             </View>
         );
     } else if (type === NEW_NOTIFICATION_TYPE.MENTION){
