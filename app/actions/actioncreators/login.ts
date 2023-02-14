@@ -23,7 +23,7 @@ export function login(domain, sns: "mastodon" | "misskey") {
             const url = createUrl(sns, domain, appData.client_id);
             const { client_id, client_secret } = appData;
             //この時点ではまだログインしていません
-            NavigationService.navigate({ name: RouterName.Authorize, params: { sns, appName, domain, url, client_id, client_secret } });
+            NavigationService.navigate({ name: RouterName.Authorize, params: { sns, domain, url, client_id, client_secret } });
         } catch (e) {
             DropDownHolder.error(t("Errors_error"), e.message);
         }
