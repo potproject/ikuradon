@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 
 import { login, loginWithAccessToken } from "../actions/actioncreators/login";
 import SnsModal from "../components/SnsModal";
+import { sns as snsType } from "../constants/sns";
 
 const snsImage = {
     "mastodon": require("../../assets/logo/mastodon.png"),
@@ -22,7 +23,7 @@ function LoginScreen() {
     const [domain, setDomain] = useState("mastodon.social");
     const [accessToken, setAccessToken] = useState("");
     const [snsModal, useSnsModal] = useState(false);
-    const [sns, useSns] = useState("mastodon");
+    const [sns, useSns] = useState<snsType>("mastodon");
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <Text style={styles.text}>{t("login_message")}</Text>
@@ -38,7 +39,7 @@ function LoginScreen() {
                 <Image style={styles.logo} source={snsImage[sns]} />
                 <Text style={styles.sns}>Target: {t(`sns.${sns}`)}</Text>
             </TouchableOpacity>
-            { Platform.OS !== "web" && (sns === "misskey" || sns === "mastodon") && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
+            { Platform.OS !== "web" && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
             <Input
                 onChangeText={text => setAccessToken(text)}
                 value={accessToken}

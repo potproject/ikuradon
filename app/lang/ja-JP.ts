@@ -116,6 +116,7 @@ export default {
     login_token_label: "アクセストークン",
     login_button_mastodon: "OAuthでログイン",
     login_button_misskey: "MiAuthでログイン",
+    login_button_pleroma: "OAuthでログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",
     login_accesstoken_message: "アクセストークンを入力してください",

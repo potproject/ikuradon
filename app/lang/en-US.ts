@@ -115,6 +115,7 @@ export default {
     login_token_label: "Access Token",
     login_button_mastodon: "Login with OAuth",
     login_button_misskey: "Login with MiAuth",
+    login_button_pleroma: "Login with OAuth",
     login_token_button: "Login with Access Token",
     login_selectaccounts: "Choose an account",
     login_accesstoken_message: "Please enter Mastodon Access Token.",
