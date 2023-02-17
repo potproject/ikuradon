@@ -138,7 +138,7 @@ function TootScreen({ navigation, route }) {
                         onPress={() => useEmojisModal(true)}>
                         <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
-                    { Platform.OS === "ios" &&
+                    { Platform.OS === "ios" && current.sns !== "misskey" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useScheduledModal(true)}>
@@ -178,8 +178,7 @@ function TootScreen({ navigation, route }) {
                         deleteDraft(index).finally(() => onChangeTootText(text));
                     }} />
                 </Overlay>
-                { /* TODO: バグのため一旦無効化にする */ }
-                { false && Platform.OS === "ios" &&
+                { Platform.OS === "ios" && current.sns !== "misskey" &&
                 <Overlay isVisible={scheduledModal} onBackdropPress={() => useScheduledModal(false)}>
                     <ScheduledModal onSelect={(date: string|null)=>{
                         useScheduledModal(false);

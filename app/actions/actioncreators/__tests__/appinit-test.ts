@@ -20,6 +20,7 @@ import ExampleInstance from "../../../example/instance";
 import ExampleSession from "../../../example/session";
 import ExampleCurrent from "../../../example/current";
 import { initialState as initConfig } from "../../../reducers/config";
+import DropDownHolder from "../../../services/DropDownHolder";
 
 jest.mock("../../../util/storage");
 jest.mock("../../../util/theme");
@@ -28,6 +29,10 @@ jest.mock("../../../util/push");
 jest.mock("../../../services/NavigationService");
 jest.mock("../../../services/Networking");
 jest.mock("../../../services/api/Rest");
+jest.mock("../../../services/DropDownHolder", () => ({
+    error: jest.fn(),
+    success: jest.fn(),
+}));
 
 describe("Action/AppInit", () => {
     it("appInit", async done => {
@@ -182,7 +187,7 @@ describe("Action/AppInit", () => {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_FAILED });
                 call++;
             } catch (e){
                 done(e);
@@ -213,14 +218,17 @@ describe("Action/AppInit", () => {
             expect(callback).toEqual({ name: RouterName.Login });
             done();
         });
-        let action = appInit(()=>null);
+        DropDownHolder.error.mockImplementationOnce((title, message) => {
+            expect(message).toEqual("Network Error");
+        });
+        let action = appInit(()=>{});
         let call = 0;
         await action((callback)=>{
             try {
                 call === 0 && expect(callback).toEqual({ type: Config.CONFIG_LOAD, config: initConfig });
                 call === 1 && expect(callback).toEqual({ type: PushNotification.PUSHNOTIFICATION_LOAD, pushNotifications: {} });
                 call === 2 && expect(callback).toEqual({ type: OpenSticker.OPENSTICKER_LOAD, openSticker: {} });
-                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_COMPLETE });
+                call === 3 && expect(callback).toEqual({ type:AppInit.APPINIT_FAILED });
                 call++;
             } catch (e){
                 done(e);
@@ -231,5 +239,6 @@ describe("Action/AppInit", () => {
         Rest.getInstance.mockReset();
         Rest.getCurrentUser.mockReset();
         NavigationService.resetAndNavigate.mockReset();
+        DropDownHolder.error.mockClear();
     });
 });

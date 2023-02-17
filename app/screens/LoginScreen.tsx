@@ -5,10 +5,13 @@ import { Input, Button, Overlay } from "react-native-elements";
 import t from "../services/I18n";
 import { Image, ThemeContext } from "react-native-elements";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { login, loginWithAccessToken } from "../actions/actioncreators/login";
 import SnsModal from "../components/SnsModal";
+import { sns as snsType } from "../constants/sns";
+import { appInit } from "../actions/actioncreators/appinit";
+import { RootState } from "../reducers";
 
 const snsImage = {
     "mastodon": require("../../assets/logo/mastodon.png"),
@@ -16,15 +19,23 @@ const snsImage = {
     "pleroma": require("../../assets/logo/mastodon.png"),
 };
 
+const reducerSelector = (state: RootState) => ({
+    app: state.appInitReducer,
+});
+
 function LoginScreen() {
     const dispatch = useDispatch();
+    const { app } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
     const [domain, setDomain] = useState("mastodon.social");
     const [accessToken, setAccessToken] = useState("");
     const [snsModal, useSnsModal] = useState(false);
-    const [sns, useSns] = useState("mastodon");
+    const [sns, useSns] = useState<snsType>("mastodon");
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+            { !app.init &&
+                <Button style={styles.button} onPress={() => dispatch(appInit(() => {}))} title={t("login_retry")} />
+            }
             <Text style={styles.text}>{t("login_message")}</Text>
             <Input
                 onChangeText={text => setDomain(text)}
@@ -38,7 +49,7 @@ function LoginScreen() {
                 <Image style={styles.logo} source={snsImage[sns]} />
                 <Text style={styles.sns}>Target: {t(`sns.${sns}`)}</Text>
             </TouchableOpacity>
-            { Platform.OS !== "web" && (sns === "misskey" || sns === "mastodon") && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
+            { Platform.OS !== "web" && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
             <Input
                 onChangeText={text => setAccessToken(text)}
                 value={accessToken}
