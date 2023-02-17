@@ -9,7 +9,7 @@ export default createReducer(initialState, (builder) => {
     builder.addCase(AppInit.APPINIT_COMPLETE, (state, action) => {
         state.init = true;
     })
-    .addCase(AppInit.APPINIT_FAILED, (state, action) => {
-        state.init = false;
-    });
+        .addCase(AppInit.APPINIT_FAILED, (state, action) => {
+            state.init = false;
+        });
 });
