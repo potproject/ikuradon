@@ -13,6 +13,8 @@ import * as AppInit from "../actiontypes/appinit";
 import { settingTheme } from "../../util/theme";
 import { pull } from "../../util/push";
 import * as Rest from "../../services/api/Rest";
+import DropDownHolder from "../../services/DropDownHolder";
+import t from "../../services/I18n";
 
 const AUTO_LOGIN = true; // Auto Login
 
@@ -57,10 +59,10 @@ export function appInit(updateTheme) {
                 return;
             } catch (e) {
                 //LOGIN ERROR!
-                await Session.setDefault();
+                DropDownHolder.error(t("messages.login_failed"), e.message);
             }
         }
-        await dispatch({ type:AppInit.APPINIT_COMPLETE });
+        await dispatch({ type:AppInit.APPINIT_FAILED });
         NavigationService.resetAndNavigate({ name: RouterName.Login });
     };
 }

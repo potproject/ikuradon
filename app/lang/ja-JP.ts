@@ -110,12 +110,14 @@ export default {
     appinit_title: "初期化中...",
 
     //ログイン
+    login_retry: "ログインの再試行",
     login_title: "ログイン",
     login_message: "Mastodon サーバ ドメインを入力してください",
     login_domain_label: "ドメイン",
     login_token_label: "アクセストークン",
     login_button_mastodon: "OAuthでログイン",
     login_button_misskey: "MiAuthでログイン",
+    login_button_pleroma: "OAuthでログイン",
     login_token_button: "アクセストークンを使用してログイン",
     login_selectaccounts: "アカウントを選択",
     login_accesstoken_message: "アクセストークンを入力してください",

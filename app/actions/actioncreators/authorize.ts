@@ -8,13 +8,15 @@ import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
 import { miAuthCheck } from "../../services/api/MiAuth";
+import { loginCallbackUrl } from "../../constants/login";
+import { sns as snsType } from "../../constants/sns";
 
-export function getAccessTokenWithHomeAction(sns: "mastodon"|"misskey", domain, client_id, client_secret, code) {
+export function getAccessTokenWithHomeAction(sns: snsType, domain, client_id, client_secret, code) {
     return async dispatch => {
         try {
             let access_token: string;
-            if (sns === "mastodon") {
-                const appData = await Rest.fetchAccessToken(sns, domain, client_id, client_secret, code, "urn:ietf:wg:oauth:2.0:oob");
+            if (sns === "mastodon" || sns === "pleroma") {
+                const appData = await Rest.fetchAccessToken(sns, domain, client_id, client_secret, code, loginCallbackUrl);
                 ({ access_token } = appData);
             } else {
                 access_token = await miAuthCheck(domain, code);

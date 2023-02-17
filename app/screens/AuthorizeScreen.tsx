@@ -1,44 +1,32 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { WebView } from "react-native-webview";
+import { WebView, WebViewNavigation } from "react-native-webview";
 import { useDispatch } from "react-redux";
 
 import { getAccessTokenWithHomeAction } from "../actions/actioncreators/authorize";
+import { loginCallbackUrl } from "../constants/login";
 
 function AuthorizeScreen({ route }) {
     const dispatch = useDispatch();
 
     const { sns, url, domain, client_id, client_secret } = route.params;
     const [call, useCall] = useState(false);
-    const onWebViewRequest = (navState, domain, client_id, client_secret) => {
-        if (sns === "mastodon"){
-            const complateUrl = `https://${domain}/oauth/authorize/`;
-            const index = navState.url.indexOf(complateUrl);
-            if (!call && index !== -1) {
+    const onWebViewRequest = (navState: WebViewNavigation, domain: any, client_id: any, client_secret: any) => {
+        const index = navState.url.indexOf(loginCallbackUrl);
+        if (!call && index !== -1) {
+            const param = sns === "misskey" ? "session" : "code";
+            const query = getUrlQuery(navState.url);
+            const authorizeCode = query[param];
+            if (authorizeCode) {
                 useCall(true);
-                //complete!
-                let authorizeCode = navState.url.substring(complateUrl.length);
-                //v2.5.0 Support
-                if (authorizeCode.substr(0, 12) === "native?code=") {
-                    authorizeCode = authorizeCode.substr(12);
-                }
                 dispatch(getAccessTokenWithHomeAction(sns, domain, client_id, client_secret, authorizeCode));
-            }
-        }
-        if (sns === "misskey"){
-            const complateUrl = "about:blank?session=";
-            const index = navState.url.indexOf(complateUrl);
-            if (!call && index !== -1) {
-                useCall(true);
-                const authorizeCode = navState.url.substring(complateUrl.length);
-                dispatch(getAccessTokenWithHomeAction(sns, domain, client_id, client_secret, authorizeCode));
+                return false;
             }
         }
         return true;
     };
     return (
         <WebView
-            incognito={true}
             source={{ uri: url }}
             onShouldStartLoadWithRequest={navState => onWebViewRequest(navState, domain, client_id, client_secret)}
             onNavigationStateChange={navState => onWebViewRequest(navState, domain, client_id, client_secret)}
@@ -52,5 +40,15 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+function getUrlQuery(url: string){
+    const regex = /[?&]([^=#]+)=([^&#]*)/g;
+    let params: { [key: string]: string } = {};
+    let match: RegExpExecArray;
+    while (match = regex.exec(url)) {
+        params[match[1]] = match[2];
+    }
+    return params;
+}
 
 export default AuthorizeScreen;

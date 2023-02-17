@@ -11,16 +11,18 @@ import NavigationService from "../../services/NavigationService";
 import DropDownHolder from "../../services/DropDownHolder";
 
 import uuid from "react-native-uuid";
+import { sns as snsType } from "../../constants/sns";
+import { loginCallbackUrl } from "../../constants/login";
 
 const appName = "ikuradon";
 
-export function login(domain, sns: "mastodon" | "misskey") {
+export function login(domain, sns: snsType) {
     return async dispatch => {
         try {
             await dispatch({ type: Streaming.STREAM_ALLSTOP });
             await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
-            const appData = await Rest.createApp(sns, domain, appName, ["read", "write", "follow", "push"], "urn:ietf:wg:oauth:2.0:oob");
-            const url = createUrl(sns, domain, appData.client_id);
+            const appData = await Rest.createApp(sns, domain, appName, ["read", "write", "follow", "push"], loginCallbackUrl);
+            const url = createUrl(sns, loginCallbackUrl, domain, appData.client_id);
             const { client_id, client_secret } = appData;
             //この時点ではまだログインしていません
             NavigationService.navigate({ name: RouterName.Authorize, params: { sns, domain, url, client_id, client_secret } });
@@ -125,12 +127,12 @@ export function accountChangeWithDelete(index) {
     };
 }
 
-function createUrl(sns: "mastodon" | "misskey", domain, client_id) {
-    if (sns === "mastodon") {
-        return `https://${domain}/oauth/authorize?client_id=${client_id}&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read%20write%20follow%20push`;
+function createUrl(sns: snsType, callback, domain, client_id) {
+    if (sns === "mastodon" || sns === "pleroma") {
+        return `https://${domain}/oauth/authorize?client_id=${client_id}&response_type=code&redirect_uri=${encodeURIComponent(callback)}&scope=read%20write%20follow%20push`;
     } else {
         const sessionID = uuid.v4();
-        const miauthUrl = `https://${domain}/miauth/${sessionID}?name=${appName}&permission=read:account,write:account,read:blocks,write:blocks,read:favorites,write:favorites,read:following,write:following,write:mutes,write:notes,read:notifications,write:notifications,write:reactions,write:votes&callback=about:blank`;
+        const miauthUrl = `https://${domain}/miauth/${sessionID}?name=${appName}&permission=read:account,write:account,read:blocks,write:blocks,read:favorites,write:favorites,read:following,write:following,write:mutes,write:notes,read:notifications,write:notifications,write:reactions,write:votes&callback=${encodeURIComponent(callback)}`;
         return miauthUrl;
     }
 }
