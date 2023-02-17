@@ -109,6 +109,7 @@ export default {
     appinit_title: "initialize...",
 
     //Login
+    login_retry: "Login Retry",
     login_title: "Login",
     login_message: "Please enter Mastodon Server domain.",
     login_domain_label: "Domain",

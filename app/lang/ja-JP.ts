@@ -110,6 +110,7 @@ export default {
     appinit_title: "初期化中...",
 
     //ログイン
+    login_retry: "ログインの再試行",
     login_title: "ログイン",
     login_message: "Mastodon サーバ ドメインを入力してください",
     login_domain_label: "ドメイン",
