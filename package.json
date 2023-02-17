@@ -17,7 +17,7 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!@react-native|react-native|(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|native-base|react-native-elements)"
+      "node_modules/(?!axios|@react-native|react-native|(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|native-base|react-native-elements)"
     ],
     "coveragePathIgnorePatterns": [
       "node_modules",
@@ -42,7 +42,7 @@
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@reduxjs/toolkit": "^1.8.1",
     "@tradle/react-native-http": "^2.0.1",
-    "axios": "^0.26.0",
+    "axios": "^1.3.3",
     "crypto-browserify": "^3.12.0",
     "dayjs": "^1.8.27",
     "events": "^3.3.0",

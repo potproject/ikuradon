@@ -41,8 +41,7 @@ describe("Action/Login", () => {
                     "client_id": client_id,
                     "client_secret": client_secret,
                     "domain": domain,
-                    "url": `https://${domain}/oauth/authorize?client_id=${client_id}&response_type=code&redirect_uri=urn:ietf:wg:oauth:2.0:oob&scope=read%20write%20follow%20push`
-                });
+                    "url": "https://example.net/oauth/authorize?client_id=TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM&response_type=code&redirect_uri=https%3A%2F%2Fikuradon.authorize%2F&scope=read%20write%20follow%20push"                });
                 done();
             } catch (error) {
                 done(error);
