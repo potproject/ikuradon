@@ -41,7 +41,6 @@ function fileUploadMisskey(domain: string, access_token: string, file: any, type
             }
             throw new Error("Error Status Code:" + response.status + "Body: " + response.body);
         } catch (e) {
-            console.log(e, e.message, e.stack, e.response.data.messages);
             reject(e);
         }
     });
