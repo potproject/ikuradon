@@ -30,6 +30,9 @@
     ]
   },
   "dependencies": {
+    "@atproto/api": "^0.2.5",
+    "@atproto/lexicon": "^0.1.0",
+    "@atproto/xrpc": "^0.1.0",
     "@expo/react-native-action-sheet": "^3.7.0",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
@@ -86,6 +89,7 @@
     "react-redux": "^7.2.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
+    "text-encoding-polyfill": "^0.6.7",
     "url": "^0.11.0"
   },
   "devDependencies": {

@@ -19,6 +19,11 @@ const list = [
         image: require("../../assets/logo/mastodon.png"),
         name: t("sns.pleroma")
     },
+    {
+        key: "bluesky",
+        image: require("../../assets/logo/mastodon.png"),
+        name: t("sns.bluesky")
+    }
 ];
 
 export default function SnsModal({ onSelect }){

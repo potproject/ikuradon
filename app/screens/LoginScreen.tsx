@@ -17,6 +17,7 @@ const snsImage = {
     "mastodon": require("../../assets/logo/mastodon.png"),
     "misskey": require("../../assets/logo/misskey.png"),
     "pleroma": require("../../assets/logo/mastodon.png"),
+    "bluesky": require("../../assets/logo/mastodon.png"),
 };
 
 const reducerSelector = (state: RootState) => ({
