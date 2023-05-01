@@ -35,9 +35,22 @@ export async function getProfile(baseUrl: string, accessJwt: string, did: string
     return data;
 }
 
-// app.bsky.feed.getTimeline
 export async function getTimeline(baseUrl: string, accessJwt: string, cursor: string = "", limit: number = 20, algorithm: string = "reverse-chronological") {
     const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getTimeline"), {
+        params: {
+            algorithm,
+            limit,
+            cursor,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
+    return data;
+}
+
+export async function getPopular(baseUrl: string, accessJwt: string, cursor: string = "", limit: number = 20, algorithm: string = "reverse-chronological") {
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.unspecced.getPopular"), {
         params: {
             algorithm,
             limit,

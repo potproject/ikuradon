@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { getProfile, getTimeline } from "./Xrpc";
+import { getPopular, getProfile, getTimeline } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 export default class blueSkyGenerator{
     baseUrl: string;
@@ -53,11 +53,48 @@ export default class blueSkyGenerator{
             headers: {},
         };
     }
-
-    async getHomeTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
-        const { feed } = await getTimeline(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit);
+    async getTimeline(type: "timeline"|"popular", options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+        const getTimelineFn = type === "timeline" ? getTimeline : getPopular;
+        const { cursor, feed } = await getTimelineFn(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit);
         let status = [];
-        for (const { post } of feed) {
+        for (const { post, reason } of feed) {
+            if (reason && reason.$type === "app.bsky.feed.defs#reasonRepost") {
+                status.push(MastodonAPI.Converter.status({
+                    id: post.cid,
+                    uri: post.uri,
+                    account: MastodonAPI.Converter.account({
+                        id: reason.by.did,
+                        username: reason.by.handle,
+                        acct: reason.by.handle,
+                        display_name: reason.by.displayName,
+                        avatar: reason.by.avatar,
+                    }),
+                    content: post.record.text,
+                    replies_count: post.replyCount,
+                    reblogs_count: post.repostCount,
+                    favourites_count: post.likeCount,
+                    created_at: post.indexedAt,
+                    reblog: MastodonAPI.Converter.status({
+                        id: post.cid,
+                        uri: post.uri,
+                        content: post.record.text,
+                        replies_count: post.replyCount,
+                        reblogs_count: post.repostCount,
+                        favourites_count: post.likeCount,
+                        created_at: post.indexedAt,
+                        media_attachments: embedImagesToMediaAttachments(post.embed),
+                        account: MastodonAPI.Converter.account({
+                            id: post.author.did,
+                            username: post.author.handle,
+                            acct: post.author.handle,
+                            display_name: post.author.displayName,
+                            avatar: post.author.avatar,
+                        }),
+                    }),
+                }));
+                continue;
+            }
+
             status.push(MastodonAPI.Converter.status({
                 id: post.cid,
                 uri: post.uri,
@@ -68,12 +105,17 @@ export default class blueSkyGenerator{
                     display_name: post.author.displayName,
                     avatar: post.author.avatar,
                 }),
+                media_attachments: embedImagesToMediaAttachments(post.embed),
                 content: post.record.text,
                 replies_count: post.replyCount,
                 reblogs_count: post.repostCount,
                 favourites_count: post.likeCount,
                 created_at: post.indexedAt,
             }));
+        }
+
+        if (cursor) {
+            status[status.length - 1].cursor = cursor;
         }
 
         return {
@@ -84,12 +126,16 @@ export default class blueSkyGenerator{
         };
     }
 
+    async getHomeTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+        return this.getTimeline("timeline", options);
+    }
+
     async getLocalTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
         return [];
     }
 
     async getPublicTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
-        return [];
+        return this.getTimeline("popular", options);
     }
 
     async getNotifications(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Notification[]>> {
@@ -179,4 +225,21 @@ export default class blueSkyGenerator{
     async votePoll(id: string, choices: number[]): Promise<Response<Entity.Poll>> {
         return {};
     }
+}
+
+function embedImagesToMediaAttachments(embed){
+    let mediaAttachments = [];
+    if (embed && embed.$type === "app.bsky.embed.images#view"){
+        for (const img of embed.images) {
+            mediaAttachments.push(MastodonAPI.Converter.attachment({
+                id: img.fullsize,
+                type: "image",
+                url: img.fullsize,
+                preview_url: img.thumb,
+                remote_url: img.fullsize,
+            }));
+        }
+    }
+    return mediaAttachments;
+
 }
