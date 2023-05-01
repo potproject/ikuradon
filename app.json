@@ -25,7 +25,6 @@
     "android": {
       "package": "net.potproject.ikuradon",
       "versionCode": 3,
-      "useNextNotificationsApi": true,
       "permissions": [
         "CAMERA",
         "READ_EXTERNAL_STORAGE"
