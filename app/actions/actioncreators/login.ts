@@ -13,6 +13,7 @@ import DropDownHolder from "../../services/DropDownHolder";
 import uuid from "react-native-uuid";
 import { sns as snsType } from "../../constants/sns";
 import { loginCallbackUrl } from "../../constants/login";
+import { createSession } from "../../services/api/Bluesky/Xrpc";
 
 const appName = "ikuradon";
 
@@ -73,6 +74,28 @@ export function loginWithAccessToken(sns, domain, access_token) {
         }
     };
 }
+
+export function loginBlueskywithIDPassword(sns, domain, identifier, password) {
+    return async dispatch => {
+        try {
+            //アクセストークンでログイン
+            await dispatch({ type: Streaming.STREAM_ALLSTOP });
+            await dispatch({ type: Main.ALLCLEAR_MASTOLIST });
+            const access_token = await createSession("https://" + domain, identifier, password);
+            const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
+            const instance = await Rest.getInstance(sns, domain, access_token);
+            let username = user_credentials.acct;
+            let avatar = user_credentials.avatar;
+            await Session.add(sns, domain, access_token, username, avatar);
+            DropDownHolder.success(t("messages.login_success"));
+            dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });
+            NavigationService.resetAndNavigate({ name: RouterName.Main });
+        } catch (e) {
+            DropDownHolder.error(t("Errors_error"), e.message);
+        }
+    };
+}
+
 
 export function logout() {
     return async dispatch => {

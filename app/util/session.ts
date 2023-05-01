@@ -38,6 +38,15 @@ export async function setIndex(index: number) {
     return session;
 }
 
+export async function refreshToken(access_token: string) {
+    let session = await Storage.getItem(CONST_Storage.Session) as Session;
+    if (session && session.login_index > -1) {
+        session.accounts[session.login_index].access_token = access_token;
+        await Storage.setItem(CONST_Storage.Session, session);
+    }
+    return session;
+}
+
 export async function getDomainAndToken(): Promise<SessionInstance>{
     let session = await Storage.getItem(CONST_Storage.Session) as Session;
     if (session && session.login_index > -1) {

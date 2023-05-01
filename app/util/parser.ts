@@ -32,6 +32,9 @@ export function dateFormat(date) {
 }
 
 export function emojisArrayToObject(emojis){
+    if (!emojis){
+        return {};
+    }
     let emojiObject = {};
     for (const emoji of emojis) {
         emojiObject[emoji.shortcode] = { uri: emoji.url };
