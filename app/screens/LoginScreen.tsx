@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Platform, Text, StyleSheet, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Input, Button, Overlay } from "react-native-elements";
 import t from "../services/I18n";
 import { Image, ThemeContext } from "react-native-elements";
@@ -17,7 +18,7 @@ const snsImage = {
     "mastodon": require("../../assets/logo/mastodon.png"),
     "misskey": require("../../assets/logo/misskey.png"),
     "pleroma": require("../../assets/logo/mastodon.png"),
-    "bluesky": require("../../assets/logo/mastodon.png"),
+    "bluesky": require("../../assets/logo/bluesky.png"),
 };
 
 const reducerSelector = (state: RootState) => ({
@@ -49,7 +50,7 @@ function LoginScreen() {
                 value={domain}
                 label={t("login_domain_label")}
                 leftIcon={
-                    <FontAwesome5 name='mastodon' size={24} color={theme.colors.primary} />
+                    <Ionicons name='browsers' size={24} color={theme.colors.primary} />
                 }
             />
             <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => useSnsModal(true)}>
@@ -88,7 +89,13 @@ function LoginScreen() {
             }
             <Overlay isVisible={snsModal} onBackdropPress={() => useSnsModal(false)}>
                 <SnsModal onSelect={(selected)=>{
-                    if (selected === "bluesky") {
+                    if (selected === "mastodon") {
+                        setDomain("mastodon.social");
+                    } else if (selected === "misskey") {
+                        setDomain("misskey.io");
+                    } else if (selected === "pleroma") {
+                        setDomain("pleroma.io");
+                    } else if (selected === "bluesky") {
                         setDomain("bsky.social");
                     }
                     useSnsModal(false);
@@ -121,8 +128,9 @@ const styles = StyleSheet.create({
         fontSize:20,
     },
     logo: {
-        width: 32,
-        height: 32,
+        width: 24,
+        height: 24,
+        marginRight: 5,
     }
 });
 
