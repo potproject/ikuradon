@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { getPopular, getProfile, getTimeline } from "./Xrpc";
+import { getPopular, getProfile, getTimeline, listNotifications, getPosts, getPostThread } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 export default class blueSkyGenerator{
     baseUrl: string;
@@ -60,7 +60,7 @@ export default class blueSkyGenerator{
         for (const { post, reason } of feed) {
             if (reason && reason.$type === "app.bsky.feed.defs#reasonRepost") {
                 status.push(MastodonAPI.Converter.status({
-                    id: post.cid,
+                    id: post.uri + "#repost-for-" + reason.by.did,
                     uri: post.uri,
                     account: MastodonAPI.Converter.account({
                         id: reason.by.did,
@@ -75,7 +75,7 @@ export default class blueSkyGenerator{
                     favourites_count: post.likeCount,
                     created_at: post.indexedAt,
                     reblog: MastodonAPI.Converter.status({
-                        id: post.cid,
+                        id: post.uri,
                         uri: post.uri,
                         content: post.record.text,
                         replies_count: post.replyCount,
@@ -96,7 +96,7 @@ export default class blueSkyGenerator{
             }
 
             status.push(MastodonAPI.Converter.status({
-                id: post.cid,
+                id: post.uri,
                 uri: post.uri,
                 account: MastodonAPI.Converter.account({
                     id: post.author.did,
@@ -138,8 +138,74 @@ export default class blueSkyGenerator{
         return this.getTimeline("popular", options);
     }
 
-    async getNotifications(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Notification[]>> {
-        return [];
+    async getNotifications(options: { limit?: number, max_id?: string, seenAt?: Date }): Promise<Response<Entity.Notification[]>> {
+        const { cursor, notifications } = await listNotifications(this.baseUrl, this.accessToken.accessJwt, options.seenAt, options.max_id, options.limit);
+        
+        const uris = [];
+        for (const notification of notifications) {
+            if (notification.reason === "like" && notification.record.$type === "app.bsky.feed.like") {
+                if (uris.includes(notification.record.subject.uri)) {
+                    continue;
+                }
+                uris.push(notification.record.subject.uri);
+            }
+        }
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, uris);
+
+        const mNotifications = [];
+        for (const notification of notifications) {
+            if ((notification.reason === "like" && notification.record.$type === "app.bsky.feed.like") ||
+                (notification.reason === "repost" && notification.record.$type === "app.bsky.feed.repost")
+            ) {
+                // get posts
+                const post = posts.find((p) => p.uri === notification.record.subject.uri);
+                if (!post) {
+                    continue;
+                }
+                
+                mNotifications.push(MastodonAPI.Converter.notification({
+                    id: notification.uri,
+                    account: MastodonAPI.Converter.account({
+                        id: notification.author.did,
+                        username: notification.author.handle,
+                        acct: notification.author.handle,
+                        display_name: notification.author.displayName,
+                        avatar: notification.author.avatar,
+                    }),
+                    status: MastodonAPI.Converter.status({
+                        id: post.uri,
+                        uri: post.uri,
+                        content: post.record.text,
+                        replies_count: post.replyCount,
+                        reblogs_count: post.repostCount,
+                        favourites_count: post.likeCount,
+                        created_at: post.indexedAt,
+                        media_attachments: embedImagesToMediaAttachments(post.embed),
+                        account: MastodonAPI.Converter.account({
+                            id: post.author.did,
+                            username: post.author.handle,
+                            acct: post.author.handle,
+                            display_name: post.author.displayName,
+                            avatar: post.author.avatar,
+                        }),
+                    }),
+                    type: notification.reason === "like" ? "favourite" : "reblog",
+                    created_at: notification.indexedAt,
+
+                }));
+            }
+        }
+        
+        if (cursor) {
+            mNotifications[mNotifications.length - 1].cursor = cursor;
+        }
+    
+        return {
+            data: mNotifications,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getFavourites(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
@@ -154,12 +220,76 @@ export default class blueSkyGenerator{
         return {};
     }
 
-    async getStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async getStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        return {
+            data: MastodonAPI.Converter.status({
+                id: post.uri,
+                uri: post.uri,
+                content: post.record.text,
+                replies_count: post.replyCount,
+                reblogs_count: post.repostCount,
+                favourites_count: post.likeCount,
+                created_at: post.indexedAt,
+                media_attachments: embedImagesToMediaAttachments(post.embed),
+                account: MastodonAPI.Converter.account({
+                    id: post.author.did,
+                    username: post.author.handle,
+                    acct: post.author.handle,
+                    display_name: post.author.displayName,
+                    avatar: post.author.avatar,
+                }),
+            }),
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async getStatusContext(id: string): Promise<Response<Entity.Context>> {
-        return {};
+    async getStatusContext(uri: string): Promise<Response<Entity.Context>> {
+        const ancestors = [];
+        const descendants = [];
+        const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (thread && thread.replies.length > 0) {
+            for (const reply of thread.replies) {
+                const post = reply.post;
+                descendants.push(MastodonAPI.Converter.status({
+                    id: post.uri,
+                    uri: post.uri,
+                    content: post.record.text,
+                    replies_count: post.replyCount,
+                    reblogs_count: post.repostCount,
+                    favourites_count: post.likeCount,
+                    created_at: post.indexedAt,
+                    media_attachments: embedImagesToMediaAttachments(post.embed),
+                    account: MastodonAPI.Converter.account({
+                        id: post.author.did,
+                        username: post.author.handle,
+                        acct: post.author.handle,
+                        display_name: post.author.displayName,
+                        avatar: post.author.avatar,
+                    }),
+                }));
+            }
+        }
+        return {
+            data: {
+                ancestors,
+                descendants,
+            },
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async deleteStatus(id: string): Promise<Response<Entity.Status>> {

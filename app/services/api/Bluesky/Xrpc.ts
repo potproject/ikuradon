@@ -64,6 +64,50 @@ export async function getPopular(baseUrl: string, accessJwt: string, cursor: str
     return data;
 }
 
+
+export async function listNotifications(baseUrl: string, accessJwt: string, seenAt: Date|null, cursor: string = "", limit: number = 20) {
+    const strSeenAt = seenAt ? seenAt.toISOString() : null;
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.notification.listNotifications"), {
+        params: {
+            seenAt: strSeenAt,
+            limit,
+            cursor,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
+
+    return data;
+}
+
+export async function getPosts(baseUrl: string, accessJwt: string, uris: string[]) {
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getPosts"), {
+        params: {
+            uris,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
+
+    return data;
+}
+
+
+export async function getPostThread(baseUrl: string, accessJwt: string, uri: string) {
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getPostThread"), {
+        params: {
+            uri,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
+
+    return data;
+}
+
 function getEndpoint(baseUrl: string, endpoint: string) {
     return baseUrl + "/" + xrpc + "/" + endpoint;
 }
