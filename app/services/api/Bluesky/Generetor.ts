@@ -168,7 +168,30 @@ export default class blueSkyGenerator{
     }
 
     async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
-        return {};
+        const type = "app.bsky.feed.post";
+        const { uri } = await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
+            $type: type,
+            createdAt: new Date().toISOString(),
+            text: status,
+        },
+        this.accessToken.did,
+        );
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, uri);
+        if (posts.length === 0) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        return {
+            data: convertStatuse(post, this.accessToken.did),
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getStatus(uri: string): Promise<Response<Entity.Status>> {
@@ -211,8 +234,26 @@ export default class blueSkyGenerator{
         };
     }
 
-    async deleteStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async deleteStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        const type = "app.bsky.feed.post";
+        const rkey = post.uri.split("/").pop();
+        await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
+        return {
+            data: convertStatuse(post, this.accessToken.did),
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async reblogStatus(uri: string): Promise<Response<Entity.Status>> {

@@ -108,14 +108,15 @@ export async function getPostThread(baseUrl: string, accessJwt: string, uri: str
     return data;
 }
 
-type collectionType = "app.bsky.feed.like" | "app.bsky.feed.repost";
+type collectionType = "app.bsky.feed.like" | "app.bsky.feed.repost" | "app.bsky.feed.post";
 type recordType = {
     $type: collectionType,
     createdAt: string,
     subject: {
         cid: string,
         uri: string,
-    }
+    } | undefined,
+    text: string | undefined, // only for app.bsky.feed.post
 }
 
 export async function createRecord(baseUrl: string, accessJwt: string, collection: collectionType, record: recordType, repo: string){
