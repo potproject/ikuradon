@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { getPopular, getProfile, getTimeline, listNotifications, getPosts, getPostThread } from "./Xrpc";
+import { getPopular, getProfile, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 export default class blueSkyGenerator{
     baseUrl: string;
@@ -74,44 +74,11 @@ export default class blueSkyGenerator{
                     reblogs_count: post.repostCount,
                     favourites_count: post.likeCount,
                     created_at: post.indexedAt,
-                    reblog: MastodonAPI.Converter.status({
-                        id: post.uri,
-                        uri: post.uri,
-                        content: post.record.text,
-                        replies_count: post.replyCount,
-                        reblogs_count: post.repostCount,
-                        favourites_count: post.likeCount,
-                        created_at: post.indexedAt,
-                        media_attachments: embedImagesToMediaAttachments(post.embed),
-                        account: MastodonAPI.Converter.account({
-                            id: post.author.did,
-                            username: post.author.handle,
-                            acct: post.author.handle,
-                            display_name: post.author.displayName,
-                            avatar: post.author.avatar,
-                        }),
-                    }),
+                    reblog: convertStatuse(post, this.accessToken.did)
                 }));
                 continue;
             }
-
-            status.push(MastodonAPI.Converter.status({
-                id: post.uri,
-                uri: post.uri,
-                account: MastodonAPI.Converter.account({
-                    id: post.author.did,
-                    username: post.author.handle,
-                    acct: post.author.handle,
-                    display_name: post.author.displayName,
-                    avatar: post.author.avatar,
-                }),
-                media_attachments: embedImagesToMediaAttachments(post.embed),
-                content: post.record.text,
-                replies_count: post.replyCount,
-                reblogs_count: post.repostCount,
-                favourites_count: post.likeCount,
-                created_at: post.indexedAt,
-            }));
+            status.push(convertStatuse(post, this.accessToken.did));
         }
 
         if (cursor) {
@@ -172,23 +139,7 @@ export default class blueSkyGenerator{
                         display_name: notification.author.displayName,
                         avatar: notification.author.avatar,
                     }),
-                    status: MastodonAPI.Converter.status({
-                        id: post.uri,
-                        uri: post.uri,
-                        content: post.record.text,
-                        replies_count: post.replyCount,
-                        reblogs_count: post.repostCount,
-                        favourites_count: post.likeCount,
-                        created_at: post.indexedAt,
-                        media_attachments: embedImagesToMediaAttachments(post.embed),
-                        account: MastodonAPI.Converter.account({
-                            id: post.author.did,
-                            username: post.author.handle,
-                            acct: post.author.handle,
-                            display_name: post.author.displayName,
-                            avatar: post.author.avatar,
-                        }),
-                    }),
+                    status: convertStatuse(post, this.accessToken.did),
                     type: notification.reason === "like" ? "favourite" : "reblog",
                     created_at: notification.indexedAt,
 
@@ -232,23 +183,7 @@ export default class blueSkyGenerator{
         }
         const post = posts[0];
         return {
-            data: MastodonAPI.Converter.status({
-                id: post.uri,
-                uri: post.uri,
-                content: post.record.text,
-                replies_count: post.replyCount,
-                reblogs_count: post.repostCount,
-                favourites_count: post.likeCount,
-                created_at: post.indexedAt,
-                media_attachments: embedImagesToMediaAttachments(post.embed),
-                account: MastodonAPI.Converter.account({
-                    id: post.author.did,
-                    username: post.author.handle,
-                    acct: post.author.handle,
-                    display_name: post.author.displayName,
-                    avatar: post.author.avatar,
-                }),
-            }),
+            data: convertStatuse(post, this.accessToken.did),
             status: 200,
             statusText: "",
             headers: {},
@@ -262,23 +197,7 @@ export default class blueSkyGenerator{
         if (thread && thread.replies.length > 0) {
             for (const reply of thread.replies) {
                 const post = reply.post;
-                descendants.push(MastodonAPI.Converter.status({
-                    id: post.uri,
-                    uri: post.uri,
-                    content: post.record.text,
-                    replies_count: post.replyCount,
-                    reblogs_count: post.repostCount,
-                    favourites_count: post.likeCount,
-                    created_at: post.indexedAt,
-                    media_attachments: embedImagesToMediaAttachments(post.embed),
-                    account: MastodonAPI.Converter.account({
-                        id: post.author.did,
-                        username: post.author.handle,
-                        acct: post.author.handle,
-                        display_name: post.author.displayName,
-                        avatar: post.author.avatar,
-                    }),
-                }));
+                descendants.push(convertStatuse(post, this.accessToken.did));
             }
         }
         return {
@@ -296,20 +215,118 @@ export default class blueSkyGenerator{
         return {};
     }
 
-    async reblogStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async reblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        const type = "app.bsky.feed.repost";
+        await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
+            $type: type,
+            createdAt: new Date().toISOString(),
+            subject: {
+                cid: post.cid,
+                uri: post.uri,
+            }
+        },
+        this.accessToken.did,
+        );
+        const data = convertStatuse(post, this.accessToken.did);
+        data.reblogged = true;
+        return {
+            data,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async unreblogStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async unreblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0 || !posts[0].viewer.repost) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        const type = "app.bsky.feed.repost";
+        const rkey = post.viewer.repost.split("/").pop();
+
+        await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
+        const data = convertStatuse(post, this.accessToken.did);
+        data.reblogged = false;
+        return {
+            data,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async favouriteStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async favouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        const type = "app.bsky.feed.like";
+        await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
+            $type: type,
+            createdAt: new Date().toISOString(),
+            subject: {
+                cid: post.cid,
+                uri: post.uri,
+            }
+        },
+        this.accessToken.did,
+        );
+        const data = convertStatuse(post, this.accessToken.did);
+        data.favourited = true;
+        return {
+            data,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async unfavouriteStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+    async unfavouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        if (posts.length === 0 || !posts[0].viewer.like) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const post = posts[0];
+        const type = "app.bsky.feed.like";
+        const rkey = post.viewer.like.split("/").pop();
+
+        await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
+        const data = convertStatuse(post, this.accessToken.did);
+        data.favourited = false;
+        return {
+            data,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
@@ -355,6 +372,37 @@ export default class blueSkyGenerator{
     async votePoll(id: string, choices: number[]): Promise<Response<Entity.Poll>> {
         return {};
     }
+}
+
+function convertStatuse(post: any, did: string): Entity.Status {
+    let favourited = false;
+    let reblogged = false;
+    if (post.viewer && post.viewer.like && post.viewer.like.includes(did)){
+        favourited = true;
+    }
+    if (post.viewer && post.viewer.repost && post.viewer.repost.includes(did)){
+        reblogged = true;
+    }
+    return MastodonAPI.Converter.status({
+        id: post.uri,
+        uri: post.uri,
+        content: post.record.text,
+        replies_count: post.replyCount,
+        reblogs_count: post.repostCount,
+        favourites_count: post.likeCount,
+        created_at: post.indexedAt,
+        media_attachments: embedImagesToMediaAttachments(post.embed),
+        account: MastodonAPI.Converter.account({
+            id: post.author.did,
+            username: post.author.handle,
+            acct: post.author.handle,
+            display_name: post.author.displayName,
+            avatar: post.author.avatar,
+        }),
+        favourited,
+        reblogged
+    });
+
 }
 
 function embedImagesToMediaAttachments(embed){

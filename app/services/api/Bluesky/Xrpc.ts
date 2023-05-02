@@ -108,6 +108,47 @@ export async function getPostThread(baseUrl: string, accessJwt: string, uri: str
     return data;
 }
 
+type collectionType = "app.bsky.feed.like" | "app.bsky.feed.repost";
+type recordType = {
+    $type: collectionType,
+    createdAt: string,
+    subject: {
+        cid: string,
+        uri: string,
+    }
+}
+
+export async function createRecord(baseUrl: string, accessJwt: string, collection: collectionType, record: recordType, repo: string){
+    const { data } = await axios.post(getEndpoint(baseUrl, "com.atproto.repo.createRecord"), {
+        collection,
+        record,
+        repo,
+    }, {
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    }).catch((e) => {
+        throw e;
+    });
+    return data;
+}
+
+export async function deleteRecord(baseUrl: string, accessJwt: string, collection: collectionType, rkey: string, repo: string){
+    const { data } = await axios.post(getEndpoint(baseUrl, "com.atproto.repo.deleteRecord"), {
+        collection,
+        rkey,
+        repo,
+    }, {
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    }).catch((e) => {
+        throw e;
+    });
+    console.log(data);
+    return data;
+}
+
 function getEndpoint(baseUrl: string, endpoint: string) {
     return baseUrl + "/" + xrpc + "/" + endpoint;
 }
