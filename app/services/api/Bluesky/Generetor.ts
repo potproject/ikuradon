@@ -257,6 +257,7 @@ export default class blueSkyGenerator{
     }
 
     async reblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
             return {
@@ -289,6 +290,7 @@ export default class blueSkyGenerator{
     }
 
     async unreblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0 || !posts[0].viewer.repost) {
             return {
@@ -314,6 +316,7 @@ export default class blueSkyGenerator{
     }
 
     async favouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
             return {
@@ -346,6 +349,7 @@ export default class blueSkyGenerator{
     }
 
     async unfavouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0 || !posts[0].viewer.like) {
             return {
@@ -461,4 +465,8 @@ function embedImagesToMediaAttachments(embed){
     }
     return mediaAttachments;
 
+}
+
+function deleteSharp(uri: string): string {
+    return uri.split("#")[0];
 }
