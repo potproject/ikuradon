@@ -35,6 +35,18 @@ export async function getProfile(baseUrl: string, accessJwt: string, did: string
     return data;
 }
 
+export async function getProfiles(baseUrl: string, accessJwt: string, dids: string[]) {
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.actor.getProfiles"), {
+        params: {
+            actors: dids,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
+    return data;
+}
+
 export async function getTimeline(baseUrl: string, accessJwt: string, cursor: string = "", limit: number = 20, algorithm: string = "reverse-chronological") {
     const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getTimeline"), {
         params: {
@@ -155,7 +167,20 @@ export async function deleteRecord(baseUrl: string, accessJwt: string, collectio
     }).catch((e) => {
         throw e;
     });
-    console.log(data);
+    return data;
+}
+
+export async function searchActors(baseUrl: string, accessJwt: string, term: string, limit: number = 20, cursor: string = "") {
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.actor.searchActors"), {
+        params: {
+            term,
+            limit,
+            cursor,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    });
     return data;
 }
 

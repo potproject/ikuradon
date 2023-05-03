@@ -20,7 +20,7 @@ function SearchScreen({ navigation }) {
                 leftComponent={<TimelineLeftHeader isBack={true} onPress={navigation.goBack} />}
                 centerComponent={<TimelineCenterHeader fixedTitle={t("search_title")} onPress={navigation.openDrawer} current={current}/>}
             />
-            <Search />
+            <Search current={current} />
         </View>
     );
 }

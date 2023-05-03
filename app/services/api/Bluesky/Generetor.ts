@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { getPopular, getProfile, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord } from "./Xrpc";
+import { getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 export default class blueSkyGenerator{
     baseUrl: string;
@@ -402,31 +402,98 @@ export default class blueSkyGenerator{
     }
 
     async bookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+        throw new Error("Method not implemented.");
     }
 
     async unbookmarkStatus(id: string): Promise<Response<Entity.Status>> {
-        return {};
+        throw new Error("Method not implemented.");
     }
 
     async createEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        return {};
+        throw new Error("Method not implemented.");
     }
 
     async deleteEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        return {};
+        throw new Error("Method not implemented.");
     }
 
-    async followAccount(id: string): Promise<Response<Entity.Relationship>> {
-        return {};
+    async followAccount(did: string): Promise<Response<Entity.Relationship>> {
+        const type = "app.bsky.graph.follow";
+        await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
+            $type: type,
+            createdAt: new Date().toISOString(),
+            subject: did
+        },
+        this.accessToken.did,
+        );
+        return {
+            data: MastodonAPI.Converter.relationship({
+                id: did,
+                following: true,
+            }),
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async unfollowAccount(id: string): Promise<Response<Entity.Relationship>> {
-        return {};
+    async unfollowAccount(did: string): Promise<Response<Entity.Relationship>> {
+        const profile = await getProfile(this.baseUrl, this.accessToken.accessJwt, did);
+        if (!profile) {
+            return {
+                data: {},
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const rkey = profile.viewer.following.split("/").pop();
+        const type = "app.bsky.graph.follow";
+        await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
+        return {
+            data: MastodonAPI.Converter.relationship({
+                id: did,
+                following: false,
+            }),
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
-    async getRelationships(ids: string[]): Promise<Response<Entity.Relationship[]>> {
-        return [];
+    async getRelationships(dids: string[]): Promise<Response<Entity.Relationship[]>> {
+        if (dids.length === 0) {
+            return {
+                data: [],
+                status: 200,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const  { profiles } = await getProfiles(this.baseUrl, this.accessToken.accessJwt, dids);
+        if (!profiles || profiles.length === 0) {
+            return {
+                data: [],
+                status: 404,
+                statusText: "",
+                headers: {},
+            };
+        }
+        const relationships = profiles.map((profile) => {
+            return MastodonAPI.Converter.relationship({
+                id: profile.did,
+                following: profile.viewer.following ? true : false,
+                blocking: profile.viewer.blockedBy ? true : false,
+                muting: profile.viewer.muted ? true : false,
+            });
+        }
+        );
+        return {
+            data: relationships,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getInstanceCustomEmojis(): Promise<Response<Entity.Emoji[]>> {
@@ -434,7 +501,7 @@ export default class blueSkyGenerator{
     }
 
     async getPoll(id: string): Promise<Response<Entity.Poll>> {
-        return {};
+        throw new Error("Method not implemented.");
     }
 
     async getPollVotes(id: string): Promise<Response<Entity.Poll[]>> {
@@ -442,7 +509,36 @@ export default class blueSkyGenerator{
     }
 
     async votePoll(id: string, choices: number[]): Promise<Response<Entity.Poll>> {
-        return {};
+        throw new Error("Method not implemented.");
+    }
+
+    async search(q: string, type: "accounts" | "hashtags" | "statuses"){
+        let accounts = [];
+        let statuses = [];
+        let hashtags = [];
+        // Account Only
+        if (type === "accounts"){
+            const { actors } = await searchActors(this.baseUrl, this.accessToken.accessJwt, q, 100);
+            accounts = actors.map((actor) => {
+                return MastodonAPI.Converter.account({
+                    id: actor.did,
+                    username: actor.handle,
+                    acct: actor.handle,
+                    display_name: actor.displayName ?? "",
+                    avatar: actor.avatar,
+                });
+            });
+        }
+        return {
+            data: {
+                accounts,
+                statuses,
+                hashtags,
+            },
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 }
 
