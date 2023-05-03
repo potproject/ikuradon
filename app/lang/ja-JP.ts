@@ -113,7 +113,7 @@ export default {
     //ログイン
     login_retry: "ログインの再試行",
     login_title: "ログイン",
-    login_message: "Mastodon サーバ ドメインを入力してください",
+    login_message: "サーバドメインを入力してください",
     login_domain_label: "ドメイン",
     login_token_label: "アクセストークン",
     login_identity_label: "ID",

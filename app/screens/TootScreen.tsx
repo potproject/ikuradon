@@ -128,17 +128,21 @@ function TootScreen({ navigation, route }) {
                         onPress={() => mediaIds && mediaIds.length < 1 && useVisibilityClip(!visibilityClip)}>
                         <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
                         <FontAwesome name={VISIBILITY_CONST[visibility]} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    }
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useEmojisModal(true)}>
                         <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
-                    { Platform.OS === "ios" && current.sns !== "misskey" &&
+                    }
+                    { Platform.OS === "ios" && current.sns !== "misskey" && current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useScheduledModal(true)}>
@@ -150,11 +154,13 @@ function TootScreen({ navigation, route }) {
                         onPress={() => useDraftModal(true)}>
                         <FontAwesome name={"sticky-note"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => onChangeCwTootText("") || useCw(!cw)}>
                         <Text style={[styles.cwText, { color:cw ? theme.colors.primary : theme.colors.grey0 }]}>CW</Text>
                     </TouchableOpacity>
+                    }
                     <Text style={[{ color: theme.colors.primary }, styles.countText]}>
                         {MAX_TOOT_LENGTH - tootText.length - cwTootText.length}
                     </Text>
