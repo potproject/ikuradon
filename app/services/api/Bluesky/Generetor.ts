@@ -39,7 +39,7 @@ export default class blueSkyGenerator{
             id: profile.did,
             username: profile.handle,
             acct: profile.handle,
-            display_name: profile.displayName,
+            display_name: profile.displayName ?? "",
             followers_count: profile.followersCount,
             following_count: profile.followsCount,
             statuses_count: profile.postsCount,
@@ -66,7 +66,7 @@ export default class blueSkyGenerator{
                         id: reason.by.did,
                         username: reason.by.handle,
                         acct: reason.by.handle,
-                        display_name: reason.by.displayName,
+                        display_name: reason.by.displayName ?? "",
                         avatar: reason.by.avatar,
                     }),
                     content: post.record.text,
@@ -110,7 +110,9 @@ export default class blueSkyGenerator{
         
         const uris = [];
         for (const notification of notifications) {
-            if (notification.reason === "like" && notification.record.$type === "app.bsky.feed.like") {
+            if ((notification.reason === "like" && notification.record.$type === "app.bsky.feed.like") ||
+                (notification.reason === "repost" && notification.record.$type === "app.bsky.feed.repost")
+            ) {
                 if (uris.includes(notification.record.subject.uri)) {
                     continue;
                 }
@@ -136,13 +138,27 @@ export default class blueSkyGenerator{
                         id: notification.author.did,
                         username: notification.author.handle,
                         acct: notification.author.handle,
-                        display_name: notification.author.displayName,
+                        display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
                     }),
                     status: convertStatuse(post, this.accessToken.did),
                     type: notification.reason === "like" ? "favourite" : "reblog",
                     created_at: notification.indexedAt,
 
+                }));
+            }
+            if (notification.reason === "follow" && notification.record.$type === "app.bsky.graph.follow"){
+                mNotifications.push(MastodonAPI.Converter.notification({
+                    id: notification.uri,
+                    account: MastodonAPI.Converter.account({
+                        id: notification.author.did,
+                        username: notification.author.handle,
+                        acct: notification.author.handle,
+                        display_name: notification.author.displayName ?? "",
+                        avatar: notification.author.avatar,
+                    }),
+                    type: "follow",
+                    created_at: notification.indexedAt,
                 }));
             }
         }
@@ -452,7 +468,7 @@ function convertStatuse(post: any, did: string): Entity.Status {
             id: post.author.did,
             username: post.author.handle,
             acct: post.author.handle,
-            display_name: post.author.displayName,
+            display_name: post.author.displayName ?? "",
             avatar: post.author.avatar,
         }),
         favourited,
