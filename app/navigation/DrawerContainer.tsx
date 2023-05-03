@@ -70,6 +70,7 @@ export default function DrawerContainer({ navigation }){
                     </View>
                 </TouchableOpacity>
                 */ }
+                { sns != "bluesky" &&
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();
                     navigation.navigate(RouterName.Search);
@@ -79,6 +80,7 @@ export default function DrawerContainer({ navigation }){
                         <Text style={[{ color: theme.customColors.char }, { fontSize: fontSize.text }, styles.text]}> {t("search_title")} </Text>
                     </View>
                 </TouchableOpacity>
+                }
                 { sns !== "misskey" && sns !== "bluesky" &&
                 <TouchableOpacity style={styles.fixedList} onPress={()=>{
                     navigation.closeDrawer();

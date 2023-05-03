@@ -169,10 +169,21 @@ export default class blueSkyGenerator{
 
     async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
         const type = "app.bsky.feed.post";
+        const images = options.media_ids ? options.media_ids.map((data) => {
+            return {
+                alt: "",
+                image: JSON.parse(data).blob,
+            };
+        }) : undefined;
+        const embed = images ? {
+            $type: "app.bsky.embed.images",
+            images,
+        } : undefined;
         const { uri } = await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             createdAt: new Date().toISOString(),
             text: status,
+            embed,
         },
         this.accessToken.did,
         );

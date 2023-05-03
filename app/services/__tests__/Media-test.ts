@@ -24,13 +24,13 @@ jest.mock("../../services/DropDownHolder", () => ({
 }));
 
 const fileDataMock = {
-    "cancelled":false,
+    "canceled":false,
     "height":1611,
     "width":2148,
     "uri":"file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg"
 };
 const fileDataMockCancelled = {
-    "cancelled":false
+    "canceled":false
 };
 
 describe("Services/Media", () => {
@@ -61,7 +61,7 @@ describe("Services/Media", () => {
         ImagePicker.launchImageLibraryAsync.mockClear();
         fileUpload.mockClear();
     });
-    it("upload cancelled", async () => {
+    it("upload canceled", async () => {
         Session.getDomainAndToken.mockImplementation(() => ExampleSession());
         ImagePicker.launchImageLibraryAsync.mockImplementation(() => fileDataMockCancelled);
         expect(await upload()).toEqual(null);

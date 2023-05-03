@@ -20,14 +20,14 @@ jest.mock("expo-image-picker", () => ({
 }));
 
 const fileDataMock = {
-    "cancelled":false,
+    "canceled":false,
     "height":1611,
     "width":2148,
     "uri":"file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg"
 };
 
 const fileDataMockCancelled = {
-    "cancelled":false
+    "canceled":false
 };
 
 describe("Action/Config", () => {

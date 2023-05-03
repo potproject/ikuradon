@@ -117,6 +117,15 @@ type recordType = {
         uri: string,
     } | undefined,
     text: string | undefined, // only for app.bsky.feed.post
+    embed: embedType | undefined, // embed image. only for app.bsky.feed.post
+}
+
+type embedType = {
+    $type: string,
+    images: {
+        alt: string,
+        image: any
+    }[],
 }
 
 export async function createRecord(baseUrl: string, accessJwt: string, collection: collectionType, record: recordType, repo: string){

@@ -2,27 +2,63 @@ import Networking from "./Networking";
 import * as CONST_API from "../constants/api";
 import * as FileSystem from "expo-file-system";
 import { sns } from "../constants/sns";
+import { Buffer } from "buffer";
+import axios from "axios";
 
 const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec));
 
-export default function fileUpload(sns: sns|undefined, domain: string, access_token: string, file: any, type: string) {
+export default function fileUpload(sns: sns|undefined, domain: string, access_token: string, fileUri: string, type: string) {
     if (sns === "mastodon" || sns === undefined){
-        return fileUploadMastodonV2(domain, access_token, file, type);
+        return fileUploadMastodonV2(domain, access_token, fileUri, type);
     }
     if (sns === "misskey"){
-        return fileUploadMisskey(domain, access_token, file, type);
+        return fileUploadMisskey(domain, access_token, fileUri, type);
     }
-    return fileUploadMastodonV1(domain, access_token, file, type);
+    if (sns === "bluesky"){
+        return fileUploadBluesky(domain, access_token, fileUri, type);
+    }
+    return fileUploadMastodonV1(domain, access_token, fileUri, type);
 }
 
-function fileUploadMisskey(domain: string, access_token: string, file: any, type: string){
+function fileUploadBluesky(domain: string, access_token: string, fileUri: string, type: string){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const baseurl = "https://" + domain + "";
+            const api = CONST_API.UPLOAD_POST_MEDIA_BLUESKY;
+            const url = baseurl + api.url;
+            const headers = createHeaders(JSON.parse(access_token).accessJwt);
+            const base64 = await FileSystem.readAsStringAsync(fileUri, {
+                encoding: FileSystem.EncodingType.Base64
+            });
+            let bin = Buffer.from(base64, "base64");
+            axios.post(url, bin, {
+                headers:{
+                    ...headers,
+                    "Content-Type": type,
+                    "Content-Length": bin.length
+                }
+            }).then((res) => {
+                const id = JSON.stringify(res.data);
+                const preview_url = fileUri;
+                resolve({
+                    id,
+                    preview_url
+                });
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
+function fileUploadMisskey(domain: string, access_token: string, fileUri: string, type: string){
     return new Promise(async (resolve, reject) => {
         try {
             let baseurl = "https://" + domain + "";
             let api = CONST_API.UPLOAD_POST_MEDIA_MISSKEY;
             let url = baseurl + api.url;
             let headers = createHeaders();
-            let response = await FileSystem.uploadAsync(url, file.uri, {
+            let response = await FileSystem.uploadAsync(url, fileUri, {
                 headers,
                 fieldName: "file",
                 uploadType: FileSystem.FileSystemUploadType.MULTIPART,
@@ -46,14 +82,14 @@ function fileUploadMisskey(domain: string, access_token: string, file: any, type
     });
 }
 
-function fileUploadMastodonV2(domain: string, access_token: string, file: any, type: string) {
+function fileUploadMastodonV2(domain: string, access_token: string, fileUri: string, type: string) {
     return new Promise(async (resolve, reject) => {
         try {
             let baseurl = "https://" + domain + "";
             let api = CONST_API.UPLOAD_POST_MEDIA_V2;
             let url = baseurl + api.url;
             let headers = createHeaders(access_token);
-            let response = await FileSystem.uploadAsync(url, file.uri, {
+            let response = await FileSystem.uploadAsync(url, fileUri, {
                 headers,
                 fieldName: "file",
                 uploadType: FileSystem.FileSystemUploadType.MULTIPART,
@@ -84,14 +120,14 @@ function fileUploadMastodonV2(domain: string, access_token: string, file: any, t
     });
 }
 
-function fileUploadMastodonV1(domain: string, access_token: string, file: any, type: string) {
+function fileUploadMastodonV1(domain: string, access_token: string, fileUri: string, type: string) {
     return new Promise(async (resolve, reject) => {
         try {
             let baseurl = "https://" + domain + "";
             let api = CONST_API.UPLOAD_POST_MEDIA_V1;
             let url = baseurl + api.url;
             let headers = createHeaders(access_token);
-            let response = await FileSystem.uploadAsync(url, file.uri, {
+            let response = await FileSystem.uploadAsync(url, fileUri, {
                 headers,
                 fieldName: "file",
                 uploadType: FileSystem.FileSystemUploadType.MULTIPART,

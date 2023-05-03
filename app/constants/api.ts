@@ -26,6 +26,12 @@ export const UPLOAD_POST_MEDIA_MISSKEY: api = {
     form: {}
 };
 
+export const UPLOAD_POST_MEDIA_BLUESKY: api = {
+    method: "post",
+    url: "/xrpc/com.atproto.repo.uploadBlob",
+    form: {}
+};
+
 export const UPLOAD_GET_MEDIA: api = {
     method: "get",
     url: "/api/v1/media/:param:",

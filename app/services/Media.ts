@@ -6,16 +6,16 @@ import DropDownHolder from "../services/DropDownHolder";
 import fileUpload from "./FileUpload";
 
 export async function upload() {
-    let fileData;
+    let fileData: ImagePicker.ImagePickerResult;
     try {
         await Permission.getBeforeAskMediaLibrary();
         fileData = await ImagePicker.launchImageLibraryAsync();
-        if (!fileData || fileData.cancelled) {
+        if (!fileData || fileData.canceled || fileData.assets.length === 0) {
             return null;
         }
         let { sns, domain, access_token } = await Session.getDomainAndToken();
         //アップロード中とかほしいね
-        let res = await fileUpload(sns, domain, access_token, fileData, "image/jpeg");
+        let res = await fileUpload(sns, domain, access_token, fileData.assets[0].uri, "image/jpeg");
         if (!res || !res.id) {
             throw new Error("ID Unknown Error!");
         }
