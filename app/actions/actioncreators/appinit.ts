@@ -15,6 +15,7 @@ import { pull } from "../../util/push";
 import * as Rest from "../../services/api/Rest";
 import DropDownHolder from "../../services/DropDownHolder";
 import t from "../../services/I18n";
+import { refreshSession } from "../../services/api/Bluesky/Xrpc";
 
 const AUTO_LOGIN = true; // Auto Login
 
@@ -51,6 +52,11 @@ export function appInit(updateTheme) {
         let { sns, domain, access_token } = await Session.getDomainAndToken();
         if (AUTO_LOGIN && access_token && domain) {
             try {
+                if (sns === "bluesky") {
+                    const { refreshJwt } = JSON.parse(access_token);
+                    access_token = await refreshSession("https://" + domain, refreshJwt);
+                    await Session.refreshToken(access_token);
+                }
                 const user_credentials = await Rest.getCurrentUser(sns, domain, access_token);
                 const instance = await Rest.getInstance(sns, domain, access_token);
                 dispatch({ type: CurrentUser.UPDATE_CURRENT_USER, sns, user_credentials, domain, access_token, instance });

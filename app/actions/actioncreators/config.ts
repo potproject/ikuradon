@@ -25,7 +25,7 @@ export function setBackground() {
         try {
             await Permission.getBeforeAskMediaLibrary();
             let fileData = await ImagePicker.launchImageLibraryAsync();
-            if (!fileData || !fileData.uri || fileData.cancelled) {
+            if (!fileData || !fileData.uri || fileData.canceled) {
                 return;
             }
             dispatch({ type: Config.SET_BACKGROUNDIMAGE, backgroundImage: fileData.uri });

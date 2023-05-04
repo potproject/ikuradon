@@ -218,7 +218,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 disabled={visibility === "private" || visibility === "direct"}
                             />
                             <Favourite id={id} tootid={tootID} favourited={favourited} count={0} style={styles.itemFlex} onFavourite={FavouriteAction} />
-                            { sns !== "misskey" && 
+                            { sns !== "misskey" && sns !== "bluesky" &&
                             <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
                             }
                             { sns === "misskey" && 

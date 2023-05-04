@@ -13,7 +13,7 @@ function AppInitScreen({ updateTheme, navigation }) {
     }, []);
     return (
         <View style={styles.container}>
-            <Image style={styles.logo} source={require("../../assets/image/icon250.png")} />
+            <Image style={styles.logo} source={require("../../assets/image/icononly.png")} />
             <View>
                 <Text style={styles.text}>Loading...</Text>
                 <Text style={styles.text}>Version: { Constants.manifest.version }</Text>
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 100,
         height: 100,
+        marginBottom: 10,
     },
 });
 

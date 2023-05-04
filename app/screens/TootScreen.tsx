@@ -44,7 +44,7 @@ function TootScreen({ navigation, route }) {
     const reply = typeof route.params !== "undefined" ? route.params : null;
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
-    const [tootText, onChangeTootText] = useState(reply ? "@" + reply.acct + " " : "");
+    const [tootText, onChangeTootText] = useState(current.sns !== "bluesky" && reply ? "@" + reply.acct + " " : "");
     const [tootCursor, useTootCursor] = useState(0);
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
@@ -128,17 +128,21 @@ function TootScreen({ navigation, route }) {
                         onPress={() => mediaIds && mediaIds.length < 1 && useVisibilityClip(!visibilityClip)}>
                         <FontAwesome name={"paperclip"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useVisibilityModal(true)}>
                         <FontAwesome name={VISIBILITY_CONST[visibility]} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    }
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useEmojisModal(true)}>
                         <FontAwesome name={"smile-o"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
-                    { Platform.OS === "ios" && current.sns !== "misskey" &&
+                    }
+                    { Platform.OS === "ios" && current.sns !== "misskey" && current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => useScheduledModal(true)}>
@@ -150,11 +154,13 @@ function TootScreen({ navigation, route }) {
                         onPress={() => useDraftModal(true)}>
                         <FontAwesome name={"sticky-note"} size={26} color={theme.colors.grey1} />
                     </TouchableOpacity>
+                    { current.sns !== "bluesky" &&
                     <TouchableOpacity
                         style={styles.icon}
                         onPress={() => onChangeCwTootText("") || useCw(!cw)}>
                         <Text style={[styles.cwText, { color:cw ? theme.colors.primary : theme.colors.grey0 }]}>CW</Text>
                     </TouchableOpacity>
+                    }
                     <Text style={[{ color: theme.colors.primary }, styles.countText]}>
                         {MAX_TOOT_LENGTH - tootText.length - cwTootText.length}
                     </Text>

@@ -35,6 +35,10 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
         dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
         try {
             let { sns, domain, access_token } = await Session.getDomainAndToken();
+            if (sns === "bluesky"){
+                // force clear
+                clear = true;
+            }
             const data = await reducerTypeArray[reducerType](sns, domain, access_token, { limit, since_id, max_id: null });
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {

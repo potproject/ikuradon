@@ -173,7 +173,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     disabled={visibility === "private" || visibility === "direct"}
                 />
                 <Favourite id={id} tootid={tootID} favourited={favourited} count={favourites_count} style={styles.itemFlex} onFavourite={FavouriteAction} />
-                { sns !== "misskey" && 
+                { sns !== "misskey" && sns !== "bluesky" &&
                 <Bookmark id={id} tootid={tootID} bookmarked={bookmarked} style={styles.itemFlex} onBookmark={BookmarkAction} />
                 }
                 { sns === "misskey" && 

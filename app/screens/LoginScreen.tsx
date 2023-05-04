@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Platform, Text, StyleSheet, View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Input, Button, Overlay } from "react-native-elements";
 import t from "../services/I18n";
 import { Image, ThemeContext } from "react-native-elements";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { login, loginWithAccessToken } from "../actions/actioncreators/login";
+import { login, loginBlueskywithIDPassword, loginWithAccessToken } from "../actions/actioncreators/login";
 import SnsModal from "../components/SnsModal";
 import { sns as snsType } from "../constants/sns";
 import { appInit } from "../actions/actioncreators/appinit";
@@ -17,6 +18,7 @@ const snsImage = {
     "mastodon": require("../../assets/logo/mastodon.png"),
     "misskey": require("../../assets/logo/misskey.png"),
     "pleroma": require("../../assets/logo/mastodon.png"),
+    "bluesky": require("../../assets/logo/bluesky.png"),
 };
 
 const reducerSelector = (state: RootState) => ({
@@ -31,6 +33,12 @@ function LoginScreen() {
     const [accessToken, setAccessToken] = useState("");
     const [snsModal, useSnsModal] = useState(false);
     const [sns, useSns] = useState<snsType>("mastodon");
+
+    // Bluesky Only
+    const [bSkyIidentity, setBSkyIdentity] = useState("");
+    const [bSkyPassword, setBSkyPassword] = useState("");
+
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             { !app.init &&
@@ -42,29 +50,54 @@ function LoginScreen() {
                 value={domain}
                 label={t("login_domain_label")}
                 leftIcon={
-                    <FontAwesome5 name='mastodon' size={24} color={theme.colors.primary} />
+                    <Ionicons name='browsers' size={24} color={theme.colors.primary} />
                 }
             />
             <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => useSnsModal(true)}>
                 <Image style={styles.logo} source={snsImage[sns]} />
                 <Text style={styles.sns}>Target: {t(`sns.${sns}`)}</Text>
             </TouchableOpacity>
-            { Platform.OS !== "web" && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
-            <Input
-                onChangeText={text => setAccessToken(text)}
-                value={accessToken}
-                label={t("login_token_label")}
-                leftIcon={
-                    <FontAwesome5
+            { Platform.OS !== "web" && sns !== "bluesky" && <Button style={styles.button} onPress={() => dispatch(login(domain, sns))} title={t(`login_button_${sns}`)} />}
+            { sns !== "bluesky" &&
+            <>
+                <Input
+                    onChangeText={text => setAccessToken(text)}
+                    value={accessToken}
+                    label={t("login_token_label")}
+                    leftIcon={<FontAwesome5
                         name='key'
                         size={24}
-                        color={theme.colors.primary}
-                    />
-                }
-            />
-            <Button style={styles.button} onPress={() => dispatch(loginWithAccessToken(sns, domain, accessToken))} title={t("login_token_button")} />
+                        color={theme.colors.primary} />} />
+                <Button style={styles.button} onPress={() => dispatch(loginWithAccessToken(sns, domain, accessToken))} title={t("login_token_button")} />
+            </>
+            }
+            { sns === "bluesky" &&
+            <>
+                <Input
+                    onChangeText={text => setBSkyIdentity(text)}
+                    value={bSkyIidentity}
+                    label={t("login_identity_label")}
+                ></Input>
+                <Input
+                    onChangeText={text => setBSkyPassword(text)}
+                    value={bSkyPassword}
+                    label={t("login_password_label")}
+                    secureTextEntry={true}
+                ></Input>
+                <Button style={styles.button} onPress={() => dispatch(loginBlueskywithIDPassword(sns, domain, bSkyIidentity, bSkyPassword))} title={t(`login_button_${sns}`)} />
+            </>
+            }
             <Overlay isVisible={snsModal} onBackdropPress={() => useSnsModal(false)}>
                 <SnsModal onSelect={(selected)=>{
+                    if (selected === "mastodon") {
+                        setDomain("mastodon.social");
+                    } else if (selected === "misskey") {
+                        setDomain("misskey.io");
+                    } else if (selected === "pleroma") {
+                        setDomain("pleroma.io");
+                    } else if (selected === "bluesky") {
+                        setDomain("bsky.social");
+                    }
                     useSnsModal(false);
                     useSns(selected);
                 }} />
@@ -95,8 +128,9 @@ const styles = StyleSheet.create({
         fontSize:20,
     },
     logo: {
-        width: 32,
-        height: 32,
+        width: 24,
+        height: 24,
+        marginRight: 5,
     }
 });
 

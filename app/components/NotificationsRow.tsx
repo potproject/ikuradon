@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, View, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import MastoRow from "../components/MastoRow";
 import { emojisArrayToObject } from "../util/parser";
 
@@ -19,6 +19,7 @@ const MAX_DISPLAY_IMAGE = 8;
 
 const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
     const { id, type } = item;
+    const [displayImageLimit, useDisplayImageLimit] = useState(true);
     const { theme } = useContext(ThemeContext);
     if (type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION){
         const { status, favouriteAccounts, boostAccounts, reactions } = item;
@@ -28,67 +29,18 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
         let emojis = {};
         return (
             <View key={id} style={[styles.container, { backgroundColor: !background ? theme.customColors.charBackground : null }]}>
-                { boostAccounts.length > 0 &&
-                <View style={styles.favAndBoostContainer}>
-                    <View style={styles.paddingReverse}>
-                        <FontAwesome name={"retweet"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
-                        <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{boostAccounts.length}</Text>
-                    </View>
-                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
-                        {boostAccounts.map((account, i) => {
-                            if (i+1 > MAX_DISPLAY_IMAGE){
-                                return null;
-                            }
-                            emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
-                            return (
-                                <Image key={i} style={styles.photo} source={{ uri: account.avatar }} />
-                            );
-                        })
-                        }
-                        { boostAccounts.length > MAX_DISPLAY_IMAGE &&
-                            <Text style={{ color: theme.colors.grey0 }}>...</Text>
-                        }
-                    </View>
-                </View>
-                }
-                { favouriteAccounts.length > 0 &&
-                <View style={styles.favAndBoostContainer}>
-                    <View style={styles.paddingReverse}>
-                        <FontAwesome name={"star"} size={fontSize.text+6} color={theme.customColors.item.favourite} style={styles.icon}/>
-                        <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{favouriteAccounts.length}</Text>
-                    </View>
-                    <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
-                        {favouriteAccounts.map((account, i) => {
-                            if (i+1 > MAX_DISPLAY_IMAGE){
-                                return null;
-                            }
-                            emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
-                            return (
-                                <Image key={i} style={styles.photo} source={{ uri: account.avatar }} />
-                            );
-                        })
-                        }
-                        { favouriteAccounts.length > MAX_DISPLAY_IMAGE &&
-                            <Text style={{ color: theme.colors.grey0 }}>...</Text>
-                        }
-                    </View>
-                </View>
-                }
-                { reactions.length > 0 &&
-                reactions.map((reaction) => {
-                    return <View key={reaction.emoji + "_reaction"} style={styles.favAndBoostContainer}>
+                <Pressable
+                    onPress={() => { useDisplayImageLimit(!displayImageLimit) }}
+                >
+                    { boostAccounts.length > 0 &&
+                    <View style={styles.favAndBoostContainer}>
                         <View style={styles.paddingReverse}>
-                            { reaction.url && 
-                                <Image style={styles.reactionImg} source={{ uri: reaction.url }} />
-                            }
-                            { !reaction.url && 
-                                <Text style={[styles.reactionChar, { fontSize: fontSize.text }]}>{reaction.emoji}</Text>
-                            }
-                            <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{reaction.accounts.length}</Text>
+                            <FontAwesome name={"retweet"} size={fontSize.text+6} color={theme.customColors.item.boost} style={styles.icon}/>
+                            <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{boostAccounts.length}</Text>
                         </View>
-                        <View style={[styles.info, { flexDirection: "row", color: theme.colors.grey0 }]}>
-                            {reaction.accounts.map((account, i) => {
-                                if (i+1 > MAX_DISPLAY_IMAGE){
+                        <View style={[styles.imgContainer, { color: theme.colors.grey0 }]}>
+                            {boostAccounts.map((account, i) => {
+                                if (displayImageLimit && i+1 > MAX_DISPLAY_IMAGE){
                                     return null;
                                 }
                                 emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
@@ -97,22 +49,107 @@ const NotificationsRow = ({ item, current, actions, background, fontSize }) => {
                                 );
                             })
                             }
-                            { reactions.length > MAX_DISPLAY_IMAGE &&
-                            <Text style={{ color: theme.colors.grey0 }}>...</Text>
+                            { displayImageLimit && boostAccounts.length > MAX_DISPLAY_IMAGE &&
+                                <Text style={{ color: theme.colors.grey0 }}>...</Text>
                             }
                         </View>
                     </View>
-                    ;
-                })
-                }
-                <View style={styles.favAndBoostMessage}>
-                    <View style={styles.paddingEnd}></View>
-                    <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
-                        <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail" numberOfLines={4}>
-                            {boostAccountNames.concat(favouriteAccountNames).concat(reactionAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
-                        </Text>
-                    </CustomEmoji>
-                </View>
+                    }
+                    { !displayImageLimit &&
+                        <View style={styles.favAndBoostMessage}>
+                            <View style={styles.paddingEnd}></View>
+                            <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
+                                <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail">
+                                    { boostAccountNames.join(", ")}
+                                </Text>
+                            </CustomEmoji>
+                        </View>
+                    }   
+                    { favouriteAccounts.length > 0 &&
+                    <View style={styles.favAndBoostContainer}>
+                        <View style={styles.paddingReverse}>
+                            <FontAwesome name={"star"} size={fontSize.text+6} color={theme.customColors.item.favourite} style={styles.icon}/>
+                            <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{favouriteAccounts.length}</Text>
+                        </View>
+                        <View style={[styles.imgContainer, { color: theme.colors.grey0 }]}>
+                            {favouriteAccounts.map((account, i) => {
+                                if (displayImageLimit && i+1 > MAX_DISPLAY_IMAGE){
+                                    return null;
+                                }
+                                emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
+                                return (
+                                    <Image key={i} style={styles.photo} source={{ uri: account.avatar }} />
+                                );
+                            })
+                            }
+                            { displayImageLimit && favouriteAccounts.length > MAX_DISPLAY_IMAGE &&
+                                <Text style={{ color: theme.colors.grey0 }}>...</Text>
+                            }
+                        </View>
+                    </View>
+                    }
+                    { !displayImageLimit &&
+                        <View style={styles.favAndBoostMessage}>
+                            <View style={styles.paddingEnd}></View>
+                            <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
+                                <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail">
+                                    { favouriteAccountNames.join(", ")}
+                                </Text>
+                            </CustomEmoji>
+                        </View>
+                    }   
+                    { reactions.length > 0 &&
+                    reactions.map((reaction) => {
+                        return <View key={reaction.emoji + "_reaction"} style={styles.favAndBoostContainer}>
+                            <View style={styles.paddingReverse}>
+                                { reaction.url && 
+                                    <Image style={styles.reactionImg} source={{ uri: reaction.url }} />
+                                }
+                                { !reaction.url && 
+                                    <Text style={[styles.reactionChar, { fontSize: fontSize.text }]}>{reaction.emoji}</Text>
+                                }
+                                <Text style={[{ color: theme.colors.grey0 }, { fontSize: fontSize.text }, styles.count]}>{reaction.accounts.length}</Text>
+                            </View>
+                            <View style={[styles.imgContainer, { color: theme.colors.grey0 }]}>
+                                { reaction.accounts.map((account, i) => {
+                                    if (displayImageLimit && i+1 > MAX_DISPLAY_IMAGE){
+                                        return null;
+                                    }
+                                    emojis = Object.assign(emojis, emojisArrayToObject(account.emojis));
+                                    return (
+                                        <Image key={i} style={styles.photo} source={{ uri: account.avatar }} />
+                                    );
+                                })
+                                }
+                                { displayImageLimit && reactions.length > MAX_DISPLAY_IMAGE &&
+                                <Text style={{ color: theme.colors.grey0 }}>...</Text>
+                                }
+                            </View>
+                        </View>
+                        ;
+                    })
+                    }
+                    { !displayImageLimit &&
+                        <View style={styles.favAndBoostMessage}>
+                            <View style={styles.paddingEnd}></View>
+                            <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
+                                <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail">
+                                    { reactionAccountNames.join(", ")}
+                                </Text>
+                            </CustomEmoji>
+                        </View>
+                    }   
+                    <View style={styles.favAndBoostMessage}>
+                        <View style={styles.paddingEnd}></View>
+                        { displayImageLimit &&
+                        <CustomEmoji emojiStyle={{ width: fontSize.userNameEmoji, height: fontSize.userNameEmoji, resizeMode: "contain" }} style={styles.info} emojis={emojis}>
+                            <Text style={{ color: theme.colors.grey0, fontSize: fontSize.userName }} ellipsizeMode="tail" numberOfLines={4}>
+                                { boostAccountNames.concat(favouriteAccountNames).concat(reactionAccountNames).filter((x, i, self) => (self.indexOf(x) === i)).join(", ")}
+                            </Text>
+                        </CustomEmoji>
+                        }
+                    </View>
+                </Pressable>
                 <MastoRow item={status} current={current} actions={actions} background={background} fontSize={fontSize} />
             </View>
         );
@@ -180,12 +217,18 @@ const styles = StyleSheet.create({
     info:{
         flex: 1
     },
+    imgContainer: {
+        flex: 1,
+        flexWrap: "wrap",
+        flexDirection: "row",
+        alignItems: "stretch",
+    },
     favAndBoostContainer: {
         flex: 1,
         flexDirection: "row",
         borderWidth: 0,
-        height: 30,
-        marginTop: 2
+        marginTop: 2,
+        marginBottom: 6,
     },
     favAndBoostMessage: {
         flex: 1,
@@ -204,6 +247,8 @@ const styles = StyleSheet.create({
     photo: {
         marginLeft: 2,
         marginRight: 2,
+        marginTop: 2,
+        marginBottom: 2,
         width: 30,
         height: 30,
         borderRadius: 4,

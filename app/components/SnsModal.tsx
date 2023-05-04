@@ -19,6 +19,11 @@ const list = [
         image: require("../../assets/logo/mastodon.png"),
         name: t("sns.pleroma")
     },
+    {
+        key: "bluesky",
+        image: require("../../assets/logo/bluesky.png"),
+        name: t("sns.bluesky")
+    }
 ];
 
 export default function SnsModal({ onSelect }){
@@ -29,7 +34,7 @@ export default function SnsModal({ onSelect }){
                 list.map((l, i) => (
                     <ListItem
                         key={i}
-                        bottomDivider={i < 2}
+                        bottomDivider={i < list.length-1}
                         onPress={() => onSelect(l.key)}
                     >
                         <Image style={styles.logo} source={l.image} />
@@ -45,12 +50,12 @@ export default function SnsModal({ onSelect }){
 
 const styles = StyleSheet.create({
     containerIos:{
-        width: 200,
-        height: 220
+        width: 220,
+        height: 240
     },
     containerAndroid:{
-        width: 220,
-        height: 250
+        width: 240,
+        height: 270
     },
     logo: {
         width:30,

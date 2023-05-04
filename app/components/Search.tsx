@@ -14,10 +14,14 @@ const initSearchData = {
 
 const index = [searchConst.TYPE_ACCOUNTS, searchConst.TYPE_HASHTAGS];
 
-export default function Search(){
+export default function Search({ current }){
     const { theme }= useContext(ThemeContext);
     const [searchValue, onChangeSearchValue] = useState("");
     const searchTypesArray = [t("search_accounts"), t("search_hashtags")];
+    if (current && current.sns === "bluesky") {
+        //delete t("search_hashtags")
+        searchTypesArray.splice(1, 1);
+    }
     const [searchTypeIndex, onChangeSearchTypeIndex] = useState(0);
     const [searchData, useSearchData] = useState(initSearchData);
     const [loading, useLoading] = useState(false);

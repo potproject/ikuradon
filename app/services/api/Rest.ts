@@ -1,4 +1,4 @@
-import generator from "megalodon";
+import generator from "./Generator";
 import { sns } from "../../constants/sns";
 
 export async function createApp(sns: sns, domain: string, client_name: string, scopes: string[], redirect_uris: string){
