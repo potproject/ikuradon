@@ -44,7 +44,7 @@ function TootScreen({ navigation, route }) {
     const reply = typeof route.params !== "undefined" ? route.params : null;
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
-    const [tootText, onChangeTootText] = useState(reply ? "@" + reply.acct + " " : "");
+    const [tootText, onChangeTootText] = useState(current.sns !== "bluesky" && reply ? "@" + reply.acct + " " : "");
     const [tootCursor, useTootCursor] = useState(0);
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);

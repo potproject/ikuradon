@@ -1,7 +1,10 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors } from "./Xrpc";
+import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
+import * as Session from "../../../util/session";
+
+const SESSION_EXPIREDTIMESEC = 60 * 60 * 1000;
 export default class blueSkyGenerator{
     baseUrl: string;
     accessToken: {
@@ -10,10 +13,21 @@ export default class blueSkyGenerator{
         email: string;
         accessJwt: string;
         refreshJwt: string;
+        createdAt: string; // ISO8601
     };
+
     constructor(baseUrl: string, accessToken: string = "") {
         this.baseUrl = baseUrl;
         this.accessToken = JSON.parse(accessToken);
+
+        // 1時間が経っている時に強制的にセッションを更新する
+        if (new Date().getTime() - new Date(this.accessToken.createdAt).getTime() > SESSION_EXPIREDTIMESEC) {
+            refreshSession(this.baseUrl, this.accessToken.refreshJwt).then((newSession) => {
+                console.log("Session Refreshed.");
+                this.accessToken = JSON.parse(newSession);
+                Session.refreshToken(newSession);
+            });
+        }
     }
 
     async createApp(client_name: string, params: { scopes: string[], redirect_uris: string }): Promise<OAuth.AppData> {
@@ -185,6 +199,24 @@ export default class blueSkyGenerator{
 
     async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
         const type = "app.bsky.feed.post";
+        let reply = undefined;
+        if (options.in_reply_to_id) {
+            const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, options.in_reply_to_id);
+            let root = thread;
+            while (root.parent) {
+                root = root.parent;
+            }
+            reply = {
+                root: {
+                    cid: root.post.cid,
+                    uri: root.post.uri,
+                },
+                parent: {
+                    cid: thread.post.cid,
+                    uri: thread.post.uri,
+                },
+            };
+        }
         const images = options.media_ids ? options.media_ids.map((data) => {
             return {
                 alt: "",
@@ -200,6 +232,7 @@ export default class blueSkyGenerator{
             createdAt: new Date().toISOString(),
             text: status,
             embed,
+            reply,
         },
         this.accessToken.did,
         );
@@ -244,6 +277,13 @@ export default class blueSkyGenerator{
         const ancestors = [];
         const descendants = [];
         const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        let parent = thread;
+        while (parent.parent) {
+            const post = parent.parent.post;
+            ancestors.unshift(convertStatuse(post, this.accessToken.did));
+            parent = parent.parent;
+        }
+
         if (thread && thread.replies.length > 0) {
             for (const reply of thread.replies) {
                 const post = reply.post;

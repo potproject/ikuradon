@@ -7,6 +7,7 @@ export async function createSession(baseUrl: string, identifier: string, passwor
         identifier,
         password,
     });
+    data.createdAt = new Date().toISOString();
     return JSON.stringify(data);
 }
 
@@ -19,6 +20,7 @@ export async function refreshSession(baseUrl:string, accessJwt: string): Promise
         console.log(e.response.data.message);
         throw e;
     });
+    data.createdAt = new Date().toISOString();
     return JSON.stringify(data);
 }
 
@@ -129,6 +131,16 @@ type recordType = {
         uri: string,
     } | undefined,
     text: string | undefined, // only for app.bsky.feed.post
+    reply: {
+        root: {
+            cid: string,
+            uri: string,
+        },
+        parent: {
+            cid: string,
+            uri: string,
+        },
+    } | undefined, // only for app.bsky.feed.post
     embed: embedType | undefined, // embed image. only for app.bsky.feed.post
 }
 
