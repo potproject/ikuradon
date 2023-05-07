@@ -3,6 +3,7 @@ import { Entity, OAuth, Response } from "megalodon";
 import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
+import { NOTIFICATION_TYPE } from "../../../util/notification";
 
 const SESSION_EXPIREDTIMESEC = 60 * 60 * 1000;
 export default class blueSkyGenerator{
@@ -163,7 +164,7 @@ export default class blueSkyGenerator{
                         avatar: notification.author.avatar,
                     }),
                     status: convertStatuse(post, this.accessToken.did),
-                    type: notification.reason === "like" ? "favourite" : "reblog",
+                    type: notification.reason === "like" ? NOTIFICATION_TYPE.FAVOURITE : NOTIFICATION_TYPE.BOOST,
                     created_at: notification.indexedAt,
 
                 }));
@@ -178,7 +179,28 @@ export default class blueSkyGenerator{
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
                     }),
-                    type: "follow",
+                    type: NOTIFICATION_TYPE.FOLLOW,
+                    created_at: notification.indexedAt,
+                }));
+            }
+            if (notification.reason === "reply" && notification.record.$type === "app.bsky.feed.post"){
+                const uri = notification.uri;
+                const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
+                const post = posts.find((p) => p.uri === uri);
+                if (!post) {
+                    continue;
+                }
+                mNotifications.push(MastodonAPI.Converter.notification({
+                    id: notification.uri,
+                    account: MastodonAPI.Converter.account({
+                        id: notification.author.did,
+                        username: notification.author.handle,
+                        acct: notification.author.handle,
+                        display_name: notification.author.displayName ?? "",
+                        avatar: notification.author.avatar,
+                    }),
+                    status: convertStatuse(post, this.accessToken.did),
+                    type: NOTIFICATION_TYPE.MENTION,
                     created_at: notification.indexedAt,
                 }));
             }
