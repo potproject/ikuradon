@@ -103,6 +103,8 @@ export async function getPosts(baseUrl: string, accessJwt: string, uris: string[
         headers: {
             Authorization: "Bearer " + accessJwt,
         },
+    }).catch((e) => {
+        throw e;
     });
 
     return data;
@@ -150,6 +152,24 @@ type embedType = {
         alt: string,
         image: any
     }[],
+}
+
+export async function listRecords(baseUrl: string, accessJwt: string, collection: collectionType, repo: string, cursor: string = "", limit: number = 20) {
+    const { data } = await axios.get(getEndpoint(baseUrl, "com.atproto.repo.listRecords"), {
+        params: {
+            collection,
+            repo,
+            limit,
+            cursor,
+        },
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    }).catch((e) => {
+        throw e;
+    }
+    );
+    return data;
 }
 
 export async function createRecord(baseUrl: string, accessJwt: string, collection: collectionType, record: recordType, repo: string){

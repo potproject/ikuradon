@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors } from "./Xrpc";
+import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 
@@ -19,7 +19,9 @@ export default class blueSkyGenerator{
     constructor(baseUrl: string, accessToken: string = "") {
         this.baseUrl = baseUrl;
         this.accessToken = JSON.parse(accessToken);
+    }
 
+    async refresh(){
         // 1時間が経っている時に強制的にセッションを更新する
         if (new Date().getTime() - new Date(this.accessToken.createdAt).getTime() > SESSION_EXPIREDTIMESEC) {
             refreshSession(this.baseUrl, this.accessToken.refreshJwt).then((newSession) => {
@@ -48,6 +50,7 @@ export default class blueSkyGenerator{
     }   
 
     async verifyAccountCredentials(): Promise<Response<Entity.Account>> {
+        await this.refresh();
         const profile = await getProfile(this.baseUrl, this.accessToken.accessJwt, this.accessToken.did);
         const account = MastodonAPI.Converter.account({
             id: profile.did,
@@ -68,6 +71,7 @@ export default class blueSkyGenerator{
         };
     }
     async getTimeline(type: "timeline"|"popular", options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+        await this.refresh();
         const getTimelineFn = type === "timeline" ? getTimeline : getPopular;
         const { cursor, feed } = await getTimelineFn(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit);
         let status = [];
@@ -108,6 +112,7 @@ export default class blueSkyGenerator{
     }
 
     async getHomeTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+        await this.refresh();
         return this.getTimeline("timeline", options);
     }
 
@@ -116,10 +121,12 @@ export default class blueSkyGenerator{
     }
 
     async getPublicTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+        await this.refresh();
         return this.getTimeline("popular", options);
     }
 
     async getNotifications(options: { limit?: number, max_id?: string, seenAt?: Date }): Promise<Response<Entity.Notification[]>> {
+        await this.refresh();
         const { cursor, notifications } = await listNotifications(this.baseUrl, this.accessToken.accessJwt, options.seenAt, options.max_id, options.limit);
         
         const uris = [];
@@ -190,7 +197,45 @@ export default class blueSkyGenerator{
     }
 
     async getFavourites(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
-        return [];
+        await this.refresh();
+        const type = "app.bsky.feed.like";
+        const { cursor, records } = await listRecords(this.baseUrl, this.accessToken.accessJwt, type, this.accessToken.did, options.max_id, options.limit);
+        const uris = [];
+        const status = [];
+        for (const { value } of records) {
+            if (value.$type !== "app.bsky.feed.like") {
+                continue;
+            }
+            if (!value.subject || !value.subject.uri || uris.includes(value.subject.uri)) {
+                continue;
+            }
+            uris.push(value.subject.uri);
+        }
+        // urisを20個ずつに分割
+        const uriChunks = [];
+        for (let i = 0; i < uris.length; i += 20) {
+            uriChunks.push(uris.slice(i, i + 20));
+        }
+        const posts = [];
+        for (const uris of uriChunks) {
+            const { posts: posts20 } = await getPosts(this.baseUrl, this.accessToken.accessJwt, uris);
+            posts.push(...posts20);
+        }
+        for (const { value } of records) {
+            const post = posts.find((p) => p.uri === value.subject.uri);
+            if (post) {
+                status.push(convertStatuse(posts.find((p) => p.uri === value.subject.uri), this.accessToken.did));
+            }
+        }
+        if (cursor) {
+            status[status.length - 1].cursor = cursor;
+        }
+        return {
+            data: status,
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getBookmarks(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
@@ -198,6 +243,7 @@ export default class blueSkyGenerator{
     }
 
     async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
+        await this.refresh();
         const type = "app.bsky.feed.post";
         let reply = undefined;
         if (options.in_reply_to_id) {
@@ -255,6 +301,7 @@ export default class blueSkyGenerator{
     }
 
     async getStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
             return {
@@ -274,6 +321,7 @@ export default class blueSkyGenerator{
     }
 
     async getStatusContext(uri: string): Promise<Response<Entity.Context>> {
+        await this.refresh();
         const ancestors = [];
         const descendants = [];
         const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, [uri]);
@@ -302,6 +350,7 @@ export default class blueSkyGenerator{
     }
 
     async deleteStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
             return {
@@ -324,6 +373,7 @@ export default class blueSkyGenerator{
     }
 
     async reblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
@@ -357,6 +407,7 @@ export default class blueSkyGenerator{
     }
 
     async unreblogStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0 || !posts[0].viewer.repost) {
@@ -383,6 +434,7 @@ export default class blueSkyGenerator{
     }
 
     async favouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
@@ -416,6 +468,7 @@ export default class blueSkyGenerator{
     }
 
     async unfavouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0 || !posts[0].viewer.like) {
@@ -458,6 +511,7 @@ export default class blueSkyGenerator{
     }
 
     async followAccount(did: string): Promise<Response<Entity.Relationship>> {
+        await this.refresh();
         const type = "app.bsky.graph.follow";
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
@@ -478,6 +532,7 @@ export default class blueSkyGenerator{
     }
 
     async unfollowAccount(did: string): Promise<Response<Entity.Relationship>> {
+        await this.refresh();
         const profile = await getProfile(this.baseUrl, this.accessToken.accessJwt, did);
         if (!profile) {
             return {
@@ -502,6 +557,7 @@ export default class blueSkyGenerator{
     }
 
     async getRelationships(dids: string[]): Promise<Response<Entity.Relationship[]>> {
+        await this.refresh();
         if (dids.length === 0) {
             return {
                 data: [],
@@ -553,6 +609,7 @@ export default class blueSkyGenerator{
     }
 
     async search(q: string, type: "accounts" | "hashtags" | "statuses"){
+        await this.refresh();
         let accounts = [];
         let statuses = [];
         let hashtags = [];
