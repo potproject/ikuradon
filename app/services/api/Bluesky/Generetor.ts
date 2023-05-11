@@ -88,6 +88,8 @@ export default class blueSkyGenerator{
                         display_name: reason.by.displayName ?? "",
                         avatar: reason.by.avatar,
                     }),
+                    in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
+                    in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
                     content: post.record.text,
                     replies_count: post.replyCount,
                     reblogs_count: post.repostCount,
@@ -686,6 +688,8 @@ function convertStatuse(post: any, did: string): Entity.Status {
             display_name: post.author.displayName ?? "",
             avatar: post.author.avatar,
         }),
+        in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
+        in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
         favourited,
         reblogged
     });
@@ -711,4 +715,10 @@ function embedImagesToMediaAttachments(embed){
 
 function deleteSharp(uri: string): string {
     return uri.split("#")[0];
+}
+
+// uri: at://did:plc:XXXXXXXX/app.bsky.feed.post/XXXXXXXX
+// did: did:plc:XXXXXXXX
+function postUriToDid(uri: string): string {
+    return uri.split("/")[2];
 }

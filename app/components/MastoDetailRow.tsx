@@ -30,6 +30,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
     // Toot data
     let {
         id,
+        in_reply_to_account_id,
         created_at,
         sensitive,
         spoiler_text,
@@ -136,6 +137,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
             )}
             <View style={styles.date}>
                 <Text style={[styles.dateText, { fontSize: fontSize.text }, { color: theme.colors.grey2 }]}>
+                    {in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {poll && <FontAwesome name={"comments"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {sensitive && (
                         <FontAwesome name={"exclamation"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />
