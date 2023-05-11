@@ -30,6 +30,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
     // Toot data
     let {
         id,
+        in_reply_to_account_id,
         created_at,
         sensitive,
         spoiler_text,
@@ -69,6 +70,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         tootID = reblog.id;
         ({
             created_at,
+            in_reply_to_account_id,
             sensitive,
             reblog,
             account,
@@ -109,6 +111,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                     )}
                 <View style={styles.date}>
                     <Text style={[styles.dateText, { fontSize: fontSize.dateText }, { color: theme.colors.grey2 }]}>
+                        { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {poll && <FontAwesome name={"comments"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {sensitive && (
                             <FontAwesome name={"exclamation"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />

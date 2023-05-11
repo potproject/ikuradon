@@ -5,7 +5,7 @@ import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
 
-const SESSION_EXPIREDTIMESEC = 60 * 60 * 1000;
+const SESSION_EXPIREDTIMESEC = 30 * 60 * 1000;
 export default class blueSkyGenerator{
     baseUrl: string;
     accessToken: {
@@ -23,7 +23,7 @@ export default class blueSkyGenerator{
     }
 
     async refresh(){
-        // 1時間が経っている時に強制的にセッションを更新する
+        // 30分が経っている時に強制的にセッションを更新する
         if (new Date().getTime() - new Date(this.accessToken.createdAt).getTime() > SESSION_EXPIREDTIMESEC) {
             refreshSession(this.baseUrl, this.accessToken.refreshJwt).then((newSession) => {
                 console.log("Session Refreshed.");
