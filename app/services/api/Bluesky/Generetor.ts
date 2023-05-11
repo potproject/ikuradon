@@ -5,6 +5,8 @@ import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
 
+import { appName } from "../../../constants/login";
+
 const SESSION_EXPIREDTIMESEC = 30 * 60 * 1000;
 export default class blueSkyGenerator{
     baseUrl: string;
@@ -301,6 +303,7 @@ export default class blueSkyGenerator{
             $type: type,
             createdAt: new Date().toISOString(),
             text: status,
+            via: appName,
             embed,
             reply,
         },
@@ -412,6 +415,7 @@ export default class blueSkyGenerator{
         const type = "app.bsky.feed.repost";
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
+            via: appName,
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -473,6 +477,7 @@ export default class blueSkyGenerator{
         const type = "app.bsky.feed.like";
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
+            via: appName,
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -539,6 +544,7 @@ export default class blueSkyGenerator{
         const type = "app.bsky.graph.follow";
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
+            via: appName,
             createdAt: new Date().toISOString(),
             subject: did
         },
@@ -666,11 +672,17 @@ export default class blueSkyGenerator{
 function convertStatuse(post: any, did: string): Entity.Status {
     let favourited = false;
     let reblogged = false;
+    let application = null;
     if (post.viewer && post.viewer.like && post.viewer.like.includes(did)){
         favourited = true;
     }
     if (post.viewer && post.viewer.repost && post.viewer.repost.includes(did)){
         reblogged = true;
+    }
+    if (post.record && typeof post.record.via === "string"){
+        application = MastodonAPI.Converter.application({
+            name: post.record.via,
+        });
     }
     return MastodonAPI.Converter.status({
         id: post.uri,
@@ -691,7 +703,8 @@ function convertStatuse(post: any, did: string): Entity.Status {
         in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
         in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
         favourited,
-        reblogged
+        reblogged,
+        application,
     });
 
 }
