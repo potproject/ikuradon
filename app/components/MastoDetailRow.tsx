@@ -57,6 +57,8 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
     let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
+    // reply to you?
+    let replyToYou = in_reply_to_account_id === user_credentials.id;
     let tootID = id;
     let myself = user_credentials && user_credentials.acct === account.acct;
     const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
@@ -137,7 +139,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
             )}
             <View style={styles.date}>
                 <Text style={[styles.dateText, { fontSize: fontSize.text }, { color: theme.colors.grey2 }]}>
-                    {in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
+                    { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={replyToYou ? theme.colors.primary : theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {poll && <FontAwesome name={"comments"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {sensitive && (
                         <FontAwesome name={"exclamation"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />

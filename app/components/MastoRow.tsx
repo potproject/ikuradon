@@ -57,6 +57,9 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         actions;
     // Theme
     const { theme } = useContext(ThemeContext);
+    // reply to you?
+    let replyToYou = in_reply_to_account_id === user_credentials.id;
+    // reblog
     let reblogFlag = false;
     let rebloggedName = "";
     let reblogedImage = null;
@@ -111,7 +114,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                     )}
                 <View style={styles.date}>
                     <Text style={[styles.dateText, { fontSize: fontSize.dateText }, { color: theme.colors.grey2 }]}>
-                        { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
+                        { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={replyToYou ? theme.colors.primary : theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {poll && <FontAwesome name={"comments"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {sensitive && (
                             <FontAwesome name={"exclamation"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />
