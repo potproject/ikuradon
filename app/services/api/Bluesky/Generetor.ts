@@ -97,11 +97,11 @@ export default class blueSkyGenerator{
                     reblogs_count: post.repostCount,
                     favourites_count: post.likeCount,
                     created_at: post.indexedAt,
-                    reblog: convertStatuse(post, this.accessToken.did)
+                    reblog: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                 }));
                 continue;
             }
-            status.push(convertStatuse(post, this.accessToken.did));
+            status.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
         }
 
         if (cursor) {
@@ -167,7 +167,7 @@ export default class blueSkyGenerator{
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
                     }),
-                    status: convertStatuse(post, this.accessToken.did),
+                    status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: notification.reason === "like" ? NOTIFICATION_TYPE.FAVOURITE : NOTIFICATION_TYPE.BOOST,
                     created_at: notification.indexedAt,
 
@@ -203,7 +203,7 @@ export default class blueSkyGenerator{
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
                     }),
-                    status: convertStatuse(post, this.accessToken.did),
+                    status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: NOTIFICATION_TYPE.MENTION,
                     created_at: notification.indexedAt,
                 }));
@@ -250,7 +250,7 @@ export default class blueSkyGenerator{
         for (const { value } of records) {
             const post = posts.find((p) => p.uri === value.subject.uri);
             if (post) {
-                status.push(convertStatuse(posts.find((p) => p.uri === value.subject.uri), this.accessToken.did));
+                status.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
             }
         }
         if (cursor) {
@@ -340,7 +340,7 @@ export default class blueSkyGenerator{
         }
         const post = posts[0];
         return {
-            data: convertStatuse(post, this.accessToken.did),
+            data: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
             status: 200,
             statusText: "",
             headers: {},
@@ -355,14 +355,14 @@ export default class blueSkyGenerator{
         let parent = thread;
         while (parent.parent) {
             const post = parent.parent.post;
-            ancestors.unshift(convertStatuse(post, this.accessToken.did));
+            ancestors.unshift(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
             parent = parent.parent;
         }
 
         if (thread && thread.replies.length > 0) {
             for (const reply of thread.replies) {
                 const post = reply.post;
-                descendants.push(convertStatuse(post, this.accessToken.did));
+                descendants.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
             }
         }
         return {
@@ -392,7 +392,7 @@ export default class blueSkyGenerator{
         const rkey = post.uri.split("/").pop();
         await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
         return {
-            data: convertStatuse(post, this.accessToken.did),
+            data: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
             status: 200,
             statusText: "",
             headers: {},
@@ -424,7 +424,7 @@ export default class blueSkyGenerator{
         },
         this.accessToken.did,
         );
-        const data = convertStatuse(post, this.accessToken.did);
+        const data = await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did);
         data.reblogged = true;
         return {
             data,
@@ -451,7 +451,7 @@ export default class blueSkyGenerator{
         const rkey = post.viewer.repost.split("/").pop();
 
         await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
-        const data = convertStatuse(post, this.accessToken.did);
+        const data = await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did);
         data.reblogged = false;
         return {
             data,
@@ -486,7 +486,7 @@ export default class blueSkyGenerator{
         },
         this.accessToken.did,
         );
-        const data = convertStatuse(post, this.accessToken.did);
+        const data = await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did);
         data.favourited = true;
         return {
             data,
@@ -513,7 +513,7 @@ export default class blueSkyGenerator{
         const rkey = post.viewer.like.split("/").pop();
 
         await deleteRecord(this.baseUrl, this.accessToken.accessJwt, type, rkey, this.accessToken.did);
-        const data = convertStatuse(post, this.accessToken.did);
+        const data = await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did);
         data.favourited = false;
         return {
             data,
@@ -669,14 +669,33 @@ export default class blueSkyGenerator{
     }
 }
 
-function convertStatuse(post: any, did: string): Entity.Status {
+async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, post: any, myDid: string): Promise<Entity.Status> {
+    let status = convertStatuse(post, myDid);
+    if (post.embed && post.embed.$type === "app.bsky.embed.record#view"){
+        status = await addQuotePost(baseUrl, accessJWT, status, post.embed.record.uri, myDid);
+    }
+    return status;
+}
+
+async function addQuotePost(baseUrl: string, accessJWT: string, status: Entity.Status, quoteDid: string, myDid: string): Promise<Entity.Status> {
+    const { posts } = await getPosts(baseUrl, accessJWT, [quoteDid]);
+    if (posts.length === 0) {
+        return Object.assign({}, status);
+    }
+    const quotePost = posts[0];
+    status.reblog = convertStatuse(quotePost, myDid);
+    status.quote = true;
+    return Object.assign({}, status);
+}
+
+function convertStatuse(post: any, myDid: string): Entity.Status {
     let favourited = false;
     let reblogged = false;
     let application = null;
-    if (post.viewer && post.viewer.like && post.viewer.like.includes(did)){
+    if (post.viewer && post.viewer.like && post.viewer.like.includes(myDid)){
         favourited = true;
     }
-    if (post.viewer && post.viewer.repost && post.viewer.repost.includes(did)){
+    if (post.viewer && post.viewer.repost && post.viewer.repost.includes(myDid)){
         reblogged = true;
     }
     if (post.record && typeof post.record.via === "string"){
