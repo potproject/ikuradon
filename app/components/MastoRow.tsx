@@ -182,6 +182,12 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 />
                             </View>
                         )}
+                        { quote && reblog && (
+                            <View style={styles.quote}>
+                                <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
+                            </View>
+                        )
+                        }
                         { emoji_reactions && emoji_reactions.length > 0 && (
                             <View style={styles.reactionsContainer}>
                                 {
@@ -205,12 +211,6 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 }
                             </View>
                         )}
-                        { quote && reblog && (
-                            <View style={styles.quote}>
-                                <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
-                            </View>
-                        )
-                        }
                         <View style={styles.item}>
                             <Reply
                                 id={id}

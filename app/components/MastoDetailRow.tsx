@@ -25,6 +25,7 @@ import { icon } from "../constants/visibility";
 import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 import Reaction from "./item/Reaction";
 import { accountURLMigrate, urlMigrate } from "../util/account";
+import MastoRow from "./MastoRow";
 
 const MastoDetailRow = ({ item, current, actions, background, fontSize, openStickerData = {} }) => {
     // Toot data
@@ -50,6 +51,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
         poll,
         application,
         emoji_reactions,
+        quote,
     } = item;
     // current
     let { user_credentials, domain, sns } = current;
@@ -119,6 +121,12 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={OpenImageViewerAction} />
                 </View>
             )}
+            { quote && reblog && (
+                <View style={styles.quote}>
+                    <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
+                </View>
+            )
+            }
             {emoji_reactions && emoji_reactions.length > 0 && (
                 <View style={styles.reactionsContainer}>
                     {emoji_reactions.map((emoji_reaction) => {
@@ -364,6 +372,17 @@ const styles = StyleSheet.create({
         height: 18,
         marginRight: 5,
         alignSelf: "center",
+    },
+    quote:{
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+        borderRadius: 6,
+        marginTop: 5,
+        marginLeft: 68,
+        marginBottom: 10,
+        marginRight: 10,
+        padding: 2,
     }
 });
 export default memo(MastoDetailRow, (p, n) => {
