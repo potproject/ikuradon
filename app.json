@@ -3,7 +3,7 @@
     "name": "ikuradon",
     "description": "ikuradon - Mastodon Client App",
     "slug": "potproject-ikuradon",
-    "version": "4.0.0-beta",
+    "version": "3.99.2",
     "platforms": [
       "android",
       "ios"
