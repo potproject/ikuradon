@@ -30,6 +30,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
     // Toot data
     let {
         id,
+        in_reply_to_account_id,
         created_at,
         sensitive,
         spoiler_text,
@@ -48,6 +49,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         emojis,
         poll,
         emoji_reactions,
+        quote,
     } = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance, sns } = current;
@@ -56,12 +58,15 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         actions;
     // Theme
     const { theme } = useContext(ThemeContext);
+    // reply to you?
+    let replyToYou = in_reply_to_account_id === user_credentials.id;
+    // reblog
     let reblogFlag = false;
     let rebloggedName = "";
     let reblogedImage = null;
     let reblogEmojis = [];
     let tootID = id;
-    if (reblog) {
+    if (reblog && !quote) {
         reblogFlag = true;
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogedImage = account.avatar;
@@ -69,6 +74,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         tootID = reblog.id;
         ({
             created_at,
+            in_reply_to_account_id,
             sensitive,
             reblog,
             account,
@@ -84,6 +90,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
             visibility,
             emojis,
             poll,
+            quote,
         } = reblog);
     }
     const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
@@ -109,6 +116,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                     )}
                 <View style={styles.date}>
                     <Text style={[styles.dateText, { fontSize: fontSize.dateText }, { color: theme.colors.grey2 }]}>
+                        { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={replyToYou ? theme.colors.primary : theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {poll && <FontAwesome name={"comments"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                         {sensitive && (
                             <FontAwesome name={"exclamation"} size={fontSize.dateText} color={theme.colors.grey0} style={{ marginRight: 5 }} />
@@ -174,6 +182,12 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 />
                             </View>
                         )}
+                        { quote && reblog && (
+                            <View style={styles.quote}>
+                                <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
+                            </View>
+                        )
+                        }
                         { emoji_reactions && emoji_reactions.length > 0 && (
                             <View style={styles.reactionsContainer}>
                                 {
@@ -397,6 +411,16 @@ const styles = StyleSheet.create({
         marginRight: 5,
         alignSelf: "center"
     },
+    quote:{
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+        borderRadius: 6,
+        marginTop: 5,
+        marginBottom: 10,
+        marginRight: 10,
+        padding: 2,
+    }
 });
 export default memo(MastoRow, (p, n) => {
     // TODO: boostもmemoしたい

@@ -33,6 +33,20 @@ export default {
     setting_visible_federal: "Do not show Federal Timeline",
     setting_visible_notifications: "Do not show Notifications Timeline",
 
+    navigation_home: "Home",
+    navigation_local: "Local",
+    navigation_federal: "Federal",
+    navigation_notifications: "Notifications",
+    navigation_setting: "Setting",
+
+    bluesky:{        
+        setting_visible_local: "Do not show My Timeline",
+        setting_visible_federal: "Do not show What's Hot Timeline",
+
+        navigation_local: "My",
+        navigation_federal: "What's Hot",
+    },
+
     setting_instance_uri: "URL",
     setting_instance_version: "Mastodon Version",
     setting_instance_editlink: "Edit profile",
@@ -71,13 +85,6 @@ export default {
     drawer_following: "Following",
     drawer_follower: "Followers",
     drawer_addaccount: "Add Account",
-
-    //Navigations
-    navigation_home: "Home",
-    navigation_local: "Local",
-    navigation_federal: "Federal",
-    navigation_notifications: "Notifications",
-    navigation_setting: "Setting",
 
     detail_toot: "Toot",
 

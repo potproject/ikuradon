@@ -25,11 +25,13 @@ import { icon } from "../constants/visibility";
 import { getMisskeyCustomEmojiReaction, isReactioned } from "../util/reactions";
 import Reaction from "./item/Reaction";
 import { accountURLMigrate, urlMigrate } from "../util/account";
+import MastoRow from "./MastoRow";
 
 const MastoDetailRow = ({ item, current, actions, background, fontSize, openStickerData = {} }) => {
     // Toot data
     let {
         id,
+        in_reply_to_account_id,
         created_at,
         sensitive,
         spoiler_text,
@@ -49,6 +51,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
         poll,
         application,
         emoji_reactions,
+        quote,
     } = item;
     // current
     let { user_credentials, domain, sns } = current;
@@ -56,6 +59,8 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
     let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
+    // reply to you?
+    let replyToYou = in_reply_to_account_id === user_credentials.id;
     let tootID = id;
     let myself = user_credentials && user_credentials.acct === account.acct;
     const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
@@ -116,6 +121,12 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     <MastoRowImage mediaAttachments={media_attachments} sensitive={sensitive} openImageViewer={OpenImageViewerAction} />
                 </View>
             )}
+            { quote && reblog && (
+                <View style={styles.quote}>
+                    <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
+                </View>
+            )
+            }
             {emoji_reactions && emoji_reactions.length > 0 && (
                 <View style={styles.reactionsContainer}>
                     {emoji_reactions.map((emoji_reaction) => {
@@ -136,6 +147,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
             )}
             <View style={styles.date}>
                 <Text style={[styles.dateText, { fontSize: fontSize.text }, { color: theme.colors.grey2 }]}>
+                    { in_reply_to_account_id && <FontAwesome name={"reply"} size={fontSize.dateText} color={replyToYou ? theme.colors.primary : theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {poll && <FontAwesome name={"comments"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />}
                     {sensitive && (
                         <FontAwesome name={"exclamation"} size={fontSize.text} color={theme.colors.grey0} style={{ marginRight: 5 }} />
@@ -360,6 +372,17 @@ const styles = StyleSheet.create({
         height: 18,
         marginRight: 5,
         alignSelf: "center",
+    },
+    quote:{
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+        borderRadius: 6,
+        marginTop: 5,
+        marginLeft: 68,
+        marginBottom: 10,
+        marginRight: 10,
+        padding: 2,
     }
 });
 export default memo(MastoDetailRow, (p, n) => {

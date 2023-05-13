@@ -12,10 +12,8 @@ import DropDownHolder from "../../services/DropDownHolder";
 
 import uuid from "react-native-uuid";
 import { sns as snsType } from "../../constants/sns";
-import { loginCallbackUrl } from "../../constants/login";
+import { appName, loginCallbackUrl } from "../../constants/login";
 import { createSession } from "../../services/api/Bluesky/Xrpc";
-
-const appName = "ikuradon";
 
 export function login(domain, sns: snsType) {
     return async dispatch => {

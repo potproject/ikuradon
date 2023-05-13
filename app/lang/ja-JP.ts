@@ -33,6 +33,20 @@ export default {
     setting_visible_federal: "連合タイムラインを非表示",
     setting_visible_notifications: "通知タイムラインを非表示",
 
+    navigation_home: "ホーム",
+    navigation_local: "ローカル",
+    navigation_federal: "連合",
+    navigation_notifications: "通知",
+    navigation_setting: "設定",
+
+    bluesky:{        
+        setting_visible_local: "自分タイムラインを非表示",
+        setting_visible_federal: "What's Hotタイムラインを非表示",
+
+        navigation_local: "自分",
+        navigation_federal: "What's Hot",
+    },
+
     setting_instance_uri: "URL",
     setting_instance_version: "バージョン",
     setting_instance_editlink: "プロフィールを編集",
@@ -72,13 +86,6 @@ export default {
     drawer_following: "フォロー",
     drawer_follower: "フォロワー",
     drawer_addaccount: "アカウント追加",
-
-    //ナビゲーション
-    navigation_home: "ホーム",
-    navigation_local: "ローカル",
-    navigation_federal: "連合",
-    navigation_notifications: "通知",
-    navigation_setting: "設定",
 
     detail_toot: "トゥート",
 

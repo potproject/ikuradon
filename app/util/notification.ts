@@ -1,6 +1,6 @@
 import emojis from "../example/emojis";
 
-const NOTIFICATION_TYPE = {
+export const NOTIFICATION_TYPE = {
     FAVOURITE: "favourite",
     BOOST: "reblog",
     EMOJIREACTION: "emoji_reaction", // Misskey Only!
