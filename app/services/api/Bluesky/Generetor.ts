@@ -680,12 +680,12 @@ async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, p
 async function addQuotePost(baseUrl: string, accessJWT: string, status: Entity.Status, quoteDid: string, myDid: string): Promise<Entity.Status> {
     const { posts } = await getPosts(baseUrl, accessJWT, [quoteDid]);
     if (posts.length === 0) {
-        return Object.assign({}, status);
+        return status;
     }
     const quotePost = posts[0];
     status.reblog = convertStatuse(quotePost, myDid);
     status.quote = true;
-    return Object.assign({}, status);
+    return JSON.parse(JSON.stringify(status));
 }
 
 function convertStatuse(post: any, myDid: string): Entity.Status {

@@ -49,6 +49,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
         emojis,
         poll,
         emoji_reactions,
+        quote,
     } = item;
     // current
     let { user_credentials, domain, access_token, notification_count, instance, sns } = current;
@@ -65,7 +66,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
     let reblogedImage = null;
     let reblogEmojis = [];
     let tootID = id;
-    if (reblog) {
+    if (reblog && !quote) {
         reblogFlag = true;
         rebloggedName = account.display_name !== "" ? account.display_name : account.username;
         reblogedImage = account.avatar;
@@ -89,6 +90,7 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
             visibility,
             emojis,
             poll,
+            quote,
         } = reblog);
     }
     const reactioned = sns === "misskey" && isReactioned(emoji_reactions);
@@ -203,6 +205,12 @@ const MastoRow = ({ item, current, actions, background, fontSize, openStickerDat
                                 }
                             </View>
                         )}
+                        { quote && reblog && (
+                            <View style={styles.quote}>
+                                <MastoRow item={reblog} current={current} actions={actions} background={background} fontSize={fontSize} openStickerData={openStickerData} />
+                            </View>
+                        )
+                        }
                         <View style={styles.item}>
                             <Reply
                                 id={id}
@@ -403,6 +411,16 @@ const styles = StyleSheet.create({
         marginRight: 5,
         alignSelf: "center"
     },
+    quote:{
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+        borderRadius: 6,
+        marginTop: 5,
+        marginBottom: 10,
+        marginRight: 10,
+        padding: 2,
+    }
 });
 export default memo(MastoRow, (p, n) => {
     // TODO: boostもmemoしたい
