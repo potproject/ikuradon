@@ -680,8 +680,14 @@ export default class blueSkyGenerator{
 
 async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, post: any, myDid: string): Promise<Entity.Status> {
     let status = convertStatuse(post, myDid);
-    if (post.embed && post.embed.$type === "app.bsky.embed.record#view"){
-        status = await addQuotePost(baseUrl, accessJWT, status, post.embed.record.uri, myDid);
+    if (post.embed && (post.embed.$type === "app.bsky.embed.record#view" || post.embed.$type === "app.bsky.embed.recordWithMedia#view")) {
+        let uri: string;
+        if (post.embed.$type === "app.bsky.embed.record#view"){
+            uri = post.embed.record.uri;
+        } else if (post.embed.$type === "app.bsky.embed.recordWithMedia#view"){
+            uri = post.embed.record.record.uri;
+        }
+        status = await addQuotePost(baseUrl, accessJWT, status, uri, myDid);
     }
     return status;
 }
@@ -741,6 +747,17 @@ function embedImagesToMediaAttachments(embed: { $type: string; images: any; }){
     let mediaAttachments = [];
     if (embed && embed.$type === "app.bsky.embed.images#view"){
         for (const img of embed.images) {
+            mediaAttachments.push(MastodonAPI.Converter.attachment({
+                id: img.fullsize,
+                type: "image",
+                url: img.fullsize,
+                preview_url: img.thumb,
+                remote_url: img.fullsize,
+            }));
+        }
+    }
+    if (embed && embed.$type === "app.bsky.embed.recordWithMedia#view"){
+        for (const img of embed.media.images) {
             mediaAttachments.push(MastodonAPI.Converter.attachment({
                 id: img.fullsize,
                 type: "image",
