@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 const MainReducerSelector = (state: RootState) => state.mainReducer;
 const reducerSelector = (state: RootState) => ({ 
+    current: state.currentUserReducer,
     streaming: state.streamingReducer,
     config: state.configReducer
 });
@@ -22,7 +23,7 @@ const Tab = createBottomTabNavigator();
 export default function TimelineNavigator() {
     const { home, local, federal, notifications } = useSelector(MainReducerSelector);
     const { theme } = useContext(ThemeContext);
-    const { streaming, config } = useSelector(reducerSelector);
+    const { current, streaming, config } = useSelector(reducerSelector);
     const { invisible } = config;
     return (
         <Tab.Navigator tabBarOptions={{
@@ -43,7 +44,7 @@ export default function TimelineNavigator() {
             { !invisible.local &&
             <Tab.Screen name={RouterName.Timeline_Local} component={TimelineScreen} 
                 options={{
-                    tabBarLabel: t("navigation_local"),
+                    tabBarLabel: current.sns === "bluesky" ? t("bluesky.navigation_local"): t("navigation_local"),
                     tabBarIcon: ({ color }) => (<ItemTabBar name={"users"} badgeCount={local.newArrival} streamBadge={streaming.local} color={color} size={22} />),
                 }} 
             />
@@ -51,7 +52,7 @@ export default function TimelineNavigator() {
             { !invisible.federal &&
             <Tab.Screen name={RouterName.Timeline_Federal} component={TimelineScreen} 
                 options={{
-                    tabBarLabel: t("navigation_federal"),
+                    tabBarLabel: current.sns === "bluesky" ? t("bluesky.navigation_federal"): t("navigation_federal"),
                     tabBarIcon: ({ color }) => (<ItemTabBar type={"federal"} name={"globe"} badgeCount={federal.newArrival} streamBadge={streaming.federal} color={color} size={26} />),
                 }} 
             />

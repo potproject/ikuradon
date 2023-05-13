@@ -104,6 +104,18 @@ export async function getPostThread(baseUrl: string, accessJwt: string, uri: str
     return data;
 }
 
+export async function getAuthorFeed(baseUrl: string, accessJwt: string, did: string, cursor: string = "", limit: number = 20) {
+    const params : Atproto.AppBskyFeedGetAuthorFeed.QueryParams = { actor: did, limit, cursor };
+    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getAuthorFeed"), {
+        params,
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    }) as Atproto.AppBskyFeedGetAuthorFeed.Response;
+
+    return data;
+}
+
 type collectionType = "app.bsky.feed.like" | "app.bsky.feed.repost" | "app.bsky.feed.post";
 type recordType = {
     $type: collectionType,

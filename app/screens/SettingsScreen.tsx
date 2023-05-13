@@ -79,7 +79,7 @@ function SettingsScreen() {
                 </ListItem>
                 <ListItem bottomDivider>
                     <ListItem.Content>
-                        <ListItem.Title>{t("setting_visible_local")}</ListItem.Title>
+                        <ListItem.Title>{current.sns === "bluesky" ? t("bluesky.setting_visible_local") :  t("setting_visible_local")}</ListItem.Title>
                     </ListItem.Content>
                     <Switch
                         onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("local", value))}
@@ -88,7 +88,7 @@ function SettingsScreen() {
                 </ListItem>
                 <ListItem bottomDivider>
                     <ListItem.Content>
-                        <ListItem.Title>{t("setting_visible_federal")}</ListItem.Title>
+                        <ListItem.Title>{current.sns === "bluesky" ? t("bluesky.setting_visible_federal") :  t("setting_visible_federal")}</ListItem.Title>
                     </ListItem.Content>
                     <Switch
                         onValueChange={value => invisibleCheck(value) && dispatch(setInvisibleTimeline("federal", value))}

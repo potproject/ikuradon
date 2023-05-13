@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
-import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
+import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
@@ -73,10 +73,18 @@ export default class blueSkyGenerator{
             headers: {},
         };
     }
-    async getTimeline(type: "timeline"|"popular", options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
+    async getTimeline(type: "timeline"|"popular"|"authorFeed", options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
         await this.refresh();
-        const getTimelineFn = type === "timeline" ? getTimeline : getPopular;
-        const { cursor, feed } = await getTimelineFn(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit);
+        let cursor: any, feed: any;
+
+        if (type === "popular") {
+            ({ cursor, feed } = await getPopular(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit));
+        } else if (type === "authorFeed") {
+            ({ cursor, feed } = await getAuthorFeed(this.baseUrl, this.accessToken.accessJwt, this.accessToken.did, options.max_id, options.limit));
+        } else {
+            ({ cursor, feed } = await getTimeline(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit));
+        }
+
         let status = [];
         for (const { post, reason } of feed) {
             if (reason && reason.$type === "app.bsky.feed.defs#reasonRepost") {
@@ -122,7 +130,8 @@ export default class blueSkyGenerator{
     }
 
     async getLocalTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
-        return [];
+        await this.refresh();
+        return this.getTimeline("authorFeed", options);
     }
 
     async getPublicTimeline(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
@@ -728,7 +737,7 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
 
 }
 
-function embedImagesToMediaAttachments(embed){
+function embedImagesToMediaAttachments(embed: { $type: string; images: any; }){
     let mediaAttachments = [];
     if (embed && embed.$type === "app.bsky.embed.images#view"){
         for (const img of embed.images) {
