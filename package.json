@@ -11,8 +11,9 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "jest --coverage",
-    "build:ios": "eas build --platform ios",
-    "submit:ios": "eas submit --platform ios"
+    "build:ios": "eas build --platform ios --profile production",
+    "submit:ios": "eas submit --platform ios --latest",
+    "update": "eas update"
   },
   "jest": {
     "preset": "jest-expo",
@@ -59,6 +60,7 @@
     "expo-localization": "~14.1.1",
     "expo-notifications": "~0.18.1",
     "expo-splash-screen": "~0.18.2",
+    "expo-updates": "~0.16.4",
     "expo-web-browser": "~12.1.1",
     "he": "^1.2.0",
     "https-browserify": "^1.0.0",
