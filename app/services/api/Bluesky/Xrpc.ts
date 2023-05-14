@@ -120,12 +120,13 @@ type collectionType = "app.bsky.feed.like" | "app.bsky.feed.repost" | "app.bsky.
 type recordType = {
     $type: collectionType,
     createdAt: string,
-    subject: {
+    subject?: {
         cid: string,
         uri: string,
-    } | undefined,
-    text: string | undefined, // only for app.bsky.feed.post
-    reply: {
+    },
+    via?: string, // unofficial field
+    text?: string, // only for app.bsky.feed.post
+    reply?: {
         root: {
             cid: string,
             uri: string,
@@ -134,8 +135,8 @@ type recordType = {
             cid: string,
             uri: string,
         },
-    } | undefined, // only for app.bsky.feed.post
-    embed: embedType | undefined, // embed image. only for app.bsky.feed.post
+    }, // only for app.bsky.feed.post
+    embed?: embedType, // embed image. only for app.bsky.feed.post
 }
 
 type embedType = {

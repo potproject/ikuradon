@@ -1,9 +1,11 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
+import * as Atproto from "@atproto/api";
 import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
+import TaskQueue from "../../../util/taskQueue";
 
 import { appName } from "../../../constants/login";
 
@@ -27,11 +29,10 @@ export default class blueSkyGenerator{
     async refresh(){
         // 30分が経っている時に強制的にセッションを更新する
         if (new Date().getTime() - new Date(this.accessToken.createdAt).getTime() > SESSION_EXPIREDTIMESEC) {
-            refreshSession(this.baseUrl, this.accessToken.refreshJwt).then((newSession) => {
-                console.log("Session Refreshed.");
-                this.accessToken = JSON.parse(newSession);
-                Session.refreshToken(newSession);
-            });
+            const newSession = await refreshSession(this.baseUrl, this.accessToken.refreshJwt);
+            console.log("Session Refreshed.");
+            this.accessToken = JSON.parse(newSession);
+            Session.refreshToken(newSession);
         }
     }
 
@@ -86,31 +87,41 @@ export default class blueSkyGenerator{
         }
 
         let status = [];
-        for (const { post, reason } of feed) {
+        const queue = new TaskQueue(20, 30);
+        for (let i = 0; i < feed.length; i++) {
+            const { post, reason } = feed[i];
             if (reason && reason.$type === "app.bsky.feed.defs#reasonRepost") {
-                status.push(MastodonAPI.Converter.status({
-                    id: post.uri + "#repost-for-" + reason.by.did,
-                    uri: post.uri,
-                    account: MastodonAPI.Converter.account({
-                        id: reason.by.did,
-                        username: reason.by.handle,
-                        acct: reason.by.handle,
-                        display_name: reason.by.displayName ?? "",
-                        avatar: reason.by.avatar,
-                    }),
-                    in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
-                    in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
-                    content: post.record.text,
-                    replies_count: post.replyCount,
-                    reblogs_count: post.repostCount,
-                    favourites_count: post.likeCount,
-                    created_at: post.indexedAt,
-                    reblog: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
-                }));
-                continue;
+                const task = async () => {
+                    status[i] = MastodonAPI.Converter.status({
+                        id: post.uri + "#repost-for-" + reason.by.did,
+                        uri: post.uri,
+                        account: MastodonAPI.Converter.account({
+                            id: reason.by.did,
+                            username: reason.by.handle,
+                            acct: reason.by.handle,
+                            display_name: reason.by.displayName ?? "",
+                            avatar: reason.by.avatar,
+                        }),
+                        in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
+                        in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
+                        content: post.record.text,
+                        replies_count: post.replyCount,
+                        reblogs_count: post.repostCount,
+                        favourites_count: post.likeCount,
+                        created_at: post.indexedAt,
+                        reblog: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
+                    });
+                };
+                queue.pushTask(task);
+            } else {
+                const task = async () => {
+                    status[i] = await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did);
+                };
+                queue.pushTask(task);
             }
-            status.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
         }
+
+        await queue.wait();
 
         if (cursor) {
             status[status.length - 1].cursor = cursor;
@@ -238,13 +249,14 @@ export default class blueSkyGenerator{
         const uris = [];
         const status = [];
         for (const { value } of records) {
-            if (value.$type !== "app.bsky.feed.like") {
+            const record = value as Atproto.AppBskyFeedLike.Record;
+            if (record.$type !== "app.bsky.feed.like") {
                 continue;
             }
-            if (!value.subject || !value.subject.uri || uris.includes(value.subject.uri)) {
+            if (uris.includes(record.subject.uri)) {
                 continue;
             }
-            uris.push(value.subject.uri);
+            uris.push(record.subject.uri);
         }
         // urisを20個ずつに分割
         const uriChunks = [];
@@ -256,12 +268,20 @@ export default class blueSkyGenerator{
             const { posts: posts20 } = await getPosts(this.baseUrl, this.accessToken.accessJwt, uris);
             posts.push(...posts20);
         }
+        const queue = new TaskQueue(20, 30);
         for (const { value } of records) {
-            const post = posts.find((p) => p.uri === value.subject.uri);
+            const record = value as Atproto.AppBskyFeedLike.Record;
+            const post = posts.find((p) => p.uri === record.subject.uri);
             if (post) {
-                status.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
+                const task = async () => {
+                    status.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
+                };
+                queue.pushTask(task);
             }
         }
+
+        await queue.wait();
+        
         if (cursor) {
             status[status.length - 1].cursor = cursor;
         }
@@ -274,7 +294,12 @@ export default class blueSkyGenerator{
     }
 
     async getBookmarks(options: { limit?: number, max_id?: string, since_id?: string }): Promise<Response<Entity.Status[]>> {
-        return [];
+        return {
+            data: [],
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
@@ -285,7 +310,7 @@ export default class blueSkyGenerator{
             const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, options.in_reply_to_id);
             let root = thread;
             while (root.parent) {
-                root = root.parent;
+                root = root.parent as typeof root;
             }
             reply = {
                 root: {
@@ -318,7 +343,7 @@ export default class blueSkyGenerator{
         },
         this.accessToken.did,
         );
-        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, uri);
+        const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
         if (posts.length === 0) {
             return {
                 data: {},
@@ -360,16 +385,16 @@ export default class blueSkyGenerator{
         await this.refresh();
         const ancestors = [];
         const descendants = [];
-        const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, [uri]);
+        const { thread } = await getPostThread(this.baseUrl, this.accessToken.accessJwt, uri);
         let parent = thread;
         while (parent.parent) {
-            const post = parent.parent.post;
+            const post = (parent.parent as typeof parent).post;
             ancestors.unshift(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
-            parent = parent.parent;
+            parent = parent.parent as typeof parent;
         }
 
-        if (thread && thread.replies.length > 0) {
-            for (const reply of thread.replies) {
+        if (thread && (thread.replies as typeof parent[]).length > 0) {
+            for (const reply of thread.replies as typeof parent[]) {
                 const post = reply.post;
                 descendants.push(await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did));
             }
@@ -429,7 +454,7 @@ export default class blueSkyGenerator{
             subject: {
                 cid: post.cid,
                 uri: post.uri,
-            }
+            },
         },
         this.accessToken.did,
         );
@@ -680,8 +705,14 @@ export default class blueSkyGenerator{
 
 async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, post: any, myDid: string): Promise<Entity.Status> {
     let status = convertStatuse(post, myDid);
-    if (post.embed && post.embed.$type === "app.bsky.embed.record#view"){
-        status = await addQuotePost(baseUrl, accessJWT, status, post.embed.record.uri, myDid);
+    if (post.embed && (post.embed.$type === "app.bsky.embed.record#view" || post.embed.$type === "app.bsky.embed.recordWithMedia#view")) {
+        let uri: string;
+        if (post.embed.$type === "app.bsky.embed.record#view"){
+            uri = post.embed.record.uri;
+        } else if (post.embed.$type === "app.bsky.embed.recordWithMedia#view"){
+            uri = post.embed.record.record.uri;
+        }
+        status = await addQuotePost(baseUrl, accessJWT, status, uri, myDid);
     }
     return status;
 }
@@ -741,6 +772,17 @@ function embedImagesToMediaAttachments(embed: { $type: string; images: any; }){
     let mediaAttachments = [];
     if (embed && embed.$type === "app.bsky.embed.images#view"){
         for (const img of embed.images) {
+            mediaAttachments.push(MastodonAPI.Converter.attachment({
+                id: img.fullsize,
+                type: "image",
+                url: img.fullsize,
+                preview_url: img.thumb,
+                remote_url: img.fullsize,
+            }));
+        }
+    }
+    if (embed && embed.$type === "app.bsky.embed.recordWithMedia#view"){
+        for (const img of embed.media.images) {
             mediaAttachments.push(MastodonAPI.Converter.attachment({
                 id: img.fullsize,
                 type: "image",
