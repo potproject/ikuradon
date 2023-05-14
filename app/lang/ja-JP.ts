@@ -167,6 +167,7 @@ export default {
     action_copy: "コピー",
     action_copyurl: "URLをコピー",
     action_reply: "返信",
+    action_openGoogleTranslateLink: "翻訳",
     action_hide: "隠す",
     action_delete: "削除",
 

@@ -167,6 +167,7 @@ export default {
     action_copy: "Copy",
     action_copyurl: "Copy URL",
     action_reply: "Reply",
+    action_openGoogleTranslateLink: "Translate",
     action_hide: "Hide",
     action_delete: "Delete",
 

@@ -781,7 +781,7 @@ function embedImagesToMediaAttachments(embed: { $type: string; images: any; }){
             }));
         }
     }
-    if (embed && embed.$type === "app.bsky.embed.recordWithMedia#view"){
+    if (embed && embed.$type === "app.bsky.embed.recordWithMedia#view" && embed.media.$type === "app.bsky.embed.images#view"){
         for (const img of embed.media.images) {
             mediaAttachments.push(MastodonAPI.Converter.attachment({
                 id: img.fullsize,

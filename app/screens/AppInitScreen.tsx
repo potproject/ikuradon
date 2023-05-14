@@ -16,7 +16,7 @@ function AppInitScreen({ updateTheme, navigation }) {
             <Image style={styles.logo} source={require("../../assets/image/icononly.png")} />
             <View>
                 <Text style={styles.text}>Loading...</Text>
-                <Text style={styles.text}>Version: { Constants.manifest.version }</Text>
+                <Text style={styles.text}>Version: { Constants.expoConfig.version }</Text>
             </View>
         </View>
     );

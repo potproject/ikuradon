@@ -252,7 +252,7 @@ function SettingsScreen() {
                 <ListItem bottomDivider>
                     <ListItem.Content>
                         <ListItem.Title>{t("setting_appversion")}</ListItem.Title>
-                        <ListItem.Subtitle>{Constants.manifest.version}</ListItem.Subtitle>
+                        <ListItem.Subtitle>{Constants.expoConfig.version}</ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>
                 <ListItem bottomDivider onPress={()=>dispatch(allClear())}>

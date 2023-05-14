@@ -4,6 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import t from "../../services/I18n";
 import { open as openUrl } from "../../util/url";
+import { openGoogleTranslateLink } from "../../util/translate";
 import { bodyFormat, bodyExtractionUrl } from "../../util/parser";
 import PropTypes from "prop-types";
 import { ThemeContext } from "react-native-elements";
@@ -12,9 +13,17 @@ function Action({ id, tootid, style, url, account_url, user, acct, image, body, 
     const { theme } = useContext(ThemeContext);
     const { showActionSheetWithOptions } = useActionSheet();
     const onOpenActionSheet = () => {
-        let cancelButtonIndex = 6;
-        let destructiveButtonIndex = 5;
-        let options = [t("action_openinbrowser"), t("action_openinbrowserprofile"), t("action_copy"), t("action_copyurl"), t("action_reply"), t("action_hide")];
+        let cancelButtonIndex = 7;
+        let destructiveButtonIndex = 6;
+        let options = [
+            t("action_openinbrowser"),
+            t("action_openinbrowserprofile"),
+            t("action_copy"),
+            t("action_copyurl"),
+            t("action_reply"),
+            t("action_openGoogleTranslateLink"),
+            t("action_hide")
+        ];
         // 自分のtootなら削除可能に
         if (myself) {
             options.push(t("action_delete"));
@@ -45,10 +54,13 @@ function Action({ id, tootid, style, url, account_url, user, acct, image, body, 
                     case 4: //reply
                         onReply(id, tootid, user, acct, image, body);
                         return;
-                    case 5: //Hide
+                    case 5: //Open Translate Link
+                        openGoogleTranslateLink(body);
+                        return;
+                    case 6: //Hide
                         onHide(id);
                         return;
-                    case 6: //Delete
+                    case 7: //Delete
                         if (myself) {
                             onDeleting(id);
                         }
