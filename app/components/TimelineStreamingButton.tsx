@@ -32,7 +32,7 @@ export default function TimelineStreamingButton({ type }){
     useEffect(() => {
         return () => {
             // UNMOUNT
-            streamingOff("mastodon", webSocketRef, dispatch, useEnabled, type);
+            streamingOff(sns, webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] UNMOUNTCLOSE:" + type);
         };
     }, []);

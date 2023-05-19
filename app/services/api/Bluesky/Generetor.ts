@@ -46,7 +46,17 @@ export default class blueSkyGenerator{
 
     async getInstance(): Promise<Response<Entity.Instance>> {
         return {
-            data: MastodonAPI.Converter.instance({} as any),
+            data: MastodonAPI.Converter.instance(
+                {
+                    uri: this.baseUrl,
+                    title: "Bluesky",
+                    description: "Bluesky",
+                    email: "",
+                    urls: {
+                        streaming_api: "DUMMY",
+                    },
+                }
+            ),
             status: 200,
             statusText: "",
             headers: {},
