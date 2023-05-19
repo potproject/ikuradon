@@ -241,8 +241,10 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     reactionChar: {
-        marginLeft: 2,
-        marginRight: 2,
+        marginLeft: 3,
+        marginRight: 4,
+        marginTop: 6,
+        marginBottom: 2,
     },
     photo: {
         marginLeft: 2,

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
 import * as Atproto from "@atproto/api";
-import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
+import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, getRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
@@ -177,7 +177,29 @@ export default class blueSkyGenerator{
                 if (!post) {
                     continue;
                 }
-                
+                if (notification.reason === "like" && typeof notification.record.emoji === "string"){
+                    const mNotification = MastodonAPI.Converter.notification({
+                        id: notification.uri,
+                        account: MastodonAPI.Converter.account({
+                            id: notification.author.did,
+                            username: notification.author.handle,
+                            acct: notification.author.handle,
+                            display_name: notification.author.displayName ?? "",
+                            avatar: notification.author.avatar,
+                        }),
+                        emoji: notification.record.emoji,
+                        status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
+                        type: NOTIFICATION_TYPE.EMOJIREACTION,
+                        created_at: notification.indexedAt,
+                    });
+                    mNotification.account.emojis = [MastodonAPI.Converter.emoji({
+                        shortcode: notification.record.emoji,
+                        url: notification.record.emoji,
+                    })];
+                    mNotification.emoji = notification.record.emoji;
+                    mNotifications.push(mNotification);
+                    continue;
+                }
                 mNotifications.push(MastodonAPI.Converter.notification({
                     id: notification.uri,
                     account: MastodonAPI.Converter.account({
@@ -190,8 +212,8 @@ export default class blueSkyGenerator{
                     status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: notification.reason === "like" ? NOTIFICATION_TYPE.FAVOURITE : NOTIFICATION_TYPE.BOOST,
                     created_at: notification.indexedAt,
-
                 }));
+
             }
             if (notification.reason === "follow" && notification.record.$type === "app.bsky.graph.follow"){
                 mNotifications.push(MastodonAPI.Converter.notification({
@@ -496,6 +518,10 @@ export default class blueSkyGenerator{
     }
 
     async favouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        return this.favouriteStatusWithEmoji(uri);
+    }
+
+    private async favouriteStatusWithEmoji(uri: string, emoji?: string): Promise<Response<Entity.Status>> {
         await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
@@ -512,6 +538,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            emoji: emoji,
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -565,12 +592,20 @@ export default class blueSkyGenerator{
         throw new Error("Method not implemented.");
     }
 
-    async createEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        throw new Error("Method not implemented.");
+    async createEmojiReaction(uri: string, emoji: string): Promise<Response<Entity.Status>> {
+        let status = await this.favouriteStatusWithEmoji(uri, emoji);
+        status.data.emoji_reactions = [{
+            name: emoji,
+            count: 1,
+            me: true,
+        }];
+        status.data.favourited = true;
+        status.data.emojis = [];
+        return status;
     }
 
     async deleteEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        throw new Error("Method not implemented.");
+        return this.unfavouriteStatus(id);
     }
 
     async followAccount(did: string): Promise<Response<Entity.Relationship>> {
@@ -657,7 +692,12 @@ export default class blueSkyGenerator{
     }
 
     async getInstanceCustomEmojis(): Promise<Response<Entity.Emoji[]>> {
-        return [];
+        return {
+            data: [],
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getPoll(id: string): Promise<Response<Entity.Poll>> {
@@ -713,6 +753,18 @@ async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, p
             uri = post.embed.record.record.uri;
         }
         status = await addQuotePost(baseUrl, accessJWT, status, uri, myDid);
+    }
+
+    if (status.favourited){
+        const rkey = post.viewer.like.split("/").pop();
+        const record = await getRecord(baseUrl, accessJWT, "app.bsky.feed.like", rkey, postUriToDid(post.viewer.like)) as Atproto.AppBskyFeedLike.Record;
+        if (record.value && record.value.$type === "app.bsky.feed.like" && typeof record.value.emoji === "string"){
+            status.emoji_reactions = [{
+                name: record.value.emoji,
+                count: 1,
+                me: true,
+            }];
+        }
     }
     return status;
 }

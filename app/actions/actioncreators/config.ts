@@ -48,7 +48,6 @@ export function setInvisibleTimeline(type, value) {
 }
 
 export function setTheme(value){
-    NavigationService.resetAndNavigate({ name: RouterName.Main });
     return { type: Config.CHANGE_THEME, theme: value }; 
 }
 

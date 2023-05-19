@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { Platform, StatusBar, StyleSheet, View, Appearance } from "react-native";
 import { ThemeProvider } from "react-native-elements";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
@@ -24,7 +24,8 @@ import TootScreen from "./app/screens/TootScreen";
 import SearchScreen from "./app/screens/SearchScreen";
 import t from "./app/services/I18n";
 
-import theme from "./app/themes/default";
+import defaultTheme from "./app/themes/default";
+import darkTheme from "./app/themes/dark";
 import AuthorizeScreen from "./app/screens/AuthorizeScreen";
 import NavigationService from "./app/services/NavigationService";
 import SettingsScreen from "./app/screens/SettingsScreen";
@@ -32,10 +33,13 @@ import SettingsThemesScreen from "./app/screens/SettingsThemesScreen";
 import DetailScreen from "./app/screens/DetailScreen";
 import ImageViewerScreen from "./app/screens/ImageViewerScreen";
 import createStore from "./app/store/store";
+import { getTheme } from "./app/util/theme";
 const Stack = createStackNavigator();
 
 export default function App(props) {
     const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+    const colorScheme = Appearance.getColorScheme();
+    const [theme, setTheme] = React.useState(colorScheme === "dark" ? darkTheme : defaultTheme);
     const store = createStore();
     // Load any resources or data that we need prior to rendering the app
     React.useEffect(() => {
@@ -46,6 +50,7 @@ export default function App(props) {
                     ...Ionicons.font,
                     "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
                 });
+                setTheme(await getTheme());
             } catch (e) {
                 // We might want to provide this error information to an error reporting service
                 console.warn(e);
@@ -66,7 +71,6 @@ export default function App(props) {
                 <ThemeProvider theme={theme}>
                     <ActionSheetProvider>
                         <ReduxProvider store={store}>
-                            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
                             <NavigationContainer ref={navigatorRef => {
                                 NavigationService.setTopLevelNavigator(navigatorRef);
                             }}>

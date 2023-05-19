@@ -168,6 +168,17 @@ export async function createRecord(baseUrl: string, accessJwt: string, collectio
     return data;
 }
 
+export async function getRecord(baseUrl: string, accessJwt: string, collection: collectionType, rkey: string, repo: string) {
+    const params : Atproto.ComAtprotoRepoGetRecord.QueryParams = { collection, rkey, repo };
+    const { data } = await axios.get(getEndpoint(baseUrl, "com.atproto.repo.getRecord"), {
+        params,
+        headers: {
+            Authorization: "Bearer " + accessJwt,
+        },
+    }) as Atproto.ComAtprotoRepoGetRecord.Response;
+    return data;
+}
+
 export async function deleteRecord(baseUrl: string, accessJwt: string, collection: collectionType, rkey: string, repo: string){
     const inputs: Atproto.ComAtprotoRepoDeleteRecord.InputSchema = { collection, rkey, repo };
     const { success } = await axios.post(getEndpoint(baseUrl, "com.atproto.repo.deleteRecord"), inputs, {

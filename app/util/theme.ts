@@ -5,25 +5,27 @@ import DarkTheme from "../themes/dark";
 import MikuGreenDarkTheme from "../themes/mikugreendark";
 import TootBlueDarkTheme from "../themes/tootbluedark";
 
-export function settingTheme(updateTheme, value){
-    switch (value){
+import * as Storage from "../util/storage";
+import * as CONST_Storage from "../constants/storage";
+
+export async function getTheme(){
+    const config = await Storage.getItem(CONST_Storage.Config);
+    let themeName = "default";
+    if (config !== null && typeof config.theme !== "undefined"){
+        themeName = config.theme;
+    }
+    switch (themeName){
         case "mikugreen":
-            updateTheme(MikuGreenTheme);
-            return;
+            return MikuGreenTheme;
         case "tootblue":
-            updateTheme(TootBlueTheme);
-            return;
+            return TootBlueTheme;
         case "dark":
-            updateTheme(DarkTheme);
-            return;
+            return DarkTheme;
         case "mikugreendark":
-            updateTheme(MikuGreenDarkTheme);
-            return;
+            return MikuGreenDarkTheme;
         case "tootbluedark":
-            updateTheme(TootBlueDarkTheme);
-            return;
+            return TootBlueDarkTheme;
         default:
-            updateTheme(defaultTheme);
-            return;
+            return defaultTheme;
     }
 }

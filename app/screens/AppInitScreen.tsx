@@ -6,10 +6,10 @@ import { withTheme } from "react-native-elements";
 
 import { appInit } from "../actions/actioncreators/appinit";
 
-function AppInitScreen({ updateTheme, navigation }) {
+function AppInitScreen() {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(appInit(updateTheme));
+        dispatch(appInit());
     }, []);
     return (
         <View style={styles.container}>
