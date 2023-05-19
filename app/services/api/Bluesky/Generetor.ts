@@ -76,6 +76,7 @@ export default class blueSkyGenerator{
             statuses_count: profile.postsCount,
             note: profile.description,
             avatar: profile.avatar,
+            url: generateProfileUrl(profile.handle),
         });
         return {
             data: account,
@@ -105,12 +106,14 @@ export default class blueSkyGenerator{
                     status[i] = MastodonAPI.Converter.status({
                         id: post.uri + "#repost-for-" + reason.by.did,
                         uri: post.uri,
+                        url: generatePostUrl(post.author.handle, post.cid),
                         account: MastodonAPI.Converter.account({
                             id: reason.by.did,
                             username: reason.by.handle,
                             acct: reason.by.handle,
                             display_name: reason.by.displayName ?? "",
                             avatar: reason.by.avatar,
+                            url: generateProfileUrl(reason.by.handle),
                         }),
                         in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
                         in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
@@ -196,6 +199,7 @@ export default class blueSkyGenerator{
                             acct: notification.author.handle,
                             display_name: notification.author.displayName ?? "",
                             avatar: notification.author.avatar,
+                            url: generateProfileUrl(notification.author.handle),
                         }),
                         emoji: notification.record.emoji,
                         status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
@@ -218,6 +222,7 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: notification.reason === "like" ? NOTIFICATION_TYPE.FAVOURITE : NOTIFICATION_TYPE.BOOST,
@@ -234,6 +239,7 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     type: NOTIFICATION_TYPE.FOLLOW,
                     created_at: notification.indexedAt,
@@ -254,6 +260,7 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: NOTIFICATION_TYPE.MENTION,
@@ -737,6 +744,7 @@ export default class blueSkyGenerator{
                     acct: actor.handle,
                     display_name: actor.displayName ?? "",
                     avatar: actor.avatar,
+                    url: generateProfileUrl(actor.handle),
                 });
             });
         }
@@ -808,6 +816,7 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
     return MastodonAPI.Converter.status({
         id: post.uri,
         uri: post.uri,
+        url: generatePostUrl(post.author.handle, post.uri),
         content: post.record.text,
         replies_count: post.replyCount,
         reblogs_count: post.repostCount,
@@ -820,6 +829,7 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
             acct: post.author.handle,
             display_name: post.author.displayName ?? "",
             avatar: post.author.avatar,
+            url: generateProfileUrl(post.author.handle),
         }),
         in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
         in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
@@ -866,4 +876,16 @@ function deleteSharp(uri: string): string {
 // did: did:plc:XXXXXXXX
 function postUriToDid(uri: string): string {
     return uri.split("/")[2];
+}
+
+// generate URL
+// TODO: これは公式のURLです。サードパーティPDSを使用している場合は異なる可能性があります
+
+const BLUESKY_SOCIAL = "bsky.app";
+export function generateProfileUrl(handle: string): string {
+    return `https://${BLUESKY_SOCIAL}/profile/${handle}`;
+}
+
+export function generatePostUrl(handle: string, uri: string): string {
+    return `https://${BLUESKY_SOCIAL}/profile/${handle}/post/${uri.split("/").pop()}`;
 }
