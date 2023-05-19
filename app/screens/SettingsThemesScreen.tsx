@@ -5,7 +5,6 @@ import { ListItem, Icon, ThemeContext, withTheme } from "react-native-elements";
 import t from "../services/I18n";
 
 import { setTheme } from "../actions/actioncreators/config";
-import { settingTheme } from "../util/theme";
 import { RootState } from "../reducers";
 const reducerSelector = (state: RootState) => ({
     config: state.configReducer
@@ -21,8 +20,8 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "default");
                     dispatch(setTheme("default"));
+
                 }}
             >
                 <ListItem.Content>
@@ -33,7 +32,6 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "mikugreen");
                     dispatch(setTheme("mikugreen"));
                 }}
             >
@@ -45,7 +43,6 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "tootblue");
                     dispatch(setTheme("tootblue"));
                 }}
             >
@@ -58,7 +55,6 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "dark");
                     dispatch(setTheme("dark"));
                 }}
             >
@@ -70,7 +66,6 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "mikugreendark");
                     dispatch(setTheme("mikugreendark"));
                 }}
             >
@@ -82,7 +77,6 @@ function SettingsThemesScreen({ updateTheme }) {
             <ListItem
                 bottomDivider
                 onPress={()=>{
-                    settingTheme(updateTheme, "tootbluedark");
                     dispatch(setTheme("tootbluedark"));
                 }}
             >

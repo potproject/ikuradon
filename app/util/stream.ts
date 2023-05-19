@@ -2,6 +2,7 @@ import * as CONST_API from "../constants/api";
 import { start, stop, receive } from "../actions/actioncreators/streaming";
 import { sns } from "../constants/sns";
 import MisskeyAPI from "megalodon/lib/src/misskey/api_client";
+import { newLoadingTimeline } from "../actions/actioncreators/main";
 
 
 const misskeyTypeMigration = {
@@ -11,7 +12,7 @@ const misskeyTypeMigration = {
 };
 
 export function streamSupported(sns: sns){
-    return sns === "mastodon" || sns === "misskey";
+    return sns === "mastodon" || sns === "misskey" || sns === "bluesky";
 }
 
 export function on(sns: sns, ref, dispatch, useEnabled, type, url){
@@ -20,6 +21,9 @@ export function on(sns: sns, ref, dispatch, useEnabled, type, url){
     }
     if (sns==="misskey"){
         return onMisskey(ref, dispatch, useEnabled, type, url);
+    }
+    if (sns==="bluesky"){
+        return onBluesky(ref, dispatch, useEnabled, type, url);
     }
 }
 
@@ -31,6 +35,9 @@ export function off(sns: sns, ref, dispatch, useEnabled, type){
     if (sns==="misskey"){
         return offMisskey(ref, dispatch, useEnabled, type);
     }
+    if (sns==="bluesky"){
+        return offBluesky(ref, dispatch, useEnabled, type);
+    }
 }
 
 export function getStreamingURL(sns: sns, streamingAPI, type, access_token){
@@ -39,6 +46,9 @@ export function getStreamingURL(sns: sns, streamingAPI, type, access_token){
     }
     if (sns==="misskey"){
         return getStreamingMisskeyURL(streamingAPI, access_token);
+    }
+    if (sns==="bluesky"){
+        return "DUMMY";
     }
 }
 
@@ -57,6 +67,24 @@ export function getStreamingMastodonURL(streamingAPI, type, access_token){
             break;
     }
     return streamingAPI + CONST_API.STREAMING_MASTODON.url + "?access_token=" + access_token + "&stream=" + stream;
+}
+
+function onBluesky(ref, dispatch, useEnabled, type, url){
+    ref.current = setInterval(() => {
+        dispatch(newLoadingTimeline(type, null, true, 20, false));
+    }, 10000);
+    console.log("[WS-Bluesky] OPEN:" + type);
+    dispatch(start(type));
+}
+
+export function offBluesky(ref, dispatch, useEnabled, type){
+    if (ref.current !== null){
+        clearInterval(ref.current);
+        ref.current = null;
+    }
+    dispatch(stop(type));
+    useEnabled(false);
+    console.log("[WS-Bluesky] CLOSE:" + type);
 }
 
 function onMastodon(ref, dispatch, useEnabled, type, url){

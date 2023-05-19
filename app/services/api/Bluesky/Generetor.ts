@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Entity, OAuth, Response } from "megalodon";
 import * as Atproto from "@atproto/api";
-import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
+import { refreshSession, getPopular, getProfile, getProfiles, getTimeline, listNotifications, getPosts, getPostThread, getAuthorFeed, createRecord, getRecord, deleteRecord, searchActors, listRecords } from "./Xrpc";
 import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
@@ -46,7 +46,17 @@ export default class blueSkyGenerator{
 
     async getInstance(): Promise<Response<Entity.Instance>> {
         return {
-            data: MastodonAPI.Converter.instance({} as any),
+            data: MastodonAPI.Converter.instance(
+                {
+                    uri: this.baseUrl,
+                    title: "Bluesky",
+                    description: "Bluesky",
+                    email: "",
+                    urls: {
+                        streaming_api: "DUMMY",
+                    },
+                }
+            ),
             status: 200,
             statusText: "",
             headers: {},
@@ -66,6 +76,7 @@ export default class blueSkyGenerator{
             statuses_count: profile.postsCount,
             note: profile.description,
             avatar: profile.avatar,
+            url: generateProfileUrl(profile.handle),
         });
         return {
             data: account,
@@ -95,12 +106,14 @@ export default class blueSkyGenerator{
                     status[i] = MastodonAPI.Converter.status({
                         id: post.uri + "#repost-for-" + reason.by.did,
                         uri: post.uri,
+                        url: generatePostUrl(post.author.handle, post.cid),
                         account: MastodonAPI.Converter.account({
                             id: reason.by.did,
                             username: reason.by.handle,
                             acct: reason.by.handle,
                             display_name: reason.by.displayName ?? "",
                             avatar: reason.by.avatar,
+                            url: generateProfileUrl(reason.by.handle),
                         }),
                         in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
                         in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
@@ -177,7 +190,30 @@ export default class blueSkyGenerator{
                 if (!post) {
                     continue;
                 }
-                
+                if (notification.reason === "like" && typeof notification.record.emoji === "string"){
+                    const mNotification = MastodonAPI.Converter.notification({
+                        id: notification.uri,
+                        account: MastodonAPI.Converter.account({
+                            id: notification.author.did,
+                            username: notification.author.handle,
+                            acct: notification.author.handle,
+                            display_name: notification.author.displayName ?? "",
+                            avatar: notification.author.avatar,
+                            url: generateProfileUrl(notification.author.handle),
+                        }),
+                        emoji: notification.record.emoji,
+                        status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
+                        type: NOTIFICATION_TYPE.EMOJIREACTION,
+                        created_at: notification.indexedAt,
+                    });
+                    mNotification.account.emojis = [MastodonAPI.Converter.emoji({
+                        shortcode: notification.record.emoji,
+                        url: notification.record.emoji,
+                    })];
+                    mNotification.emoji = notification.record.emoji;
+                    mNotifications.push(mNotification);
+                    continue;
+                }
                 mNotifications.push(MastodonAPI.Converter.notification({
                     id: notification.uri,
                     account: MastodonAPI.Converter.account({
@@ -186,12 +222,13 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: notification.reason === "like" ? NOTIFICATION_TYPE.FAVOURITE : NOTIFICATION_TYPE.BOOST,
                     created_at: notification.indexedAt,
-
                 }));
+
             }
             if (notification.reason === "follow" && notification.record.$type === "app.bsky.graph.follow"){
                 mNotifications.push(MastodonAPI.Converter.notification({
@@ -202,6 +239,7 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     type: NOTIFICATION_TYPE.FOLLOW,
                     created_at: notification.indexedAt,
@@ -222,6 +260,7 @@ export default class blueSkyGenerator{
                         acct: notification.author.handle,
                         display_name: notification.author.displayName ?? "",
                         avatar: notification.author.avatar,
+                        url: generateProfileUrl(notification.author.handle),
                     }),
                     status: await convertStatuseWithQuotePost(this.baseUrl, this.accessToken.accessJwt, post, this.accessToken.did),
                     type: NOTIFICATION_TYPE.MENTION,
@@ -496,6 +535,10 @@ export default class blueSkyGenerator{
     }
 
     async favouriteStatus(uri: string): Promise<Response<Entity.Status>> {
+        return this.favouriteStatusWithEmoji(uri);
+    }
+
+    private async favouriteStatusWithEmoji(uri: string, emoji?: string): Promise<Response<Entity.Status>> {
         await this.refresh();
         uri = deleteSharp(uri);
         const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [uri]);
@@ -512,6 +555,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            emoji: emoji,
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -565,12 +609,20 @@ export default class blueSkyGenerator{
         throw new Error("Method not implemented.");
     }
 
-    async createEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        throw new Error("Method not implemented.");
+    async createEmojiReaction(uri: string, emoji: string): Promise<Response<Entity.Status>> {
+        let status = await this.favouriteStatusWithEmoji(uri, emoji);
+        status.data.emoji_reactions = [{
+            name: emoji,
+            count: 1,
+            me: true,
+        }];
+        status.data.favourited = true;
+        status.data.emojis = [];
+        return status;
     }
 
     async deleteEmojiReaction(id: string, name: string): Promise<Response<Entity.Status>> {
-        throw new Error("Method not implemented.");
+        return this.unfavouriteStatus(id);
     }
 
     async followAccount(did: string): Promise<Response<Entity.Relationship>> {
@@ -657,7 +709,12 @@ export default class blueSkyGenerator{
     }
 
     async getInstanceCustomEmojis(): Promise<Response<Entity.Emoji[]>> {
-        return [];
+        return {
+            data: [],
+            status: 200,
+            statusText: "",
+            headers: {},
+        };
     }
 
     async getPoll(id: string): Promise<Response<Entity.Poll>> {
@@ -687,6 +744,7 @@ export default class blueSkyGenerator{
                     acct: actor.handle,
                     display_name: actor.displayName ?? "",
                     avatar: actor.avatar,
+                    url: generateProfileUrl(actor.handle),
                 });
             });
         }
@@ -713,6 +771,18 @@ async function convertStatuseWithQuotePost(baseUrl: string, accessJWT: string, p
             uri = post.embed.record.record.uri;
         }
         status = await addQuotePost(baseUrl, accessJWT, status, uri, myDid);
+    }
+
+    if (status.favourited){
+        const rkey = post.viewer.like.split("/").pop();
+        const record = await getRecord(baseUrl, accessJWT, "app.bsky.feed.like", rkey, postUriToDid(post.viewer.like)) as Atproto.AppBskyFeedLike.Record;
+        if (record.value && record.value.$type === "app.bsky.feed.like" && typeof record.value.emoji === "string"){
+            status.emoji_reactions = [{
+                name: record.value.emoji,
+                count: 1,
+                me: true,
+            }];
+        }
     }
     return status;
 }
@@ -746,6 +816,7 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
     return MastodonAPI.Converter.status({
         id: post.uri,
         uri: post.uri,
+        url: generatePostUrl(post.author.handle, post.uri),
         content: post.record.text,
         replies_count: post.replyCount,
         reblogs_count: post.repostCount,
@@ -758,6 +829,7 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
             acct: post.author.handle,
             display_name: post.author.displayName ?? "",
             avatar: post.author.avatar,
+            url: generateProfileUrl(post.author.handle),
         }),
         in_reply_to_account_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? postUriToDid(post.record.reply.parent.uri) : null,
         in_reply_to_id: post.record && post.record.reply && post.record.reply.parent && post.record.reply.parent.uri ? post.record.reply.parent.uri : null,
@@ -804,4 +876,16 @@ function deleteSharp(uri: string): string {
 // did: did:plc:XXXXXXXX
 function postUriToDid(uri: string): string {
     return uri.split("/")[2];
+}
+
+// generate URL
+// TODO: これは公式のURLです。サードパーティPDSを使用している場合は異なる可能性があります
+
+const BLUESKY_SOCIAL = "bsky.app";
+export function generateProfileUrl(handle: string): string {
+    return `https://${BLUESKY_SOCIAL}/profile/${handle}`;
+}
+
+export function generatePostUrl(handle: string, uri: string): string {
+    return `https://${BLUESKY_SOCIAL}/profile/${handle}/post/${uri.split("/").pop()}`;
 }

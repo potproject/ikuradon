@@ -10,7 +10,6 @@ import * as CurrentUser from "../actiontypes/currentuser";
 import * as RouterName from "../../constants/RouterName";
 import NavigationService from "../../services/NavigationService";
 import * as AppInit from "../actiontypes/appinit";
-import { settingTheme } from "../../util/theme";
 import { pull } from "../../util/push";
 import * as Rest from "../../services/api/Rest";
 import DropDownHolder from "../../services/DropDownHolder";
@@ -19,16 +18,12 @@ import { refreshSession } from "../../services/api/Bluesky/Xrpc";
 
 const AUTO_LOGIN = true; // Auto Login
 
-export function appInit(updateTheme) {
+export function appInit() {
     return async dispatch => {
         // config init load
         let config = await Storage.getItem(CONST_Storage.Config);
         if (config !== null) {
             await dispatch({ type: Config.CONFIG_LOAD, config });
-            // Theme init
-            if (typeof config.theme !== "undefined"){
-                settingTheme(updateTheme, config.theme);
-            }
         }
 
         // Push Notification load

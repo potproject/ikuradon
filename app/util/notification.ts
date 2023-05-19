@@ -3,7 +3,7 @@ import emojis from "../example/emojis";
 export const NOTIFICATION_TYPE = {
     FAVOURITE: "favourite",
     BOOST: "reblog",
-    EMOJIREACTION: "emoji_reaction", // Misskey Only!
+    EMOJIREACTION: "emoji_reaction", // Misskey and Bluesky Only!
     FOLLOW: "follow",
     MENTION: "mention",
 };

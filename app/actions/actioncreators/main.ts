@@ -30,9 +30,9 @@ export function deleting(id) {
     };
 }
 
-export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40) {
+export function newLoadingTimeline(reducerType, since_id, clear = false, limit = 40, refreshing = true){
     return async dispatch => {
-        dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
+        refreshing && dispatch({ type: Main.REFRESHING_MASTOLIST, reducerType });
         try {
             let { sns, domain, access_token } = await Session.getDomainAndToken();
             if (sns === "bluesky"){
@@ -43,7 +43,7 @@ export function newLoadingTimeline(reducerType, since_id, clear = false, limit =
             dispatch({ type: Main.NEW_UPDATE_MASTOLIST, data: data, reducerType, clear, streaming: false });
         } catch (e) {
             DropDownHolder.error(t("messages.network_error"), e.message);
-            dispatch({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType });
+            refreshing && dispatch({ type: Main.STOP_REFRESHING_MASTOLIST, reducerType });
         }
     };
 }

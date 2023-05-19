@@ -34,19 +34,15 @@ export default function TimelineCenterHeader({ fixedTitle, onPress, current }){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: "row",
-        paddingTop: 4,
-        paddingBottom: 4,
     },
     image:{
         width: 30,
         height: 30,
         borderRadius: 15,
-        marginRight:5
-    },
-    textView:{
-        flex: 1,
+        marginTop: 4,
+        marginLeft: 10,
+        marginRight:10
     },
     text:{
         width: 200,

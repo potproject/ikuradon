@@ -12,7 +12,6 @@ import NavigationService from "../../../services/NavigationService";
 import * as RouterName from "../../../constants/RouterName";
 
 import { getItem } from "../../../util/storage";
-import { settingTheme } from "../../../util/theme";
 import * as Session from "../../../util/session";
 
 import ExampleAccount from "../../../example/account";
@@ -54,7 +53,7 @@ describe("Action/AppInit", () => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
-        let action = appInit(()=>null);
+        let action = appInit();
         let call = 0;
         const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
@@ -94,7 +93,7 @@ describe("Action/AppInit", () => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
-        let action = appInit(()=>null);
+        let action = appInit();
         let call = 0;
         const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
@@ -135,7 +134,7 @@ describe("Action/AppInit", () => {
             expect(callback).toEqual({ name: RouterName.Main });
             done();
         });
-        let action = appInit(()=>null);
+        let action = appInit();
         let call = 0;
         const { user_credentials, domain, access_token, instance, sns } = ExampleCurrent();
         await action((callback)=>{
@@ -180,7 +179,7 @@ describe("Action/AppInit", () => {
             expect(callback).toEqual({ name: RouterName.Login });
             done();
         });
-        let action = appInit(()=>null);
+        let action = appInit();
         let call = 0;
         await action((callback)=>{
             try {
@@ -221,7 +220,7 @@ describe("Action/AppInit", () => {
         DropDownHolder.error.mockImplementationOnce((title, message) => {
             expect(message).toEqual("Network Error");
         });
-        let action = appInit(()=>{});
+        let action = appInit();
         let call = 0;
         await action((callback)=>{
             try {

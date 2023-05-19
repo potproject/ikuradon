@@ -4,6 +4,8 @@ import * as Storage from "../util/storage";
 import * as CONST_Storage from "../constants/storage";
 import { createReducer } from "@reduxjs/toolkit";
 
+import * as Updates from "expo-updates";
+
 export const initialState = {
     backgroundImage: null,
 
@@ -58,7 +60,18 @@ export default createReducer(initialState, (builder) => {
             type === ConfigActionTypes.CONFIG_RESET
             ,
             (state, action) => {
-                Storage.setItem(CONST_Storage.Config, state);
+                Storage.setItem(CONST_Storage.Config, state).then(() =>
+                {
+                    // if type ===  ChangeTheme
+                    if (action.type === ConfigActionTypes.CHANGE_THEME) {
+                        Updates.reloadAsync().catch(
+                            (e) => {
+                                console.log(e);
+                            }
+                        );
+                    }
+                }
+                );
                 return state;
             }
         );

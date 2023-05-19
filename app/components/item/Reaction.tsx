@@ -24,7 +24,10 @@ function Reaction({ id, tootid, style, reactioned, onReaction }){
             { !reactioned && stateOnPress && 
             <Overlay isVisible={stateOnPress} onBackdropPress={() => useStateOnPress(false)}>
                 <EmojisModal reaction={true} onSelect={(emoji) => {
-                    onReaction(id, tootid, !reactioned, emoji.length !== 1 ? ":"+emoji+":" : emoji);
+                    // ascii以外の文字が含まれているか判断
+                    const isPlainEmoji = emoji.match(/[ -~]/g) === null;
+
+                    onReaction(id, tootid, !reactioned, !isPlainEmoji ? ":"+emoji+":" : emoji);
                     useStateOnPress(false);
                 }
                 } />

@@ -42,7 +42,7 @@ function LoginScreen() {
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             { !app.init &&
-                <Button style={styles.button} onPress={() => dispatch(appInit(() => {}))} title={t("login_retry")} />
+                <Button style={styles.button} onPress={() => dispatch(appInit())} title={t("login_retry")} />
             }
             <Text style={styles.text}>{t("login_message")}</Text>
             <Input

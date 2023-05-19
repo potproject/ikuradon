@@ -32,7 +32,7 @@ export default function TimelineStreamingButton({ type }){
     useEffect(() => {
         return () => {
             // UNMOUNT
-            streamingOff("mastodon", webSocketRef, dispatch, useEnabled, type);
+            streamingOff(sns, webSocketRef, dispatch, useEnabled, type);
             console.log("[WS] UNMOUNTCLOSE:" + type);
         };
     }, []);
@@ -41,15 +41,15 @@ export default function TimelineStreamingButton({ type }){
     }
     return (
         <TouchableOpacity style={styles.view} onPress={() => useEnabled(!enabled)}>
-            <FontAwesome name="feed" size={24} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
+            <FontAwesome name="feed" size={26} color={enabled === true ? theme.customColors.primaryComplementary : theme.customColors.primaryBackground} />
         </TouchableOpacity>
     );
 }
 const styles = StyleSheet.create({
     view: {
-        paddingTop: 4,
+        paddingTop: 6,
         paddingBottom: 4,
         paddingLeft: 12,
-        paddingRight: 8
+        paddingRight: 8,
     }
 });
