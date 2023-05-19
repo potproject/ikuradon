@@ -19,4 +19,4 @@ jobs:
                   expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
                   expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
             - run: yarn install
-            - run: expo publish
+            - run: eas update --channel production --message=update
