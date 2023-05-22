@@ -52,7 +52,7 @@ function NotificationsList({ type }) {
             dispatch(newLoadingTimeline(type, listdata.maxId, true));
         }
     }, []);
-    const newNotifications = notificationParse(listdata.data);
+    const newNotifications = notificationParse(current.sns, listdata.data);
     return (
         <View style={styles.container}>
             <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, { backgroundColor: theme.customColors.charBackground }]}>

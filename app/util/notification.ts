@@ -1,5 +1,3 @@
-import emojis from "../example/emojis";
-
 export const NOTIFICATION_TYPE = {
     FAVOURITE: "favourite",
     BOOST: "reblog",
@@ -32,7 +30,7 @@ type reactionNotification = {
 
 type account = any;
 
-export function notificationParse(notifications){
+export function notificationParse(sns, notifications){
     let newNotifications: newNotificationsType = [];
     for (let notification of notifications){
         const { type } = notification;
@@ -40,6 +38,9 @@ export function notificationParse(notifications){
             case NOTIFICATION_TYPE.FAVOURITE:
             case NOTIFICATION_TYPE.BOOST:
             case NOTIFICATION_TYPE.EMOJIREACTION:
+                if (sns === "mastodon"){
+                    continue;
+                }
                 //お気に入りまたはブーストまたはリアクション
                 const { account, status } = notification;
                 const findIndex = newNotifications.findIndex(item => item.type === NEW_NOTIFICATION_TYPE.FAVOURITEANDBOOSTANDREACTION && item.id === status.id);
