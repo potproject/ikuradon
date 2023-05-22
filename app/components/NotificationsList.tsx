@@ -77,7 +77,7 @@ function NotificationsList({ type }) {
                     </View>
                     }
                     onEndReached={() => {
-                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading && !listdata.endedTimeline) {
                             dispatch(oldLoadingTimeline(type, listdata.minId));
                         }
                     }}

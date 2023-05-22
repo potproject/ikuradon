@@ -125,7 +125,7 @@ function MastoList({ navigation, type }) {
                         )
                     }
                     onEndReached={() => {
-                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading) {
+                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading && !listdata.endedTimeLine){
                             dispatch(oldLoadingTimeline(type, listdata.minId));
                         }
                     }}
