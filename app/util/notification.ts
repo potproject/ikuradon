@@ -38,7 +38,7 @@ export function notificationParse(sns, notifications){
             case NOTIFICATION_TYPE.FAVOURITE:
             case NOTIFICATION_TYPE.BOOST:
             case NOTIFICATION_TYPE.EMOJIREACTION:
-                if (sns === "mastodon"){
+                if (sns === "mastodon" && type === NOTIFICATION_TYPE.EMOJIREACTION){
                     continue;
                 }
                 //お気に入りまたはブーストまたはリアクション
