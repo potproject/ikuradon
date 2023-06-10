@@ -161,6 +161,10 @@ export default {
     //Detail
     detail_title: "Detail",
 
+    //Boost
+    boost_repost: "Boost",
+    boost_quote: "Quote Post",
+
     //Actions
     action_openinbrowser: "Open in Browser",
     action_openinbrowserprofile: "Open Profile in Browser",

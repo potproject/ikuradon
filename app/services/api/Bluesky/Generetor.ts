@@ -341,7 +341,7 @@ export default class blueSkyGenerator{
         };
     }
 
-    async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
+    async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct", quote_id?: string }): Promise<Response<Entity.Status>> {
         await this.refresh();
         const type = "app.bsky.feed.post";
         let reply = undefined;
@@ -368,10 +368,37 @@ export default class blueSkyGenerator{
                 image: JSON.parse(data).blob,
             };
         }) : undefined;
-        const embed = images ? {
+        let embed = images ? {
             $type: "app.bsky.embed.images",
             images,
-        } : undefined;
+        } : undefined as Atproto.AppBskyEmbedImages.View | Atproto.AppBskyEmbedRecord.View | Atproto.AppBskyEmbedRecordWithMedia.View | undefined;
+        if (options.quote_id) {
+            const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [options.quote_id]);
+            if (posts.length > 0) {
+                const post = posts[0];
+                if (embed){
+                    embed = {
+                        $type: "app.bsky.embed.recordWithMedia",
+                        record: {
+                            $type: "app.bsky.embed.record",
+                            record: {
+                                cid: post.cid,
+                                uri: post.uri,
+                            }
+                        },
+                        media: embed,
+                    };
+                } else {
+                    embed = {
+                        $type: "app.bsky.embed.record",
+                        record: {
+                            cid: post.cid,
+                            uri: post.uri,
+                        },
+                    };
+                }
+            }
+        }
         const { uri } = await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             createdAt: new Date().toISOString(),

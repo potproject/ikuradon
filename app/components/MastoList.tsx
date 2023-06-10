@@ -39,9 +39,9 @@ function MastoList({ navigation, type }) {
         }
     }, []);
     const actions = {
-        ReplyAction: (id, tootid, user, acct, image, body) =>
-            NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
-
+        ReplyAction: (id, tootid, user, acct, image, body) => {
+            NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body, quote: false } });
+        },
         BoostAction: (id, tootid, boosted) => {
             dispatch(BoostAction(id, tootid, boosted));
         },
@@ -53,6 +53,9 @@ function MastoList({ navigation, type }) {
         },
         ReactionAction: (id, tootid, reactioned, emoji) => {
             dispatch(ReactionAction(id, tootid, reactioned, emoji));
+        },
+        QuoteAction: (id, tootid, user, acct, image, body) => {
+            NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body, quote: true } });
         },
         HideAction: (id) => {
             dispatch(HideAction(id));

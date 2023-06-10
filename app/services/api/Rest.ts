@@ -62,11 +62,12 @@ export async function getBookmarks(sns: sns, domain: string, access_token: strin
 
 type statusOptions = {
     visibility?: "public" | "unlisted" | "private" | "direct";
-    sensitive?: boolean,
-    spoiler_text?: string,
-    media_ids?: Array<string>,
-    in_reply_to_id?: string,
+    sensitive?: boolean;
+    spoiler_text?: string;
+    media_ids?: Array<string>;
+    in_reply_to_id?: string;
     scheduled_at?: string;
+    quote_id?: string;
 };
 
 export async function postStatus(sns: sns, domain: string, access_token: string, status: string, options: statusOptions){
