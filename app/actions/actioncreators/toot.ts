@@ -12,8 +12,12 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
             dispatch({ type: Toot.TOOT_WAITING });
             let { sns, domain, access_token } = await Session.getDomainAndToken();
             let in_reply_to_id = null;
-            if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined") {
+            let quote_id = null;
+            if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined" && reply.quote === false) {
                 in_reply_to_id = reply.tootid;
+            }
+            if (reply !== null && typeof reply === "object" && typeof reply.tootid !== "undefined" && reply.quote === true) {
+                quote_id = reply.tootid;
             }
             if (media_ids.length === 0){
                 media_ids = undefined;
@@ -26,6 +30,7 @@ export function toot(status, visibility, sensitive, spoiler_text, media_ids = []
                     spoiler_text,
                     media_ids,
                     in_reply_to_id,
+                    quote_id,
                     scheduled_at
                 }
             );

@@ -161,6 +161,10 @@ export default {
     //詳細
     detail_title: "詳細",
 
+    //Boost
+    boost_repost: "ブースト",
+    boost_quote: "引用ブースト",
+        
     //アクション
     action_openinbrowser: "ブラウザで開く",
     action_openinbrowserprofile: "プロフィールをブラウザで開く",

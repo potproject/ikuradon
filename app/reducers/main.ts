@@ -13,7 +13,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
     local: {
         data: [],
@@ -22,7 +23,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
     federal: {
         data: [],
@@ -31,7 +33,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
     notifications: {
         data: [],
@@ -40,7 +43,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
     favourites: {
         data: [],
@@ -49,7 +53,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
     bookmarks: {
         data: [],
@@ -58,7 +63,8 @@ export const initialState = {
         minId: null,
         maxId: null,
         newArrival: 0,
-        lastUpdate: 0
+        lastUpdate: 0,
+        endedTimeline: false
     },
 };
 
@@ -129,6 +135,10 @@ export default createReducer(initialState, (builder) => {
                     data = action.data.concat(state[reducerType].data);
                 }
                 const { minId, maxId } = getFirstAndLastID(data);
+                let endedTimeline = false;
+                if (action.type === MainActionTypes.OLD_UPDATE_MASTOLIST && action.data.length === 0){
+                    endedTimeline = true;
+                }
                 state[reducerType] = {
                     data,
                     refreshing: false,
@@ -136,7 +146,8 @@ export default createReducer(initialState, (builder) => {
                     minId,
                     maxId,
                     newArrival,
-                    lastUpdate
+                    lastUpdate,
+                    endedTimeline,
                 };
             });
 });

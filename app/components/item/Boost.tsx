@@ -3,15 +3,44 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import t from "../../services/I18n";
+
 import { ThemeContext } from "react-native-elements";
 
 function Boost(props){
-    const { id, tootid, style, reblogged, count, disabled, onBoost } = props;
+    const { id, tootid, style, reblogged, count, disabled, onBoost, onQuote, user, acct, image, body } = props;
     const [stateReblogged, useStateReblogged] = useState(reblogged);
     const { theme } = useContext(ThemeContext);
+    const { showActionSheetWithOptions } = useActionSheet();
+    const onOpenActionSheet = () => {
+        showActionSheetWithOptions(
+            {
+                options: [t("boost_repost"), t("boost_quote"), t("global_cancel")],
+                cancelButtonIndex: 2,
+            },
+            buttonIndex => {
+                switch (buttonIndex) {
+                    case 0:
+                        useStateReblogged(!stateReblogged);
+                        onBoost(id, tootid, !stateReblogged);
+                        return;
+                    case 1:
+                        onQuote(id, tootid, user, acct, image, body);
+                        return;
+                    case 2:
+                        return;
+                }
+            },
+        );
+    };
     return (
         <View style={[style, styles.container]}>
             <TouchableOpacity style={style} disabled={disabled} onPress={() => {
+                if (onQuote && !stateReblogged) {
+                    onOpenActionSheet();
+                    return;
+                }
                 useStateReblogged(!stateReblogged);
                 onBoost(id, tootid, !stateReblogged);
             }}>
@@ -29,7 +58,12 @@ Boost.propTypes = {
     reblogged: PropTypes.bool,
     count: PropTypes.number,
     disabled: PropTypes.bool,
-    onBoost: PropTypes.func
+    onBoost: PropTypes.func,
+    onQuote: PropTypes.func,
+    user: PropTypes.string,
+    acct: PropTypes.string,
+    image: PropTypes.string,
+    body: PropTypes.string,
 };
 
 const styles = StyleSheet.create({

@@ -8,6 +8,7 @@ import { NOTIFICATION_TYPE } from "../../../util/notification";
 import TaskQueue from "../../../util/taskQueue";
 
 import { appName } from "../../../constants/login";
+import * as Localization from "expo-localization";
 
 const SESSION_EXPIREDTIMESEC = 30 * 60 * 1000;
 export default class blueSkyGenerator{
@@ -95,6 +96,13 @@ export default class blueSkyGenerator{
             ({ cursor, feed } = await getAuthorFeed(this.baseUrl, this.accessToken.accessJwt, this.accessToken.did, options.max_id, options.limit));
         } else {
             ({ cursor, feed } = await getTimeline(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit));
+            // 自分以外のmetionの場合は除外
+            feed = feed.filter((item) => {
+                if (item.reply && item.reply.parent && item.reply.parent.author.did !== this.accessToken.did) {
+                    return false;
+                }
+                return true;
+            });
         }
 
         let status = [];
@@ -341,7 +349,7 @@ export default class blueSkyGenerator{
         };
     }
 
-    async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct" }): Promise<Response<Entity.Status>> {
+    async postStatus(status: string, options: { in_reply_to_id?: string, media_ids?: string[], sensitive?: boolean, spoiler_text?: string, visibility?: "public" | "unlisted" | "private" | "direct", quote_id?: string }): Promise<Response<Entity.Status>> {
         await this.refresh();
         const type = "app.bsky.feed.post";
         let reply = undefined;
@@ -368,15 +376,43 @@ export default class blueSkyGenerator{
                 image: JSON.parse(data).blob,
             };
         }) : undefined;
-        const embed = images ? {
+        let embed = images ? {
             $type: "app.bsky.embed.images",
             images,
-        } : undefined;
+        } : undefined as Atproto.AppBskyEmbedImages.View | Atproto.AppBskyEmbedRecord.View | Atproto.AppBskyEmbedRecordWithMedia.View | undefined;
+        if (options.quote_id) {
+            const { posts } = await getPosts(this.baseUrl, this.accessToken.accessJwt, [options.quote_id]);
+            if (posts.length > 0) {
+                const post = posts[0];
+                if (embed){
+                    embed = {
+                        $type: "app.bsky.embed.recordWithMedia",
+                        record: {
+                            $type: "app.bsky.embed.record",
+                            record: {
+                                cid: post.cid,
+                                uri: post.uri,
+                            }
+                        },
+                        media: embed,
+                    };
+                } else {
+                    embed = {
+                        $type: "app.bsky.embed.record",
+                        record: {
+                            cid: post.cid,
+                            uri: post.uri,
+                        },
+                    };
+                }
+            }
+        }
         const { uri } = await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             createdAt: new Date().toISOString(),
             text: status,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             embed,
             reply,
         },
@@ -489,6 +525,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -555,6 +592,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             emoji: emoji,
             createdAt: new Date().toISOString(),
             subject: {
@@ -631,6 +669,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             createdAt: new Date().toISOString(),
             subject: did
         },

@@ -17,7 +17,6 @@ const reducerSelector = (state: RootState) => ({
     toot: state.tootReducer
 });
 
-import * as RouterName from "../constants/RouterName";
 import VisibilityModal from "../components/VisibilityModal";
 import EmojisModal from "../components/EmojisModal";
 import DraftModal from "../components/DraftModal";
@@ -25,6 +24,7 @@ import ScheduledModal from "../components/ScheduledModal";
 import { addDraft, deleteDraft } from "../util/draft";
 import TootImageClip from "../components/TootImageClip";
 import { RootState } from "../reducers";
+import { bodyFormat } from "../util/parser";
 
 const MAX_TOOT_LENGTH = 500;
 const MAX_TOOT_WARNING = MAX_TOOT_LENGTH / 20;
@@ -37,14 +37,23 @@ const VISIBILITY_CONST = {
     private: "lock",
     direct: "envelope"
 };
+type Reply = {
+    id: string;
+    tootid: string;
+    user: string;
+    acct: string;
+    image: string;
+    body: string;
+    quote: boolean;
+}
 
 function TootScreen({ navigation, route }) {
     const dispatch = useDispatch();
     const { showActionSheetWithOptions } = useActionSheet();
-    const reply = typeof route.params !== "undefined" ? route.params : null;
+    const reply: Reply|null = typeof route.params !== "undefined" ? route.params : null;
     const { current, toot } = useSelector(reducerSelector);
     const { theme } = useContext(ThemeContext);
-    const [tootText, onChangeTootText] = useState(current.sns !== "bluesky" && reply ? "@" + reply.acct + " " : "");
+    const [tootText, onChangeTootText] = useState(current.sns !== "bluesky" && reply && !reply.quote ? "@" + reply.acct + " " : "");
     const [tootCursor, useTootCursor] = useState(0);
     const [cwTootText, onChangeCwTootText] = useState("");
     const [cw, useCw] = useState(false);
@@ -95,6 +104,18 @@ function TootScreen({ navigation, route }) {
                 )}
             />
             <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.container]}>
+                { reply &&
+                <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.replyBox]}>
+                    <Text style={[{ color: theme.colors.primary }, styles.replyUser]} ellipsizeMode="tail" numberOfLines={1}>
+                        { !reply.quote && <FontAwesome name={"reply"} size={16} color={theme.colors.grey0} /> }
+                        { reply.quote && <FontAwesome name={"quote-left"} size={16} color={theme.colors.grey0} /> }
+                        {reply.user}
+                    </Text>
+                    <Text style={[{ color: theme.colors.grey0, fontSize: 16 }, styles.replyBody]} ellipsizeMode="tail" numberOfLines={1}>
+                        {bodyFormat(reply.body)}
+                    </Text>
+                </View>
+                }
                 <View style={[{ backgroundColor: theme.customColors.charBackground }, styles.inputContainer]}>
                     {cw &&
                     <TextInput
@@ -206,6 +227,20 @@ const styles = StyleSheet.create({
         flex: 6,
         margin: 10,
         fontSize: 20
+    },
+    replyBox: {
+        flex: 1,
+        marginLeft: 20,
+        marginTop: 5,
+        marginRight: 5,
+        marginBottom: 5,
+    },
+    replyUser: {
+        fontWeight: "bold",
+        fontSize: 18,
+    },
+    replyBody: {
+        fontSize: 16,
     },
     cwInput: {
         flex: 1,

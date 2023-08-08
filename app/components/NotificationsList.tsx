@@ -30,12 +30,12 @@ function NotificationsList({ type }) {
     const { current, main, config } = useSelector(CurrentUserReducerSelector);
     const listdata = main[type];
     const actions = {
-        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
-
+        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body, quote: false } }),
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
         BookmarkAction: (id, tootid, bookmarked) => {dispatch(BookmarkAction(id, tootid, bookmarked))},
         ReactionAction: (id, tootid, reactioned, emoji) => {dispatch(ReactionAction(id, tootid, reactioned, emoji))},
+        QuoteAction: (id, tootid, user, acct, image, body) => {NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body, quote: true } })},
         HideAction: (id) => {dispatch(HideAction(id))},
         DeleteAction: (id) => {dispatch(DeleteAction(id))},
 
@@ -52,7 +52,7 @@ function NotificationsList({ type }) {
             dispatch(newLoadingTimeline(type, listdata.maxId, true));
         }
     }, []);
-    const newNotifications = notificationParse(listdata.data);
+    const newNotifications = notificationParse(current.sns, listdata.data);
     return (
         <View style={styles.container}>
             <ImageBackground imageStyle={{ opacity:0.3 }} source={config.backgroundImage ? { uri: config.backgroundImage } : null} style={[styles.background, { backgroundColor: theme.customColors.charBackground }]}>
@@ -77,7 +77,7 @@ function NotificationsList({ type }) {
                     </View>
                     }
                     onEndReached={() => {
-                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading){
+                        if (init && listdata && listdata.data instanceof Array && listdata.data.length >= 10 && !listdata.loading && !listdata.endedTimeline) {
                             dispatch(oldLoadingTimeline(type, listdata.minId));
                         }
                     }}

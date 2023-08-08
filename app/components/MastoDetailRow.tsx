@@ -56,7 +56,7 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
     // current
     let { user_credentials, domain, sns } = current;
     // Actions
-    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
+    let { ReplyAction, BoostAction, FavouriteAction, BookmarkAction, ReactionAction, QuoteAction, HideAction, DeleteAction, OpenImageViewerAction, CloseImageViewerAction } = actions;
     // Theme
     const { theme } = useContext(ThemeContext);
     // reply to you?
@@ -183,6 +183,11 @@ const MastoDetailRow = ({ item, current, actions, background, fontSize, openStic
                     style={styles.itemFlex}
                     onBoost={BoostAction}
                     disabled={visibility === "private" || visibility === "direct"}
+                    onQuote={sns === "bluesky" || sns === "misskey" ? QuoteAction : null}
+                    user={account.display_name !== "" ? account.display_name : account.username}
+                    acct={account.acct}
+                    image={account.avatar}
+                    body={content}
                 />
                 <Favourite id={id} tootid={tootID} favourited={favourited} count={favourites_count} style={styles.itemFlex} onFavourite={FavouriteAction} />
                 { sns !== "misskey" && sns !== "bluesky" &&

@@ -67,7 +67,7 @@
     "https-proxy-agent": "^5.0.1",
     "i18n-js": "^3.5.1",
     "jest": "^29.2.1",
-    "megalodon": "^5.2.0",
+    "megalodon": "^6.0.0",
     "os-browserify": "^0.3.0",
     "prop-types": "^15.7.2",
     "qs": "^6.10.3",
