@@ -125,6 +125,7 @@ type recordType = {
         uri: string,
     },
     via?: string, // unofficial field
+    langs?: string[], // undocumented field
     text?: string, // only for app.bsky.feed.post
     reply?: {
         root: {

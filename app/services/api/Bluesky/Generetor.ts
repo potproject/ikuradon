@@ -8,6 +8,7 @@ import { NOTIFICATION_TYPE } from "../../../util/notification";
 import TaskQueue from "../../../util/taskQueue";
 
 import { appName } from "../../../constants/login";
+import * as Localization from "expo-localization";
 
 const SESSION_EXPIREDTIMESEC = 30 * 60 * 1000;
 export default class blueSkyGenerator{
@@ -411,6 +412,7 @@ export default class blueSkyGenerator{
             createdAt: new Date().toISOString(),
             text: status,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             embed,
             reply,
         },
@@ -523,6 +525,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             createdAt: new Date().toISOString(),
             subject: {
                 cid: post.cid,
@@ -589,6 +592,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             emoji: emoji,
             createdAt: new Date().toISOString(),
             subject: {
@@ -665,6 +669,7 @@ export default class blueSkyGenerator{
         await createRecord(this.baseUrl, this.accessToken.accessJwt, type, {
             $type: type,
             via: appName,
+            langs: [Localization.locale.split("-")[0]],
             createdAt: new Date().toISOString(),
             subject: did
         },
