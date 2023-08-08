@@ -95,6 +95,13 @@ export default class blueSkyGenerator{
             ({ cursor, feed } = await getAuthorFeed(this.baseUrl, this.accessToken.accessJwt, this.accessToken.did, options.max_id, options.limit));
         } else {
             ({ cursor, feed } = await getTimeline(this.baseUrl, this.accessToken.accessJwt, options.max_id, options.limit));
+            // 自分以外のmetionの場合は除外
+            feed = feed.filter((item) => {
+                if (item.reply && item.reply.parent && item.reply.parent.author.did !== this.accessToken.did) {
+                    return false;
+                }
+                return true;
+            });
         }
 
         let status = [];
