@@ -80,15 +80,24 @@ export async function listNotifications(baseUrl: string, accessJwt: string, seen
 }
 
 export async function getPosts(baseUrl: string, accessJwt: string, uris: string[]) {
-    const params : Atproto.AppBskyFeedGetPosts.QueryParams = { uris };
-    const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getPosts"), {
-        params,
-        headers: {
-            Authorization: "Bearer " + accessJwt,
-        },
-    }) as Atproto.AppBskyFeedGetPosts.Response;
-
-    return data;
+    // uris must not have more than 25 elements
+    const chunkSize = 25;
+    const results = [];
+  
+    for (let i = 0; i < uris.length; i += chunkSize) {
+        const chunkUris = uris.slice(i, i + chunkSize);
+        const params: Atproto.AppBskyFeedGetPosts.QueryParams = { uris: chunkUris };
+  
+        const { data } = await axios.get(getEndpoint(baseUrl, "app.bsky.feed.getPosts"), {
+            params,
+            headers: {
+                Authorization: "Bearer " + accessJwt,
+            },
+        }) as Atproto.AppBskyFeedGetPosts.Response;
+        data.posts.forEach((post) => results.push(post));
+    }
+  
+    return { posts : results };
 }
 
 
