@@ -35,7 +35,7 @@ function DetailScreen({ route, navigation }) {
     const detailID = typeof data.id === "string" ? data.id : null;
     const { data: openStickerData } = openSticker;
     const detailRowActions = {
-        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body } }),
+        ReplyAction: (id, tootid, user, acct, image, body) => NavigationService.navigate({ name: RouterName.Toot, params: { id, tootid, user, acct, image, body, quote: false } }),
 
         BoostAction: (id, tootid, boosted) => {dispatch(BoostAction(id, tootid, boosted))},
         FavouriteAction: (id, tootid, favourited) => {dispatch(FavouriteAction(id, tootid, favourited))},
