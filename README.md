@@ -47,7 +47,8 @@ expo publish
 
 -   iOS / Android Device Support
 -   Mastodon Support
--   Misskey / Pleroma (Maybe) Support
+-   ~~Misskey~~ / Pleroma (Maybe) Support
+-   Bluesky Support
 -   Modern UI
 -   Multi Account Support
 -   Streaming API Support

@@ -1,7 +1,7 @@
 export default {
     sns: {
         mastodon: "Mastodon",
-        misskey: "Misskey",
+        misskey: "Misskey(Unsupported)",
         pleroma: "Pleroma",
         bluesky: "Bluesky",
     },
