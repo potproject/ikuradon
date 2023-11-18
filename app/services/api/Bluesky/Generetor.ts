@@ -6,7 +6,7 @@ import MastodonAPI from "megalodon/lib/src/mastodon/api_client";
 import * as Session from "../../../util/session";
 import { NOTIFICATION_TYPE } from "../../../util/notification";
 import TaskQueue from "../../../util/taskQueue";
-
+import { TextEncoder, TextDecoder } from "text-encoding";
 import { appName } from "../../../constants/login";
 import * as Localization from "expo-localization";
 
@@ -852,6 +852,19 @@ function convertStatuse(post: any, myDid: string): Entity.Status {
             name: post.record.via,
         });
     }
+
+    if (post.record.$type === "app.bsky.feed.post" && post.record.facets && post.record.facets.length > 0){
+        for (const facet of post.record.facets) {
+            for (const features of facet.features){
+                if (features.$type === "app.bsky.richtext.facet#link"){
+                    const byteStart = new TextEncoder().encode(post.record.text).slice(0, facet.index.byteStart);
+                    const byteEnd = new TextEncoder().encode(post.record.text).slice(facet.index.byteEnd);
+                    post.record.text = new TextDecoder().decode(byteStart) + features.uri + new TextDecoder().decode(byteEnd);
+                }
+            }
+        }
+    }
+
     return MastodonAPI.Converter.status({
         id: post.uri,
         uri: post.uri,
